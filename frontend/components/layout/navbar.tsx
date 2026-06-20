@@ -3,8 +3,8 @@
 import { useEffect, useState } from 'react'
 import { AnimatePresence, motion } from 'framer-motion'
 import { Check, ChevronDown, Globe2, Menu, X } from 'lucide-react'
-import { destinations } from '@/lib/destinations'
-import { tours } from '@/lib/tours'
+import { destinations } from '@/features/destinations'
+import { tours } from '@/features/tours'
 
 type NavChild = {
   label: string

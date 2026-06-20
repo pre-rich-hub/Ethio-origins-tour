@@ -3,8 +3,8 @@
 import { motion } from 'framer-motion'
 import Link from 'next/link'
 import { ArrowRight, Clock } from 'lucide-react'
-import { tours } from '@/lib/tours'
-import { SectionHeading } from './section-heading'
+import { SectionHeading } from '@/components/shared/section-heading'
+import { tours } from '@/features/tours'
 
 export function Experiences() {
   const featuredTours = tours.slice(0, 9)

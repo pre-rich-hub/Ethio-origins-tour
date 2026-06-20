@@ -1,15 +1,17 @@
-import { Navbar } from '@/components/navbar'
-import { Hero } from '@/components/hero'
-import { TrustStrip } from '@/components/trust-strip'
-import { Experiences } from '@/components/experiences'
-import { Destinations } from '@/components/destinations'
-import { WhyEthiopia } from '@/components/why-ethiopia'
-import { CustomJourneys } from '@/components/custom-journeys'
-import { Gallery } from '@/components/gallery'
-import { Testimonials } from '@/components/testimonials'
-import { BrandStory } from '@/components/brand-story'
-import { SiteFooter } from '@/components/site-footer'
-import { FloatingContact } from '@/components/floating-contact'
+import { FloatingContact } from '@/components/layout/floating-contact'
+import { Navbar } from '@/components/layout/navbar'
+import { SiteFooter } from '@/components/layout/site-footer'
+import {
+  BrandStory,
+  CustomJourneys,
+  Experiences,
+  FeaturedDestinations,
+  Hero,
+  HomeGallery,
+  HomeTestimonials,
+  TrustStrip,
+  WhyEthiopia,
+} from '@/features/home'
 
 export default function Page() {
   return (
@@ -18,11 +20,11 @@ export default function Page() {
       <Hero />
       <TrustStrip />
       <Experiences />
-      <Destinations />
+      <FeaturedDestinations />
       <WhyEthiopia />
       <CustomJourneys />
-      <Gallery />
-      <Testimonials />
+      <HomeGallery />
+      <HomeTestimonials />
       <BrandStory />
       <SiteFooter />
       <FloatingContact />

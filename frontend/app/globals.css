@@ -55,6 +55,8 @@
 :root {
   color-scheme: light;
   --radius: 0.25rem;
+  --font-cormorant: Georgia, 'Times New Roman', serif;
+  --font-jakarta: Arial, Helvetica, sans-serif;
 
   /* Luxury & Premium palette */
   --forest: #1f4d3a;

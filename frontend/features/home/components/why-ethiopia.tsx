@@ -1,7 +1,7 @@
 'use client'
 
 import { motion } from 'framer-motion'
-import { Reveal } from './reveal'
+import { Reveal } from '@/components/shared/reveal'
 
 const facts = [
   { value: 'Ancient', label: 'History' },

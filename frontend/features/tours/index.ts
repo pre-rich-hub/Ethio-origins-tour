@@ -1,0 +1,6 @@
+export { TourDetailPage } from './components/tour-detail-page'
+export type { TourPageProps } from './components/tour-detail-page'
+export { ToursPage } from './components/tours-page'
+export { tours } from './data/tours'
+export { getTour } from './services/get-tour'
+export type { Tour } from './types/tour'

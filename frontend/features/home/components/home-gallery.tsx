@@ -66,7 +66,7 @@ const images = [
 
 const notes = ['Landscapes', 'Traditions', 'Human Connections']
 
-export function Gallery() {
+export function HomeGallery() {
   const [activeIndex, setActiveIndex] = useState(0)
   const [isPlaying, setIsPlaying] = useState(true)
   const activeImage = images[activeIndex]

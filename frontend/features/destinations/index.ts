@@ -1,0 +1,6 @@
+export { DestinationDetailPage } from './components/destination-detail-page'
+export type { DestinationPageProps } from './components/destination-detail-page'
+export { DestinationsPage } from './components/destinations-page'
+export { destinations } from './data/destinations'
+export { getDestination } from './services/get-destination'
+export type { Destination } from './types/destination'
