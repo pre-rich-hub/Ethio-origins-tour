@@ -16,7 +16,7 @@ export function DestinationsGrid() {
             >
               <img
                 src={destination.image}
-                alt={destination.name}
+                alt={destination.imageAlt}
                 className="absolute inset-0 size-full object-cover transition-transform duration-[1.4s] ease-out group-hover:scale-105"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/28 to-black/10" />

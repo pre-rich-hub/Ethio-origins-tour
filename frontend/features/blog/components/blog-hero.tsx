@@ -26,7 +26,7 @@ export function BlogHero() {
             Ethio Origins Journal
           </p>
           <h1 className="mt-5 text-balance font-serif text-5xl font-medium leading-[0.95] text-cream sm:text-6xl md:text-7xl">
-            Stories, Notes, and Travel Inspiration
+            Ethiopia Travel Guide
           </h1>
           <p className="mt-7 max-w-2xl font-sans text-base font-light leading-relaxed text-cream/82 md:text-lg">
             Refined guides and field notes for travelers planning meaningful

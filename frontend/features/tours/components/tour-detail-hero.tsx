@@ -11,7 +11,7 @@ export function TourDetailHero({ gallery, tour }: TourDetailHeroProps) {
     <section className="relative isolate overflow-hidden bg-coffee pt-28 text-cream md:pt-36">
       <img
         src={tour.image}
-        alt={tour.title}
+        alt={tour.imageAlt}
         className="absolute inset-0 z-0 size-full object-cover"
       />
       <div className="absolute inset-0 z-0 bg-[linear-gradient(90deg,rgba(12,18,15,0.96)_0%,rgba(24,55,43,0.84)_48%,rgba(0,0,0,0.32)_100%)]" />

@@ -119,7 +119,7 @@ export function Hero() {
             transition={{ duration: 1, delay: 0.35 }}
             className="mx-auto max-w-[22rem] text-balance font-serif text-4xl font-medium leading-[0.98] text-cream min-[380px]:text-5xl sm:max-w-none sm:text-6xl md:text-7xl lg:text-8xl"
           >
-            Discover the Soul of Ethiopia
+            Explore Ethiopia with Local Travel Experts
           </motion.h1>
           <motion.p
             initial={{ opacity: 0, y: 20 }}

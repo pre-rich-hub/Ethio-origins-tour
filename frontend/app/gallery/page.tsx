@@ -7,12 +7,22 @@ import {
   GalleryHero,
   GalleryStoryStrip,
 } from '@/features/gallery'
+import { createMetadata } from '@/lib/seo/create-metadata'
 
-export const metadata: Metadata = {
-  title: 'Gallery | Ethio Origins Tours',
+export const metadata: Metadata = createMetadata({
+  title: 'Ethiopia Travel Gallery',
   description:
-    'A visual diary of Ethiopian landscapes, traditions, wildlife, architecture, and human connections.',
-}
+    "Explore photographs of Ethiopia's landscapes, historical sites, cultural experiences, wildlife and destinations featured in our guided tours.",
+  canonicalPath: '/gallery',
+  primaryKeyword: 'Ethiopia Travel Gallery',
+  secondaryKeywords: [
+    'Ethiopia Tour Photos',
+    'Ethiopia Destination Photography',
+    'Explore Ethiopia Photos',
+  ],
+  ogImage: '/images/exp-northern.png',
+  ogImageAlt: 'Rock-hewn church of Lalibela in warm light',
+})
 
 export default function GalleryPage() {
   return (

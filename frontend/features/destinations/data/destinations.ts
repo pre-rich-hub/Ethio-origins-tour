@@ -19,6 +19,22 @@ export const destinations: Destination[] = [
     ],
     bestFor: 'History, architecture, faith heritage, and highland culture',
     itinerary: ['Addis Ababa arrival', 'Lalibela churches', 'Gondar heritage', 'Highland village time'],
+    imageAlt: 'Historic northern Ethiopia landscape representing Lalibela and Gondar heritage routes',
+    seo: {
+      title: 'Lalibela Tour Packages & Historical Tours',
+      description:
+        "Explore Lalibela's rock-hewn churches with local guides on historical northern Ethiopia tours featuring Gondar, highland culture and sacred heritage.",
+      canonicalPath: '/destinations/lalibela-and-the-north',
+      primaryKeyword: 'Lalibela Tour Packages',
+      secondaryKeywords: [
+        'Lalibela Tours',
+        'Lalibela Historical Tours',
+        'Lalibela Guided Tours',
+        'Lalibela Ethiopia Travel',
+      ],
+      ogImage: '/images/dest-gondar.png',
+      ogImageAlt: 'Historic northern Ethiopia heritage route',
+    },
   },
   {
     slug: 'omo-valley-cultures',
@@ -38,6 +54,22 @@ export const destinations: Destination[] = [
     ],
     bestFor: 'Cultural immersion, photography, markets, and overland travel',
     itinerary: ['Fly to Jinka', 'Omo Valley communities', 'Market and river routes', 'Return through Arba Minch'],
+    imageAlt: 'Omo Valley cultural journey in southern Ethiopia',
+    seo: {
+      title: 'Omo Valley Tours & Cultural Experiences',
+      description:
+        "Discover Omo Valley tours with experienced local guides. Explore southern Ethiopia's landscapes, markets and cultural experiences through responsible journeys.",
+      canonicalPath: '/destinations/omo-valley-cultures',
+      primaryKeyword: 'Omo Valley Tours',
+      secondaryKeywords: [
+        'Omo Valley Tour Packages',
+        'Omo Valley Cultural Tours',
+        'Southern Ethiopia Tours',
+        'Omo Valley Cultural Experiences',
+      ],
+      ogImage: '/images/exp-omo.png',
+      ogImageAlt: 'Omo Valley cultural travel experience',
+    },
   },
   {
     slug: 'danakil-depression',
@@ -57,6 +89,22 @@ export const destinations: Destination[] = [
     ],
     bestFor: 'Expedition travel, geology, desert landscapes, and photography',
     itinerary: ['Mekelle briefing', 'Salt flats', 'Dallol landscapes', 'Desert return'],
+    imageAlt: 'Colorful Danakil Depression expedition landscape',
+    seo: {
+      title: 'Danakil Depression Tours & Adventure Packages',
+      description:
+        'Explore Danakil Depression tours featuring volcanic landscapes, salt flats, Dallol and Afar desert routes with experienced guides.',
+      canonicalPath: '/destinations/danakil-depression',
+      primaryKeyword: 'Danakil Depression Tours',
+      secondaryKeywords: [
+        'Danakil Tour Packages',
+        'Danakil Adventure Tours',
+        'Erta Ale Tours',
+        'Afar Danakil Tours',
+      ],
+      ogImage: '/images/exp-danakil.png',
+      ogImageAlt: 'Danakil Depression desert and volcanic landscape',
+    },
   },
   {
     slug: 'bale-mountains',
@@ -76,6 +124,22 @@ export const destinations: Destination[] = [
     ],
     bestFor: 'Wildlife, soft adventure, birding, and highland scenery',
     itinerary: ['Drive to Bale', 'Forest walks', 'Sanetti Plateau', 'Return through Rift Valley'],
+    imageAlt: 'Bale Mountains highland nature and wildlife landscape',
+    seo: {
+      title: 'Bale Mountains Tours, Trekking & Wildlife',
+      description:
+        "Explore Bale Mountains tours featuring trekking, wildlife, bird watching and dramatic highland landscapes in one of Ethiopia's major national parks.",
+      canonicalPath: '/destinations/bale-mountains',
+      primaryKeyword: 'Bale Mountains Tours',
+      secondaryKeywords: [
+        'Bale Mountains Trekking',
+        'Bale Mountains Wildlife Tours',
+        'Ethiopia Nature Tours',
+        'Bale Mountains National Park Tour',
+      ],
+      ogImage: '/images/exp-bale.png',
+      ogImageAlt: 'Bale Mountains highland wildlife route',
+    },
   },
   {
     slug: 'wonchi-crater-lake',
@@ -95,6 +159,21 @@ export const destinations: Destination[] = [
     ],
     bestFor: 'Short escapes, families, gentle nature, and lake views',
     itinerary: ['Depart Addis', 'Crater rim walk', 'Lake and monastery', 'Return to Addis'],
+    imageAlt: 'Wonchi Crater Lake highland retreat near Addis Ababa',
+    seo: {
+      title: 'Wonchi Crater Lake Tours & Retreats',
+      description:
+        'Plan a Wonchi Crater Lake retreat with guided walks, lake views, village trails and a short highland escape close to Addis Ababa.',
+      canonicalPath: '/destinations/wonchi-crater-lake',
+      primaryKeyword: 'Wonchi Crater Lake Tours',
+      secondaryKeywords: [
+        'Wonchi Tours',
+        'Ethiopia Lake Tours',
+        'Addis Ababa Short Trips',
+      ],
+      ogImage: '/images/dest-wonchi.png',
+      ogImageAlt: 'Wonchi Crater Lake in Ethiopia',
+    },
   },
   {
     slug: 'awash-and-rift-valley',
@@ -114,5 +193,20 @@ export const destinations: Destination[] = [
     ],
     bestFor: 'Wildlife, scenery, short safaris, and first-time Ethiopia trips',
     itinerary: ['Drive to Awash', 'Game drive and falls', 'Hot springs', 'Rift Valley return'],
+    imageAlt: 'Awash and Rift Valley wilderness landscape in Ethiopia',
+    seo: {
+      title: 'Awash & Rift Valley Tours',
+      description:
+        'Explore Awash and Rift Valley tours with wildlife drives, hot springs, lake country and accessible wilderness routes from Addis Ababa.',
+      canonicalPath: '/destinations/awash-and-rift-valley',
+      primaryKeyword: 'Awash and Rift Valley Tours',
+      secondaryKeywords: [
+        'Awash National Park Tours',
+        'Ethiopia Wildlife Tours',
+        'Rift Valley Ethiopia Tours',
+      ],
+      ogImage: '/images/dest-awash.png',
+      ogImageAlt: 'Awash and Rift Valley travel landscape',
+    },
   },
 ]

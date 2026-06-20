@@ -17,7 +17,7 @@ export function DestinationDetailHero({
     <section className="relative isolate min-h-screen overflow-hidden bg-coffee pt-28 text-cream">
       <img
         src={destination.image}
-        alt={destination.name}
+        alt={destination.imageAlt}
         className="absolute inset-0 z-0 size-full scale-105 object-cover"
       />
       <div className="absolute inset-0 z-0 bg-[linear-gradient(90deg,rgba(12,17,14,0.96)_0%,rgba(29,25,20,0.76)_48%,rgba(12,17,14,0.3)_100%)]" />
@@ -39,7 +39,7 @@ export function DestinationDetailHero({
               {destination.place}
             </p>
             <h1 className="mt-6 max-w-5xl text-balance font-serif text-5xl font-medium leading-[0.92] text-cream sm:text-7xl md:text-8xl lg:text-9xl">
-              {destination.name}
+              {destination.seo.primaryKeyword}
             </h1>
             <p className="mt-7 max-w-2xl text-pretty font-sans text-base font-light leading-relaxed text-cream/86 md:text-lg">
               {destination.intro}
