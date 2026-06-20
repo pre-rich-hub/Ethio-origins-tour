@@ -1,5 +1,7 @@
 import type { Metadata } from 'next'
-import { BlogPage } from '@/features/blog'
+import { Navbar } from '@/components/layout/navbar'
+import { SiteFooter } from '@/components/layout/site-footer'
+import { BlogHero, BlogPostsSection } from '@/features/blog'
 
 export const metadata: Metadata = {
   title: 'Blog | Ethio Origins Tours',
@@ -7,4 +9,13 @@ export const metadata: Metadata = {
     'Travel insights, destination notes, and private journey inspiration from Ethio Origins Tours.',
 }
 
-export default BlogPage
+export default function BlogPage() {
+  return (
+    <main className="bg-background text-foreground">
+      <Navbar />
+      <BlogHero />
+      <BlogPostsSection />
+      <SiteFooter />
+    </main>
+  )
+}
