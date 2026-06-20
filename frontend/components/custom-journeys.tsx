@@ -1,0 +1,111 @@
+'use client'
+
+import { motion } from 'framer-motion'
+import {
+  Compass,
+  Handshake,
+  MapPinned,
+  ShieldCheck,
+  UserRound,
+} from 'lucide-react'
+
+const features = [
+  {
+    icon: ShieldCheck,
+    stat: '15+',
+    title: 'Years Local Expertise',
+    text: 'Deep regional knowledge shaped by years of planning and guiding journeys across Ethiopia.',
+  },
+  {
+    icon: Compass,
+    stat: '100%',
+    title: 'Tailor-Made Journeys',
+    text: 'Every itinerary is carefully designed around your pace, interests, comfort, and travel style.',
+  },
+  {
+    icon: UserRound,
+    stat: 'Expert',
+    title: 'Guides Across Ethiopia',
+    text: 'Travel with knowledgeable local guides who bring history, culture, and landscapes to life.',
+  },
+  {
+    icon: Handshake,
+    stat: 'Authentic',
+    title: 'Cultural Access',
+    text: 'Meaningful encounters with communities, traditions, and stories beyond ordinary sightseeing.',
+  },
+]
+
+export function CustomJourneys() {
+  return (
+    <section className="relative isolate overflow-hidden bg-coffee py-20 text-cream md:py-28">
+      <div className="absolute inset-0 z-0">
+        <img
+          src="/images/custom.png"
+          alt="Luxury safari camp overlooking the Ethiopian highlands at dusk"
+          className="size-full object-cover"
+        />
+        <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(24,55,43,0.96),rgba(31,77,58,0.82)_48%,rgba(0,0,0,0.42))]" />
+        <div className="absolute inset-x-0 bottom-0 h-48 bg-gradient-to-t from-coffee/80 to-transparent" />
+      </div>
+
+      <div className="relative z-10 mx-auto max-w-7xl px-6">
+        <div className="grid gap-10 lg:grid-cols-[0.78fr_1.22fr] lg:items-end">
+          <div className="max-w-2xl">
+            <p className="mb-3 font-sans text-xs uppercase tracking-luxe text-gold">
+              Why Travel With Ethio Origins
+            </p>
+            <h2 className="text-balance font-serif text-4xl font-medium leading-tight text-cream md:text-6xl">
+              Why Travelers Choose Ethio Origins
+            </h2>
+          </div>
+
+          <p className="max-w-2xl text-pretty font-sans text-lg font-light leading-relaxed text-cream/82 md:text-xl">
+            Local expertise, private planning, and authentic access come
+            together to create journeys that feel personal, polished, and deeply
+            connected to place.
+          </p>
+        </div>
+
+        <div className="mt-14 grid gap-5 md:grid-cols-2 xl:grid-cols-4">
+          {features.map((f, i) => (
+            <motion.article
+              key={f.title}
+              initial={{ opacity: 0, y: 24 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: '-40px' }}
+              transition={{ duration: 0.55, delay: i * 0.08 }}
+              className="group min-h-[310px] border border-cream/16 bg-cream/8 p-7 shadow-2xl shadow-black/10 backdrop-blur-sm transition-colors hover:border-gold/60 hover:bg-cream/12"
+            >
+              <div className="flex items-start justify-between gap-5">
+                <f.icon className="size-8 text-gold" strokeWidth={1.4} />
+                <MapPinned className="size-5 text-cream/30 transition-colors group-hover:text-gold" />
+              </div>
+
+              <p className="mt-12 font-serif text-5xl font-medium leading-none text-cream">
+                {f.stat}
+              </p>
+              <h3 className="mt-4 font-serif text-2xl font-medium leading-none text-cream">
+                {f.title}
+              </h3>
+              <p className="mt-4 font-sans text-sm font-light leading-relaxed text-cream/70">
+                {f.text}
+              </p>
+            </motion.article>
+          ))}
+        </div>
+
+        <div className="mt-12 border-l border-gold pl-6 md:max-w-3xl">
+          <p className="mb-3 font-sans text-xs uppercase tracking-luxe text-gold">
+            Our Promise
+          </p>
+          <p className="font-serif text-3xl font-medium leading-tight text-cream md:text-4xl">
+            We don&apos;t just show Ethiopia. We help you experience it through
+            meaningful encounters, expert guidance, and carefully crafted
+            journeys.
+          </p>
+        </div>
+      </div>
+    </section>
+  )
+}
