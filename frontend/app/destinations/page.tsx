@@ -2,12 +2,23 @@ import type { Metadata } from 'next'
 import { Navbar } from '@/components/layout/navbar'
 import { SiteFooter } from '@/components/layout/site-footer'
 import { DestinationsGrid, DestinationsHero } from '@/features/destinations'
+import { createMetadata } from '@/lib/seo/create-metadata'
 
-export const metadata: Metadata = {
-  title: 'Destinations | Ethio Origins Tours',
+export const metadata: Metadata = createMetadata({
+  title: 'Ethiopia Travel Destinations & Places to Visit',
   description:
-    'Explore dedicated Ethiopian destination pages for historic routes, Omo Valley, Danakil, Bale Mountains, Wonchi, Awash, and the Rift Valley.',
-}
+    "Discover Ethiopia's leading travel destinations, including Lalibela, Omo Valley, Danakil Depression, Bale Mountains, Wonchi, Awash and the Rift Valley.",
+  canonicalPath: '/destinations',
+  primaryKeyword: 'Ethiopia Travel Destinations',
+  secondaryKeywords: [
+    'Places to Visit in Ethiopia',
+    'Explore Ethiopia',
+    'Ethiopia Sightseeing Destinations',
+    'Best Ethiopia Destinations',
+  ],
+  ogImage: '/images/hero.png',
+  ogImageAlt: 'Ethiopian highland travel destination landscape',
+})
 
 export default function DestinationsPage() {
   return (

@@ -26,9 +26,9 @@ export function TourDetailContent({ tour }: { tour: Tour }) {
               <p className="font-sans text-xs uppercase tracking-luxe text-gold">
                 {tour.duration} Private Journey
               </p>
-              <h1 className="mt-4 text-balance font-serif text-4xl font-medium leading-tight text-foreground md:text-6xl">
+              <h2 className="mt-4 text-balance font-serif text-4xl font-medium leading-tight text-foreground md:text-6xl">
                 {tour.title}
-              </h1>
+              </h2>
               <p className="mt-6 max-w-3xl font-sans text-base font-light leading-relaxed text-muted-foreground md:text-lg">
                 {tour.intro}
               </p>

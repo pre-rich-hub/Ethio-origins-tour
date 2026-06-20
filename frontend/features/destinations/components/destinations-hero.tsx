@@ -23,7 +23,7 @@ export function DestinationsHero() {
             Dedicated Destinations
           </p>
           <h1 className="mt-5 text-balance font-serif text-4xl font-medium leading-[1.02] sm:text-6xl md:text-7xl">
-            Choose the Ethiopia you want to feel.
+            Explore Ethiopia&apos;s Top Travel Destinations
           </h1>
           <p className="mt-7 max-w-2xl text-pretty font-sans text-base font-light leading-relaxed text-cream/82 md:text-lg">
             Every destination below opens its own dedicated page with a

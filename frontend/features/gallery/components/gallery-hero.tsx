@@ -31,7 +31,7 @@ export function GalleryHero() {
               A Visual Diary
             </p>
             <h1 className="mt-5 text-balance font-serif text-6xl font-medium leading-[0.88] text-cream sm:text-7xl md:text-8xl">
-              Moments That Define Ethiopia
+              Discover Ethiopia Through Our Gallery
             </h1>
             <p className="mt-7 max-w-2xl text-pretty font-sans text-base font-light leading-relaxed text-cream/84 md:text-lg">
               A cinematic collection of landscapes, traditions, wildlife,

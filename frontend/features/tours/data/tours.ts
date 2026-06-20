@@ -67,6 +67,23 @@ export const tours = [
     ],
     journeyMap:
       'Addis Ababa - Jinka - Turmi - Omo Valley - Arba Minch - Dorze Village - Hawassa - Abijata Shalla Lakes National Park',
+    destinationSlugs: ['omo-valley-cultures', 'bale-mountains'],
+    categorySlugs: ['cultural-tours', 'nature-adventure-tours', 'wildlife-tours'],
+    imageAlt: 'Omo Valley cultural and nature journey in southern Ethiopia',
+    seo: {
+      title: '13-Day Southern Ethiopia Cultural Tour',
+      description:
+        'Explore southern Ethiopia on a thirteen-day cultural and nature journey featuring Omo Valley communities, landscapes and guided regional experiences.',
+      canonicalPath: '/tours/13-days-southern-ethiopia-cultural-nature-adventure',
+      primaryKeyword: '13 Day Southern Ethiopia Tour',
+      secondaryKeywords: [
+        'Southern Ethiopia Cultural Tour',
+        'Omo Valley Tour Package',
+        'Southern Ethiopia Adventure',
+      ],
+      ogImage: '/images/client/custom/omo-valley.jpg',
+      ogImageAlt: 'Omo Valley cultural journey in southern Ethiopia',
+    },
   },
   {
     id: 2,
@@ -135,6 +152,23 @@ export const tours = [
     ],
     journeyMap:
       'Addis Ababa - Lalibela - Gondar - Axum - Bahir Dar - Addis Ababa',
+    destinationSlugs: ['lalibela-and-the-north'],
+    categorySlugs: ['historical-tours', 'cultural-tours'],
+    imageAlt: 'Lalibela historic church route in northern Ethiopia',
+    seo: {
+      title: '8-Day Historic Northern Ethiopia Route',
+      description:
+        "Discover Ethiopia's historic northern route on an eight-day guided journey through Lalibela, Gondar, Axum, Bahir Dar and sacred heritage sites.",
+      canonicalPath: '/tours/8-days-historic-northern-route',
+      primaryKeyword: 'Northern Ethiopia Tour',
+      secondaryKeywords: [
+        'Ethiopia Historical Tours',
+        'Lalibela Historical Tours',
+        'Ethiopia Heritage Tours',
+      ],
+      ogImage: '/images/client/custom/lalibela.jpg',
+      ogImageAlt: 'Lalibela heritage site in northern Ethiopia',
+    },
   },
   {
     id: 3,
@@ -202,6 +236,23 @@ export const tours = [
       },
     ],
     journeyMap: 'Gondar - Debark - Simien Mountains - Gondar',
+    destinationSlugs: ['lalibela-and-the-north'],
+    categorySlugs: ['trekking-hiking-tours', 'nature-adventure-tours', 'wildlife-tours'],
+    imageAlt: 'Simien Mountains trekking landscape in Ethiopia',
+    seo: {
+      title: '6-Day Simien Mountains Trekking Tour',
+      description:
+        'Trek through the Simien Mountains on a six-day guided hiking tour featuring dramatic escarpments, highland routes and endemic wildlife.',
+      canonicalPath: '/tours/6-days-simien-mountains-trekking',
+      primaryKeyword: 'Simien Mountains Trekking Tour',
+      secondaryKeywords: [
+        'Simien Mountains Hiking Tour',
+        'Ethiopia Trekking Tours',
+        'Simien Trekking Package',
+      ],
+      ogImage: '/images/exp-simien.png',
+      ogImageAlt: 'Simien Mountains trekking landscape',
+    },
   },
   {
     id: 4,
@@ -269,6 +320,24 @@ export const tours = [
       },
     ],
     journeyMap: 'Mekelle - Berhale - Salt Flats - Dallol - Mekelle',
+    destinationSlugs: ['danakil-depression'],
+    categorySlugs: ['nature-adventure-tours', 'photography-tours'],
+    imageAlt: 'Danakil Depression expedition landscape in Ethiopia',
+    seo: {
+      title: '5-Day Danakil Depression Tour',
+      description:
+        'Explore the Danakil Depression on a five-day guided tour featuring volcanic landscapes, salt flats, Dallol and Afar desert experiences.',
+      canonicalPath: '/tours/5-days-danakil-depression-expedition',
+      primaryKeyword: '5 Day Danakil Depression Tour',
+      secondaryKeywords: [
+        'Danakil Tour Package',
+        'Afar Danakil Tour',
+        'Erta Ale Tour',
+        'Danakil Adventure Tour',
+      ],
+      ogImage: '/images/client/custom/dankil-depression.jpg',
+      ogImageAlt: 'Danakil Depression volcanic desert landscape',
+    },
   },
   {
     id: 5,
@@ -336,6 +405,23 @@ export const tours = [
       },
     ],
     journeyMap: 'Addis Ababa - Dinsho - Sanetti Plateau - Harenna Forest - Addis Ababa',
+    destinationSlugs: ['bale-mountains'],
+    categorySlugs: ['wildlife-tours', 'trekking-hiking-tours', 'nature-adventure-tours'],
+    imageAlt: 'Bale Mountains wildlife safari landscape',
+    seo: {
+      title: '7-Day Bale Mountains Wildlife Safari',
+      description:
+        'Explore Bale Mountains on a seven-day wildlife safari featuring highland scenery, endemic wildlife, forest walks and nature experiences.',
+      canonicalPath: '/tours/7-days-bale-mountains-wildlife-safari',
+      primaryKeyword: 'Bale Mountains Wildlife Tour',
+      secondaryKeywords: [
+        'Bale Mountains Tour Package',
+        'Bale Mountains Trekking Tour',
+        'Ethiopia Nature Tours',
+      ],
+      ogImage: '/images/exp-bale.png',
+      ogImageAlt: 'Bale Mountains highland wildlife route',
+    },
   },
   {
     id: 6,
@@ -403,6 +489,23 @@ export const tours = [
       },
     ],
     journeyMap: 'Addis Ababa - Ziway - Langano - Hawassa - Addis Ababa',
+    destinationSlugs: ['awash-and-rift-valley'],
+    categorySlugs: ['nature-adventure-tours', 'wildlife-tours', 'private-customized-tours'],
+    imageAlt: 'Rift Valley lakes retreat in Ethiopia',
+    seo: {
+      title: '4-Day Rift Valley Lakes Retreat',
+      description:
+        'Enjoy a four-day Rift Valley lakes retreat with birdlife, lakeside stays, Hawassa market visits and relaxed private guiding from Addis Ababa.',
+      canonicalPath: '/tours/4-days-rift-valley-lakes-retreat',
+      primaryKeyword: 'Rift Valley Ethiopia Tour',
+      secondaryKeywords: [
+        'Ethiopia Nature Tours',
+        'Hawassa Tours',
+        'Ethiopia Wildlife Tours',
+      ],
+      ogImage: '/images/exp-rift.png',
+      ogImageAlt: 'Rift Valley lake landscape in Ethiopia',
+    },
   },
   {
     id: 7,
@@ -470,6 +573,23 @@ export const tours = [
       },
     ],
     journeyMap: 'Bole - National Museum - Merkato - Entoto - Cultural Dinner',
+    destinationSlugs: [],
+    categorySlugs: ['city-tours', 'cultural-tours'],
+    imageAlt: 'Addis Ababa market and cultural city tour',
+    seo: {
+      title: '3-Day Addis Ababa City Discovery Tour',
+      description:
+        'Discover Addis Ababa through a three-day guided city tour featuring museums, markets, landmarks, local food, coffee and cultural experiences.',
+      canonicalPath: '/tours/3-days-addis-ababa-cultural-city-break',
+      primaryKeyword: '3 Day Addis Ababa City Tour',
+      secondaryKeywords: [
+        'Addis Ababa Tour Package',
+        'Addis Ababa Sightseeing Tour',
+        'Addis Ababa Guided Tour',
+      ],
+      ogImage: '/images/gallery-market.png',
+      ogImageAlt: 'Addis Ababa market and city culture',
+    },
   },
   {
     id: 8,
@@ -537,6 +657,23 @@ export const tours = [
       },
     ],
     journeyMap: 'Addis Ababa - Jimma - Kaffa Highlands - Addis Ababa',
+    destinationSlugs: [],
+    categorySlugs: ['coffee-tours', 'cultural-tours', 'private-customized-tours'],
+    imageAlt: 'Traditional Ethiopian coffee ceremony and highland route',
+    seo: {
+      title: '9-Day Ethiopian Coffee Origin Tour',
+      description:
+        "Experience Ethiopia's coffee heritage on a nine-day guided tour featuring highland coffee regions, ceremonies and cultural encounters.",
+      canonicalPath: '/tours/9-days-coffee-heritage-and-highlands',
+      primaryKeyword: 'Ethiopia Coffee Tour',
+      secondaryKeywords: [
+        'Ethiopia Coffee Tour Package',
+        'Ethiopian Coffee Origin Tour',
+        'Ethiopia Coffee Experiences',
+      ],
+      ogImage: '/images/gallery-coffee.png',
+      ogImageAlt: 'Traditional Ethiopian coffee ceremony',
+    },
   },
   {
     id: 9,
@@ -604,6 +741,23 @@ export const tours = [
       },
     ],
     journeyMap: 'Addis Ababa - Jinka - Turmi - Omo Valley - Arba Minch',
+    destinationSlugs: ['omo-valley-cultures'],
+    categorySlugs: ['photography-tours', 'cultural-tours'],
+    imageAlt: 'Omo Valley photography expedition in southern Ethiopia',
+    seo: {
+      title: '10-Day Omo Valley Photography Expedition',
+      description:
+        'Plan a ten-day Omo Valley photography expedition with consent-first cultural visits, market timing, landscapes and private guiding.',
+      canonicalPath: '/tours/10-days-omo-valley-photography-expedition',
+      primaryKeyword: 'Omo Valley Photography Tour',
+      secondaryKeywords: [
+        'Ethiopia Photography Tours',
+        'Omo Valley Cultural Tours',
+        'Southern Ethiopia Tours',
+      ],
+      ogImage: '/images/exp-omo.png',
+      ogImageAlt: 'Omo Valley cultural photography route',
+    },
   },
   {
     id: 10,
@@ -671,6 +825,23 @@ export const tours = [
       },
     ],
     journeyMap: 'Addis Ababa - Awash National Park - Hot Springs - Addis Ababa',
+    destinationSlugs: ['awash-and-rift-valley'],
+    categorySlugs: ['wildlife-tours', 'nature-adventure-tours'],
+    imageAlt: 'Awash wildlife and hot springs tour route',
+    seo: {
+      title: '5-Day Awash Wildlife & Hot Springs Tour',
+      description:
+        'Explore Awash National Park and Rift Valley hot springs on a five-day guided wildlife tour with private pacing from Addis Ababa.',
+      canonicalPath: '/tours/5-days-awash-wildlife-and-hot-springs',
+      primaryKeyword: 'Awash Wildlife Tour',
+      secondaryKeywords: [
+        'Ethiopia Wildlife Tours',
+        'Awash National Park Tours',
+        'Rift Valley Ethiopia Tours',
+      ],
+      ogImage: '/images/dest-awash.png',
+      ogImageAlt: 'Awash National Park and Rift Valley landscape',
+    },
   },
   {
     id: 11,
@@ -738,5 +909,22 @@ export const tours = [
       },
     ],
     journeyMap: 'Addis Ababa - Northern Heritage - Rift Valley - Optional Southern Extension',
+    destinationSlugs: ['lalibela-and-the-north', 'omo-valley-cultures', 'bale-mountains'],
+    categorySlugs: ['historical-tours', 'cultural-tours', 'private-customized-tours'],
+    imageAlt: 'Ethiopia grand circuit travel route',
+    seo: {
+      title: '12-Day Ethiopia Grand Circuit Tour',
+      description:
+        "Discover Ethiopia's heritage, landscapes and cultural regions on a twelve-day private grand circuit with flexible northern and southern extensions.",
+      canonicalPath: '/tours/12-days-ethiopia-grand-circuit',
+      primaryKeyword: 'Ethiopia Grand Circuit Tour',
+      secondaryKeywords: [
+        'Ethiopia Tour Packages',
+        'Northern Ethiopia Tour',
+        'Private Tours Ethiopia',
+      ],
+      ogImage: '/images/hero.png',
+      ogImageAlt: 'Ethiopian landscape for a grand circuit journey',
+    },
   },
 ]
