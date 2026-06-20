@@ -6,12 +6,23 @@ import {
   ContactHero,
   ContactPlanningSteps,
 } from '@/features/contact'
+import { createMetadata } from '@/lib/seo/create-metadata'
 
-export const metadata: Metadata = {
-  title: 'Contact Us | Ethio Origins Tours',
+export const metadata: Metadata = createMetadata({
+  title: 'Contact Us to Plan Your Ethiopia Tour',
   description:
-    'Plan a private Ethiopian journey with Ethio Origins Tours. Contact our travel designers for bespoke cultural, nature, and heritage itineraries.',
-}
+    'Contact Ethio Origins Tour to plan a private, group or customized Ethiopia journey. Share your dates, interests and preferred destinations with our local team.',
+  canonicalPath: '/contact',
+  primaryKeyword: 'Contact Ethio Origins Tour',
+  secondaryKeywords: [
+    'Ethiopia Tour Booking',
+    'Plan an Ethiopia Tour',
+    'Ethiopia Travel Planner',
+    'Custom Ethiopia Tour Inquiry',
+  ],
+  ogImage: '/images/cta.png',
+  ogImageAlt: 'Ethiopian mountain landscape for private trip planning',
+})
 
 export default function ContactPage() {
   return (
