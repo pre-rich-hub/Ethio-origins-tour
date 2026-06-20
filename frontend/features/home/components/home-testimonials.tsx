@@ -2,7 +2,7 @@
 
 import { motion } from 'framer-motion'
 import { Quote } from 'lucide-react'
-import { SectionHeading } from './section-heading'
+import { SectionHeading } from '@/components/shared/section-heading'
 
 const testimonials = [
   {
@@ -31,7 +31,7 @@ const testimonials = [
   },
 ]
 
-export function Testimonials() {
+export function HomeTestimonials() {
   return (
     <section className="bg-sand py-20 md:py-28">
       <div className="mx-auto max-w-7xl px-6">

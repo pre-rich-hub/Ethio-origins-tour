@@ -1,0 +1,8 @@
+export { RelatedTours } from './components/related-tours'
+export { TourDetailContent } from './components/tour-detail-content'
+export { TourDetailHero } from './components/tour-detail-hero'
+export { ToursGrid } from './components/tours-grid'
+export { ToursHero } from './components/tours-hero'
+export { tours } from './data/tours'
+export { getTour } from './services/get-tour'
+export type { Tour } from './types/tour'

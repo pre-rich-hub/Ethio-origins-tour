@@ -1,6 +1,6 @@
 'use client'
 
-import { Reveal } from './reveal'
+import { Reveal } from '@/components/shared/reveal'
 
 const stats = [
   { value: '2,000+', label: 'Travelers Hosted' },

@@ -1,15 +1,4 @@
-export type Destination = {
-  slug: string
-  name: string
-  place: string
-  duration: string
-  description: string
-  intro: string
-  image: string
-  highlights: string[]
-  bestFor: string
-  itinerary: string[]
-}
+import type { Destination } from '../types/destination'
 
 export const destinations: Destination[] = [
   {
@@ -127,7 +116,3 @@ export const destinations: Destination[] = [
     itinerary: ['Drive to Awash', 'Game drive and falls', 'Hot springs', 'Rift Valley return'],
   },
 ]
-
-export function getDestination(slug: string) {
-  return destinations.find((destination) => destination.slug === slug)
-}

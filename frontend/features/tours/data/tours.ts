@@ -740,9 +740,3 @@ export const tours = [
     journeyMap: 'Addis Ababa - Northern Heritage - Rift Valley - Optional Southern Extension',
   },
 ]
-
-export type Tour = (typeof tours)[number]
-
-export function getTour(slug: string) {
-  return tours.find((tour) => tour.slug === slug)
-}

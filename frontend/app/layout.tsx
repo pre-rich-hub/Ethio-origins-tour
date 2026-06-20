@@ -1,20 +1,6 @@
 import { Analytics } from '@vercel/analytics/next'
 import type { Metadata, Viewport } from 'next'
-import { Cormorant_Garamond, Plus_Jakarta_Sans } from 'next/font/google'
 import './globals.css'
-
-const cormorant = Cormorant_Garamond({
-  variable: '--font-cormorant',
-  subsets: ['latin'],
-  weight: ['400', '500', '600', '700'],
-  style: ['normal', 'italic'],
-})
-
-const jakarta = Plus_Jakarta_Sans({
-  variable: '--font-jakarta',
-  subsets: ['latin'],
-  weight: ['300', '400', '500', '600'],
-})
 
 export const metadata: Metadata = {
   title: "Ethio Origins Tours — Journey Through Ethiopia's Living Heritage",
@@ -33,10 +19,7 @@ export default function RootLayout({
   children: React.ReactNode
 }>) {
   return (
-    <html
-      lang="en"
-      className={`${cormorant.variable} ${jakarta.variable} bg-background`}
-    >
+    <html lang="en" className="bg-background">
       <body className="font-sans antialiased">
         {children}
         {process.env.NODE_ENV === 'production' && <Analytics />}

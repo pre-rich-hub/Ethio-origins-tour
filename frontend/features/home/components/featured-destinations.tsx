@@ -2,10 +2,10 @@
 
 import { motion } from 'framer-motion'
 import Link from 'next/link'
-import { destinations } from '@/lib/destinations'
-import { SectionHeading } from './section-heading'
+import { SectionHeading } from '@/components/shared/section-heading'
+import { destinations } from '@/features/destinations'
 
-export function Destinations() {
+export function FeaturedDestinations() {
   return (
     <section
       id="destinations"
