@@ -2,14 +2,9 @@ import Link from 'next/link'
 import type { Metadata } from 'next'
 import { Navbar } from '@/components/layout/navbar'
 import { SiteFooter } from '@/components/layout/site-footer'
+import { createNotFoundMetadata } from '@/lib/seo/create-metadata'
 
-export const metadata: Metadata = {
-  title: 'Page Not Found',
-  robots: {
-    index: false,
-    follow: false,
-  },
-}
+export const metadata: Metadata = createNotFoundMetadata()
 
 export default function NotFound() {
   return (

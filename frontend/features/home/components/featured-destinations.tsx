@@ -20,12 +20,12 @@ export function FeaturedDestinations() {
         />
 
         <div className="mt-6 text-center">
-          <a
+          <Link
             href="/destinations"
             className="inline-flex max-w-full items-center justify-center border border-cream/30 px-4 py-3 text-center font-sans text-[0.68rem] uppercase tracking-[0.16em] text-cream transition-colors hover:border-gold hover:text-gold sm:px-5 sm:text-xs sm:tracking-widest"
           >
             Explore Destinations
-          </a>
+          </Link>
         </div>
 
         <div className="mt-10 flex snap-x snap-mandatory gap-4 overflow-x-auto pb-6 [scrollbar-width:thin] [scrollbar-color:rgba(250,246,236,0.35)_transparent] md:mt-14 md:gap-6">

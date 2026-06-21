@@ -16,7 +16,10 @@ import {
   getTour,
   tours,
 } from '@/features/tours'
-import { createMetadata } from '@/lib/seo/create-metadata'
+import {
+  createMetadata,
+  createNotFoundMetadata,
+} from '@/lib/seo/create-metadata'
 import { createBreadcrumbSchema, createTourSchema } from '@/lib/seo/schemas'
 
 type TourPageProps = {
@@ -40,14 +43,7 @@ export async function generateMetadata({
   const category = getTourCategory(slug)
 
   if (!tour && !category) {
-    return {
-      title: 'Tour Not Found',
-      description: 'The requested Ethiopia tour page could not be found.',
-      robots: {
-        index: false,
-        follow: false,
-      },
-    }
+    return createNotFoundMetadata('Tour Not Found')
   }
 
   return createMetadata((tour || category)!.seo)

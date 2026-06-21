@@ -1,3 +1,4 @@
+import Link from 'next/link'
 import { ArrowLeft } from 'lucide-react'
 
 export function DestinationsHero() {
@@ -11,13 +12,13 @@ export function DestinationsHero() {
       <div className="absolute inset-0 z-0 bg-[linear-gradient(90deg,rgba(18,27,21,0.9)_0%,rgba(47,36,26,0.72)_48%,rgba(18,27,21,0.45)_100%)]" />
       <div className="absolute inset-x-0 bottom-0 z-0 h-28 bg-gradient-to-t from-background to-transparent" />
       <div className="relative z-10 mx-auto max-w-7xl px-4 pb-16 sm:px-6 md:px-8 md:pb-28">
-        <a
+        <Link
           href="/"
           className="inline-flex items-center gap-2 font-sans text-[0.68rem] uppercase tracking-[0.16em] text-cream/75 transition-colors hover:text-gold sm:text-xs sm:tracking-widest"
         >
           <ArrowLeft className="size-4" />
           Back Home
-        </a>
+        </Link>
         <div className="mt-10 max-w-4xl md:mt-14">
           <p className="font-sans text-xs uppercase tracking-[0.18em] text-gold sm:tracking-luxe md:text-sm">
             Dedicated Destinations

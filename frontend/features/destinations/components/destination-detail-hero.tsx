@@ -1,3 +1,5 @@
+import Image from 'next/image'
+import Link from 'next/link'
 import {
   ArrowLeft,
   ArrowRight,
@@ -15,22 +17,25 @@ export function DestinationDetailHero({
 }) {
   return (
     <section className="relative isolate min-h-screen overflow-hidden bg-coffee pt-28 text-cream">
-      <img
+      <Image
         src={destination.image}
         alt={destination.imageAlt}
+        fill
+        priority
+        sizes="100vw"
         className="absolute inset-0 z-0 size-full scale-105 object-cover"
       />
       <div className="absolute inset-0 z-0 bg-[linear-gradient(90deg,rgba(12,17,14,0.96)_0%,rgba(29,25,20,0.76)_48%,rgba(12,17,14,0.3)_100%)]" />
       <div className="absolute inset-x-0 bottom-0 z-0 h-1/2 bg-gradient-to-t from-background via-background/45 to-transparent" />
 
       <div className="relative z-10 mx-auto flex min-h-[calc(100vh-7rem)] max-w-7xl flex-col justify-end px-4 pb-10 sm:px-6 md:px-8 md:pb-16">
-        <a
+        <Link
           href="/destinations"
           className="mb-auto inline-flex w-fit items-center gap-2 font-sans text-[0.68rem] uppercase tracking-[0.16em] text-cream/75 transition-colors hover:text-gold sm:text-xs sm:tracking-widest"
         >
           <ArrowLeft className="size-4" />
           Back to Destinations
-        </a>
+        </Link>
 
         <div className="grid gap-8 lg:grid-cols-[minmax(0,1fr)_390px] lg:items-end">
           <div className="max-w-5xl">

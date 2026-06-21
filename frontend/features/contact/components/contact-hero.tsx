@@ -1,3 +1,4 @@
+import Link from 'next/link'
 import { ArrowLeft } from 'lucide-react'
 
 export function ContactHero() {
@@ -13,13 +14,13 @@ export function ContactHero() {
       <div className="absolute inset-x-0 bottom-0 z-0 h-44 bg-gradient-to-t from-background to-transparent" />
 
       <div className="relative z-10 mx-auto w-full max-w-7xl px-6 pb-16 md:px-8 md:pb-20">
-        <a
+        <Link
           href="/"
           className="inline-flex items-center gap-2 font-sans text-xs uppercase tracking-widest text-cream/75 transition-colors hover:text-gold"
         >
           <ArrowLeft className="size-4" />
           Back Home
-        </a>
+        </Link>
         <div className="mt-10 grid gap-8 lg:grid-cols-[minmax(0,1fr)_360px] lg:items-end">
           <div className="max-w-4xl">
             <p className="font-sans text-xs uppercase tracking-luxe text-gold md:text-sm">

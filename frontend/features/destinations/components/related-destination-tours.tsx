@@ -1,3 +1,4 @@
+import Image from 'next/image'
 import Link from 'next/link'
 import { ArrowRight } from 'lucide-react'
 import { tours } from '@/features/tours/data/tours'
@@ -44,9 +45,11 @@ export function RelatedDestinationTours({
               className="group overflow-hidden border border-border bg-card shadow-xl shadow-coffee/5 transition-transform duration-500 hover:-translate-y-1"
             >
               <div className="relative aspect-[4/3] overflow-hidden bg-coffee">
-                <img
+                <Image
                   src={tour.image}
                   alt={tour.imageAlt}
+                  fill
+                  sizes="(min-width: 768px) 33vw, 100vw"
                   className="size-full object-cover transition-transform duration-[1.2s] group-hover:scale-105"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/12 to-transparent" />

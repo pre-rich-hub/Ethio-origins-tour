@@ -1,7 +1,7 @@
 export const tours = [
   {
     id: 1,
-    slug: '13-days-southern-ethiopia-cultural-nature-adventure',
+    slug: '13-day-southern-ethiopia-cultural-tour',
     title: '13 Days Southern Ethiopia Cultural & Nature Adventure',
     image: '/images/client/custom/omo-valley.jpg',
     gallery: [
@@ -74,7 +74,7 @@ export const tours = [
       title: '13-Day Southern Ethiopia Cultural Tour',
       description:
         'Explore southern Ethiopia on a thirteen-day cultural and nature journey featuring Omo Valley communities, landscapes and guided regional experiences.',
-      canonicalPath: '/tours/13-days-southern-ethiopia-cultural-nature-adventure',
+      canonicalPath: '/tours/13-day-southern-ethiopia-cultural-tour',
       primaryKeyword: '13 Day Southern Ethiopia Tour',
       secondaryKeywords: [
         'Southern Ethiopia Cultural Tour',
@@ -87,7 +87,7 @@ export const tours = [
   },
   {
     id: 2,
-    slug: '8-days-historic-northern-route',
+    slug: '8-day-historic-northern-route-tour',
     title: '8 Days Historic Northern Route',
     image: '/images/client/custom/lalibela.jpg',
     gallery: [
@@ -159,7 +159,7 @@ export const tours = [
       title: '8-Day Historic Northern Ethiopia Route',
       description:
         "Discover Ethiopia's historic northern route on an eight-day guided journey through Lalibela, Gondar, Axum, Bahir Dar and sacred heritage sites.",
-      canonicalPath: '/tours/8-days-historic-northern-route',
+      canonicalPath: '/tours/8-day-historic-northern-route-tour',
       primaryKeyword: 'Northern Ethiopia Tour',
       secondaryKeywords: [
         'Ethiopia Historical Tours',
@@ -172,7 +172,7 @@ export const tours = [
   },
   {
     id: 3,
-    slug: '6-days-simien-mountains-trekking',
+    slug: '6-day-simien-mountains-trekking-tour',
     title: '6 Days Simien Mountains Trekking',
     image: '/images/exp-simien.png',
     gallery: [
@@ -243,7 +243,7 @@ export const tours = [
       title: '6-Day Simien Mountains Trekking Tour',
       description:
         'Trek through the Simien Mountains on a six-day guided hiking tour featuring dramatic escarpments, highland routes and endemic wildlife.',
-      canonicalPath: '/tours/6-days-simien-mountains-trekking',
+      canonicalPath: '/tours/6-day-simien-mountains-trekking-tour',
       primaryKeyword: 'Simien Mountains Trekking Tour',
       secondaryKeywords: [
         'Simien Mountains Hiking Tour',
@@ -256,7 +256,7 @@ export const tours = [
   },
   {
     id: 4,
-    slug: '5-days-danakil-depression-expedition',
+    slug: '5-day-danakil-depression-tour',
     title: '5 Days Danakil Depression Expedition',
     image: '/images/client/custom/dankil-depression.jpg',
     gallery: [
@@ -327,7 +327,7 @@ export const tours = [
       title: '5-Day Danakil Depression Tour',
       description:
         'Explore the Danakil Depression on a five-day guided tour featuring volcanic landscapes, salt flats, Dallol and Afar desert experiences.',
-      canonicalPath: '/tours/5-days-danakil-depression-expedition',
+      canonicalPath: '/tours/5-day-danakil-depression-tour',
       primaryKeyword: '5 Day Danakil Depression Tour',
       secondaryKeywords: [
         'Danakil Tour Package',
@@ -341,7 +341,7 @@ export const tours = [
   },
   {
     id: 5,
-    slug: '7-days-bale-mountains-wildlife-safari',
+    slug: '7-day-bale-mountains-wildlife-safari',
     title: '7 Days Bale Mountains Wildlife Safari',
     image: '/images/exp-bale.png',
     gallery: [
@@ -412,7 +412,7 @@ export const tours = [
       title: '7-Day Bale Mountains Wildlife Safari',
       description:
         'Explore Bale Mountains on a seven-day wildlife safari featuring highland scenery, endemic wildlife, forest walks and nature experiences.',
-      canonicalPath: '/tours/7-days-bale-mountains-wildlife-safari',
+      canonicalPath: '/tours/7-day-bale-mountains-wildlife-safari',
       primaryKeyword: 'Bale Mountains Wildlife Tour',
       secondaryKeywords: [
         'Bale Mountains Tour Package',
@@ -425,7 +425,7 @@ export const tours = [
   },
   {
     id: 6,
-    slug: '4-days-rift-valley-lakes-retreat',
+    slug: '4-day-rift-valley-lakes-retreat',
     title: '4 Days Rift Valley Lakes Retreat',
     image: '/images/exp-rift.png',
     gallery: [
@@ -496,7 +496,7 @@ export const tours = [
       title: '4-Day Rift Valley Lakes Retreat',
       description:
         'Enjoy a four-day Rift Valley lakes retreat with birdlife, lakeside stays, Hawassa market visits and relaxed private guiding from Addis Ababa.',
-      canonicalPath: '/tours/4-days-rift-valley-lakes-retreat',
+      canonicalPath: '/tours/4-day-rift-valley-lakes-retreat',
       primaryKeyword: 'Rift Valley Ethiopia Tour',
       secondaryKeywords: [
         'Ethiopia Nature Tours',
@@ -509,7 +509,7 @@ export const tours = [
   },
   {
     id: 7,
-    slug: '3-days-addis-ababa-cultural-city-break',
+    slug: '3-day-addis-ababa-city-tour',
     title: '3 Days Addis Ababa Cultural City Break',
     image: '/images/gallery-market.png',
     gallery: [
@@ -580,7 +580,7 @@ export const tours = [
       title: '3-Day Addis Ababa City Discovery Tour',
       description:
         'Discover Addis Ababa through a three-day guided city tour featuring museums, markets, landmarks, local food, coffee and cultural experiences.',
-      canonicalPath: '/tours/3-days-addis-ababa-cultural-city-break',
+      canonicalPath: '/tours/3-day-addis-ababa-city-tour',
       primaryKeyword: '3 Day Addis Ababa City Tour',
       secondaryKeywords: [
         'Addis Ababa Tour Package',
@@ -593,7 +593,7 @@ export const tours = [
   },
   {
     id: 8,
-    slug: '9-days-coffee-heritage-and-highlands',
+    slug: '9-day-ethiopian-coffee-origin-tour',
     title: '9 Days Coffee Heritage & Highlands',
     image: '/images/gallery-coffee.png',
     gallery: [
@@ -664,7 +664,7 @@ export const tours = [
       title: '9-Day Ethiopian Coffee Origin Tour',
       description:
         "Experience Ethiopia's coffee heritage on a nine-day guided tour featuring highland coffee regions, ceremonies and cultural encounters.",
-      canonicalPath: '/tours/9-days-coffee-heritage-and-highlands',
+      canonicalPath: '/tours/9-day-ethiopian-coffee-origin-tour',
       primaryKeyword: 'Ethiopia Coffee Tour',
       secondaryKeywords: [
         'Ethiopia Coffee Tour Package',
@@ -677,7 +677,7 @@ export const tours = [
   },
   {
     id: 9,
-    slug: '10-days-omo-valley-photography-expedition',
+    slug: '10-day-omo-valley-photography-tour',
     title: '10 Days Omo Valley Photography Expedition',
     image: '/images/exp-omo.png',
     gallery: [
@@ -748,7 +748,7 @@ export const tours = [
       title: '10-Day Omo Valley Photography Expedition',
       description:
         'Plan a ten-day Omo Valley photography expedition with consent-first cultural visits, market timing, landscapes and private guiding.',
-      canonicalPath: '/tours/10-days-omo-valley-photography-expedition',
+      canonicalPath: '/tours/10-day-omo-valley-photography-tour',
       primaryKeyword: 'Omo Valley Photography Tour',
       secondaryKeywords: [
         'Ethiopia Photography Tours',
@@ -761,7 +761,7 @@ export const tours = [
   },
   {
     id: 10,
-    slug: '5-days-awash-wildlife-and-hot-springs',
+    slug: '5-day-awash-wildlife-hot-springs-tour',
     title: '5 Days Awash Wildlife & Hot Springs',
     image: '/images/dest-awash.png',
     gallery: [
@@ -832,7 +832,7 @@ export const tours = [
       title: '5-Day Awash Wildlife & Hot Springs Tour',
       description:
         'Explore Awash National Park and Rift Valley hot springs on a five-day guided wildlife tour with private pacing from Addis Ababa.',
-      canonicalPath: '/tours/5-days-awash-wildlife-and-hot-springs',
+      canonicalPath: '/tours/5-day-awash-wildlife-hot-springs-tour',
       primaryKeyword: 'Awash Wildlife Tour',
       secondaryKeywords: [
         'Ethiopia Wildlife Tours',
@@ -845,7 +845,7 @@ export const tours = [
   },
   {
     id: 11,
-    slug: '12-days-ethiopia-grand-circuit',
+    slug: '12-day-ethiopia-grand-circuit-tour',
     title: '12 Days Ethiopia Grand Circuit',
     image: '/images/hero.png',
     gallery: [
@@ -916,7 +916,7 @@ export const tours = [
       title: '12-Day Ethiopia Grand Circuit Tour',
       description:
         "Discover Ethiopia's heritage, landscapes and cultural regions on a twelve-day private grand circuit with flexible northern and southern extensions.",
-      canonicalPath: '/tours/12-days-ethiopia-grand-circuit',
+      canonicalPath: '/tours/12-day-ethiopia-grand-circuit-tour',
       primaryKeyword: 'Ethiopia Grand Circuit Tour',
       secondaryKeywords: [
         'Ethiopia Tour Packages',

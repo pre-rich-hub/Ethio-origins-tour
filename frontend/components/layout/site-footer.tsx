@@ -337,12 +337,12 @@ export function SiteFooter() {
             reserved.
           </p>
           <div className="flex gap-6">
-            <a href="#" className="font-sans text-xs text-cream/50 transition-colors hover:text-cream">
+            <span className="font-sans text-xs text-cream/50">
               Terms
-            </a>
-            <a href="#" className="font-sans text-xs text-cream/50 transition-colors hover:text-cream">
+            </span>
+            <span className="font-sans text-xs text-cream/50">
               Privacy
-            </a>
+            </span>
           </div>
         </div>
       </div>

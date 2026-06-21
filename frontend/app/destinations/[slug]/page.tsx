@@ -15,7 +15,10 @@ import {
   destinations,
   getDestination,
 } from '@/features/destinations'
-import { createMetadata } from '@/lib/seo/create-metadata'
+import {
+  createMetadata,
+  createNotFoundMetadata,
+} from '@/lib/seo/create-metadata'
 import {
   createBreadcrumbSchema,
   createDestinationSchema,
@@ -38,14 +41,7 @@ export async function generateMetadata({
   const destination = getDestination(slug)
 
   if (!destination) {
-    return {
-      title: 'Destination Not Found',
-      description: 'The requested Ethiopia destination page could not be found.',
-      robots: {
-        index: false,
-        follow: false,
-      },
-    }
+    return createNotFoundMetadata('Destination Not Found')
   }
 
   return createMetadata(destination.seo)
