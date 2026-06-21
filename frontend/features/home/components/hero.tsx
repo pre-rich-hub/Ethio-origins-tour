@@ -1,6 +1,7 @@
 'use client'
 
 import { motion, useReducedMotion, useScroll, useTransform } from 'framer-motion'
+import Link from 'next/link'
 import { useRef } from 'react'
 import { ArrowRight, ChevronDown } from 'lucide-react'
 
@@ -136,13 +137,13 @@ export function Hero() {
             transition={{ duration: 0.9, delay: 0.8 }}
             className="mt-8 flex flex-col justify-center gap-3 sm:mt-10 sm:flex-row sm:gap-4"
           >
-            <a
+            <Link
               href="/#experiences"
               className="inline-flex h-12 w-full items-center justify-center gap-2 rounded-sm bg-gold px-6 font-sans text-xs uppercase tracking-widest text-coffee transition-transform hover:-translate-y-0.5 sm:h-14 sm:w-auto sm:px-7 sm:text-sm"
             >
               Explore Tours
               <ArrowRight className="size-4" />
-            </a>
+            </Link>
             <a
               href="/contact"
               className="inline-flex h-12 w-full items-center justify-center rounded-sm border border-cream/55 px-6 font-sans text-xs uppercase tracking-widest text-cream backdrop-blur-sm transition-colors hover:bg-cream/10 sm:h-14 sm:w-auto sm:px-7 sm:text-sm"

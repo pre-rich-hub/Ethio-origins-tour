@@ -1,5 +1,6 @@
 'use client'
 
+import Link from 'next/link'
 import { useEffect, useState } from 'react'
 import { AnimatePresence, motion } from 'framer-motion'
 import { Check, ChevronDown, Globe2, Menu, X } from 'lucide-react'
@@ -81,14 +82,14 @@ export function Navbar() {
       }`}
     >
       <nav className="mx-auto flex max-w-7xl items-center justify-between px-5 py-4 md:px-8 md:py-5">
-        <a href="/#home" className="flex flex-col leading-none text-cream">
+        <Link href="/#home" className="flex flex-col leading-none text-cream">
           <span className="font-serif text-xl font-semibold tracking-wide md:text-2xl">
             Ethio Origins
           </span>
           <span className="font-sans text-[0.6rem] uppercase tracking-luxe text-gold">
             Tours
           </span>
-        </a>
+        </Link>
 
         <ul className="hidden items-center gap-8 lg:flex">
           {links.map((l) => (
@@ -205,7 +206,7 @@ export function Navbar() {
             className="fixed inset-0 z-50 flex flex-col bg-background text-foreground lg:hidden"
           >
             <div className="flex items-start justify-between px-5 py-6">
-              <a
+              <Link
                 href="/#home"
                 onClick={() => {
                   setOpen(false)
@@ -219,7 +220,7 @@ export function Navbar() {
                 <span className="font-sans text-[0.6rem] uppercase tracking-luxe text-gold">
                   Tour
                 </span>
-              </a>
+              </Link>
               <button
                 onClick={() => {
                   setOpen(false)

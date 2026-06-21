@@ -1,7 +1,6 @@
 import type { MetadataRoute } from 'next'
 import { destinations } from '@/features/destinations'
 import { tourCategories, tours } from '@/features/tours'
-import { siteConfig } from '@/lib/seo/site-config'
 import { absoluteUrl } from '@/lib/seo/urls'
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {

@@ -34,6 +34,7 @@ export function BlogPostsSection() {
                 <p className="mt-4 font-sans text-sm font-light leading-relaxed text-muted-foreground">
                   {post.excerpt}
                 </p>
+                {/* Temporary planning CTA until real article routes and bodies exist. */}
                 <Link
                   href="/contact"
                   className="mt-6 inline-flex items-center gap-2 font-sans text-xs font-bold uppercase tracking-widest text-forest transition-colors hover:text-gold"

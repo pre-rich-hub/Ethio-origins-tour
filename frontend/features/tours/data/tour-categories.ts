@@ -24,6 +24,8 @@ export const tourCategories: TourCategory[] = [
         'Omo Valley Cultural Tours',
         'Ethiopia Heritage Tours',
       ],
+      ogImage: '/images/exp-omo.png',
+      ogImageAlt: 'Omo Valley cultural travel experience',
     },
   },
   {
@@ -42,6 +44,8 @@ export const tourCategories: TourCategory[] = [
         'Historic Route Ethiopia',
         'Historical Tour Packages Ethiopia',
       ],
+      ogImage: '/images/client/custom/lalibela.jpg',
+      ogImageAlt: 'Lalibela heritage site in northern Ethiopia',
     },
   },
   {
@@ -60,6 +64,8 @@ export const tourCategories: TourCategory[] = [
         'Ethiopian Adventure Travel',
         'Explore Ethiopia Tours',
       ],
+      ogImage: '/images/exp-danakil.png',
+      ogImageAlt: 'Danakil Depression adventure landscape',
     },
   },
   {
@@ -78,6 +84,8 @@ export const tourCategories: TourCategory[] = [
         'Simien Mountains Trekking',
         'Bale Mountains Trekking',
       ],
+      ogImage: '/images/exp-simien.png',
+      ogImageAlt: 'Simien Mountains trekking landscape',
     },
   },
   {
@@ -96,6 +104,8 @@ export const tourCategories: TourCategory[] = [
         'Ethiopia Wildlife Safaris',
         'Endemic Wildlife Ethiopia',
       ],
+      ogImage: '/images/exp-bale.png',
+      ogImageAlt: 'Bale Mountains wildlife route',
     },
   },
   {
@@ -114,6 +124,8 @@ export const tourCategories: TourCategory[] = [
         'Ethiopian Coffee Origin Tour',
         'Ethiopia Coffee Experiences',
       ],
+      ogImage: '/images/gallery-coffee.png',
+      ogImageAlt: 'Traditional Ethiopian coffee ceremony',
     },
   },
   {
@@ -132,6 +144,8 @@ export const tourCategories: TourCategory[] = [
         'Omo Valley Photography Tours',
         'Ethiopia Landscape Photography Tours',
       ],
+      ogImage: '/images/exp-omo.png',
+      ogImageAlt: 'Omo Valley photography route',
     },
   },
   {
@@ -150,6 +164,8 @@ export const tourCategories: TourCategory[] = [
         'Addis Ababa City Tours',
         'Ethiopia Guided City Tours',
       ],
+      ogImage: '/images/gallery-market.png',
+      ogImageAlt: 'Addis Ababa market and city culture',
     },
   },
   {
@@ -169,6 +185,8 @@ export const tourCategories: TourCategory[] = [
         'Ethiopia Travel Planner',
         'Ethiopia Holiday Planner',
       ],
+      ogImage: '/images/custom.png',
+      ogImageAlt: 'Customized Ethiopia private journey',
     },
   },
 ]

@@ -1,3 +1,5 @@
+import Image from 'next/image'
+import Link from 'next/link'
 import { ArrowLeft, ArrowRight, Clock, MapPin, Users } from 'lucide-react'
 import type { Tour } from '../types/tour'
 
@@ -9,22 +11,25 @@ type TourDetailHeroProps = {
 export function TourDetailHero({ gallery, tour }: TourDetailHeroProps) {
   return (
     <section className="relative isolate overflow-hidden bg-coffee pt-28 text-cream md:pt-36">
-      <img
+      <Image
         src={tour.image}
         alt={tour.imageAlt}
+        fill
+        priority
+        sizes="100vw"
         className="absolute inset-0 z-0 size-full object-cover"
       />
       <div className="absolute inset-0 z-0 bg-[linear-gradient(90deg,rgba(12,18,15,0.96)_0%,rgba(24,55,43,0.84)_48%,rgba(0,0,0,0.32)_100%)]" />
       <div className="absolute inset-x-0 bottom-0 z-0 h-56 bg-gradient-to-t from-stone to-transparent" />
 
       <div className="relative z-10 mx-auto max-w-7xl px-4 pb-12 sm:px-6 md:px-8 md:pb-16">
-        <a
+        <Link
           href="/tours"
           className="inline-flex items-center gap-2 font-sans text-[0.68rem] uppercase tracking-[0.16em] text-cream/78 transition-colors hover:text-gold sm:text-xs sm:tracking-widest"
         >
           <ArrowLeft className="size-4" />
           Back to Tours
-        </a>
+        </Link>
 
         <div className="grid min-h-[620px] gap-10 py-14 lg:grid-cols-[minmax(0,1fr)_390px] lg:items-end lg:py-20">
           <div className="max-w-4xl">
@@ -83,9 +88,11 @@ export function TourDetailHero({ gallery, tour }: TourDetailHeroProps) {
                   key={image + index}
                   className="relative aspect-[4/3] overflow-hidden border border-cream/12 bg-black"
                 >
-                  <img
+                  <Image
                     src={image}
                     alt=""
+                    fill
+                    sizes="(min-width: 1024px) 180px, 50vw"
                     className="size-full object-cover transition-transform duration-700 hover:scale-105"
                   />
                 </figure>
