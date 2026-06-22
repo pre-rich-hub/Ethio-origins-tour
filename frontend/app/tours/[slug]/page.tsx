@@ -1,5 +1,5 @@
 import type { Metadata } from 'next'
-import { notFound } from 'next/navigation'
+import { notFound, permanentRedirect } from 'next/navigation'
 import { Navbar } from '@/components/layout/navbar'
 import { SiteFooter } from '@/components/layout/site-footer'
 import { Breadcrumbs } from '@/components/seo/breadcrumbs'
@@ -28,6 +28,17 @@ type TourPageProps = {
   }>
 }
 
+const tourRedirects: Record<string, string> = {
+  '13-days-southern-ethiopia-cultural-nature-adventure': '10-day-omo-valley-bale-mountains-cultural-adventure',
+  '12-days-ethiopia-grand-circuit': '20-day-ethiopia-historical-cultural-adventure',
+  '6-days-simien-mountains-trekking': '6-day-ethiopia-holiday-package',
+  '3-days-addis-ababa-cultural-city-break': '1-day-debre-libanos-portuguese-bridge-tour',
+  '5-days-awash-wildlife-and-hot-springs': '5-day-lalibela-danakil-depression-tour',
+  '9-days-coffee-heritage-and-highlands': '3-day-harar-cultural-historical-tour',
+  '5-days-danakil-depression-expedition': '4-day-danakil-depression-erta-ale-tour',
+  '8-days-historic-northern-route': '3-day-lalibela-genna-festival-tour',
+}
+
 export function generateStaticParams() {
   return [
     ...tours.map((tour) => ({ slug: tour.slug })),
@@ -39,6 +50,11 @@ export async function generateMetadata({
   params,
 }: TourPageProps): Promise<Metadata> {
   const { slug } = await params
+
+  if (tourRedirects[slug]) {
+    permanentRedirect(`/tours/${tourRedirects[slug]}`)
+  }
+
   const tour = getTour(slug)
   const category = getTourCategory(slug)
 
@@ -51,6 +67,11 @@ export async function generateMetadata({
 
 export default async function TourPage({ params }: TourPageProps) {
   const { slug } = await params
+
+  if (tourRedirects[slug]) {
+    permanentRedirect(`/tours/${tourRedirects[slug]}`)
+  }
+
   const tour = getTour(slug)
   const category = getTourCategory(slug)
 

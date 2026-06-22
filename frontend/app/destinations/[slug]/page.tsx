@@ -1,5 +1,5 @@
 import type { Metadata } from 'next'
-import { notFound } from 'next/navigation'
+import { notFound, permanentRedirect } from 'next/navigation'
 import { Navbar } from '@/components/layout/navbar'
 import { SiteFooter } from '@/components/layout/site-footer'
 import { Breadcrumbs } from '@/components/seo/breadcrumbs'
@@ -30,6 +30,14 @@ type DestinationPageProps = {
   }>
 }
 
+const destinationRedirects: Record<string, string> = {
+  'lalibela-and-the-north': 'lalibela',
+  'omo-valley-cultures': 'omo-valley',
+  'wonchi-crater-lake': 'wenchi-crater-lake',
+  'awash-and-rift-valley': 'awash-national-park',
+  'bale-mountains': 'bale-mountains-national-park',
+}
+
 export function generateStaticParams() {
   return destinations.map((destination) => ({ slug: destination.slug }))
 }
@@ -38,6 +46,11 @@ export async function generateMetadata({
   params,
 }: DestinationPageProps): Promise<Metadata> {
   const { slug } = await params
+
+  if (destinationRedirects[slug]) {
+    permanentRedirect(`/destinations/${destinationRedirects[slug]}`)
+  }
+
   const destination = getDestination(slug)
 
   if (!destination) {
@@ -49,6 +62,11 @@ export async function generateMetadata({
 
 export default async function DestinationPage({ params }: DestinationPageProps) {
   const { slug } = await params
+
+  if (destinationRedirects[slug]) {
+    permanentRedirect(`/destinations/${destinationRedirects[slug]}`)
+  }
+
   const destination = getDestination(slug)
 
   if (!destination) {
@@ -57,6 +75,17 @@ export default async function DestinationPage({ params }: DestinationPageProps) 
 
   const relatedDestinations = destinations
     .filter((item) => item.slug !== destination.slug)
+    .sort((a, b) => {
+      if (a.category === destination.category && b.category !== destination.category) {
+        return -1
+      }
+
+      if (a.category !== destination.category && b.category === destination.category) {
+        return 1
+      }
+
+      return 0
+    })
     .slice(0, 3)
 
   return (

@@ -1,9 +1,31 @@
-import Image from 'next/image'
 import Link from 'next/link'
+import { useMemo, useState } from 'react'
 import { ArrowRight, Clock, MapPin } from 'lucide-react'
 import { destinations } from '../data/destinations'
+import type { DestinationCategory } from '../types/destination'
+
+type DestinationFilter = 'all' | DestinationCategory
+
+const destinationFilters: { label: string; value: DestinationFilter }[] = [
+  { label: 'All', value: 'all' },
+  { label: 'Historical & Religious', value: 'historical-religious' },
+  { label: 'Lakes & Scenic', value: 'lakes-scenic' },
+  { label: 'Mountains & Wildlife', value: 'mountains-wildlife' },
+  { label: 'Adventure & Geological', value: 'adventure-geological' },
+  { label: 'Tribal & Cultural', value: 'tribal-cultural' },
+]
 
 export function DestinationsGrid() {
+  const [activeFilter, setActiveFilter] = useState<DestinationFilter>('all')
+
+  const filteredDestinations = useMemo(() => {
+    if (activeFilter === 'all') {
+      return destinations
+    }
+
+    return destinations.filter((destination) => destination.category === activeFilter)
+  }, [activeFilter])
+
   return (
     <section className="py-14 md:py-28">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 md:px-8">
@@ -15,11 +37,9 @@ export function DestinationsGrid() {
               aria-label={`Open dedicated page for ${destination.name}`}
               className="group relative flex min-h-[440px] cursor-pointer touch-manipulation overflow-hidden border border-cream/18 bg-coffee shadow-2xl shadow-black/20 transition-shadow hover:shadow-coffee/30 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-gold sm:min-h-[500px] md:min-h-[520px]"
             >
-              <Image
+              <img
                 src={destination.image}
                 alt={destination.imageAlt}
-                fill
-                sizes="(min-width: 1024px) 33vw, (min-width: 768px) 50vw, 100vw"
                 className="absolute inset-0 size-full object-cover transition-transform duration-[1.4s] ease-out group-hover:scale-105"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/28 to-black/10" />
@@ -51,3 +71,4 @@ export function DestinationsGrid() {
     </section>
   )
 }
+
