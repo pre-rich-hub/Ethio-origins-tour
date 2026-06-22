@@ -5,7 +5,20 @@ import Link from 'next/link'
 import { SectionHeading } from '@/components/shared/section-heading'
 import { destinations } from '@/features/destinations'
 
+const featuredDestinationSlugs = [
+  'lalibela',
+  'omo-valley',
+  'danakil-depression',
+  'bale-mountains-national-park',
+  'wenchi-crater-lake',
+  'awash-national-park',
+]
+
 export function FeaturedDestinations() {
+  const featuredDestinations = destinations.filter((destination) =>
+    featuredDestinationSlugs.includes(destination.slug),
+  )
+
   return (
     <section
       id="destinations"
@@ -29,7 +42,7 @@ export function FeaturedDestinations() {
         </div>
 
         <div className="mt-10 flex snap-x snap-mandatory gap-4 overflow-x-auto pb-6 [scrollbar-width:thin] [scrollbar-color:rgba(250,246,236,0.35)_transparent] md:mt-14 md:gap-6">
-          {destinations.map((d, i) => (
+          {featuredDestinations.map((d, i) => (
             <Link
               key={d.name}
               href={`/destinations/${d.slug}`}

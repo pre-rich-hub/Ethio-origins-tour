@@ -50,9 +50,9 @@ const images = [
   },
   {
     src: '/images/dest-wonchi.png',
-    alt: 'Wonchi Crater Lake',
+    alt: 'Wenchi Crater Lake',
     title: 'Crater Stillness',
-    place: 'Wonchi',
+    place: 'Wenchi',
     cls: '',
   },
   {

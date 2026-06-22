@@ -1,13 +1,17 @@
 import type { Metadata } from 'next'
 import { Navbar } from '@/components/layout/navbar'
 import { SiteFooter } from '@/components/layout/site-footer'
-import { DestinationsGrid, DestinationsHero } from '@/features/destinations'
+import {
+  DestinationExtrasSection,
+  DestinationsGrid,
+  DestinationsHero,
+} from '@/features/destinations'
 import { createMetadata } from '@/lib/seo/create-metadata'
 
 export const metadata: Metadata = createMetadata({
   title: 'Ethiopia Travel Destinations & Places to Visit',
   description:
-    "Discover Ethiopia's leading travel destinations, including Lalibela, Omo Valley, Danakil Depression, Bale Mountains, Wonchi, Awash and the Rift Valley.",
+    "Discover Ethiopia's leading travel destinations, including Lalibela, Omo Valley, Danakil Depression, Bale Mountains, Wenchi Crater Lake, Awash National Park, festivals and adventure experiences.",
   canonicalPath: '/destinations',
   primaryKeyword: 'Ethiopia Travel Destinations',
   secondaryKeywords: [
@@ -26,6 +30,7 @@ export default function DestinationsPage() {
       <Navbar />
       <DestinationsHero />
       <DestinationsGrid />
+      <DestinationExtrasSection />
       <SiteFooter />
     </main>
   )

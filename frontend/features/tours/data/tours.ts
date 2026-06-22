@@ -67,7 +67,7 @@ export const tours = [
     ],
     journeyMap:
       'Addis Ababa - Jinka - Turmi - Omo Valley - Arba Minch - Dorze Village - Hawassa - Abijata Shalla Lakes National Park',
-    destinationSlugs: ['omo-valley-cultures', 'bale-mountains'],
+    destinationSlugs: ['omo-valley', 'bale-mountains-national-park'],
     categorySlugs: ['cultural-tours', 'nature-adventure-tours', 'wildlife-tours'],
     imageAlt: 'Omo Valley cultural and nature journey in southern Ethiopia',
     seo: {
@@ -97,12 +97,12 @@ export const tours = [
       '/images/exp-northern.png',
     ],
     duration: '8 Days',
-    region: 'Lalibela, Gondar, Axum, Bahir Dar',
+    region: 'Lalibela, Gondar, Aksum, Bahir Dar',
     highlights: 'Lalibela · Gondar Castles · Lake Tana',
     description:
       'A dedicated heritage journey through Ethiopia\'s most iconic northern historic sites, sacred architecture, and imperial cities.',
     intro:
-      'Travel through the cradle of Ethiopian civilization with private guiding in Lalibela, Gondar, Axum, and Bahir Dar. This route balances UNESCO heritage, highland scenery, monasteries, and carefully paced cultural encounters.',
+      'Travel through the cradle of Ethiopian civilization with private guiding in Lalibela, Gondar, Aksum, and Bahir Dar. This route balances UNESCO heritage, highland scenery, monasteries, and carefully paced cultural encounters.',
     adultPrice: 1850,
     childPrice: 1450,
     rating: 4.9,
@@ -112,7 +112,7 @@ export const tours = [
     moments: [
       'Explore Lalibela\'s rock-hewn churches with an expert local guide',
       'Walk Gondar\'s royal enclosure and church murals',
-      'Visit Axum stelae fields and ancient heritage sites',
+      'Visit Aksum stelae fields and ancient heritage sites',
       'Cruise Lake Tana to island monasteries near Bahir Dar',
     ],
     included: [
@@ -151,14 +151,14 @@ export const tours = [
       },
     ],
     journeyMap:
-      'Addis Ababa - Lalibela - Gondar - Axum - Bahir Dar - Addis Ababa',
-    destinationSlugs: ['lalibela-and-the-north'],
+      'Addis Ababa - Lalibela - Gondar - Aksum - Bahir Dar - Addis Ababa',
+    destinationSlugs: ['lalibela'],
     categorySlugs: ['historical-tours', 'cultural-tours'],
     imageAlt: 'Lalibela historic church route in northern Ethiopia',
     seo: {
       title: '8-Day Historic Northern Ethiopia Route',
       description:
-        "Discover Ethiopia's historic northern route on an eight-day guided journey through Lalibela, Gondar, Axum, Bahir Dar and sacred heritage sites.",
+        "Discover Ethiopia's historic northern route on an eight-day guided journey through Lalibela, Gondar, Aksum, Bahir Dar and sacred heritage sites.",
       canonicalPath: '/tours/8-days-historic-northern-route',
       primaryKeyword: 'Northern Ethiopia Tour',
       secondaryKeywords: [
@@ -236,7 +236,7 @@ export const tours = [
       },
     ],
     journeyMap: 'Gondar - Debark - Simien Mountains - Gondar',
-    destinationSlugs: ['lalibela-and-the-north'],
+    destinationSlugs: ['simien-mountains-national-park'],
     categorySlugs: ['trekking-hiking-tours', 'nature-adventure-tours', 'wildlife-tours'],
     imageAlt: 'Simien Mountains trekking landscape in Ethiopia',
     seo: {
@@ -405,7 +405,7 @@ export const tours = [
       },
     ],
     journeyMap: 'Addis Ababa - Dinsho - Sanetti Plateau - Harenna Forest - Addis Ababa',
-    destinationSlugs: ['bale-mountains'],
+    destinationSlugs: ['bale-mountains-national-park'],
     categorySlugs: ['wildlife-tours', 'trekking-hiking-tours', 'nature-adventure-tours'],
     imageAlt: 'Bale Mountains wildlife safari landscape',
     seo: {
@@ -489,7 +489,7 @@ export const tours = [
       },
     ],
     journeyMap: 'Addis Ababa - Ziway - Langano - Hawassa - Addis Ababa',
-    destinationSlugs: ['awash-and-rift-valley'],
+    destinationSlugs: ['awash-national-park'],
     categorySlugs: ['nature-adventure-tours', 'wildlife-tours', 'private-customized-tours'],
     imageAlt: 'Rift Valley lakes retreat in Ethiopia',
     seo: {
@@ -741,7 +741,7 @@ export const tours = [
       },
     ],
     journeyMap: 'Addis Ababa - Jinka - Turmi - Omo Valley - Arba Minch',
-    destinationSlugs: ['omo-valley-cultures'],
+    destinationSlugs: ['omo-valley'],
     categorySlugs: ['photography-tours', 'cultural-tours'],
     imageAlt: 'Omo Valley photography expedition in southern Ethiopia',
     seo: {
@@ -825,7 +825,7 @@ export const tours = [
       },
     ],
     journeyMap: 'Addis Ababa - Awash National Park - Hot Springs - Addis Ababa',
-    destinationSlugs: ['awash-and-rift-valley'],
+    destinationSlugs: ['awash-national-park'],
     categorySlugs: ['wildlife-tours', 'nature-adventure-tours'],
     imageAlt: 'Awash wildlife and hot springs tour route',
     seo: {
@@ -979,7 +979,7 @@ export const tours = [
     ],
     journeyMap:
       'Addis Ababa - Bahir Dar - Lake Tana - Blue Nile Falls - Gondar - Simien Mountains - Lalibela - Lake Langano - Dorze Village - Arba Minch - Lake Chamo - Jinka - Mago National Park - Turmi - Murulle - Konso - Lake Ziway - Addis Ababa',
-    destinationSlugs: ['lalibela-and-the-north', 'omo-valley-cultures', 'awash-and-rift-valley'],
+    destinationSlugs: ['lalibela', 'omo-valley', 'awash-national-park'],
     categorySlugs: ['historical-tours', 'cultural-tours', 'nature-adventure-tours', 'private-customized-tours'],
     imageAlt: 'Historic North and Omo Valley cultural tour route in Ethiopia',
     seo: {

@@ -8,9 +8,13 @@ export function RelatedDestinationTours({
 }: {
   destination: Destination
 }) {
-  const relatedTours = tours
-    .filter((tour) => tour.destinationSlugs.includes(destination.slug))
-    .slice(0, 3)
+  const relatedTours = tours.filter((tour) => {
+    if (destination.relatedTourSlugs.length) {
+      return destination.relatedTourSlugs.includes(tour.slug)
+    }
+
+    return tour.destinationSlugs.includes(destination.slug)
+  }).slice(0, 3)
 
   if (!relatedTours.length) {
     return null

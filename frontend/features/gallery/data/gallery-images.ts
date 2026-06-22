@@ -37,9 +37,9 @@ export const galleryImages = [
   },
   {
     src: '/images/dest-wonchi.png',
-    alt: 'Wonchi Crater Lake',
+    alt: 'Wenchi Crater Lake',
     title: 'Crater Stillness',
-    place: 'Wonchi',
+    place: 'Wenchi',
   },
   {
     src: '/images/exp-omo.png',

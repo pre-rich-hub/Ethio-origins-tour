@@ -36,10 +36,10 @@ export function DestinationDetailHero({
           <div className="max-w-5xl">
             <p className="inline-flex items-center gap-3 border border-cream/18 bg-black/20 px-4 py-2 font-sans text-[0.68rem] uppercase tracking-[0.16em] text-gold backdrop-blur-md sm:text-xs sm:tracking-luxe md:text-sm">
               <MapPin className="size-4" />
-              {destination.place}
+              {destination.categoryLabel} · {destination.region}
             </p>
             <h1 className="mt-6 max-w-5xl text-balance font-serif text-5xl font-medium leading-[0.92] text-cream sm:text-7xl md:text-8xl lg:text-9xl">
-              {destination.seo.primaryKeyword}
+              {destination.name}
             </h1>
             <p className="mt-7 max-w-2xl text-pretty font-sans text-base font-light leading-relaxed text-cream/86 md:text-lg">
               {destination.intro}
@@ -70,7 +70,7 @@ export function DestinationDetailHero({
                 <Clock className="mt-1 size-5 text-gold" />
                 <div>
                   <p className="font-sans text-[0.65rem] uppercase tracking-widest text-cream/55">
-                    Duration
+                    Planning
                   </p>
                   <p className="mt-1 font-serif text-2xl font-medium leading-none text-cream">
                     {destination.duration}
@@ -81,10 +81,10 @@ export function DestinationDetailHero({
                 <Compass className="mt-1 size-5 text-gold" />
                 <div>
                   <p className="font-sans text-[0.65rem] uppercase tracking-widest text-cream/55">
-                    Best For
+                    Region
                   </p>
                   <p className="mt-1 font-sans text-sm font-light leading-relaxed text-cream/85">
-                    {destination.bestFor}
+                    {destination.region}
                   </p>
                 </div>
               </div>
