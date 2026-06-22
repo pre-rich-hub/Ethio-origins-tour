@@ -26,8 +26,8 @@ type TourPageProps = {
 }
 
 const tourRedirects: Record<string, string> = {
+  '13-days-southern-ethiopia-cultural-nature-adventure': '10-day-omo-valley-bale-mountains-cultural-adventure',
   '12-days-ethiopia-grand-circuit': '20-day-ethiopia-historical-cultural-adventure',
-  '12-day-historic-north-omo-valley-tour': '20-day-ethiopia-historical-cultural-adventure',
   '6-days-simien-mountains-trekking': '6-day-ethiopia-holiday-package',
   '3-days-addis-ababa-cultural-city-break': '1-day-debre-libanos-portuguese-bridge-tour',
   '5-days-awash-wildlife-and-hot-springs': '5-day-lalibela-danakil-depression-tour',

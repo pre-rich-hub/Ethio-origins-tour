@@ -45,6 +45,24 @@ export const tourCategories: TourCategory[] = [
     },
   },
   {
+    slug: 'omo-valley-tours',
+    name: 'Omo Valley Tours',
+    description:
+      'Responsible Omo Valley cultural tours through southern Ethiopia communities, river landscapes, markets and local heritage routes.',
+    seo: {
+      title: 'Omo Valley Tours & Cultural Adventures',
+      description:
+        'Explore Omo Valley tours featuring Mursi, Hamer, Karo, Dassanech, Ari and other Southern Ethiopia cultural experiences.',
+      canonicalPath: '/tours/omo-valley-tours',
+      primaryKeyword: 'Omo Valley Tours',
+      secondaryKeywords: [
+        'Omo Valley Cultural Tour',
+        'Mursi Hamer Karo Tour',
+        'Southern Ethiopia Tour',
+      ],
+    },
+  },
+  {
     slug: 'historical-tours',
     name: 'Ethiopia Historical Tours',
     description:
@@ -131,6 +149,24 @@ export const tourCategories: TourCategory[] = [
         'Ethiopia Nature Tours',
         'Ethiopian Adventure Travel',
         'Explore Ethiopia Tours',
+      ],
+    },
+  },
+  {
+    slug: 'southern-ethiopia-tours',
+    name: 'Southern Ethiopia Tours',
+    description:
+      'Southern Ethiopia journeys combining Omo Valley cultures, Rift Valley lakes, Dorze villages, Konso heritage and Bale Mountains wildlife.',
+    seo: {
+      title: 'Southern Ethiopia Tours',
+      description:
+        'Plan Southern Ethiopia tours through the Omo Valley, Konso, Dorze, Hawassa, Rift Valley landscapes and Bale Mountains National Park.',
+      canonicalPath: '/tours/southern-ethiopia-tours',
+      primaryKeyword: 'Southern Ethiopia Tour',
+      secondaryKeywords: [
+        'Omo Valley and Bale Mountains Adventure',
+        'Ethiopia Tribal and Wildlife Tour',
+        'Ethiopia Cultural Adventure Tour',
       ],
     },
   },
@@ -243,6 +279,24 @@ export const tourCategories: TourCategory[] = [
     },
   },
   {
+    slug: 'birdwatching-tours',
+    name: 'Ethiopia Birdwatching Tours',
+    description:
+      'Guided birdwatching tours and nature excursions featuring lakes, highland habitats, endemic species and photography-friendly routes.',
+    seo: {
+      title: 'Ethiopia Birdwatching Tours',
+      description:
+        'Explore Ethiopia birdwatching tours featuring highland lakes, nature day trips, endemic birdlife and guided scenic routes.',
+      canonicalPath: '/tours/birdwatching-tours',
+      primaryKeyword: 'Ethiopia Birdwatching Tours',
+      secondaryKeywords: [
+        'Ethiopia Birding Tours',
+        'Wonchi Birdwatching Tour',
+        'Ethiopia Nature Tours',
+      ],
+    },
+  },
+  {
     slug: 'city-tours',
     name: 'Ethiopia City Tours',
     description:
@@ -261,6 +315,24 @@ export const tourCategories: TourCategory[] = [
     },
   },
   {
+    slug: 'addis-ababa-excursions',
+    name: 'Addis Ababa Excursions',
+    description:
+      'Private excursions from Addis Ababa to nearby nature, culture, history and scenic highland destinations.',
+    seo: {
+      title: 'Addis Ababa Excursions & Day Trips',
+      description:
+        'Plan Addis Ababa excursions and private day trips to nearby crater lakes, monasteries, historic sites and scenic highland landscapes.',
+      canonicalPath: '/tours/addis-ababa-excursions',
+      primaryKeyword: 'Addis Ababa Excursions',
+      secondaryKeywords: [
+        'Addis Ababa Day Trips',
+        'Wonchi Day Trip from Addis Ababa',
+        'Addis Ababa Nature Day Tour',
+      ],
+    },
+  },
+  {
     slug: 'unesco-heritage-tours',
     name: 'UNESCO Heritage Tours',
     description:
@@ -275,6 +347,24 @@ export const tourCategories: TourCategory[] = [
         'Harar UNESCO Tour',
         'Ethiopia Heritage Tours',
         'Historic Ethiopia Tours',
+      ],
+    },
+  },
+  {
+    slug: 'ethiopia-historic-route-tours',
+    name: 'Ethiopia Historic Route Tours',
+    description:
+      'Northern Ethiopia heritage tours linking Bahir Dar, Lake Tana, Gondar, Lalibela, Aksum and other historic route highlights.',
+    seo: {
+      title: 'Ethiopia Historic Route Tours',
+      description:
+        'Explore Ethiopia historic route tours through Bahir Dar, Lake Tana, Gondar, Lalibela, Aksum and northern UNESCO heritage sites.',
+      canonicalPath: '/tours/ethiopia-historic-route-tours',
+      primaryKeyword: 'Ethiopia Historic Route Tour',
+      secondaryKeywords: [
+        'Northern Ethiopia Historical Tour',
+        'Bahir Dar Gondar Lalibela Axum Tour',
+        'Ethiopia UNESCO Heritage Tour',
       ],
     },
   },
