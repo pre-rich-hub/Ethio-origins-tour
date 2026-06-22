@@ -29,6 +29,9 @@ const tourRedirects: Record<string, string> = {
   '12-days-ethiopia-grand-circuit': '20-day-ethiopia-historical-cultural-adventure',
   '12-day-historic-north-omo-valley-tour': '20-day-ethiopia-historical-cultural-adventure',
   '6-days-simien-mountains-trekking': '6-day-ethiopia-holiday-package',
+  '3-days-addis-ababa-cultural-city-break': '1-day-debre-libanos-portuguese-bridge-tour',
+  '5-days-awash-wildlife-and-hot-springs': '5-day-lalibela-danakil-depression-tour',
+  '9-days-coffee-heritage-and-highlands': '3-day-harar-cultural-historical-tour',
   '5-days-danakil-depression-expedition': '4-day-danakil-depression-erta-ale-tour',
   '8-days-historic-northern-route': '3-day-lalibela-genna-festival-tour',
 }

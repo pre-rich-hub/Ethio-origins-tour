@@ -9,6 +9,24 @@ export type TourCategory = {
 
 export const tourCategories: TourCategory[] = [
   {
+    slug: 'day-tours',
+    name: 'Ethiopia Day Tours',
+    description:
+      'Short guided day tours and excursions from Addis Ababa and other gateways, focused on culture, history, nature and nearby landmarks.',
+    seo: {
+      title: 'Ethiopia Day Tours & Excursions',
+      description:
+        'Explore Ethiopia day tours and guided excursions from Addis Ababa featuring monasteries, historic bridges, landscapes and local culture.',
+      canonicalPath: '/tours/day-tours',
+      primaryKeyword: 'Ethiopia Day Tours',
+      secondaryKeywords: [
+        'Addis Ababa Day Tour',
+        'Ethiopia Day Trips',
+        'Debre Libanos Day Tour',
+      ],
+    },
+  },
+  {
     slug: 'cultural-tours',
     name: 'Ethiopia Cultural Tours',
     description:
@@ -117,6 +135,42 @@ export const tourCategories: TourCategory[] = [
     },
   },
   {
+    slug: 'nature-tours',
+    name: 'Ethiopia Nature Tours',
+    description:
+      'Nature-focused Ethiopia tours featuring highland landscapes, gorges, waterfalls, birdlife, wildlife viewpoints and scenic walking routes.',
+    seo: {
+      title: 'Ethiopia Nature Tours & Scenic Trips',
+      description:
+        'Explore Ethiopia nature tours featuring scenic highlands, gorges, waterfalls, birdlife, wildlife viewpoints and guided outdoor routes.',
+      canonicalPath: '/tours/nature-tours',
+      primaryKeyword: 'Ethiopia Nature Tours',
+      secondaryKeywords: [
+        'Jemma River Gorge Tour',
+        'Ethiopia Wildlife Day Trip',
+        'Ethiopia Scenic Tours',
+      ],
+    },
+  },
+  {
+    slug: 'nature-geological-tours',
+    name: 'Nature and Geological Tours',
+    description:
+      'Guided Ethiopia tours focused on geological wonders, volcanic landscapes, geothermal fields, salt flats and dramatic natural formations.',
+    seo: {
+      title: 'Ethiopia Nature and Geological Tours',
+      description:
+        'Explore Ethiopia nature and geological tours featuring Danakil Depression, Erta Ale, Dallol, salt flats and volcanic landscapes.',
+      canonicalPath: '/tours/nature-geological-tours',
+      primaryKeyword: 'Ethiopia Geological Tours',
+      secondaryKeywords: [
+        'Danakil Depression Tours',
+        'Erta Ale Volcano Tour',
+        'Dallol Tour Ethiopia',
+      ],
+    },
+  },
+  {
     slug: 'trekking-hiking-tours',
     name: 'Ethiopia Trekking & Hiking Tours',
     description:
@@ -203,6 +257,24 @@ export const tourCategories: TourCategory[] = [
         'Ethiopia City Tours',
         'Addis Ababa City Tours',
         'Ethiopia Guided City Tours',
+      ],
+    },
+  },
+  {
+    slug: 'unesco-heritage-tours',
+    name: 'UNESCO Heritage Tours',
+    description:
+      'Ethiopia tours centered on UNESCO World Heritage Sites, historic cities, sacred monuments, cultural landscapes and preserved living traditions.',
+    seo: {
+      title: 'Ethiopia UNESCO Heritage Tours',
+      description:
+        'Explore Ethiopia UNESCO heritage tours featuring Harar Jugol, Lalibela, Gondar, Aksum and guided historical cultural routes.',
+      canonicalPath: '/tours/unesco-heritage-tours',
+      primaryKeyword: 'Ethiopia UNESCO Heritage Tours',
+      secondaryKeywords: [
+        'Harar UNESCO Tour',
+        'Ethiopia Heritage Tours',
+        'Historic Ethiopia Tours',
       ],
     },
   },
