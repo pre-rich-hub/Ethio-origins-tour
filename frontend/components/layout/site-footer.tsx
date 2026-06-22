@@ -20,8 +20,8 @@ const columns = [
     title: 'Destinations',
     links: [
       { label: 'All Destinations', href: '/destinations' },
-      { label: 'Historic North', href: '/destinations/lalibela-and-the-north' },
-      { label: 'Omo Valley', href: '/destinations/omo-valley-cultures' },
+      { label: 'Historic North', href: '/destinations/lalibela' },
+      { label: 'Omo Valley', href: '/destinations/omo-valley' },
       { label: 'Danakil & Rift Valley', href: '/destinations/danakil-depression' },
     ],
   },
