@@ -1,5 +1,5 @@
 import type { Metadata } from 'next'
-import { notFound } from 'next/navigation'
+import { notFound, permanentRedirect } from 'next/navigation'
 import { Navbar } from '@/components/layout/navbar'
 import { SiteFooter } from '@/components/layout/site-footer'
 import { Breadcrumbs } from '@/components/seo/breadcrumbs'
@@ -25,6 +25,10 @@ type TourPageProps = {
   }>
 }
 
+const tourRedirects: Record<string, string> = {
+  '12-days-ethiopia-grand-circuit': '12-day-historic-north-omo-valley-tour',
+}
+
 export function generateStaticParams() {
   return [
     ...tours.map((tour) => ({ slug: tour.slug })),
@@ -36,6 +40,11 @@ export async function generateMetadata({
   params,
 }: TourPageProps): Promise<Metadata> {
   const { slug } = await params
+
+  if (tourRedirects[slug]) {
+    permanentRedirect(`/tours/${tourRedirects[slug]}`)
+  }
+
   const tour = getTour(slug)
   const category = getTourCategory(slug)
 
@@ -55,6 +64,11 @@ export async function generateMetadata({
 
 export default async function TourPage({ params }: TourPageProps) {
   const { slug } = await params
+
+  if (tourRedirects[slug]) {
+    permanentRedirect(`/tours/${tourRedirects[slug]}`)
+  }
+
   const tour = getTour(slug)
   const category = getTourCategory(slug)
 

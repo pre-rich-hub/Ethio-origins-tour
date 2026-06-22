@@ -845,8 +845,8 @@ export const tours = [
   },
   {
     id: 11,
-    slug: '12-days-ethiopia-grand-circuit',
-    title: '12 Days Ethiopia Grand Circuit',
+    slug: '12-day-historic-north-omo-valley-tour',
+    title: '12-Day Historic North & Omo Valley Cultural Adventure',
     image: '/images/hero.png',
     gallery: [
       '/images/hero.png',
@@ -855,30 +855,36 @@ export const tours = [
       '/images/exp-bale.png',
     ],
     duration: '12 Days',
-    region: 'Northern Route, Rift Valley, Omo Extension',
-    highlights: 'Heritage · Landscapes · Living Cultures',
+    region: 'Addis Ababa, Bahir Dar, Gondar, Simien Mountains, Lalibela, Lake Langano, Omo Valley',
+    highlights: 'Historic North · Simien Mountains · Omo Valley',
     description:
-      'A dedicated grand circuit for travelers who want Ethiopia\'s major heritage, landscapes, and cultural regions in one private journey.',
+      'Explore Ethiopia on a 12-day journey through Addis Ababa, Bahir Dar, Gondar, Simien Mountains, Lalibela, Lake Langano and the Omo Valley.',
     intro:
-      'This broad private itinerary links signature Ethiopian experiences into one polished route: Addis Ababa, northern heritage, Rift Valley landscapes, and an optional southern cultural extension.',
+      'This unforgettable Ethiopian adventure begins and ends in Addis Ababa, taking you through the country\'s most remarkable historical, natural, and cultural treasures. Discover Lake Tana monasteries, Blue Nile Falls, Gondar\'s royal sites, the Simien Mountains, Lalibela\'s rock-hewn churches, Lake Langano, Dorze Village, Lake Chamo, Mursi, Hamer, Karo and Konso communities.',
+    // Pending client data: pricing was not provided in the client document.
     adultPrice: 3150,
+    // Pending client data: pricing was not provided in the client document.
     childPrice: 2500,
+    // Pending client data: rating was not provided in the client document.
     rating: 4.9,
+    // Pending client data: review count was not provided in the client document.
     reviewCount: 29,
-    destination: 'Ethiopia Grand Circuit',
+    destination: 'Historic North & Omo Valley',
     bestFor: 'First-time visitors, private groups, heritage, culture, and scenery',
     moments: [
-      'Combine historic north and Rift Valley scenery',
-      'Travel with one coordinated private team',
-      'Balance major landmarks with slower cultural stops',
-      'Customize the route with Omo, Bale, or Danakil extensions',
+      'Tour Addis Ababa including Mount Entoto, the National Museum, Lucy, the Ethnological Museum, Holy Trinity Cathedral and Merkato',
+      'Visit Lake Tana monasteries, Blue Nile Falls, Gondar royal sites, Simien Mountains National Park and Lalibela rock-hewn churches',
+      'Travel through Lake Langano, Dorze Village, Lake Chamo, Jinka, Turmi, Konso and Arba Minch',
+      'Meet Mursi, Hamer and Karo communities, then return through Lake Ziway for a farewell dinner and cultural performance',
     ],
+    // Pending client data: included services were not provided in the client document.
     included: [
       'Private guide and vehicle',
       'Route planning and coordination',
       'Listed entrance fees',
       'Domestic logistics support',
     ],
+    // Pending client data: excluded services were not provided in the client document.
     excluded: [
       'International flights',
       'Domestic flights unless quoted',
@@ -888,43 +894,110 @@ export const tours = [
     itinerary: [
       {
         day: 1,
-        title: 'Addis Ababa Arrival',
+        title: 'Arrival in Addis Ababa & City Tour',
         activities:
-          'Arrive, settle in, and begin with an orientation dinner and coffee ceremony.',
-        overnight: 'Addis Ababa hotel',
+          'Upon arrival at Addis Ababa Bole International Airport, you will be welcomed by our representative and transferred to your hotel. After a short rest, enjoy a guided city tour including Mount Entoto for panoramic views of Addis Ababa, the National Museum, home of the famous fossil "Lucy", the Ethnological Museum, Holy Trinity Cathedral, Merkato, one of Africa\'s largest open-air markets, and important monuments and historical landmarks.',
+        overnight: 'Hotel in Addis Ababa',
       },
       {
         day: 2,
-        title: 'Northern Heritage Flight',
+        title: 'Fly to Bahir Dar - Lake Tana Monasteries & Blue Nile Falls',
         activities:
-          'Fly north for the first major heritage stop, shaped around flight schedules and season.',
-        overnight: 'Heritage lodge',
+          'Take a morning flight to Bahir Dar. Enjoy a boat excursion on Lake Tana to visit the historic monasteries of the Zege Peninsula, including Azwa Mariam Monastery, Ura Kidane Mihret Monastery and Bete Maryam Monastery. Admire centuries-old religious paintings and unique Ethiopian Orthodox architecture. After lunch, drive to the magnificent Blue Nile Falls, Tis Issat, known locally as "Smoking Water". A short walk brings you close to the falls for excellent views and photographs. Later, explore Bahir Dar\'s vibrant lakeside atmosphere and local markets.',
+        overnight: 'Hotel in Bahir Dar',
       },
       {
         day: 3,
-        title: 'Rift Valley Transition',
+        title: 'Drive to Gondar',
         activities:
-          'Continue into lake country or extend south depending on the final private route design.',
-        overnight: 'Rift Valley lodge',
+          'Drive to Gondar through beautiful countryside. Visit Guzara Castle, the Royal Enclosure at Fasil Ghebbi, the Castle of Emperor Fasilides, Debre Birhan Selassie Church and Fasilides Bath while learning about Ethiopia\'s imperial history in the former capital of the Ethiopian Empire.',
+        overnight: 'Hotel in Gondar',
+      },
+      {
+        day: 4,
+        title: 'Excursion to Simien Mountains National Park',
+        activities:
+          'Drive to the spectacular Simien Mountains National Park, a UNESCO World Heritage Site. Highlights include dramatic mountain scenery, Gelada Baboons, Walia Ibex, numerous endemic bird species, and trekking near Sankaber and Jimbar Waterfall. Return to Gondar in the afternoon.',
+        overnight: 'Hotel in Gondar',
+      },
+      {
+        day: 5,
+        title: 'Fly to Lalibela',
+        activities:
+          'Take a morning flight to Lalibela. Visit the first group of the famous rock-hewn churches, including Bete Medhane Alem, Bete Maryam, Bete Meskel, Bete Denagel, Debre Sina and Bete Golgotha. Marvel at these architectural masterpieces carved directly from volcanic rock.',
+        overnight: 'Hotel in Lalibela',
+      },
+      {
+        day: 6,
+        title: 'Fly to Addis Ababa & Drive to Lake Langano',
+        activities:
+          'Fly back to Addis Ababa in the morning, then drive south through the Great Rift Valley, passing Lakes Koka, Ziway and Langano. Enjoy beautiful scenery, birdlife and views of rural Ethiopian life.',
+        overnight: 'Hotel at Lake Langano',
+      },
+      {
+        day: 7,
+        title: 'Lake Langano - Dorze Village - Arba Minch',
+        activities:
+          'Drive to Arba Minch while visiting several ethnic communities along the route. Continue to Chencha to explore the traditional Dorze village, famous for beehive-shaped houses, weaving traditions and enset, or false banana, cultivation. Arrive in Arba Minch in the evening.',
+        overnight: 'Hotel in Arba Minch',
+      },
+      {
+        day: 8,
+        title: 'Arba Minch - Jinka',
+        activities:
+          'Begin with an early morning boat trip on Lake Chamo, with highlights including the Crocodile Market, hippos and water birds. Continue to Jinka, visiting the Konso, Ari and Tsemay communities along the way.',
+        overnight: 'Hotel/Lodge in Jinka',
+      },
+      {
+        day: 9,
+        title: 'Mursi Tribe & Drive to Turmi',
+        activities:
+          'Visit Mago National Park to meet the Mursi people, famous for their distinctive lip plates and rich cultural traditions. After lunch, continue to Turmi and visit the Hamer people and their villages.',
+        overnight: 'Lodge in Turmi',
+      },
+      {
+        day: 10,
+        title: 'Karo Tribe Excursion',
+        activities:
+          'Travel to Murulle to visit the Karo people, renowned for their elaborate body painting and scarification traditions. Enjoy stunning views of the Omo River from Korcho village. Depending on the day, attend the colorful local market and, if fortunate, witness a traditional Hamer bull-jumping ceremony.',
+        overnight: 'Lodge in Turmi',
+      },
+      {
+        day: 11,
+        title: 'Turmi - Konso - Arba Minch',
+        activities:
+          'Drive to Konso, a UNESCO World Heritage Site known for terraced farming systems, traditional stone-walled villages and rich cultural heritage. Continue to Arba Minch, enjoying scenic landscapes along the way.',
+        overnight: 'Hotel in Arba Minch',
+      },
+      {
+        day: 12,
+        title: 'Return to Addis Ababa',
+        activities:
+          'Drive back to Addis Ababa through the Great Rift Valley. Visit local villages and make a stop at Lake Ziway. Upon arrival in Addis Ababa, enjoy last-minute souvenir shopping, a farewell dinner featuring traditional Ethiopian cuisine, and a cultural music and dance performance before transferring to Bole International Airport for your departure flight.',
+        overnight: 'Departure',
       },
     ],
-    journeyMap: 'Addis Ababa - Northern Heritage - Rift Valley - Optional Southern Extension',
-    destinationSlugs: ['lalibela-and-the-north', 'omo-valley-cultures', 'bale-mountains'],
-    categorySlugs: ['historical-tours', 'cultural-tours', 'private-customized-tours'],
-    imageAlt: 'Ethiopia grand circuit travel route',
+    journeyMap:
+      'Addis Ababa - Bahir Dar - Lake Tana - Blue Nile Falls - Gondar - Simien Mountains - Lalibela - Lake Langano - Dorze Village - Arba Minch - Lake Chamo - Jinka - Mago National Park - Turmi - Murulle - Konso - Lake Ziway - Addis Ababa',
+    destinationSlugs: ['lalibela-and-the-north', 'omo-valley-cultures', 'awash-and-rift-valley'],
+    categorySlugs: ['historical-tours', 'cultural-tours', 'nature-adventure-tours', 'private-customized-tours'],
+    imageAlt: 'Historic North and Omo Valley cultural tour route in Ethiopia',
     seo: {
-      title: '12-Day Ethiopia Grand Circuit Tour',
+      title: '12-Day Historic North & Omo Valley Cultural Tour',
       description:
-        "Discover Ethiopia's heritage, landscapes and cultural regions on a twelve-day private grand circuit with flexible northern and southern extensions.",
-      canonicalPath: '/tours/12-days-ethiopia-grand-circuit',
-      primaryKeyword: 'Ethiopia Grand Circuit Tour',
+        'Explore Ethiopia on a 12-day journey through Addis Ababa, Bahir Dar, Gondar, Simien Mountains, Lalibela, Lake Langano and the Omo Valley.',
+      canonicalPath: '/tours/12-day-historic-north-omo-valley-tour',
+      primaryKeyword: '12 Day Historic North and Omo Valley Tour',
       secondaryKeywords: [
-        'Ethiopia Tour Packages',
-        'Northern Ethiopia Tour',
-        'Private Tours Ethiopia',
+        'Northern Ethiopia and Omo Valley Tour',
+        'Ethiopia Historical and Cultural Tour',
+        'Lalibela and Omo Valley Tour',
+        'Ethiopia 12 Day Tour',
+        'Historic North Ethiopia Tour',
+        'Omo Valley Cultural Adventure',
       ],
       ogImage: '/images/hero.png',
-      ogImageAlt: 'Ethiopian landscape for a grand circuit journey',
+      ogImageAlt: 'Historic North and Omo Valley cultural adventure in Ethiopia',
     },
   },
 ]
