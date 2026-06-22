@@ -87,8 +87,8 @@ export const tours = [
   },
   {
     id: 2,
-    slug: '8-days-historic-northern-route',
-    title: '8 Days Historic Northern Route',
+    slug: '3-day-lalibela-genna-festival-tour',
+    title: '3-Day Lalibela Christmas (Genna) Festival Tour',
     image: '/images/client/custom/lalibela.jpg',
     gallery: [
       '/images/client/custom/lalibela.jpg',
@@ -96,31 +96,42 @@ export const tours = [
       '/images/dest-gondar.png',
       '/images/exp-northern.png',
     ],
-    duration: '8 Days',
-    region: 'Lalibela, Gondar, Aksum, Bahir Dar',
-    highlights: 'Lalibela · Gondar Castles · Lake Tana',
+    duration: '3 Days',
+    region: 'Addis Ababa, Lalibela, Beza Kula',
+    highlights: 'Lalibela · Genna Festival · Beza Kula',
     description:
-      'A dedicated heritage journey through Ethiopia\'s most iconic northern historic sites, sacred architecture, and imperial cities.',
+      'Experience Lalibela\'s rock-hewn churches, candlelight ceremonies and Ethiopia\'s Genna Christmas Festival on a three-day cultural and religious tour.',
     intro:
-      'Travel through the cradle of Ethiopian civilization with private guiding in Lalibela, Gondar, Aksum, and Bahir Dar. This route balances UNESCO heritage, highland scenery, monasteries, and carefully paced cultural encounters.',
+      'Experience one of the world\'s most unique and spiritual Christmas celebrations in Lalibela, Ethiopia\'s New Jerusalem. This journey combines UNESCO-listed rock-hewn churches, Ethiopian Orthodox traditions, candlelight ceremonies, pilgrim gatherings, and the Beza Kula Christmas celebration in Addis Ababa.',
+    // Pending client data: pricing was not provided in the client document.
     adultPrice: 1850,
+    // Pending client data: pricing was not provided in the client document.
     childPrice: 1450,
+    // Pending client data: rating was not provided in the client document.
     rating: 4.9,
+    // Pending client data: review count was not provided in the client document.
     reviewCount: 41,
-    destination: 'Northern Ethiopia',
-    bestFor: 'History lovers, architecture, faith heritage, photography, and first-time visitors',
+    destination: 'Lalibela',
+    bestFor: 'Religious festivals, pilgrimage, Ethiopian Orthodox traditions, history, culture, and first-time Lalibela visitors',
     moments: [
-      'Explore Lalibela\'s rock-hewn churches with an expert local guide',
-      'Walk Gondar\'s royal enclosure and church murals',
-      'Visit Aksum stelae fields and ancient heritage sites',
-      'Cruise Lake Tana to island monasteries near Bahir Dar',
+      'Lalibela UNESCO World Heritage Site',
+      'Eleven Rock-Hewn Churches',
+      'Bete Giyorgis',
+      'Ethiopian Christmas (Genna) Festival',
+      'Candlelight Religious Ceremonies',
+      'Pilgrim Gatherings',
+      'Ethiopian Orthodox Traditions',
+      'Beza Kula Christmas Celebration',
+      'Cultural and Religious Experiences',
     ],
+    // Pending client data: included services were not provided in the client document.
     included: [
       'Domestic flight coordination',
       'Private vehicle transfers',
       'Professional English-speaking guide',
       'Entrance fees for listed sites',
     ],
+    // Pending client data: excluded services were not provided in the client document.
     excluded: [
       'International flights',
       'Personal shopping and souvenirs',
@@ -130,44 +141,47 @@ export const tours = [
     itinerary: [
       {
         day: 1,
-        title: 'Arrival in Addis Ababa',
+        title: 'Addis Ababa - Lalibela | Arrival & Rock-Hewn Churches Tour',
         activities:
-          'Arrive in Addis Ababa, meet your host, and enjoy a gentle orientation with a traditional coffee ceremony.',
-        overnight: 'Addis Ababa boutique hotel',
+          'Take a morning flight from Addis Ababa to Lalibela. Upon arrival at Lalibela Airport, meet your guide and transfer to your hotel. After check-in and refreshments, begin exploring the first cluster of Lalibela\'s rock-hewn churches, including Bete Medhane Alem, Bete Maryam, Bete Meskel, Bete Denagel, Bete Golgotha and Bete Mikael. Learn about King Lalibela and his vision of creating a New Jerusalem in Ethiopia, then admire the churches carved from solid rock and connected by tunnels, trenches and hidden passageways.',
+        overnight: 'Hotel in Lalibela',
       },
       {
         day: 2,
-        title: 'Fly to Lalibela',
+        title: 'Lalibela Churches & Ethiopian Christmas (Genna) Celebration',
         activities:
-          'Fly north and begin exploring the first cluster of Lalibela\'s rock-hewn churches with time for photography and context.',
-        overnight: 'Lalibela lodge',
+          'Continue exploring Lalibela\'s remaining churches, including Bete Emanuel, Bete Gabriel-Rufael, Bete Abba Libanos and the world-famous Bete Giyorgis, carved in the shape of a Greek cross. In the afternoon and evening, experience Genna, Ethiopia\'s Orthodox Christmas Festival, with thousands of pilgrims in traditional white Shamma garments, Orthodox chants and hymns, candlelight ceremonies, priests carrying colorful umbrellas and sacred crosses, spiritual processions and religious blessings.',
+        overnight: 'Hotel in Lalibela',
       },
       {
         day: 3,
-        title: 'Lalibela Sacred Sites',
+        title: 'Lalibela - Addis Ababa | Beza Kula Christmas Celebration',
         activities:
-          'Continue through the second church cluster and meet local clergy and artisans where access allows.',
-        overnight: 'Lalibela lodge',
+          'Transfer early to Lalibela Airport for your flight back to Addis Ababa. Upon arrival, continue the Christmas celebrations at Beza Kula, where worshippers gather after the all-night Christmas vigil to welcome the dawn with prayers, hymns and joyful festivities. Depending on your departure schedule, enjoy free time for souvenir shopping or relaxation before transfer to Bole International Airport for international departure or onward travel.',
+        overnight: 'Departure',
       },
     ],
     journeyMap:
-      'Addis Ababa - Lalibela - Gondar - Aksum - Bahir Dar - Addis Ababa',
-    destinationSlugs: ['lalibela'],
-    categorySlugs: ['historical-tours', 'cultural-tours'],
-    imageAlt: 'Lalibela historic church route in northern Ethiopia',
+      'Addis Ababa - Lalibela - Bete Medhane Alem - Bete Maryam - Bete Giyorgis - Addis Ababa - Beza Kula - Bole International Airport',
+    destinationSlugs: ['lalibela', 'addis-ababa'],
+    categorySlugs: ['religious-pilgrimage-tours', 'historical-tours', 'cultural-tours', 'festival-tours'],
+    imageAlt: 'Lalibela Christmas Genna Festival and rock-hewn church tour',
     seo: {
-      title: '8-Day Historic Northern Ethiopia Route',
+      title: '3-Day Lalibela Christmas (Genna) Festival Tour',
       description:
-        "Discover Ethiopia's historic northern route on an eight-day guided journey through Lalibela, Gondar, Aksum, Bahir Dar and sacred heritage sites.",
-      canonicalPath: '/tours/8-days-historic-northern-route',
-      primaryKeyword: 'Northern Ethiopia Tour',
+        'Experience Lalibela\'s rock-hewn churches, candlelight ceremonies and Ethiopia\'s Genna Christmas Festival on a three-day cultural and religious tour.',
+      canonicalPath: '/tours/3-day-lalibela-genna-festival-tour',
+      primaryKeyword: '3 Day Lalibela Christmas Tour',
       secondaryKeywords: [
-        'Ethiopia Historical Tours',
-        'Lalibela Historical Tours',
-        'Ethiopia Heritage Tours',
+        'Lalibela Genna Festival Tour',
+        'Ethiopian Christmas Tour',
+        'Lalibela Christmas Festival',
+        'Ethiopia Religious Festival Tour',
+        'Lalibela Pilgrimage Tour',
+        'Genna Festival Ethiopia',
       ],
       ogImage: '/images/client/custom/lalibela.jpg',
-      ogImageAlt: 'Lalibela heritage site in northern Ethiopia',
+      ogImageAlt: 'Lalibela Christmas Genna Festival tour',
     },
   },
   {
@@ -256,8 +270,8 @@ export const tours = [
   },
   {
     id: 4,
-    slug: '5-days-danakil-depression-expedition',
-    title: '5 Days Danakil Depression Expedition',
+    slug: '4-day-danakil-depression-erta-ale-tour',
+    title: '4-Day Danakil Depression & Erta Ale Volcano Adventure',
     image: '/images/client/custom/dankil-depression.jpg',
     gallery: [
       '/images/client/custom/dankil-depression.jpg',
@@ -265,31 +279,41 @@ export const tours = [
       '/images/client/custom/img-3.jpg',
       '/images/client/custom/photo_10_2026-02-22_15-45-13.jpg',
     ],
-    duration: '5 Days',
-    region: 'Afar, Dallol, Salt Flats',
-    highlights: 'Dallol · Salt Caravans · Desert Landscapes',
+    duration: '4 Days',
+    region: 'Mekele, Berhale, Hamed Ela, Dallol, Dodom, Erta Ale',
+    highlights: 'Dallol · Danakil Depression · Erta Ale',
     description:
-      'A dedicated expedition into the Afar desert, built around surreal geology, salt flats, and careful field logistics.',
+      'Explore Dallol, salt flats, Afar culture and the active Erta Ale lava lake on a four-day guided Danakil Depression adventure in Ethiopia.',
     intro:
-      'Travel with an experienced desert crew through one of the planet\'s most extreme landscapes. The journey focuses on safety, timing, and unforgettable access to the Danakil\'s volcanic color fields and salt routes.',
+      'Experience one of the most extraordinary and otherworldly landscapes on Earth. Explore Dallol hydrothermal fields, sulfur and mineral formations, salt flats, camel caravans, Afar settlements and the legendary Erta Ale Volcano, home to a remarkable lava lake.',
+    // Pending client data: pricing was not provided in the client document.
     adultPrice: 1650,
+    // Pending client data: pricing was not provided in the client document.
     childPrice: 1350,
+    // Pending client data: rating was not provided in the client document.
     rating: 4.7,
+    // Pending client data: review count was not provided in the client document.
     reviewCount: 19,
     destination: 'Danakil Depression',
-    bestFor: 'Expedition travelers, geology, desert photography, and rare landscapes',
+    bestFor: 'Adventure travelers, geology, desert landscapes, Afar culture, volcano trekking, and photography',
     moments: [
-      'Visit Dallol geothermal formations',
-      'Cross salt flats with local Afar support',
-      'Photograph camel caravans and desert horizons',
-      'Experience remote camp logistics with a private crew',
+      'Dallol Hydrothermal Field',
+      'Danakil Depression',
+      'Salt Flats and Camel Caravans',
+      'Traditional Afar Culture',
+      'Erta Ale Active Volcano',
+      'Lava Lake Experience',
+      'Desert Landscapes',
+      'Geological Wonders',
     ],
+    // Pending client data: included services were not provided in the client document.
     included: [
       'Afar permits and local coordination',
       '4WD vehicle with driver',
       'Cook and camping support',
       'Professional guide',
     ],
+    // Pending client data: excluded services were not provided in the client document.
     excluded: [
       'Personal expenses',
       'Travel insurance',
@@ -299,44 +323,53 @@ export const tours = [
     itinerary: [
       {
         day: 1,
-        title: 'Mekelle to Afar Region',
+        title: 'Fly to Mekele - Drive to Hamed Ela',
         activities:
-          'Meet the expedition team, check supplies, and drive toward the Afar desert with landscape stops.',
-        overnight: 'Basic desert accommodation',
+          'Take a morning flight from Addis Ababa to Mekele. Upon arrival, begin the journey to Hamed Ela via Berhale, covering approximately 160 km through the dramatic landscapes of the Afar Region. Along the way, see scenic desert landscapes, traditional Afar settlements, camel caravans transporting salt across the Danakil Depression, and salt mining activities. In Berhale, collect permits and security escorts required for travel within the Afar Region before continuing to Hamed Ela.',
+        overnight: 'Camping in Hamed Ela',
       },
       {
         day: 2,
-        title: 'Salt Flats and Caravans',
+        title: 'Dallol & Danakil Depression Exploration',
         activities:
-          'Explore salt routes, watch local extraction work, and photograph the desert at golden hour.',
-        overnight: 'Desert camp',
+          'Depart early for Dallol, located approximately 116 meters below sea level. Explore the Dallol hydrothermal field, colorful sulfur and mineral formations, acidic hot springs, salt terraces, salt canyons, and traditional salt extraction sites. Witness local workers cutting salt blocks by hand and loading them onto camel caravans, a centuries-old tradition that remains an essential part of life in the region.',
+        overnight: 'Camping in Hamed Ela',
       },
       {
         day: 3,
-        title: 'Dallol Geothermal Fields',
+        title: 'Erta Ale Active Volcano',
         activities:
-          'Visit Dallol early for the best light and continue through otherworldly mineral landscapes.',
-        overnight: 'Desert camp',
+          'After breakfast, drive across the lava desert toward Dodom, the base camp for Erta Ale Volcano. Cross vast lava fields, observe unique volcanic landscapes, and stop at local Afar settlements. After reaching Dodom, enjoy an early dinner before beginning the three-hour trek to Erta Ale. At the crater rim, witness the active lava lake, glowing molten lava, dramatic volcanic scenery, and night views across the Danakil Depression.',
+        overnight: 'Camping near Erta Ale Volcano',
+      },
+      {
+        day: 4,
+        title: 'Sunrise at Erta Ale & Return to Addis Ababa',
+        activities:
+          'Wake early to experience the volcano at sunrise and enjoy a final view of the lava lake. Descend to Dodom and begin the return journey to Mekele through the dramatic landscapes of the Danakil Depression. Upon arrival in Mekele, transfer to the airport for your flight back to Addis Ababa.',
+        overnight: 'Departure',
       },
     ],
-    journeyMap: 'Mekelle - Berhale - Salt Flats - Dallol - Mekelle',
-    destinationSlugs: ['danakil-depression'],
+    journeyMap:
+      'Addis Ababa - Mekele - Berhale - Hamed Ela - Dallol - Danakil Depression - Dodom - Erta Ale - Mekele - Addis Ababa',
+    destinationSlugs: ['danakil-depression', 'erta-ale', 'dallol', 'mekele'],
     categorySlugs: ['nature-adventure-tours', 'photography-tours'],
-    imageAlt: 'Danakil Depression expedition landscape in Ethiopia',
+    imageAlt: 'Danakil Depression and Erta Ale Volcano adventure in Ethiopia',
     seo: {
-      title: '5-Day Danakil Depression Tour',
+      title: '4-Day Danakil Depression & Erta Ale Volcano Tour',
       description:
-        'Explore the Danakil Depression on a five-day guided tour featuring volcanic landscapes, salt flats, Dallol and Afar desert experiences.',
-      canonicalPath: '/tours/5-days-danakil-depression-expedition',
-      primaryKeyword: '5 Day Danakil Depression Tour',
+        'Explore Dallol, salt flats, Afar culture and the active Erta Ale lava lake on a four-day guided Danakil Depression adventure in Ethiopia.',
+      canonicalPath: '/tours/4-day-danakil-depression-erta-ale-tour',
+      primaryKeyword: '4 Day Danakil Depression Tour',
       secondaryKeywords: [
-        'Danakil Tour Package',
-        'Afar Danakil Tour',
-        'Erta Ale Tour',
-        'Danakil Adventure Tour',
+        'Danakil Depression and Erta Ale Tour',
+        'Erta Ale Volcano Tour',
+        'Dallol Tour Ethiopia',
+        'Afar Danakil Adventure',
+        'Danakil Lava Lake Tour',
       ],
       ogImage: '/images/client/custom/dankil-depression.jpg',
-      ogImageAlt: 'Danakil Depression volcanic desert landscape',
+      ogImageAlt: 'Danakil Depression and Erta Ale Volcano adventure',
     },
   },
   {

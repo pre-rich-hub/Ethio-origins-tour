@@ -27,6 +27,8 @@ type TourPageProps = {
 
 const tourRedirects: Record<string, string> = {
   '12-days-ethiopia-grand-circuit': '12-day-historic-north-omo-valley-tour',
+  '5-days-danakil-depression-expedition': '4-day-danakil-depression-erta-ale-tour',
+  '8-days-historic-northern-route': '3-day-lalibela-genna-festival-tour',
 }
 
 export function generateStaticParams() {

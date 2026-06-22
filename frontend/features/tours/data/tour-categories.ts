@@ -45,6 +45,42 @@ export const tourCategories: TourCategory[] = [
     },
   },
   {
+    slug: 'religious-pilgrimage-tours',
+    name: 'Religious & Pilgrimage Tours',
+    description:
+      'Faith-focused journeys through sacred sites, pilgrimage routes, Orthodox traditions and religious heritage experiences.',
+    seo: {
+      title: 'Ethiopia Religious & Pilgrimage Tours',
+      description:
+        'Explore Ethiopia religious and pilgrimage tours featuring sacred sites, Orthodox traditions, Lalibela churches and spiritual heritage experiences.',
+      canonicalPath: '/tours/religious-pilgrimage-tours',
+      primaryKeyword: 'Ethiopia Religious Tours',
+      secondaryKeywords: [
+        'Ethiopia Pilgrimage Tours',
+        'Lalibela Pilgrimage Tour',
+        'Ethiopia Religious Festival Tour',
+      ],
+    },
+  },
+  {
+    slug: 'festival-tours',
+    name: 'Ethiopia Festival Tours',
+    description:
+      'Festival journeys centered on cultural celebrations, religious ceremonies, seasonal gatherings and living traditions.',
+    seo: {
+      title: 'Ethiopia Festival Tours & Cultural Celebrations',
+      description:
+        'Discover Ethiopia festival tours featuring Genna, Timkat, Meskel and cultural celebrations with locally guided experiences.',
+      canonicalPath: '/tours/festival-tours',
+      primaryKeyword: 'Ethiopia Festival Tours',
+      secondaryKeywords: [
+        'Lalibela Genna Festival Tour',
+        'Ethiopian Christmas Tour',
+        'Ethiopia Cultural Festivals',
+      ],
+    },
+  },
+  {
     slug: 'nature-adventure-tours',
     name: 'Ethiopia Adventure Tours',
     description:
