@@ -26,7 +26,9 @@ type TourPageProps = {
 }
 
 const tourRedirects: Record<string, string> = {
-  '12-days-ethiopia-grand-circuit': '12-day-historic-north-omo-valley-tour',
+  '12-days-ethiopia-grand-circuit': '20-day-ethiopia-historical-cultural-adventure',
+  '12-day-historic-north-omo-valley-tour': '20-day-ethiopia-historical-cultural-adventure',
+  '6-days-simien-mountains-trekking': '6-day-ethiopia-holiday-package',
   '5-days-danakil-depression-expedition': '4-day-danakil-depression-erta-ale-tour',
   '8-days-historic-northern-route': '3-day-lalibela-genna-festival-tour',
 }

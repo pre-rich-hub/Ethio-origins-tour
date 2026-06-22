@@ -186,8 +186,8 @@ export const tours = [
   },
   {
     id: 3,
-    slug: '6-days-simien-mountains-trekking',
-    title: '6 Days Simien Mountains Trekking',
+    slug: '6-day-ethiopia-holiday-package',
+    title: '6-Day Ethiopia Holiday Package Tour',
     image: '/images/exp-simien.png',
     gallery: [
       '/images/exp-simien.png',
@@ -196,76 +196,123 @@ export const tours = [
       '/images/client/custom/img-2.jpg',
     ],
     duration: '6 Days',
-    region: 'Simien Mountains National Park',
-    highlights: 'Gelada Monkeys · Escarpments · Highland Camps',
+    region: 'Addis Ababa, Bahir Dar, Gondar, Lalibela',
+    highlights: 'Addis Ababa · Lake Tana · Gondar · Lalibela',
     description:
-      'A dedicated mountain trekking itinerary through dramatic escarpments, endemic wildlife areas, and quiet highland camps.',
+      'Explore Addis Ababa, Bahir Dar, Lake Tana, Blue Nile Falls, Gondar and Lalibela on a six-day historical and cultural Ethiopia holiday package.',
     intro:
-      'Designed for active travelers, this private trek explores the Simien Mountains with local scouts, flexible hiking distances, and sweeping viewpoints across one of Africa\'s great alpine landscapes.',
-    adultPrice: 1480,
-    childPrice: 1180,
-    rating: 4.8,
-    reviewCount: 34,
-    destination: 'Simien Mountains',
-    bestFor: 'Trekking, wildlife, landscape photography, and active private travel',
+      'Discover the rich history, culture, and spiritual heritage of Northern Ethiopia on this six-day journey through Addis Ababa, Lake Tana, Blue Nile Falls, Gondar and Lalibela. Cruise to ancient island monasteries, visit medieval castles and royal sites, and explore Lalibela, the New Jerusalem of Africa, where rock-hewn churches were carved from solid volcanic rock more than 800 years ago.',
+    // Pending client data: pricing was not provided in the client document.
+    adultPrice: 0,
+    // Pending client data: pricing was not provided in the client document.
+    childPrice: 0,
+    // Pending client data: rating was not provided in the client document.
+    rating: 0,
+    // Pending client data: review count was not provided in the client document.
+    reviewCount: 0,
+    destination: 'Northern Ethiopia',
+    bestFor: 'Historical tours, cultural holidays, religious heritage, Lalibela churches, Gondar castles, Lake Tana monasteries, and private Ethiopia vacations',
     moments: [
-      'Watch gelada monkeys along the escarpment',
-      'Hike with local scouts and mountain guides',
-      'Enjoy sunrise and sunset viewpoints',
-      'Sleep in selected lodges or supported camps',
+      'Addis Ababa City Tour',
+      'Mount Entoto and Holy Trinity Cathedral',
+      'National Museum and Lucy Fossil',
+      'Lake Tana Monasteries',
+      'Blue Nile Falls',
+      'Awra Amba Community',
+      'Gondar Royal Enclosure and Castles',
+      'Debre Birhan Selassie Church',
+      'Lalibela Rock-Hewn Churches',
+      'Bete Giyorgis',
+      'Nakuto La\'ab Monastery',
+      'Traditional Ethiopian Cultural Dinner',
     ],
+    // Pending client data: included services were not provided in the client document.
     included: [
-      'Park fees and scout service',
-      'Private trekking guide',
-      'Ground transport',
-      'Bottled water during transfers',
+      'Pending client confirmation: included services were not provided in the client document.',
     ],
+    // Pending client data: excluded services were not provided in the client document.
     excluded: [
-      'Personal trekking gear',
-      'Travel insurance',
-      'Tips and gratuities',
-      'Optional mule support',
+      'Pending client confirmation: excluded services were not provided in the client document.',
     ],
     itinerary: [
       {
         day: 1,
-        title: 'Gondar to Simien Gateway',
+        title: 'Arrival in Addis Ababa & City Tour',
         activities:
-          'Drive from Gondar to the park gateway, meet the local team, and take a warm-up walk along the escarpment.',
-        overnight: 'Simien lodge',
+          'Upon arrival at Addis Ababa Bole International Airport, meet your Ethio Origins Tour representative and transfer to your hotel. Begin your city tour at Mount Entoto for panoramic views, then visit Entoto St. Mary Church, the Entoto Museum, and Emperor Menelik II\'s former palace. Continue to the Ethnological Museum, the National Museum of Ethiopia to see Lucy, Holy Trinity Cathedral, Ba\'ata Church, the Mausoleum of Emperor Menelik II, and Merkato, Africa\'s largest open-air market.',
+        overnight: 'Hotel in Addis Ababa',
       },
       {
         day: 2,
-        title: 'Escarpment Trek',
+        title: 'Addis Ababa - Bahir Dar | Blue Nile Falls & Lake Tana',
         activities:
-          'Follow highland trails with wide views, birdlife, and frequent gelada monkey sightings.',
-        overnight: 'Mountain lodge or camp',
+          'Take a morning flight to Bahir Dar, one of Ethiopia\'s most beautiful lakeside cities on Lake Tana. Drive to Tis Abay village to visit the Blue Nile Falls, locally known as Tis Issat, or Smoking Water. Walk through local villages and cross the historic Portuguese Bridge before a boat excursion on Lake Tana to visit Ura Kidane Mihret Monastery, Azwa Maryam Monastery, and Kibran Gabriel Monastery, which is accessible to men only.',
+        overnight: 'Hotel in Bahir Dar',
       },
       {
         day: 3,
-        title: 'Viewpoint Circuit',
+        title: 'Bahir Dar - Awra Amba - Gondar',
         activities:
-          'Hike a flexible route shaped around weather, fitness, and photography goals.',
-        overnight: 'Mountain lodge or camp',
+          'Drive to Gondar, the former imperial capital of Ethiopia. En route, stop at the Awra Amba Community, a remarkable village known for equality, cooperation, and social harmony. In Gondar, visit the Royal Enclosure at Fasil Ghebbi, a UNESCO World Heritage Site, including Emperor Fasilides\' Castle, Fasilides\' Bath, the Royal Banquet Hall, Debre Birhan Selassie Church with its angel-painted ceiling, and the historic Felasha Village.',
+        overnight: 'Hotel in Gondar',
+      },
+      {
+        day: 4,
+        title: 'Gondar - Lalibela | First Group of Rock-Hewn Churches',
+        activities:
+          'Fly to Lalibela, Ethiopia\'s sacred Christian pilgrimage destination and UNESCO World Heritage Site. Begin exploring the first group of Lalibela\'s rock-hewn churches, carved directly into solid volcanic rock during the reign of King Lalibela in the 12th and 13th centuries. Visit Bete Medhane Alem, Bete Maryam, Bete Meskel, Bete Danaghel, Bete Mikael, and Bete Golgotha, and explore the tunnels, passageways, and courtyards that connect them.',
+        overnight: 'Hotel in Lalibela',
+      },
+      {
+        day: 5,
+        title: 'Lalibela Churches & Optional Asheten Mariam Excursion',
+        activities:
+          'Enjoy an optional hike to Asheten Mariam Monastery, set at about 3,000 meters above sea level with panoramic views of the mountains and valleys. After lunch, continue to the second group of Lalibela churches, including Bete Amanuel, Bete Merkorios, Bete Abba Libanos, and Bete Gabriel-Rufael. Conclude at the iconic Bete Giyorgis, the cross-shaped Church of St. George, then visit Nakuto La\'ab Cave Church, known for holy springs and religious treasures.',
+        overnight: 'Hotel in Lalibela',
+      },
+      {
+        day: 6,
+        title: 'Lalibela - Addis Ababa - Departure',
+        activities:
+          'Fly from Lalibela back to Addis Ababa. Depending on your international departure schedule, enjoy free time for shopping, sightseeing, or relaxation. In the evening, attend a farewell cultural dinner at a traditional restaurant with Ethiopian cuisine, music, and dances from diverse ethnic groups, then transfer to Bole International Airport for departure.',
+        overnight: 'Departure',
       },
     ],
-    journeyMap: 'Gondar - Debark - Simien Mountains - Gondar',
-    destinationSlugs: ['simien-mountains-national-park'],
-    categorySlugs: ['trekking-hiking-tours', 'nature-adventure-tours', 'wildlife-tours'],
-    imageAlt: 'Simien Mountains trekking landscape in Ethiopia',
+    journeyMap:
+      'Bole International Airport - Addis Ababa - Mount Entoto - Bahir Dar - Blue Nile Falls - Lake Tana - Awra Amba - Gondar - Lalibela - Addis Ababa - Bole International Airport',
+    destinationSlugs: [
+      'addis-ababa',
+      'bahir-dar',
+      'lake-tana',
+      'blue-nile-falls',
+      'awra-amba',
+      'gondar',
+      'lalibela',
+    ],
+    categorySlugs: [
+      'historical-tours',
+      'cultural-tours',
+      'religious-pilgrimage-tours',
+      'ethiopia-holiday-packages',
+      'private-customized-tours',
+    ],
+    imageAlt: 'Northern Ethiopia holiday package through Addis Ababa, Bahir Dar, Gondar and Lalibela',
     seo: {
-      title: '6-Day Simien Mountains Trekking Tour',
+      title: '6-Day Ethiopia Holiday Package Tour',
       description:
-        'Trek through the Simien Mountains on a six-day guided hiking tour featuring dramatic escarpments, highland routes and endemic wildlife.',
-      canonicalPath: '/tours/6-days-simien-mountains-trekking',
-      primaryKeyword: 'Simien Mountains Trekking Tour',
+        'Explore Addis Ababa, Bahir Dar, Lake Tana, Blue Nile Falls, Gondar and Lalibela on a six-day historical and cultural Ethiopia holiday package.',
+      canonicalPath: '/tours/6-day-ethiopia-holiday-package',
+      primaryKeyword: '6 Day Ethiopia Holiday Package',
       secondaryKeywords: [
-        'Simien Mountains Hiking Tour',
-        'Ethiopia Trekking Tours',
-        'Simien Trekking Package',
+        'Northern Ethiopia Tour',
+        'Addis Ababa Bahir Dar Gondar Lalibela Tour',
+        'Ethiopia Historical Tour Package',
+        'Ethiopia Cultural Holiday',
+        'Lalibela and Gondar Tour',
+        'Ethiopia Vacation Package',
       ],
       ogImage: '/images/exp-simien.png',
-      ogImageAlt: 'Simien Mountains trekking landscape',
+      ogImageAlt: 'Northern Ethiopia holiday package tour',
     },
   },
   {
@@ -878,8 +925,8 @@ export const tours = [
   },
   {
     id: 11,
-    slug: '12-day-historic-north-omo-valley-tour',
-    title: '12-Day Historic North & Omo Valley Cultural Adventure',
+    slug: '20-day-ethiopia-historical-cultural-adventure',
+    title: '20-Day Ethiopia Historical & Cultural Adventure',
     image: '/images/hero.png',
     gallery: [
       '/images/hero.png',
@@ -887,150 +934,226 @@ export const tours = [
       '/images/exp-omo.png',
       '/images/exp-bale.png',
     ],
-    duration: '12 Days',
-    region: 'Addis Ababa, Bahir Dar, Gondar, Simien Mountains, Lalibela, Lake Langano, Omo Valley',
-    highlights: 'Historic North · Simien Mountains · Omo Valley',
+    duration: '20 Days',
+    region: 'Addis Ababa, Bahir Dar, Gondar, Simien Mountains, Axum, Tigray, Lalibela, Awash, Harar',
+    highlights: 'Historic Route · UNESCO Heritage · Wildlife',
     description:
-      'Explore Ethiopia on a 12-day journey through Addis Ababa, Bahir Dar, Gondar, Simien Mountains, Lalibela, Lake Langano and the Omo Valley.',
+      'Explore Ethiopia on a 20-day journey through Addis Ababa, Bahir Dar, Gondar, Simien Mountains, Axum, Tigray, Lalibela, Awash and Harar.',
     intro:
-      'This unforgettable Ethiopian adventure begins and ends in Addis Ababa, taking you through the country\'s most remarkable historical, natural, and cultural treasures. Discover Lake Tana monasteries, Blue Nile Falls, Gondar\'s royal sites, the Simien Mountains, Lalibela\'s rock-hewn churches, Lake Langano, Dorze Village, Lake Chamo, Mursi, Hamer, Karo and Konso communities.',
+      'Embark on an extraordinary 20-day journey through Ethiopia, a land of ancient civilizations, breathtaking landscapes, rich cultural traditions, and remarkable historical treasures. This comprehensive adventure follows Ethiopia\'s famous Historic Route, combining UNESCO World Heritage Sites, mountain scenery, Lake Tana monasteries, Gondar, the Simien Mountains, Axum, Tigray rock-hewn churches, Lalibela, Awash National Park and Harar.',
     // Pending client data: pricing was not provided in the client document.
-    adultPrice: 3150,
+    adultPrice: 0,
     // Pending client data: pricing was not provided in the client document.
-    childPrice: 2500,
+    childPrice: 0,
     // Pending client data: rating was not provided in the client document.
-    rating: 4.9,
+    rating: 0,
     // Pending client data: review count was not provided in the client document.
-    reviewCount: 29,
-    destination: 'Historic North & Omo Valley',
-    bestFor: 'First-time visitors, private groups, heritage, culture, and scenery',
+    reviewCount: 0,
+    destination: 'Ethiopia Historic Route',
+    bestFor: 'Historical routes, cultural travel, UNESCO heritage, religious sites, wildlife, photography, and multi-destination private journeys',
     moments: [
-      'Tour Addis Ababa including Mount Entoto, the National Museum, Lucy, the Ethnological Museum, Holy Trinity Cathedral and Merkato',
-      'Visit Lake Tana monasteries, Blue Nile Falls, Gondar royal sites, Simien Mountains National Park and Lalibela rock-hewn churches',
-      'Travel through Lake Langano, Dorze Village, Lake Chamo, Jinka, Turmi, Konso and Arba Minch',
-      'Meet Mursi, Hamer and Karo communities, then return through Lake Ziway for a farewell dinner and cultural performance',
+      'Addis Ababa, National Museum, Lucy, Ethnological Museum, Holy Trinity Cathedral, Merkato and Mount Entoto',
+      'Debre Libanos Monastery, Portuguese Bridge, Jemma River Gorge, Blue Nile Gorge and Debre Markos',
+      'Lake Tana monasteries, Zege Peninsula, Ura Kidane Mihret, Blue Nile Falls, Gondar and Fasil Ghebbi',
+      'Simien Mountains National Park, Gelada Baboons, Walia Ibex, Axum, Yeha, Gheralta, Tigray churches and Lalibela',
+      'Awash National Park, Awash Falls, natural hot springs, Harar, Hyena Feeding Ceremony and farewell cultural dinner',
     ],
     // Pending client data: included services were not provided in the client document.
     included: [
-      'Private guide and vehicle',
-      'Route planning and coordination',
-      'Listed entrance fees',
-      'Domestic logistics support',
+      'Pending client confirmation: included services were not provided in the client document.',
     ],
     // Pending client data: excluded services were not provided in the client document.
     excluded: [
-      'International flights',
-      'Domestic flights unless quoted',
-      'Personal expenses',
-      'Tips and gratuities',
+      'Pending client confirmation: excluded services were not provided in the client document.',
     ],
     itinerary: [
       {
         day: 1,
-        title: 'Arrival in Addis Ababa & City Tour',
+        title: 'Arrival in Addis Ababa',
         activities:
-          'Upon arrival at Addis Ababa Bole International Airport, you will be welcomed by our representative and transferred to your hotel. After a short rest, enjoy a guided city tour including Mount Entoto for panoramic views of Addis Ababa, the National Museum, home of the famous fossil "Lucy", the Ethnological Museum, Holy Trinity Cathedral, Merkato, one of Africa\'s largest open-air markets, and important monuments and historical landmarks.',
-        overnight: 'Hotel in Addis Ababa',
+          'Upon arrival at Bole International Airport, meet your Ethio Origins Tour representative and transfer to your hotel. Depending on arrival time, enjoy a guided Addis Ababa city tour including the National Museum, home of Lucy, the Ethnological Museum, Holy Trinity Cathedral, Merkato, and Mount Entoto for panoramic views of the capital city.',
+        overnight: 'Addis Ababa',
       },
       {
         day: 2,
-        title: 'Fly to Bahir Dar - Lake Tana Monasteries & Blue Nile Falls',
+        title: 'Addis Ababa - Debre Markos',
         activities:
-          'Take a morning flight to Bahir Dar. Enjoy a boat excursion on Lake Tana to visit the historic monasteries of the Zege Peninsula, including Azwa Mariam Monastery, Ura Kidane Mihret Monastery and Bete Maryam Monastery. Admire centuries-old religious paintings and unique Ethiopian Orthodox architecture. After lunch, drive to the magnificent Blue Nile Falls, Tis Issat, known locally as "Smoking Water". A short walk brings you close to the falls for excellent views and photographs. Later, explore Bahir Dar\'s vibrant lakeside atmosphere and local markets.',
-        overnight: 'Hotel in Bahir Dar',
+          'Drive north through the Ethiopian Highlands. Visit Debre Libanos Monastery, founded by Saint Tekle Haymanot in the 13th century, continue to the Portuguese Bridge, and enjoy views of the Jemma River Gorge before crossing the Blue Nile Gorge en route to Debre Markos.',
+        overnight: 'Debre Markos',
       },
       {
         day: 3,
-        title: 'Drive to Gondar',
+        title: 'Debre Markos - Bahir Dar',
         activities:
-          'Drive to Gondar through beautiful countryside. Visit Guzara Castle, the Royal Enclosure at Fasil Ghebbi, the Castle of Emperor Fasilides, Debre Birhan Selassie Church and Fasilides Bath while learning about Ethiopia\'s imperial history in the former capital of the Ethiopian Empire.',
-        overnight: 'Hotel in Gondar',
+          'Continue to Bahir Dar, one of Ethiopia\'s attractive lakeside cities. Upon arrival, enjoy a relaxing walk through the city and local markets. In the evening, head to Bezawit Hill for sunset views over Lake Tana and the Blue Nile.',
+        overnight: 'Bahir Dar',
       },
       {
         day: 4,
-        title: 'Excursion to Simien Mountains National Park',
+        title: 'Lake Tana Monasteries',
         activities:
-          'Drive to the spectacular Simien Mountains National Park, a UNESCO World Heritage Site. Highlights include dramatic mountain scenery, Gelada Baboons, Walia Ibex, numerous endemic bird species, and trekking near Sankaber and Jimbar Waterfall. Return to Gondar in the afternoon.',
-        overnight: 'Hotel in Gondar',
+          'Take a full-day boat excursion on Lake Tana, Ethiopia\'s largest lake and the source of the Blue Nile. Visit the monasteries of the Zege Peninsula, including Ura Kidane Mihret, renowned for murals and religious treasures. Observe local fishermen, birdlife, and perhaps hippos along the shoreline.',
+        overnight: 'Bahir Dar',
       },
       {
         day: 5,
-        title: 'Fly to Lalibela',
+        title: 'Blue Nile Falls - Gondar',
         activities:
-          'Take a morning flight to Lalibela. Visit the first group of the famous rock-hewn churches, including Bete Medhane Alem, Bete Maryam, Bete Meskel, Bete Denagel, Debre Sina and Bete Golgotha. Marvel at these architectural masterpieces carved directly from volcanic rock.',
-        overnight: 'Hotel in Lalibela',
+          'Visit the Blue Nile Falls, locally known as Tis Issat, or Smoking Water. Walk through rural villages and cross the historic Portuguese Bridge. After lunch, drive to Gondar, the former capital of Ethiopia\'s emperors.',
+        overnight: 'Gondar',
       },
       {
         day: 6,
-        title: 'Fly to Addis Ababa & Drive to Lake Langano',
+        title: 'Gondar - Simien Mountains',
         activities:
-          'Fly back to Addis Ababa in the morning, then drive south through the Great Rift Valley, passing Lakes Koka, Ziway and Langano. Enjoy beautiful scenery, birdlife and views of rural Ethiopian life.',
-        overnight: 'Hotel at Lake Langano',
+          'Visit Gondar\'s Royal Enclosure at Fasil Ghebbi, Fasilides Bath, and Debre Birhan Selassie Church with its angel-covered ceiling. In the afternoon, drive to Simien Mountains National Park and enjoy sunset views.',
+        overnight: 'Simien Mountains',
       },
       {
         day: 7,
-        title: 'Lake Langano - Dorze Village - Arba Minch',
+        title: 'Simien Mountains National Park',
         activities:
-          'Drive to Arba Minch while visiting several ethnic communities along the route. Continue to Chencha to explore the traditional Dorze village, famous for beehive-shaped houses, weaving traditions and enset, or false banana, cultivation. Arrive in Arba Minch in the evening.',
-        overnight: 'Hotel in Arba Minch',
+          'Spend the day exploring one of Africa\'s most spectacular mountain ranges. Enjoy hiking opportunities and look for endemic wildlife including Gelada Baboons, Walia Ibex, Ethiopian Klipspringers, and numerous bird species while admiring dramatic cliffs, deep valleys, and highland landscapes.',
+        overnight: 'Simien Mountains',
       },
       {
         day: 8,
-        title: 'Arba Minch - Jinka',
+        title: 'Simien Mountains - Axum',
         activities:
-          'Begin with an early morning boat trip on Lake Chamo, with highlights including the Crocodile Market, hippos and water birds. Continue to Jinka, visiting the Konso, Ari and Tsemay communities along the way.',
-        overnight: 'Hotel/Lodge in Jinka',
+          'Drive through northern Ethiopia\'s dramatic scenery toward Axum. Travel via the Lima Limo Road and cross the Tekeze River Valley while enjoying mountain landscapes.',
+        overnight: 'Axum',
       },
       {
         day: 9,
-        title: 'Mursi Tribe & Drive to Turmi',
+        title: 'Discover Axum',
         activities:
-          'Visit Mago National Park to meet the Mursi people, famous for their distinctive lip plates and rich cultural traditions. After lunch, continue to Turmi and visit the Hamer people and their villages.',
-        overnight: 'Lodge in Turmi',
+          'Explore Ethiopia\'s ancient capital and one of Africa\'s major archaeological sites. Visit Stelae Park, the Tombs of Kings, Queen of Sheba\'s Palace ruins, Ezana\'s inscriptions, and St. Mary of Zion Church, associated with the legend of the Ark of the Covenant.',
+        overnight: 'Axum',
       },
       {
         day: 10,
-        title: 'Karo Tribe Excursion',
+        title: 'Axum - Tigray',
         activities:
-          'Travel to Murulle to visit the Karo people, renowned for their elaborate body painting and scarification traditions. Enjoy stunning views of the Omo River from Korcho village. Depending on the day, attend the colorful local market and, if fortunate, witness a traditional Hamer bull-jumping ceremony.',
-        overnight: 'Lodge in Turmi',
+          'Travel through rugged Tigray landscapes. Visit Yeha Temple, Ethiopia\'s oldest standing structure, dating back nearly 3,000 years, then continue through mountain scenery toward the Gheralta region.',
+        overnight: 'Gheralta/Tigray',
       },
       {
         day: 11,
-        title: 'Turmi - Konso - Arba Minch',
+        title: 'Tigray Rock-Hewn Churches - Mekele',
         activities:
-          'Drive to Konso, a UNESCO World Heritage Site known for terraced farming systems, traditional stone-walled villages and rich cultural heritage. Continue to Arba Minch, enjoying scenic landscapes along the way.',
-        overnight: 'Hotel in Arba Minch',
+          'Explore some of Tigray\'s remarkable rock-hewn churches, dramatically carved into cliffs and mountainsides. Depending on interests and fitness level, choose from churches accessible by short or moderate hikes, then continue to Mekele.',
+        overnight: 'Mekele',
       },
       {
         day: 12,
-        title: 'Return to Addis Ababa',
+        title: 'Mekele - Lalibela',
         activities:
-          'Drive back to Addis Ababa through the Great Rift Valley. Visit local villages and make a stop at Lake Ziway. Upon arrival in Addis Ababa, enjoy last-minute souvenir shopping, a farewell dinner featuring traditional Ethiopian cuisine, and a cultural music and dance performance before transferring to Bole International Airport for your departure flight.',
+          'Travel through the Ethiopian Highlands toward Lalibela. Enjoy mountain scenery, traditional villages, and rural landscapes. Optional visit to Yemrehane Kristos Church, one of Ethiopia\'s finest medieval churches.',
+        overnight: 'Lalibela',
+      },
+      {
+        day: 13,
+        title: 'Lalibela Rock-Hewn Churches',
+        activities:
+          'Spend the day exploring the first group of Lalibela\'s famous rock-hewn churches. Marvel at the engineering and religious significance of these UNESCO World Heritage monuments carved directly into solid rock.',
+        overnight: 'Lalibela',
+      },
+      {
+        day: 14,
+        title: 'Lalibela Exploration',
+        activities:
+          'Continue visiting the remaining churches, including Bete Giyorgis, the Church of St. George. Optional activities include hiking to Asheton Maryam Monastery, attending local religious ceremonies, cultural experiences, or traditional coffee ceremonies.',
+        overnight: 'Lalibela',
+      },
+      {
+        day: 15,
+        title: 'Lalibela - Kombolcha',
+        activities:
+          'Drive south through scenic mountain landscapes and traditional villages. Observe daily life in rural Ethiopia while traveling toward Kombolcha.',
+        overnight: 'Kombolcha',
+      },
+      {
+        day: 16,
+        title: 'Kombolcha - Awash National Park',
+        activities:
+          'Travel southeast through the Afar lowlands toward Awash National Park. Observe the landscape change as the highlands give way to semi-desert plains and savannah ecosystems.',
+        overnight: 'Awash National Park',
+      },
+      {
+        day: 17,
+        title: 'Awash National Park Safari',
+        activities:
+          'Enjoy game drives and nature walks in Awash National Park. Look for Oryx, Soemmerring\'s Gazelle, Warthogs, Olive Baboons, Crocodiles, and bird species. Visit Awash Falls and natural hot springs.',
+        overnight: 'Awash National Park',
+      },
+      {
+        day: 18,
+        title: 'Awash - Harar',
+        activities:
+          'Drive east toward Harar, passing fertile agricultural regions known for coffee and khat production before arriving in one of Ethiopia\'s most fascinating cultural destinations.',
+        overnight: 'Harar',
+      },
+      {
+        day: 19,
+        title: 'Explore Harar',
+        activities:
+          'Discover the UNESCO-listed walled city of Harar. Wander through colorful markets, narrow alleyways, traditional Harari houses, museums, and historic mosques. In the evening, witness the Hyena Feeding Ceremony, one of Ethiopia\'s unique cultural traditions.',
+        overnight: 'Harar',
+      },
+      {
+        day: 20,
+        title: 'Harar - Addis Ababa - Departure',
+        activities:
+          'Drive back to Addis Ababa through Ethiopia\'s eastern highlands. Upon arrival, enjoy last-minute shopping, relaxation, and a farewell cultural dinner with traditional Ethiopian cuisine, music, and dance performances. Later, transfer to Bole International Airport for your international departure flight.',
         overnight: 'Departure',
       },
     ],
     journeyMap:
-      'Addis Ababa - Bahir Dar - Lake Tana - Blue Nile Falls - Gondar - Simien Mountains - Lalibela - Lake Langano - Dorze Village - Arba Minch - Lake Chamo - Jinka - Mago National Park - Turmi - Murulle - Konso - Lake Ziway - Addis Ababa',
-    destinationSlugs: ['lalibela', 'omo-valley', 'awash-national-park'],
-    categorySlugs: ['historical-tours', 'cultural-tours', 'nature-adventure-tours', 'private-customized-tours'],
-    imageAlt: 'Historic North and Omo Valley cultural tour route in Ethiopia',
+      'Addis Ababa - Debre Markos - Bahir Dar - Lake Tana - Blue Nile Falls - Gondar - Simien Mountains - Axum - Yeha - Gheralta - Mekele - Lalibela - Kombolcha - Awash National Park - Harar - Addis Ababa',
+    destinationSlugs: [
+      'addis-ababa',
+      'debre-markos',
+      'bahir-dar',
+      'lake-tana',
+      'blue-nile-falls',
+      'gondar',
+      'simien-mountains-national-park',
+      'aksum',
+      'yeha-temple',
+      'gheralta',
+      'mekele',
+      'lalibela',
+      'kombolcha',
+      'awash-national-park',
+      'harar',
+    ],
+    categorySlugs: [
+      'historical-tours',
+      'cultural-tours',
+      'religious-pilgrimage-tours',
+      'nature-adventure-tours',
+      'wildlife-tours',
+      'photography-tours',
+      'private-customized-tours',
+    ],
+    imageAlt: 'Ethiopia historical and cultural adventure route',
     seo: {
-      title: '12-Day Historic North & Omo Valley Cultural Tour',
+      title: '20-Day Ethiopia Historical & Cultural Adventure',
       description:
-        'Explore Ethiopia on a 12-day journey through Addis Ababa, Bahir Dar, Gondar, Simien Mountains, Lalibela, Lake Langano and the Omo Valley.',
-      canonicalPath: '/tours/12-day-historic-north-omo-valley-tour',
-      primaryKeyword: '12 Day Historic North and Omo Valley Tour',
+        'Explore Ethiopia on a 20-day journey through Addis Ababa, Bahir Dar, Gondar, Simien Mountains, Axum, Tigray, Lalibela, Awash and Harar.',
+      canonicalPath: '/tours/20-day-ethiopia-historical-cultural-adventure',
+      primaryKeyword: '20 Day Ethiopia Historical and Cultural Tour',
       secondaryKeywords: [
-        'Northern Ethiopia and Omo Valley Tour',
-        'Ethiopia Historical and Cultural Tour',
-        'Lalibela and Omo Valley Tour',
-        'Ethiopia 12 Day Tour',
-        'Historic North Ethiopia Tour',
-        'Omo Valley Cultural Adventure',
+        'Ethiopia Historic Route Tour',
+        'Northern Ethiopia Cultural Tour',
+        'Ethiopia UNESCO Heritage Tour',
+        'Ethiopia Historical Adventure',
+        'Lalibela Gondar Axum Tour',
+        'Ethiopia Multi-Destination Tour',
+        'Ethiopia Cultural and Wildlife Tour',
       ],
       ogImage: '/images/hero.png',
-      ogImageAlt: 'Historic North and Omo Valley cultural adventure in Ethiopia',
+      ogImageAlt: 'Ethiopia historical and cultural adventure',
     },
   },
 ]

@@ -63,6 +63,24 @@ export const tourCategories: TourCategory[] = [
     },
   },
   {
+    slug: 'ethiopia-holiday-packages',
+    name: 'Ethiopia Holiday Packages',
+    description:
+      'Curated Ethiopia holiday packages combining history, culture, religious heritage, scenic landscapes and private travel support.',
+    seo: {
+      title: 'Ethiopia Holiday Packages & Vacation Tours',
+      description:
+        'Explore Ethiopia holiday packages featuring Addis Ababa, Bahir Dar, Gondar, Lalibela and guided cultural vacation routes.',
+      canonicalPath: '/tours/ethiopia-holiday-packages',
+      primaryKeyword: 'Ethiopia Holiday Packages',
+      secondaryKeywords: [
+        'Ethiopia Vacation Package',
+        'Northern Ethiopia Tour',
+        'Ethiopia Cultural Holiday',
+      ],
+    },
+  },
+  {
     slug: 'festival-tours',
     name: 'Ethiopia Festival Tours',
     description:
