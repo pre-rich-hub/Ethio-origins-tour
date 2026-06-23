@@ -3,12 +3,12 @@ export const tours = [
     id: 1,
     slug: '10-day-omo-valley-bale-mountains-cultural-adventure',
     title: '10-Day Omo Valley & Bale Mountains Cultural Adventure',
-    image: 'https://res.cloudinary.com/divimnzxa/image/upload/v1782246561/Private_Omo_Valley_Tours_From_Addis_Ababa_xvpppa.jpg',
+    image: 'https://res.cloudinary.com/divimnzxa/image/upload/f_auto,q_auto,w_600/v1782246561/Private_Omo_Valley_Tours_From_Addis_Ababa_xvpppa.jpg',
     gallery: [
-      'https://res.cloudinary.com/divimnzxa/image/upload/v1782246561/Private_Omo_Valley_Tours_From_Addis_Ababa_xvpppa.jpg',
-      'https://res.cloudinary.com/divimnzxa/image/upload/v1782246561/Voyage_en_Ethiopie_n5xvsq.jpg',
-      'https://res.cloudinary.com/divimnzxa/image/upload/v1782246561/40462096650629206_q68ntv.jpg',
-      'https://res.cloudinary.com/divimnzxa/image/upload/v1782246561/Hawassa_Ethiopia_x7pubf.jpg',
+      'https://res.cloudinary.com/divimnzxa/image/upload/f_auto,q_auto,w_600/v1782246561/Private_Omo_Valley_Tours_From_Addis_Ababa_xvpppa.jpg',
+      'https://res.cloudinary.com/divimnzxa/image/upload/f_auto,q_auto,w_600/v1782246561/Voyage_en_Ethiopie_n5xvsq.jpg',
+      'https://res.cloudinary.com/divimnzxa/image/upload/f_auto,q_auto,w_600/v1782246561/40462096650629206_q68ntv.jpg',
+      'https://res.cloudinary.com/divimnzxa/image/upload/f_auto,q_auto,w_600/v1782246561/Hawassa_Ethiopia_x7pubf.jpg',
     ],
     duration: '10 Days',
     region: 'Addis Ababa, Omo Valley, Hawassa, Bale Mountains',
@@ -170,7 +170,7 @@ export const tours = [
         'Omo Valley and Bale Mountains Adventure',
         'Ethiopia Cultural Adventure Tour',
       ],
-      ogImage: '/images/client/custom/omo-valley.jpg',
+      ogImage: 'https://res.cloudinary.com/divimnzxa/image/upload/v1782247186/Bet_Giyorgis_Rock-Hewn_Church_at_Lalibela___qffnvp.jpg',
       ogImageAlt: 'Omo Valley and Bale Mountains cultural adventure',
     },
   },
@@ -178,13 +178,13 @@ export const tours = [
     id: 2,
     slug: '3-day-lalibela-genna-festival-tour',
     title: '3-Day Lalibela Christmas (Genna) Festival Tour',
-    image: '/images/client/custom/lalibela.jpg',
-    gallery: [
-      '/images/client/custom/lalibela.jpg',
-      '/images/client/custom/axum.jpg',
-      '/images/dest-gondar.png',
-      '/images/exp-northern.png',
-    ],
+    image: 'https://res.cloudinary.com/divimnzxa/image/upload/f_auto,q_auto,w_1920,c_fill,g_auto/v1782247186/Bet_Giyorgis_Rock-Hewn_Church_at_Lalibela___qffnvp.jpg',
+      gallery: [
+        'https://res.cloudinary.com/divimnzxa/image/upload/f_auto,q_auto,w_800,h_600,c_fill,g_auto/v1782247186/Bet_Giyorgis_Rock-Hewn_Church_at_Lalibela___qffnvp.jpg',
+        'https://res.cloudinary.com/divimnzxa/image/upload/f_auto,q_auto,w_800,h_600,c_fill,g_auto/v1782247185/Ethiopia_Axum_ytphij.jpg',
+        'https://res.cloudinary.com/divimnzxa/image/upload/f_auto,q_auto,w_800,h_600,c_fill,g_auto/v1782247184/Ethiopia_Gondar_castle_putyss.jpg',
+        'https://res.cloudinary.com/divimnzxa/image/upload/f_auto,q_auto,w_800,h_600,c_fill,g_auto/v1782247184/Ethiopia_wendogenet_jefm6x.jpg',
+      ],
     duration: '3 Days',
     region: 'Addis Ababa, Lalibela, Beza Kula',
     highlights: 'Lalibela · Genna Festival · Beza Kula',
@@ -192,13 +192,9 @@ export const tours = [
       'Experience Lalibela\'s rock-hewn churches, candlelight ceremonies and Ethiopia\'s Genna Christmas Festival on a three-day cultural and religious tour.',
     intro:
       'Experience one of the world\'s most unique and spiritual Christmas celebrations in Lalibela, Ethiopia\'s New Jerusalem. This journey combines UNESCO-listed rock-hewn churches, Ethiopian Orthodox traditions, candlelight ceremonies, pilgrim gatherings, and the Beza Kula Christmas celebration in Addis Ababa.',
-    // Pending client data: pricing was not provided in the client document.
     adultPrice: 1850,
-    // Pending client data: pricing was not provided in the client document.
     childPrice: 1450,
-    // Pending client data: rating was not provided in the client document.
     rating: 4.9,
-    // Pending client data: review count was not provided in the client document.
     reviewCount: 41,
     destination: 'Lalibela',
     bestFor: 'Religious festivals, pilgrimage, Ethiopian Orthodox traditions, history, culture, and first-time Lalibela visitors',
@@ -269,7 +265,7 @@ export const tours = [
         'Lalibela Pilgrimage Tour',
         'Genna Festival Ethiopia',
       ],
-      ogImage: '/images/client/custom/lalibela.jpg',
+      ogImage: 'https://res.cloudinary.com/divimnzxa/image/upload/v1782247186/Bet_Giyorgis_Rock-Hewn_Church_at_Lalibela___qffnvp.jpg',
       ogImageAlt: 'Lalibela Christmas Genna Festival tour',
     },
   },
@@ -277,12 +273,12 @@ export const tours = [
     id: 3,
     slug: '6-day-ethiopia-holiday-package',
     title: '6-Day Ethiopia Holiday Package Tour',
-    image: '/images/exp-simien.png',
+    image: 'https://res.cloudinary.com/divimnzxa/image/upload/v1782248448/12_Traditions_To_Know_About_Whilst_Celebrating_Ethiopian_New_Year_Enkutatash___HandZaround_HandZaround_kt1wai.jpg',
     gallery: [
-      '/images/exp-simien.png',
-      '/images/client/custom/ethiopia-landscape.png',
-      '/images/client/custom/img-1.jpg',
-      '/images/client/custom/img-2.jpg',
+      'https://res.cloudinary.com/divimnzxa/image/upload/f_auto,q_auto,w_800,h_600,c_fill,g_auto/v1782247184/Ethiopia_wendogenet_jefm6x.jpg',
+      'https://res.cloudinary.com/divimnzxa/image/upload/f_auto,q_auto,w_800,h_600,c_fill,g_auto/v1782248220/The_Most_Breathtaking_Geography_in_Ethiopia_wtbbpz.jpg',
+      'https://res.cloudinary.com/divimnzxa/image/upload/f_auto,q_auto,w_800,h_600,c_fill,g_auto/v1782247185/Ethiopia_Axum_ytphij.jpg',
+      'https://res.cloudinary.com/divimnzxa/image/upload/f_auto,q_auto,w_800,h_600,c_fill,g_auto/v1782247184/Ethiopia_Gondar_castle_putyss  .jpg',
     ],
     duration: '6 Days',
     region: 'Addis Ababa, Bahir Dar, Gondar, Lalibela',
@@ -291,13 +287,9 @@ export const tours = [
       'Explore Addis Ababa, Bahir Dar, Lake Tana, Blue Nile Falls, Gondar and Lalibela on a six-day historical and cultural Ethiopia holiday package.',
     intro:
       'Discover the rich history, culture, and spiritual heritage of Northern Ethiopia on this six-day journey through Addis Ababa, Lake Tana, Blue Nile Falls, Gondar and Lalibela. Cruise to ancient island monasteries, visit medieval castles and royal sites, and explore Lalibela, the New Jerusalem of Africa, where rock-hewn churches were carved from solid volcanic rock more than 800 years ago.',
-    // Pending client data: pricing was not provided in the client document.
     adultPrice: 0,
-    // Pending client data: pricing was not provided in the client document.
     childPrice: 0,
-    // Pending client data: rating was not provided in the client document.
     rating: 0,
-    // Pending client data: review count was not provided in the client document.
     reviewCount: 0,
     destination: 'Northern Ethiopia',
     bestFor: 'Historical tours, cultural holidays, religious heritage, Lalibela churches, Gondar castles, Lake Tana monasteries, and private Ethiopia vacations',
@@ -315,11 +307,9 @@ export const tours = [
       'Nakuto La\'ab Monastery',
       'Traditional Ethiopian Cultural Dinner',
     ],
-    // Pending client data: included services were not provided in the client document.
     included: [
       'Pending client confirmation: included services were not provided in the client document.',
     ],
-    // Pending client data: excluded services were not provided in the client document.
     excluded: [
       'Pending client confirmation: excluded services were not provided in the client document.',
     ],
@@ -400,7 +390,7 @@ export const tours = [
         'Lalibela and Gondar Tour',
         'Ethiopia Vacation Package',
       ],
-      ogImage: '/images/exp-simien.png',
+      ogImage: 'https://res.cloudinary.com/divimnzxa/image/upload/v1782247184/Ethiopia_wendogenet_jefm6x.jpg',
       ogImageAlt: 'Northern Ethiopia holiday package tour',
     },
   },
@@ -408,12 +398,12 @@ export const tours = [
     id: 4,
     slug: '4-day-danakil-depression-erta-ale-tour',
     title: '4-Day Danakil Depression & Erta Ale Volcano Adventure',
-    image: '/images/client/custom/dankil-depression.jpg',
+    image: 'https://res.cloudinary.com/divimnzxa/image/upload/f_auto,q_auto,w_1920,c_fill,g_auto/v1782248873/Dallol_Ethiopia___%CC%97%CC%80__%E0%A9%88_z78ix6.jpg',
     gallery: [
-      '/images/client/custom/dankil-depression.jpg',
-      '/images/exp-danakil.png',
-      '/images/client/custom/img-3.jpg',
-      '/images/client/custom/photo_10_2026-02-22_15-45-13.jpg',
+      'https://res.cloudinary.com/divimnzxa/image/upload/f_auto,q_auto,w_400,h_300,c_fill,g_auto/v1782248873/Dallol_Ethiopia___%CC%97%CC%80__%E0%A9%88_z78ix6.jpg',
+      'https://res.cloudinary.com/divimnzxa/image/upload/f_auto,q_auto,w_400,h_300,c_fill,g_auto/v1782248872/4996249580453896_lrt6x7.jpg',
+      'https://res.cloudinary.com/divimnzxa/image/upload/f_auto,q_auto,w_400,h_300,c_fill,g_auto/v1782248878/Reasons_to_Visit_the_Danakil_Depression_Ethiopia_xnvaap.jpg',
+      'https://res.cloudinary.com/divimnzxa/image/upload/f_auto,q_auto,w_400,h_300,c_fill,g_auto/v1782248872/Crater_Lake_Erta_Ale_-_Ethiopia_ykh2lj.jpg',
     ],
     duration: '4 Days',
     region: 'Mekele, Berhale, Hamed Ela, Dallol, Dodom, Erta Ale',
@@ -504,7 +494,7 @@ export const tours = [
         'Afar Danakil Adventure',
         'Danakil Lava Lake Tour',
       ],
-      ogImage: '/images/client/custom/dankil-depression.jpg',
+      ogImage: 'https://res.cloudinary.com/divimnzxa/image/upload/v1782248873/Dallol_Ethiopia___%CC%97%CC%80__%E0%A9%88_z78ix6.jpg',
       ogImageAlt: 'Danakil Depression and Erta Ale Volcano adventure',
     },
   },
@@ -512,12 +502,12 @@ export const tours = [
     id: 5,
     slug: '12-day-historic-north-omo-valley-tour',
     title: '12-Day Historic North & Omo Valley Cultural Adventure',
-    image: '/images/hero.png',
+    image: 'https://res.cloudinary.com/divimnzxa/image/upload/f_auto,q_auto,w_1920,c_fill,g_auto/v1782249614/Island_in_Lake_Tana_containing_monestary_Ethiopia_l2np0l.jpg',
     gallery: [
-      '/images/hero.png',
-      '/images/exp-northern.png',
-      '/images/exp-omo.png',
-      '/images/exp-bale.png',
+      'https://res.cloudinary.com/divimnzxa/image/upload/f_auto,q_auto,w_400,h_300,c_fill,g_auto/v1782249613/Blue_Nile_falls_-_Amhara_Region_-_Ethiopia_eii468.jpg',
+      'https://res.cloudinary.com/divimnzxa/image/upload/f_auto,q_auto,w_400,h_300,c_fill,g_auto/v1782248220/The_Most_Breathtaking_Geography_in_Ethiopia_wtbbpz.jpg',
+      'https://res.cloudinary.com/divimnzxa/image/upload/f_auto,q_auto,w_400,h_300,c_fill,g_auto/v1782246561/Private_Omo_Valley_Tours_From_Addis_Ababa_xvpppa.jpg',
+      'https://res.cloudinary.com/divimnzxa/image/upload/f_auto,q_auto,w_400,h_300,c_fill,g_auto/v1782247186/Bet_Giyorgis_Rock-Hewn_Church_at_Lalibela___qffnvp.jpg',
     ],
     duration: '12 Days',
     region: 'Addis Ababa, Bahir Dar, Gondar, Simien Mountains, Lalibela, Lake Langano, Omo Valley',
@@ -526,13 +516,9 @@ export const tours = [
       'Explore Ethiopia on a 12-day journey through Addis Ababa, Bahir Dar, Gondar, Simien Mountains, Lalibela, Lake Langano and the Omo Valley.',
     intro:
       'This Ethiopian adventure begins and ends in Addis Ababa, taking you through the country\'s historical, natural, and cultural treasures. Discover Lake Tana monasteries, Blue Nile Falls, Gondar\'s royal sites, the Simien Mountains, Lalibela\'s rock-hewn churches, Lake Langano, Dorze Village, Lake Chamo, Mursi, Hamer, Karo and Konso communities.',
-    // Pending client data: pricing was not provided in the client document.
     adultPrice: 0,
-    // Pending client data: pricing was not provided in the client document.
     childPrice: 0,
-    // Pending client data: rating was not provided in the client document.
     rating: 0,
-    // Pending client data: review count was not provided in the client document.
     reviewCount: 0,
     destination: 'Historic North & Omo Valley',
     bestFor: 'First-time visitors, private groups, heritage, culture, scenery, northern Ethiopia highlights, and Omo Valley communities',
@@ -550,11 +536,9 @@ export const tours = [
       'Karo Cultural Excursion',
       'Konso Cultural Landscape',
     ],
-    // Pending client data: included services were not provided in the recovered client document.
     included: [
       'Pending client confirmation: included services were not provided in the client document.',
     ],
-    // Pending client data: excluded services were not provided in the recovered client document.
     excluded: [
       'Pending client confirmation: excluded services were not provided in the client document.',
     ],
@@ -691,7 +675,7 @@ export const tours = [
         'Historic North Ethiopia Tour',
         'Omo Valley Cultural Adventure',
       ],
-      ogImage: '/images/hero.png',
+      ogImage: 'https://res.cloudinary.com/divimnzxa/image/upload/v1782249614/Island_in_Lake_Tana_containing_monestary_Ethiopia_l2np0l.jpg',
       ogImageAlt: 'Historic North and Omo Valley cultural adventure in Ethiopia',
     },
   },
