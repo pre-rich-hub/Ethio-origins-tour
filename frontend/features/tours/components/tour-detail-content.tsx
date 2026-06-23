@@ -1,7 +1,16 @@
-import { Check, MapPin } from 'lucide-react'
+import { AlertCircle, Check, MapPin, Plane } from 'lucide-react'
 import type { Tour } from '../types/tour'
 
 export function TourDetailContent({ tour }: { tour: Tour }) {
+  const arrivalInfo =
+    'arrivalInfo' in tour && Array.isArray(tour.arrivalInfo)
+      ? tour.arrivalInfo
+      : []
+  const importantNote =
+    'importantNote' in tour && typeof tour.importantNote === 'string'
+      ? tour.importantNote
+      : undefined
+
   return (
     <section className="pb-20 pt-16 md:pb-28 md:pt-20">
       <div className="mx-auto grid max-w-7xl gap-8 px-6 md:px-8 lg:grid-cols-[minmax(0,1fr)_376px]">
@@ -45,6 +54,45 @@ export function TourDetailContent({ tour }: { tour: Tour }) {
               </div>
             </section>
 
+            {arrivalInfo.length > 0 ? (
+              <section id="arrival">
+                <p className="font-sans text-xs uppercase tracking-luxe text-gold">
+                  Arrival
+                </p>
+                <h2 className="mt-4 font-serif text-4xl font-medium text-foreground">
+                  Before Day 1
+                </h2>
+                <div className="mt-8 grid gap-4 sm:grid-cols-2">
+                  {arrivalInfo.map((item) => (
+                    <div key={item} className="flex gap-3 border border-border p-5">
+                      <Plane className="mt-1 size-5 shrink-0 text-gold" />
+                      <p className="font-sans text-sm font-light leading-relaxed text-muted-foreground">
+                        {item}
+                      </p>
+                    </div>
+                  ))}
+                </div>
+              </section>
+            ) : null}
+
+            {importantNote ? (
+              <section aria-label="Important tour note">
+                <div className="border border-gold/50 bg-gold/10 p-5 md:p-6">
+                  <div className="flex gap-3">
+                    <AlertCircle className="mt-1 size-5 shrink-0 text-gold" />
+                    <div>
+                      <p className="font-sans text-xs uppercase tracking-luxe text-gold">
+                        Important Note
+                      </p>
+                      <p className="mt-3 font-sans text-sm font-light leading-relaxed text-muted-foreground">
+                        {importantNote}
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </section>
+            ) : null}
+
             <section id="itinerary">
               <p className="font-sans text-xs uppercase tracking-luxe text-gold">
                 Itinerary
@@ -71,6 +119,11 @@ export function TourDetailContent({ tour }: { tour: Tour }) {
                       <p className="mt-3 font-sans text-xs uppercase tracking-widest text-gold">
                         Overnight: {item.overnight}
                       </p>
+                      {'meals' in item && item.meals ? (
+                        <p className="mt-2 font-sans text-xs uppercase tracking-widest text-gold">
+                          Meals: {item.meals}
+                        </p>
+                      ) : null}
                     </div>
                   </article>
                 ))}
