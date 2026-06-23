@@ -1,5 +1,6 @@
 'use client'
 
+import Image from 'next/image'
 import { AnimatePresence, motion } from 'framer-motion'
 import Link from 'next/link'
 import { Pause, Play, Sparkles } from 'lucide-react'
@@ -200,9 +201,11 @@ export function HomeGallery() {
                     }`}
                     aria-label={`Show ${image.title}`}
                   >
-                    <img
+                    <Image
                       src={image.src}
                       alt=""
+                      fill
+                      sizes="(max-width: 640px) 25vw, (max-width: 1024px) 12.5vw, 25vw"
                       className="size-full object-cover transition-transform duration-700 group-hover:scale-110"
                     />
                     <span className="absolute inset-0 bg-black/20" />

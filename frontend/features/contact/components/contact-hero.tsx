@@ -1,11 +1,15 @@
+import Image from 'next/image'
 import { ArrowLeft } from 'lucide-react'
 
 export function ContactHero() {
   return (
     <section className="relative isolate flex min-h-[620px] items-end overflow-hidden bg-coffee pt-28 md:min-h-[680px]">
-      <img
+      <Image
         src="/images/cta.png"
         alt="Ethiopian mountain landscape at sunset"
+        fill
+        priority
+        sizes="100vw"
         className="absolute inset-0 z-0 size-full object-cover"
       />
       <div className="absolute inset-0 z-0 bg-[linear-gradient(90deg,rgba(24,55,43,0.96)_0%,rgba(31,77,58,0.82)_46%,rgba(26,26,26,0.42)_100%)]" />

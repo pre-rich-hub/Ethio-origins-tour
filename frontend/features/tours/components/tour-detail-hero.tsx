@@ -1,3 +1,4 @@
+import Image from 'next/image'
 import { ArrowLeft, ArrowRight, Clock, MapPin, Users } from 'lucide-react'
 import type { Tour } from '../types/tour'
 
@@ -9,9 +10,12 @@ type TourDetailHeroProps = {
 export function TourDetailHero({ gallery, tour }: TourDetailHeroProps) {
   return (
     <section className="relative isolate overflow-hidden bg-coffee pt-28 text-cream md:pt-36">
-      <img
+      <Image
         src={tour.image}
         alt={tour.imageAlt}
+        fill
+        priority
+        sizes="100vw"
         className="absolute inset-0 z-0 size-full object-cover"
       />
       <div className="absolute inset-0 z-0 bg-[linear-gradient(90deg,rgba(12,18,15,0.96)_0%,rgba(24,55,43,0.84)_48%,rgba(0,0,0,0.32)_100%)]" />
@@ -83,9 +87,11 @@ export function TourDetailHero({ gallery, tour }: TourDetailHeroProps) {
                   key={image + index}
                   className="relative aspect-[4/3] overflow-hidden border border-cream/12 bg-black"
                 >
-                  <img
+                  <Image
                     src={image}
                     alt=""
+                    fill
+                    sizes="(min-width: 1024px) 180px, 50vw"
                     className="size-full object-cover transition-transform duration-700 hover:scale-105"
                   />
                 </figure>

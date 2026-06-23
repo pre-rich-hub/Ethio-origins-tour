@@ -1,12 +1,16 @@
+import Image from 'next/image'
 import { ArrowLeft } from 'lucide-react'
 import type { TourCategory } from '../data/tour-categories'
 
 export function TourCategoryHero({ category }: { category: TourCategory }) {
   return (
     <section className="relative isolate overflow-hidden bg-coffee pt-28 text-cream md:pt-40">
-      <img
+      <Image
         src="/images/hero.png"
         alt=""
+        fill
+        priority
+        sizes="100vw"
         className="absolute inset-0 z-0 size-full object-cover"
       />
       <div className="absolute inset-0 z-0 bg-[linear-gradient(90deg,rgba(18,27,21,0.92)_0%,rgba(47,36,26,0.74)_48%,rgba(18,27,21,0.45)_100%)]" />

@@ -3,12 +3,12 @@ export const tours = [
     id: 1,
     slug: '10-day-omo-valley-bale-mountains-cultural-adventure',
     title: '10-Day Omo Valley & Bale Mountains Cultural Adventure',
-    image: '/images/client/custom/omo-valley.jpg',
+    image: 'https://res.cloudinary.com/divimnzxa/image/upload/v1782246561/Private_Omo_Valley_Tours_From_Addis_Ababa_xvpppa.jpg',
     gallery: [
-      '/images/client/custom/omo-valley.jpg',
-      '/images/client/custom/arbaminch.jpg',
-      '/images/client/custom/dorze-village.jpg',
-      '/images/client/custom/hawassa.jpg',
+      'https://res.cloudinary.com/divimnzxa/image/upload/v1782246561/Private_Omo_Valley_Tours_From_Addis_Ababa_xvpppa.jpg',
+      'https://res.cloudinary.com/divimnzxa/image/upload/v1782246561/Voyage_en_Ethiopie_n5xvsq.jpg',
+      'https://res.cloudinary.com/divimnzxa/image/upload/v1782246561/40462096650629206_q68ntv.jpg',
+      'https://res.cloudinary.com/divimnzxa/image/upload/v1782246561/Hawassa_Ethiopia_x7pubf.jpg',
     ],
     duration: '10 Days',
     region: 'Addis Ababa, Omo Valley, Hawassa, Bale Mountains',
@@ -17,13 +17,9 @@ export const tours = [
       'Explore the Omo Valley, Mursi, Hamer, Karo, Dassanech, Konso, Dorze, Hawassa and Bale Mountains on a ten-day Southern Ethiopia adventure.',
     intro:
       'Discover the cultural diversity, ancient traditions, dramatic landscapes and unique wildlife of Southern Ethiopia on a 10-day journey through the Great Rift Valley, Omo Valley communities, UNESCO heritage sites, Lake Chamo, Hawassa and Bale Mountains National Park. Arrival is handled separately from Day 1: guests arrive at Addis Ababa Bole International Airport, meet the Ethio Origins Tour team, transfer to their hotel, and either begin light sightseeing with a morning arrival or rest before the tour with an afternoon or evening arrival.',
-    // Pending client data: pricing was not provided in the client document.
     adultPrice: 0,
-    // Pending client data: pricing was not provided in the client document.
     childPrice: 0,
-    // Pending client data: rating was not provided in the client document.
     rating: 0,
-    // Pending client data: review count was not provided in the client document.
     reviewCount: 0,
     destination: 'Omo Valley',
     bestFor: 'Southern Ethiopia culture, Omo Valley communities, UNESCO heritage, wildlife, birdwatching, photography, and private overland adventure',

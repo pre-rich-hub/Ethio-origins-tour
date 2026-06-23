@@ -1,5 +1,6 @@
 'use client'
 
+import Image from 'next/image'
 import { motion } from 'framer-motion'
 import { Reveal } from '@/components/shared/reveal'
 
@@ -15,11 +16,13 @@ export function WhyEthiopia() {
     <section id="about" className="bg-coffee py-20 md:py-28">
       <div className="mx-auto grid max-w-7xl items-center gap-12 px-6 lg:grid-cols-2 lg:gap-16">
         <Reveal>
-          <div className="relative overflow-hidden rounded-md">
-            <img
+          <div className="relative h-[420px] overflow-hidden rounded-md md:h-[560px]">
+            <Image
               src="/images/why-ethiopia.png"
               alt="Ethiopian Orthodox priest holding an ornate cross"
-              className="h-[420px] w-full object-cover md:h-[560px]"
+              fill
+              sizes="(max-width: 1024px) 100vw, 50vw"
+              className="object-cover"
             />
             <div className="absolute inset-0 bg-gradient-to-t from-coffee/40 to-transparent" />
           </div>

@@ -1,5 +1,6 @@
 'use client'
 
+import Image from 'next/image'
 import { motion } from 'framer-motion'
 import { Quote } from 'lucide-react'
 import { SectionHeading } from '@/components/shared/section-heading'
@@ -56,9 +57,11 @@ export function HomeTestimonials() {
                 &ldquo;{t.quote}&rdquo;
               </blockquote>
               <figcaption className="mt-7 flex items-center gap-4 border-t border-coffee/10 pt-6">
-                <img
+                <Image
                   src={t.image || '/placeholder.svg'}
                   alt={t.name}
+                  width={48}
+                  height={48}
                   className="size-12 rounded-full object-cover"
                 />
                 <div>

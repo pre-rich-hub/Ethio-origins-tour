@@ -1,5 +1,6 @@
 'use client'
 
+import Image from 'next/image'
 import { Reveal } from '@/components/shared/reveal'
 
 export function BrandStory() {
@@ -7,11 +8,13 @@ export function BrandStory() {
     <section className="bg-background py-20 md:py-28">
       <div className="mx-auto grid max-w-7xl items-center gap-12 px-6 lg:grid-cols-12 lg:gap-16">
         <Reveal className="lg:col-span-5">
-          <div className="overflow-hidden rounded-md">
-            <img
+          <div className="relative h-[400px] overflow-hidden rounded-md md:h-[540px]">
+            <Image
               src="/images/story.png"
               alt="A local guide and travelers walking an Ethiopian highland ridge at golden hour"
-              className="h-[400px] w-full object-cover md:h-[540px]"
+              fill
+              sizes="(max-width: 1024px) 100vw, 42vw"
+              className="object-cover"
             />
           </div>
         </Reveal>

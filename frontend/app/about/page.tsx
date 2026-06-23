@@ -1,4 +1,5 @@
 import type { Metadata } from 'next'
+import Image from 'next/image'
 import { Navbar } from '@/components/layout/navbar'
 import { SiteFooter } from '@/components/layout/site-footer'
 import {
@@ -30,9 +31,12 @@ export default function AboutPage() {
     <main className="bg-background text-foreground">
       <Navbar />
       <section className="relative isolate overflow-hidden bg-coffee pt-28 text-cream md:pt-40">
-        <img
+        <Image
           src="/images/story.png"
           alt="A local guide and travelers walking an Ethiopian highland ridge at golden hour"
+          fill
+          priority
+          sizes="100vw"
           className="absolute inset-0 z-0 size-full object-cover"
         />
         <div className="absolute inset-0 z-0 bg-[linear-gradient(90deg,rgba(18,27,21,0.92)_0%,rgba(47,36,26,0.74)_48%,rgba(18,27,21,0.45)_100%)]" />
