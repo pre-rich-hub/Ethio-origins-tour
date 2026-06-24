@@ -683,12 +683,12 @@ export const tours = [
     id: 7,
     slug: '1-day-debre-libanos-portuguese-bridge-tour',
     title: '1-Day Debre Libanos Monastery & Portuguese Bridge Excursion',
-    image: '/images/gallery-market.png',
+    image: 'https://res.cloudinary.com/divimnzxa/image/upload/f_auto,q_auto,w_1920,c_fill,g_auto/v1782305234/Debre_Libanos_anvjli.jpg',
     gallery: [
-      '/images/gallery-market.png',
-      '/images/gallery-coffee.png',
-      '/images/gallery-dance.png',
-      '/images/client/custom/photo_12_2026-02-22_15-45-13.jpg',
+      'https://res.cloudinary.com/divimnzxa/image/upload/f_auto,q_auto,w_400,h_300,c_fill,g_auto/v1782305234/Debre_Libanos_anvjli.jpg',
+      'https://res.cloudinary.com/divimnzxa/image/upload/v1782305237/Portuguese_bridge_in_Ethiopia_lcrpjy.jpg',
+      'https://res.cloudinary.com/divimnzxa/image/upload/f_auto,q_auto,w_400,h_300,c_fill,g_auto/v1782305237/Debre_Libanos_Monastery_and_Jemma_River_Gorge_-_Day_Tour_from_Addis_Ababa_k1s5qw.jpg',
+      'https://res.cloudinary.com/divimnzxa/image/upload/f_auto,q_auto,w_400,h_300,c_fill,g_auto/v1782244137/adiss_ababa_Ethiopia_wj8emk.jpg',
     ],
     duration: '1 Day',
     region: 'Addis Ababa, Debre Libanos, Portuguese Bridge, Jemma River Gorge',
@@ -697,13 +697,9 @@ export const tours = [
       'Take a full-day trip from Addis Ababa to Debre Libanos Monastery, Portuguese Bridge, Jemma River Gorge, waterfalls and Gelada Baboon viewpoints.',
     intro:
       'Escape the bustle of Addis Ababa and discover one of Ethiopia\'s most important religious and natural destinations on a full-day excursion to Debre Libanos Monastery and the historic Portuguese Bridge. Founded in the 13th century by Saint Tekle Haymanot, Debre Libanos remains a revered Ethiopian Orthodox pilgrimage and learning center, while the nearby Jemma River Gorge offers canyon views, waterfall viewpoints, Gelada Baboons, birds of prey and endemic Ethiopian birdlife.',
-    // Pending client data: pricing was not provided in the client document.
     adultPrice: 0,
-    // Pending client data: pricing was not provided in the client document.
     childPrice: 0,
-    // Pending client data: rating was not provided in the client document.
     rating: 0,
-    // Pending client data: review count was not provided in the client document.
     reviewCount: 0,
     destination: 'Debre Libanos',
     bestFor: 'Addis Ababa day trips, Ethiopian Orthodox heritage, monastery history, highland scenery, wildlife viewing, birdlife and photography',
@@ -777,7 +773,7 @@ export const tours = [
         'Ethiopia Monastery Tour',
         'Gelada Baboon Day Trip',
       ],
-      ogImage: '/images/gallery-market.png',
+      ogImage: 'https://res.cloudinary.com/divimnzxa/image/upload/f_auto,q_auto,w_1200,h_630,c_fill,g_auto/v1782305234/Debre_Libanos_anvjli.jpg',
       ogImageAlt: 'Debre Libanos and Portuguese Bridge day tour',
     },
   },
@@ -785,12 +781,12 @@ export const tours = [
     id: 8,
     slug: '3-day-harar-cultural-historical-tour',
     title: '3-Day Harar Cultural & Historical Tour',
-    image: '/images/gallery-coffee.png',
+    image: 'https://res.cloudinary.com/divimnzxa/image/upload/f_auto,q_auto,w_1920,c_fill,g_auto/v1782306410/Feeding_Wild_Hyenas_in_Harar_kciiku.jpg',
     gallery: [
-      '/images/gallery-coffee.png',
-      '/images/client/custom/img-6.jpg',
-      '/images/client/custom/ethiopia-landscape.png',
-      '/images/story.png',
+      'https://res.cloudinary.com/divimnzxa/image/upload/f_auto,q_auto,w_400,h_300,c_fill,g_auto/v1782306410/Dire_Dawa_train_station_-_Ethiopia_qm9bsw.jpg',
+      'https://res.cloudinary.com/divimnzxa/image/upload/f_auto,q_auto,w_400,h_300,c_fill,g_auto/v1782306410/https___flic_kr_p_qdmESG___Central_Addis_Ababa_1_c3ts9e.jpg',
+      'https://res.cloudinary.com/divimnzxa/image/upload/f_auto,q_auto,w_400,h_300,c_fill,g_auto/v1782306410/Feeding_Wild_Hyenas_in_Harar_kciiku.jpg',
+      'https://res.cloudinary.com/divimnzxa/image/upload/f_auto,q_auto,w_400,h_300,c_fill,g_auto/v1782244137/adiss_ababa_Ethiopia_wj8emk.jpg',
     ],
     duration: '3 Days',
     region: 'Addis Ababa, Dire Dawa, Aweday, Harar',
@@ -799,13 +795,9 @@ export const tours = [
       'Explore Harar Jugol, Aweday Market, traditional Harari homes, historic mosques, Dire Dawa and the famous Hyena Feeding Ceremony on a three-day tour.',
     intro:
       'Discover Harar, one of Ethiopia\'s most fascinating cultural treasures and a UNESCO World Heritage Site. Known as the City of Saints and regarded as the fourth holiest city in Islam, Harar is a living museum of history, religion, architecture and tradition, with ancient city walls, traditional Harari houses, narrow alleyways, markets, mosques, shrines and the unforgettable Hyena Feeding Ceremony.',
-    // Pending client data: pricing was not provided in the client document.
     adultPrice: 0,
-    // Pending client data: pricing was not provided in the client document.
     childPrice: 0,
-    // Pending client data: rating was not provided in the client document.
     rating: 0,
-    // Pending client data: review count was not provided in the client document.
     reviewCount: 0,
     destination: 'Harar',
     bestFor: 'Cultural travel, historical cities, UNESCO heritage, Islamic history, markets, photography, and private eastern Ethiopia tours',
@@ -896,7 +888,7 @@ export const tours = [
         'Eastern Ethiopia Cultural Tour',
         'Harar UNESCO Tour',
       ],
-      ogImage: '/images/gallery-coffee.png',
+      ogImage: 'https://res.cloudinary.com/divimnzxa/image/upload/v1782306410/Feeding_Wild_Hyenas_in_Harar_kciiku.jpg',
       ogImageAlt: 'Harar cultural and historical tour',
     },
   },
@@ -904,12 +896,12 @@ export const tours = [
     id: 10,
     slug: '5-day-lalibela-danakil-depression-tour',
     title: '5-Day Lalibela & Danakil Depression Adventure',
-    image: '/images/dest-awash.png',
+    image: 'https://res.cloudinary.com/divimnzxa/image/upload/f_auto,q_auto,w_1920,c_fill,g_auto/v1782247186/Bet_Giyorgis_Rock-Hewn_Church_at_Lalibela___qffnvp.jpg',
     gallery: [
-      '/images/dest-awash.png',
-      '/images/client/custom/img-10.jpg',
-      '/images/exp-rift.png',
-      '/images/client/custom/photo_18_2026-02-22_15-45-13.jpg',
+      'https://res.cloudinary.com/divimnzxa/image/upload/f_auto,q_auto,w_400,h_300,c_fill,g_auto/v1782248872/Crater_Lake_Erta_Ale_-_Ethiopia_ykh2lj.jpg',
+      'https://res.cloudinary.com/divimnzxa/image/upload/f_auto,q_auto,w_400,h_300,c_fill,g_auto/v1782248878/Reasons_to_Visit_the_Danakil_Depression_Ethiopia_xnvaap.jpg',
+      'https://res.cloudinary.com/divimnzxa/image/upload/f_auto,q_auto,w_400,h_300,c_fill,g_auto/v1782247186/Bet_Giyorgis_Rock-Hewn_Church_at_Lalibela___qffnvp.jpg',
+      'https://res.cloudinary.com/divimnzxa/image/upload/f_auto,q_auto,w_400,h_300,c_fill,g_auto/v1782248873/Dallol_Ethiopia___%CC%97%CC%80__%E0%A9%88_z78ix6.jpg',
     ],
     duration: '5 Days',
     region: 'Lalibela, Addis Ababa, Semera, Erta Ale, Dallol, Mekele',
@@ -918,13 +910,9 @@ export const tours = [
       'Explore Lalibela\'s rock-hewn churches, Addis Ababa, Erta Ale Volcano, Dallol and the Danakil Depression on a five-day Ethiopia adventure.',
     intro:
       'Experience two of Ethiopia\'s most extraordinary destinations on this unforgettable 5-day journey combining the spiritual wonders of Lalibela with the dramatic volcanic landscapes of the Danakil Depression. Explore UNESCO-listed rock-hewn churches, Ethiopian Orthodox traditions, Addis Ababa city highlights, Erta Ale Volcano, a permanent lava lake, Dallol geothermal fields, salt flats, camel caravans and Afar culture.',
-    // Pending client data: pricing was not provided in the client document.
     adultPrice: 0,
-    // Pending client data: pricing was not provided in the client document.
     childPrice: 0,
-    // Pending client data: rating was not provided in the client document.
     rating: 0,
-    // Pending client data: review count was not provided in the client document.
     reviewCount: 0,
     destination: 'Lalibela & Danakil Depression',
     bestFor: 'Historical routes, religious heritage, adventure travel, volcano trekking, geological landscapes, Afar culture, and photography',
