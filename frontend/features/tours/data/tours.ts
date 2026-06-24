@@ -1031,12 +1031,12 @@ export const tours = [
     id: 11,
     slug: '20-day-ethiopia-historical-cultural-adventure',
     title: '20-Day Ethiopia Historical & Cultural Adventure',
-    image: '/images/hero.png',
+    image: 'https://res.cloudinary.com/divimnzxa/image/upload/f_auto,q_auto,w_1920,c_fill,g_auto/v1782308427/Gondar_Ethiopia_guosib.jpg',
     gallery: [
-      '/images/hero.png',
-      '/images/exp-northern.png',
-      '/images/exp-omo.png',
-      '/images/exp-bale.png',
+      'https://res.cloudinary.com/divimnzxa/image/upload/f_auto,q_auto,w_400,h_300,c_fill,g_auto/v1782308429/The_Gate_of_Tekle_Haymanot_Square_in_Debre_Markos_fpno3d.jpg',
+      'https://res.cloudinary.com/divimnzxa/image/upload/f_auto,q_auto,w_400,h_300,c_fill,g_auto/v1782308429/A_Complete_Guide_to_Staying_in_the_Simien_igcdiq.jpg',
+      'https://res.cloudinary.com/divimnzxa/image/upload/f_auto,q_auto,w_400,h_300,c_fill,g_auto/v1782308429/Beautiful_Bahir_Dar_City_bdkvzl.jpg',
+      'https://res.cloudinary.com/divimnzxa/image/upload/f_auto,q_auto,w_400,h_300,c_fill,g_auto/v1782308427/Gondar_Ethiopia_guosib.jpg',
     ],
     duration: '20 Days',
     region: 'Addis Ababa, Bahir Dar, Gondar, Simien Mountains, Axum, Tigray, Lalibela, Awash, Harar',
@@ -1045,13 +1045,9 @@ export const tours = [
       'Explore Ethiopia on a 20-day journey through Addis Ababa, Bahir Dar, Gondar, Simien Mountains, Axum, Tigray, Lalibela, Awash and Harar.',
     intro:
       'Embark on an extraordinary 20-day journey through Ethiopia, a land of ancient civilizations, breathtaking landscapes, rich cultural traditions, and remarkable historical treasures. This comprehensive adventure follows Ethiopia\'s famous Historic Route, combining UNESCO World Heritage Sites, mountain scenery, Lake Tana monasteries, Gondar, the Simien Mountains, Axum, Tigray rock-hewn churches, Lalibela, Awash National Park and Harar.',
-    // Pending client data: pricing was not provided in the client document.
     adultPrice: 0,
-    // Pending client data: pricing was not provided in the client document.
     childPrice: 0,
-    // Pending client data: rating was not provided in the client document.
     rating: 0,
-    // Pending client data: review count was not provided in the client document.
     reviewCount: 0,
     destination: 'Ethiopia Historic Route',
     bestFor: 'Historical routes, cultural travel, UNESCO heritage, religious sites, wildlife, photography, and multi-destination private journeys',
@@ -1062,11 +1058,9 @@ export const tours = [
       'Simien Mountains National Park, Gelada Baboons, Walia Ibex, Axum, Yeha, Gheralta, Tigray churches and Lalibela',
       'Awash National Park, Awash Falls, natural hot springs, Harar, Hyena Feeding Ceremony and farewell cultural dinner',
     ],
-    // Pending client data: included services were not provided in the client document.
     included: [
       'Pending client confirmation: included services were not provided in the client document.',
     ],
-    // Pending client data: excluded services were not provided in the client document.
     excluded: [
       'Pending client confirmation: excluded services were not provided in the client document.',
     ],
@@ -1256,7 +1250,7 @@ export const tours = [
         'Ethiopia Multi-Destination Tour',
         'Ethiopia Cultural and Wildlife Tour',
       ],
-      ogImage: '/images/hero.png',
+      ogImage: 'https://res.cloudinary.com/divimnzxa/image/upload/f_auto,q_auto,w_400,h_300,c_fill,g_auto/v1782308427/Gondar_Ethiopia_guosib.jpg',
       ogImageAlt: 'Ethiopia historical and cultural adventure',
     },
   },
@@ -1264,12 +1258,11 @@ export const tours = [
     id: 12,
     slug: 'addis-ababa-full-day-city-tour',
     title: 'Addis Ababa Full-Day City Tour',
-    image: '/images/gallery-market.png',
+    image: 'https://res.cloudinary.com/divimnzxa/image/upload/f_auto,q_auto,w_1920,c_fill,g_auto/v1782309635/Ethiopian_Museum_of_Science_ugmsqk.jpg',
     gallery: [
-      '/images/gallery-market.png',
-      '/images/gallery-coffee.png',
-      '/images/gallery-dance.png',
-      '/images/client/custom/photo_12_2026-02-22_15-45-13.jpg',
+      'https://res.cloudinary.com/divimnzxa/image/upload/f_auto,q_auto,w_400,h_300,c_fill,g_auto/v1782309634/Gada_-_Mount_Entoto_Mount_Entoto_is_the_highest_peak_overlooking_the_city_of_Addis_Ababa_the_capital_of_Ethiopia_and_has_views_of_the_city__It_reaches_3_200_meters_above_sea_level_and_is_part_of_hgwuey.jpg',
+      'https://res.cloudinary.com/divimnzxa/image/upload/f_auto,q_auto,w_400,h_300,c_fill,g_auto/v1782309635/Mercato_Market_-_All_You_SHOULD_Know_Before_Going_2026_Reviews_hgqtip.jpg',
+      'https://res.cloudinary.com/divimnzxa/image/upload/f_auto,q_auto,w_400,h_300,c_fill,g_auto/v1782309635/Ethiopian_Museum_of_Science_ugmsqk.jpg'
     ],
     duration: 'Full Day',
     region: 'Addis Ababa',
@@ -1278,13 +1271,9 @@ export const tours = [
       'Explore Mount Entoto, the National Museum, Ethnological Museum, Holy Trinity Cathedral, St. George Cathedral and Merkato on a private Addis Ababa city tour.',
     intro:
       'Discover the vibrant capital of Ethiopia on a comprehensive full-day tour of Addis Ababa, where ancient traditions blend with modern African life. Founded by Emperor Menelik II in 1886, the city is Ethiopia\'s political, cultural and diplomatic center, and this private tour introduces its museums, historic churches, bustling markets, panoramic viewpoints and traditional food culture.',
-    // Pending client data: pricing was not provided in the client document.
     adultPrice: 0,
-    // Pending client data: pricing was not provided in the client document.
     childPrice: 0,
-    // Pending client data: rating was not provided in the client document.
     rating: 0,
-    // Pending client data: review count was not provided in the client document.
     reviewCount: 0,
     destination: 'Addis Ababa',
     bestFor: 'City tours, cultural introductions, historical sites, museums, churches, markets, private day tours and first-time visitors',
@@ -1356,7 +1345,7 @@ export const tours = [
         'Merkato Tour',
         'Private Addis Ababa Tour',
       ],
-      ogImage: '/images/gallery-market.png',
+      ogImage: 'https://res.cloudinary.com/divimnzxa/image/upload/v1782309635/Ethiopian_Museum_of_Science_ugmsqk.jpg',
       ogImageAlt: 'Addis Ababa city tour with museums churches and market',
     },
   },
@@ -1364,12 +1353,10 @@ export const tours = [
     id: 13,
     slug: 'wonchi-crater-lake-day-tour',
     title: 'Wonchi Crater Lake Day Tour',
-    image: '/images/dest-wonchi.png',
+    image: 'https://res.cloudinary.com/divimnzxa/image/upload/f_auto,q_auto,w_1920,c_fill,g_auto/v1782311075/Crater_Lake_National_Park_Sunrise_ofeape.jpg',
     gallery: [
-      '/images/dest-wonchi.png',
-      '/images/client/custom/ethiopia-landscape.png',
-      '/images/exp-rift.png',
-      '/images/hero.png',
+      'https://res.cloudinary.com/divimnzxa/image/upload/f_auto,q_auto,w_400,h_300,c_fill,g_auto/v1782311076/Crater_Lake_National_Park_Oregon_USA_a99k8d.jpg',
+      'https://res.cloudinary.com/divimnzxa/image/upload/f_auto,q_auto,w_400,h_300,c_fill,g_auto/v1782311075/Crater_Lake_National_Park_Sunrise_ofeape.jpg',
     ],
     duration: '1 Day',
     region: 'Addis Ababa, Wonchi Crater Lake',
@@ -1378,13 +1365,9 @@ export const tours = [
       'Explore Wonchi Crater Lake on a full-day trip from Addis Ababa with scenic hiking, an optional horse ride, a traditional boat trip and Cherkos Monastery.',
     intro:
       'Escape the bustle of Addis Ababa and discover one of Ethiopia\'s most beautiful natural destinations on this full-day excursion to Wonchi Crater Lake. Located west of Addis Ababa at the foot of Mount Wonchi, this volcanic crater landscape combines highland scenery, forests, farmland, traditional Oromo communities, hiking trails, an optional horseback ride, a traditional boat trip and Cherkos Monastery on the island.',
-    // Pending client data: pricing was not provided in the client document.
     adultPrice: 0,
-    // Pending client data: pricing was not provided in the client document.
     childPrice: 0,
-    // Pending client data: rating was not provided in the client document.
     rating: 0,
-    // Pending client data: review count was not provided in the client document.
     reviewCount: 0,
     destination: 'Wonchi Crater Lake',
     bestFor: 'Nature lovers, Addis Ababa excursions, hiking, optional horseback riding, boat trips, birdwatching, photography, and local culture',
@@ -1459,7 +1442,7 @@ export const tours = [
         'Cherkos Monastery Tour',
         'Ethiopia Crater Lake Tour',
       ],
-      ogImage: '/images/dest-wonchi.png',
+      ogImage: '',
       ogImageAlt: 'Wonchi Crater Lake day tour from Addis Ababa',
     },
   },
@@ -1467,12 +1450,10 @@ export const tours = [
     id: 14,
     slug: '5-day-ethiopia-historic-route-tour',
     title: '5-Day Ethiopia Historic Route Tour',
-    image: '/images/exp-northern.png',
+    image: 'https://res.cloudinary.com/divimnzxa/image/upload/f_auto,q_auto,w_400,h_300,c_fill,g_auto/v1782247186/Bet_Giyorgis_Rock-Hewn_Church_at_Lalibela___qffnvp.jpg',
     gallery: [
-      '/images/exp-northern.png',
-      '/images/dest-gondar.png',
-      '/images/client/custom/lalibela.jpg',
-      '/images/client/custom/axum.jpg',
+      'https://res.cloudinary.com/divimnzxa/image/upload/f_auto,q_auto,w_400,h_300,c_fill,g_auto/v1782247186/Bet_Giyorgis_Rock-Hewn_Church_at_Lalibela___qffnvp.jpg',
+      'https://res.cloudinary.com/divimnzxa/image/upload/f_auto,q_auto,w_400,h_300,c_fill,g_auto/v1782308427/Gondar_Ethiopia_guosib.jpg',
     ],
     duration: '5 Days',
     region: 'Addis Ababa, Bahir Dar, Gondar, Lalibela, Aksum',
@@ -1481,13 +1462,9 @@ export const tours = [
       'Explore Bahir Dar, Lake Tana, Gondar, Lalibela and Axum on a five-day journey through Ethiopia\'s historic route and UNESCO heritage sites.',
     intro:
       'Follow Ethiopia\'s historic route from Lake Tana and Bahir Dar to Gondar, Lalibela and ancient Axum, combining boat excursions, royal castles, rock-hewn churches, stelae fields and sacred Orthodox heritage. Pre-tour arrival is handled separately from Day 1: guests arrive at Addis Ababa Bole International Airport, meet the Ethio Origins Tour team, transfer to their hotel, and either begin light sightseeing with a morning arrival or rest before starting the tour the next morning with an afternoon or evening arrival.',
-    // Pending client data: pricing was not provided in the client document.
     adultPrice: 0,
-    // Pending client data: pricing was not provided in the client document.
     childPrice: 0,
-    // Pending client data: rating was not provided in the client document.
     rating: 0,
-    // Pending client data: review count was not provided in the client document.
     reviewCount: 0,
     destination: 'Ethiopia Historic Route',
     bestFor: 'Historic route travel, UNESCO heritage, churches, monasteries, castles, ancient kingdoms, cultural discovery, and private Ethiopia holidays',
@@ -1595,7 +1572,7 @@ export const tours = [
         'Lalibela and Axum Tour',
         'Ethiopia Cultural Tour Package',
       ],
-      ogImage: '/images/exp-northern.png',
+      ogImage: 'https://res.cloudinary.com/divimnzxa/image/upload/f_auto,q_auto,w_400,h_300,c_fill,g_auto/v1782247186/Bet_Giyorgis_Rock-Hewn_Church_at_Lalibela___qffnvp.jpg',
       ogImageAlt: 'Ethiopia historic route tour through northern heritage sites',
     },
   },
