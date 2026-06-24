@@ -1,13 +1,18 @@
+'use client'
+
 import Link from 'next/link'
 import { destinations } from '@/features/destinations/data/destinations'
+import { useLanguage } from '@/lib/i18n/language'
 import { tourCategories } from '../data/tour-categories'
+import { getLocalizedTourCategories } from '../lib/tour-localization'
 import type { Tour } from '../types/tour'
 
 export function TourContextLinks({ tour }: { tour: Tour }) {
+  const { language, t } = useLanguage()
   const relatedDestinations = destinations.filter((destination) =>
     tour.destinationSlugs.includes(destination.slug),
   )
-  const relatedCategories = tourCategories.filter((category) =>
+  const relatedCategories = getLocalizedTourCategories(tourCategories, language).filter((category) =>
     tour.categorySlugs.includes(category.slug),
   )
 
@@ -21,7 +26,7 @@ export function TourContextLinks({ tour }: { tour: Tour }) {
         {relatedDestinations.length > 0 && (
           <div>
             <p className="font-sans text-xs uppercase tracking-luxe text-gold">
-              Related Destinations
+              {t.toursPage.relatedDestinations}
             </p>
             <div className="mt-4 flex flex-wrap gap-3">
               {relatedDestinations.map((destination) => (
@@ -39,7 +44,7 @@ export function TourContextLinks({ tour }: { tour: Tour }) {
         {relatedCategories.length > 0 && (
           <div>
             <p className="font-sans text-xs uppercase tracking-luxe text-gold">
-              Related Tour Styles
+              {t.toursPage.relatedTourStyles}
             </p>
             <div className="mt-4 flex flex-wrap gap-3">
               {relatedCategories.map((category) => (

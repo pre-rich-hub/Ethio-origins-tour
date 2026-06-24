@@ -2,6 +2,7 @@ import type { Metadata } from 'next'
 import { Navbar } from '@/components/layout/navbar'
 import { SiteFooter } from '@/components/layout/site-footer'
 import { BlogHero, BlogPostsSection } from '@/features/blog'
+import { getBlogPosts } from '@/lib/api/cms'
 import { createMetadata } from '@/lib/seo/create-metadata'
 
 export const metadata: Metadata = createMetadata({
@@ -20,12 +21,14 @@ export const metadata: Metadata = createMetadata({
   ogImageAlt: 'Vibrant Ethiopian market for travel inspiration',
 })
 
-export default function BlogPage() {
+export default async function BlogPage() {
+  const posts = await getBlogPosts()
+
   return (
     <main className="bg-background text-foreground">
       <Navbar />
       <BlogHero />
-      <BlogPostsSection />
+      <BlogPostsSection items={posts} />
       <SiteFooter />
     </main>
   )

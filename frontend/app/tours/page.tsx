@@ -2,6 +2,7 @@ import type { Metadata } from 'next'
 import { Navbar } from '@/components/layout/navbar'
 import { SiteFooter } from '@/components/layout/site-footer'
 import { TourCategoryNav, ToursGrid, ToursHero } from '@/features/tours'
+import { getTours } from '@/lib/api/cms'
 import { createMetadata } from '@/lib/seo/create-metadata'
 
 export const metadata: Metadata = createMetadata({
@@ -23,13 +24,15 @@ export const metadata: Metadata = createMetadata({
   ogImageAlt: 'Guided Ethiopia tour package experience',
 })
 
-export default function ToursPage() {
+export default async function ToursPage() {
+  const tours = await getTours()
+
   return (
     <main className="bg-background text-foreground">
       <Navbar />
       <ToursHero />
       <TourCategoryNav />
-      <ToursGrid />
+      <ToursGrid items={tours} />
       <SiteFooter />
     </main>
   )

@@ -3,6 +3,10 @@ import { Navbar } from '@/components/layout/navbar'
 import { SiteFooter } from '@/components/layout/site-footer'
 import { createMetadata } from '@/lib/seo/create-metadata'
 import {
+  getFeaturedDestinations,
+  getGalleryImages,
+} from '@/lib/api/cms'
+import {
   BrandStory,
   CustomJourneys,
   Experiences,
@@ -32,17 +36,22 @@ export const metadata = createMetadata({
   ogImageAlt: 'Ethiopian landscape with mountain light',
 })
 
-export default function Page() {
+export default async function Page() {
+  const [featuredDestinations, galleryImages] = await Promise.all([
+    getFeaturedDestinations(),
+    getGalleryImages(),
+  ])
+
   return (
     <main className="overflow-x-hidden">
       <Navbar />
       <Hero />
       <TrustStrip />
       <Experiences />
-      <FeaturedDestinations />
+      <FeaturedDestinations items={featuredDestinations} />
       <WhyEthiopia />
       <CustomJourneys />
-      <HomeGallery />
+      <HomeGallery items={galleryImages.slice(0, 6)} />
       <HomeTestimonials />
       <BrandStory />
       <SiteFooter />

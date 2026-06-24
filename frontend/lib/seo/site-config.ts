@@ -11,8 +11,8 @@ export const siteConfig = {
   language: "en",
   country: "ET",
   location: "Addis Ababa, Ethiopia",
-  defaultOgImage: "/images/hero.png",
-  logo: "/images/client/custom/logo.jpg",
+  defaultOgImage: "/brand/social-profile.png",
+  logo: "/brand/logo-primary.png",
 
   contact: {
     email: "hello@ethioorigins.com",

@@ -2,8 +2,10 @@
 import Link from 'next/link'
 import { useMemo, useState } from 'react'
 import { ArrowRight, Clock, MapPin } from 'lucide-react'
+import { useLanguage } from '@/lib/i18n/language'
 import { destinations } from '../data/destinations'
-import type { DestinationCategory } from '../types/destination'
+import { getLocalizedDestinations } from '../lib/destination-localization'
+import type { Destination, DestinationCategory } from '../types/destination'
 
 type DestinationFilter = 'all' | DestinationCategory
 
@@ -16,26 +18,53 @@ const destinationFilters: { label: string; value: DestinationFilter }[] = [
   { label: 'Tribal & Cultural', value: 'tribal-cultural' },
 ]
 
-export function DestinationsGrid() {
+export function DestinationsGrid({ items = destinations }: { items?: Destination[] }) {
+  const { language, t } = useLanguage()
   const [activeFilter, setActiveFilter] = useState<DestinationFilter>('all')
+  const localizedItems = useMemo(
+    () => getLocalizedDestinations(items, language),
+    [items, language],
+  )
+  const translatedFilters = destinationFilters.map((filter, index) => ({
+    ...filter,
+    label: t.destinationsPage.filters[index] ?? filter.label,
+  }))
 
   const filteredDestinations = useMemo(() => {
     if (activeFilter === 'all') {
-      return destinations
+      return localizedItems
     }
 
-    return destinations.filter((destination) => destination.category === activeFilter)
-  }, [activeFilter])
+    return localizedItems.filter(
+      (destination) => destination.category === activeFilter,
+    )
+  }, [activeFilter, localizedItems])
 
   return (
     <section className="py-14 md:py-28">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 md:px-8">
+        <div className="mb-10 flex flex-wrap justify-center gap-2">
+          {translatedFilters.map((filter) => (
+            <button
+              key={filter.value}
+              type="button"
+              onClick={() => setActiveFilter(filter.value)}
+              className={`border px-4 py-2 font-sans text-[0.66rem] font-bold uppercase tracking-[0.14em] transition-colors sm:text-xs ${
+                activeFilter === filter.value
+                  ? 'border-forest bg-forest text-cream'
+                  : 'border-border bg-card text-muted-foreground hover:border-gold hover:text-forest'
+              }`}
+            >
+              {filter.label}
+            </button>
+          ))}
+        </div>
         <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-          {destinations.map((destination) => (
+          {filteredDestinations.map((destination) => (
             <Link
               key={destination.slug}
               href={`/destinations/${destination.slug}`}
-              aria-label={`Open dedicated page for ${destination.name}`}
+              aria-label={`${t.destinationsPage.openPage} ${destination.name}`}
               className="group relative flex min-h-[440px] cursor-pointer touch-manipulation overflow-hidden border border-cream/18 bg-coffee shadow-2xl shadow-black/20 transition-shadow hover:shadow-coffee/30 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-gold sm:min-h-[500px] md:min-h-[520px]"
             >
               <img
@@ -61,7 +90,7 @@ export function DestinationsGrid() {
                   {destination.description}
                 </p>
                 <span className="mt-6 inline-flex h-12 w-full items-center justify-center border border-cream/90 px-5 font-sans text-[0.64rem] font-bold uppercase tracking-[0.14em] text-cream transition-colors group-hover:bg-cream group-hover:text-coffee sm:mt-8 sm:h-14 sm:w-48 sm:text-[0.66rem] sm:tracking-[0.22em]">
-                  Open dedicated page
+                  {t.destinationsPage.openPage}
                   <ArrowRight className="size-4 transition-transform group-hover:translate-x-1" />
                 </span>
               </div>
@@ -72,4 +101,3 @@ export function DestinationsGrid() {
     </section>
   )
 }
-

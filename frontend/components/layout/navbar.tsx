@@ -1,11 +1,13 @@
 'use client'
 
 import Link from 'next/link'
+import Image from 'next/image'
 import { useEffect, useState } from 'react'
 import { AnimatePresence, motion } from 'framer-motion'
 import { Check, ChevronDown, Globe2, Menu, X } from 'lucide-react'
 import { destinations } from '@/features/destinations'
 import { tours } from '@/features/tours'
+import { languages, useLanguage } from '@/lib/i18n/language'
 
 type NavChild = {
   label: string
@@ -22,49 +24,44 @@ type NavLink = {
   seeMoreLabel?: string
 }
 
-const links: NavLink[] = [
-  { label: 'Home', href: '/#home' },
-  {
-    label: 'Destinations',
-    href: '/destinations',
-    previewLimit: 4,
-    seeMoreHref: '/destinations',
-    seeMoreLabel: 'See more destinations',
-    children: destinations.map((destination) => ({
-      label: destination.name,
-      href: `/destinations/${destination.slug}`,
-      meta: destination.place,
-    })),
-  },
-  {
-    label: 'Tours',
-    href: '/tours',
-    previewLimit: 4,
-    seeMoreHref: '/tours',
-    seeMoreLabel: 'See more tours',
-    children: tours.map((tour) => ({
-      label: tour.title,
-      href: `/tours/${tour.slug}`,
-      meta: tour.duration,
-    })),
-  },
-  { label: 'Gallery', href: '/gallery' },
-  { label: 'Blog', href: '/blog' },
-  { label: 'Contact Us', href: '/contact' },
-]
-
-const languages = [
-  { code: 'EN', label: 'English' },
-  { code: 'DE', label: 'German' },
-  { code: 'ES', label: 'Spanish' },
-  { code: 'FR', label: 'French' },
-]
-
 export function Navbar() {
+  const { language, setLanguage, t } = useLanguage()
   const [scrolled, setScrolled] = useState(false)
   const [open, setOpen] = useState(false)
+  const [languageMenuOpen, setLanguageMenuOpen] = useState(false)
   const [expandedMobile, setExpandedMobile] = useState<string | null>(null)
-  const [language, setLanguage] = useState(languages[0])
+  const selectedLanguage =
+    languages.find((item) => item.code === language) ?? languages[0]
+  const links: NavLink[] = [
+    { label: t.nav.home, href: '/#home' },
+    {
+      label: t.nav.destinations,
+      href: '/destinations',
+      previewLimit: 4,
+      seeMoreHref: '/destinations',
+      seeMoreLabel: t.nav.seeMoreDestinations,
+      children: destinations.map((destination) => ({
+        label: destination.name,
+        href: `/destinations/${destination.slug}`,
+        meta: destination.place,
+      })),
+    },
+    {
+      label: t.nav.tours,
+      href: '/tours',
+      previewLimit: 4,
+      seeMoreHref: '/tours',
+      seeMoreLabel: t.nav.seeMoreTours,
+      children: tours.map((tour) => ({
+        label: tour.title,
+        href: `/tours/${tour.slug}`,
+        meta: tour.duration,
+      })),
+    },
+    { label: t.nav.gallery, href: '/gallery' },
+    { label: t.nav.blog, href: '/blog' },
+    { label: t.nav.contact, href: '/contact' },
+  ]
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 40)
@@ -82,13 +79,15 @@ export function Navbar() {
       }`}
     >
       <nav className="mx-auto flex max-w-7xl items-center justify-between px-5 py-4 md:px-8 md:py-5">
-        <Link href="/#home" className="flex flex-col leading-none text-cream">
-          <span className="font-serif text-xl font-semibold tracking-wide md:text-2xl">
-            Ethio Origins
-          </span>
-          <span className="font-sans text-[0.6rem] uppercase tracking-luxe text-gold">
-            Tours
-          </span>
+        <Link href="/#home" className="flex items-center" aria-label="Ethio Origins Tour home">
+          <Image
+            src="/brand/logo-header.png"
+            alt="Ethio Origins Ethiopia Tours"
+            width={900}
+            height={883}
+            priority
+            className="h-14 w-auto md:h-16"
+          />
         </Link>
 
         <ul className="hidden items-center gap-8 lg:flex">
@@ -151,28 +150,41 @@ export function Navbar() {
           <div className="group relative hidden lg:block">
             <button
               type="button"
+              onClick={() => setLanguageMenuOpen((value) => !value)}
               className="flex items-center gap-2 rounded-sm border border-cream/18 bg-cream/8 px-3.5 py-2.5 font-sans text-[0.68rem] font-bold uppercase tracking-[0.16em] text-cream transition-colors hover:border-gold/70 hover:text-gold"
-              aria-label="Change language"
+              aria-label={t.nav.changeLanguage}
+              aria-expanded={languageMenuOpen}
             >
               <Globe2 className="size-4" />
-              {language.code}
+              {selectedLanguage.code}
               <ChevronDown className="size-3.5 transition-transform duration-300 group-hover:rotate-180" />
             </button>
 
-            <div className="pointer-events-none absolute right-0 top-full z-50 w-44 pt-4 opacity-0 transition-all duration-300 group-hover:pointer-events-auto group-hover:translate-y-1 group-hover:opacity-100 group-focus-within:pointer-events-auto group-focus-within:translate-y-1 group-focus-within:opacity-100">
+            <div
+              className={`absolute right-0 top-full z-50 w-44 pt-4 transition-all duration-300 ${
+                languageMenuOpen
+                  ? 'pointer-events-auto translate-y-1 opacity-100'
+                  : 'pointer-events-none opacity-0'
+              }`}
+            >
               <div className="overflow-hidden rounded-md border border-cream/15 bg-forest/95 p-1.5 shadow-2xl shadow-black/30 backdrop-blur-xl">
                 {languages.map((item) => (
                   <button
                     key={item.code}
                     type="button"
-                    onClick={() => setLanguage(item)}
-                    className="flex w-full items-center justify-between rounded-sm px-3 py-2.5 text-left font-sans text-xs uppercase tracking-widest text-cream/80 transition-colors hover:bg-cream/8 hover:text-gold"
+                    onClick={() => {
+                      setLanguage(item.code)
+                      setLanguageMenuOpen(false)
+                    }}
+                    className="flex w-full items-center justify-between rounded-sm px-3 py-2.5 text-left font-sans text-sm text-cream/80 transition-colors hover:bg-cream/8 hover:text-gold"
                   >
-                    <span>
-                      <span className="mr-2 text-gold">{item.code}</span>
-                      {item.label}
+                    <span className="flex items-center gap-2">
+                      <span className="font-sans text-[0.65rem] font-bold uppercase tracking-widest text-gold">
+                        {item.code}
+                      </span>
+                      {item.displayName}
                     </span>
-                    {language.code === item.code && (
+                    {language === item.code && (
                       <Check className="size-3.5 text-gold" />
                     )}
                   </button>
@@ -185,7 +197,7 @@ export function Navbar() {
             href="/contact"
             className="hidden rounded-sm border border-gold/70 px-5 py-2.5 font-sans text-xs uppercase tracking-widest text-cream transition-colors hover:bg-gold hover:text-coffee md:inline-block"
           >
-            Plan Your Journey
+            {t.nav.plan}
           </a>
           <button
             onClick={() => setOpen(true)}
@@ -212,14 +224,15 @@ export function Navbar() {
                   setOpen(false)
                   setExpandedMobile(null)
                 }}
-                className="flex flex-col leading-none text-forest"
+                className="flex items-center"
               >
-                <span className="font-serif text-xl font-semibold tracking-wide">
-                  Ethio Origins
-                </span>
-                <span className="font-sans text-[0.6rem] uppercase tracking-luxe text-gold">
-                  Tour
-                </span>
+                <Image
+                  src="/brand/logo-header.png"
+                  alt="Ethio Origins Ethiopia Tours"
+                  width={900}
+                  height={883}
+                  className="h-16 w-auto"
+                />
               </Link>
               <button
                 onClick={() => {
@@ -275,7 +288,7 @@ export function Navbar() {
                               }}
                               className="font-sans text-[0.7rem] uppercase tracking-[0.22em] text-gold transition-colors hover:text-forest"
                             >
-                              {l.seeMoreLabel ?? `All ${l.label}`}
+                              {l.seeMoreLabel ?? `${t.nav.all} ${l.label}`}
                             </a>
                             {l.children
                               .slice(0, l.previewLimit ?? l.children.length)
@@ -306,7 +319,7 @@ export function Navbar() {
                       }}
                       className="inline-block font-serif text-2xl font-medium text-foreground transition-colors hover:text-gold"
                     >
-                      {l.label === 'Contact Us' ? 'Contact' : l.label}
+                      {l.href === '/contact' ? t.nav.contactShort : l.label}
                     </a>
                   )}
                 </motion.li>
@@ -317,22 +330,29 @@ export function Navbar() {
               <div className="mb-4 border border-forest/10 bg-stone/60 p-3">
                 <p className="mb-3 flex items-center justify-center gap-2 font-sans text-[0.65rem] font-bold uppercase tracking-[0.22em] text-gold">
                   <Globe2 className="size-4" />
-                  Language
+                  {t.nav.language}
                 </p>
-                <div className="grid grid-cols-4 gap-2">
+                <div className="grid gap-2 sm:grid-cols-2">
                   {languages.map((item) => (
                     <button
                       key={item.code}
                       type="button"
-                      onClick={() => setLanguage(item)}
-                      className={`border px-2 py-2.5 font-sans text-[0.68rem] font-bold uppercase tracking-widest transition-colors ${
-                        language.code === item.code
+                      onClick={() => {
+                        setLanguage(item.code)
+                        setOpen(false)
+                        setExpandedMobile(null)
+                      }}
+                      className={`flex items-center justify-between border px-3 py-2.5 font-sans text-sm transition-colors ${
+                        language === item.code
                           ? 'border-gold bg-gold text-forest'
                           : 'border-forest/10 bg-cream text-forest hover:border-gold'
                       }`}
-                      aria-label={`Change language to ${item.label}`}
+                      aria-label={`${t.nav.changeLanguage} to ${item.label}`}
                     >
-                      {item.code}
+                      <span>{item.displayName}</span>
+                      <span className="text-[0.62rem] font-bold uppercase tracking-widest opacity-70">
+                        {item.code}
+                      </span>
                     </button>
                   ))}
                 </div>
@@ -346,7 +366,7 @@ export function Navbar() {
                 }}
                 className="block rounded-sm bg-gold px-6 py-4 text-center font-sans text-xs uppercase tracking-widest text-coffee"
               >
-                Plan Your Journey
+                {t.nav.plan}
               </a>
             </div>
           </motion.div>

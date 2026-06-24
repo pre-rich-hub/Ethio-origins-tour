@@ -1,7 +1,12 @@
+'use client'
+
 import Link from 'next/link'
 import { ArrowLeft } from 'lucide-react'
+import { useLanguage } from '@/lib/i18n/language'
 
 export function BlogHero() {
+  const { t } = useLanguage()
+
   return (
     <section className="relative isolate overflow-hidden bg-forest pt-28 text-cream md:pt-36">
       <img
@@ -18,19 +23,18 @@ export function BlogHero() {
           className="inline-flex items-center gap-2 font-sans text-xs uppercase tracking-widest text-cream/75 transition-colors hover:text-gold"
         >
           <ArrowLeft className="size-4" />
-          Back Home
+          {t.blogPage.heroBack}
         </Link>
 
         <div className="mt-16 max-w-4xl">
           <p className="font-sans text-xs uppercase tracking-luxe text-gold md:text-sm">
-            Ethio Origins Journal
+            {t.blogPage.heroEyebrow}
           </p>
           <h1 className="mt-5 text-balance font-serif text-5xl font-medium leading-[0.95] text-cream sm:text-6xl md:text-7xl">
-            Ethiopia Travel Guide
+            {t.blogPage.heroTitle}
           </h1>
           <p className="mt-7 max-w-2xl font-sans text-base font-light leading-relaxed text-cream/82 md:text-lg">
-            Refined guides and field notes for travelers planning meaningful
-            journeys across Ethiopia.
+            {t.blogPage.heroDescription}
           </p>
         </div>
       </div>

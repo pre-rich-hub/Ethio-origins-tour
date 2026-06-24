@@ -8,6 +8,7 @@ import {
   ShieldCheck,
   UserRound,
 } from 'lucide-react'
+import { useLanguage } from '@/lib/i18n/language'
 
 const features = [
   {
@@ -37,6 +38,14 @@ const features = [
 ]
 
 export function CustomJourneys() {
+  const { t } = useLanguage()
+  const translatedFeatures = features.map((feature, index) => ({
+    ...feature,
+    stat: t.custom.features[index]?.[0] ?? feature.stat,
+    title: t.custom.features[index]?.[1] ?? feature.title,
+    text: t.custom.features[index]?.[2] ?? feature.text,
+  }))
+
   return (
     <section className="relative isolate overflow-hidden bg-coffee py-20 text-cream md:py-28">
       <div className="absolute inset-0 z-0">
@@ -53,22 +62,20 @@ export function CustomJourneys() {
         <div className="grid gap-10 lg:grid-cols-[0.78fr_1.22fr] lg:items-end">
           <div className="max-w-2xl">
             <p className="mb-3 font-sans text-xs uppercase tracking-luxe text-gold">
-              Why Travel With Ethio Origins
+              {t.custom.eyebrow}
             </p>
             <h2 className="text-balance font-serif text-4xl font-medium leading-tight text-cream md:text-6xl">
-              Why Travelers Choose Ethio Origins
+              {t.custom.title}
             </h2>
           </div>
 
           <p className="max-w-2xl text-pretty font-sans text-lg font-light leading-relaxed text-cream/82 md:text-xl">
-            Local expertise, private planning, and authentic access come
-            together to create journeys that feel personal, polished, and deeply
-            connected to place.
+            {t.custom.description}
           </p>
         </div>
 
         <div className="mt-14 grid gap-5 md:grid-cols-2 xl:grid-cols-4">
-          {features.map((f, i) => (
+          {translatedFeatures.map((f, i) => (
             <motion.article
               key={f.title}
               initial={{ opacity: 0, y: 24 }}
@@ -97,12 +104,10 @@ export function CustomJourneys() {
 
         <div className="mt-12 border-l border-gold pl-6 md:max-w-3xl">
           <p className="mb-3 font-sans text-xs uppercase tracking-luxe text-gold">
-            Our Promise
+            {t.custom.promiseEyebrow}
           </p>
           <p className="font-serif text-3xl font-medium leading-tight text-cream md:text-4xl">
-            We don&apos;t just show Ethiopia. We help you experience it through
-            meaningful encounters, expert guidance, and carefully crafted
-            journeys.
+            {t.custom.promise}
           </p>
         </div>
       </div>

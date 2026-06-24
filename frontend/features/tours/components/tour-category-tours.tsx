@@ -1,6 +1,13 @@
+'use client'
+
 import Image from 'next/image'
 import Link from 'next/link'
 import { ArrowRight, Clock, MapPin } from 'lucide-react'
+import { useLanguage } from '@/lib/i18n/language'
+import {
+  getLocalizedTourCategory,
+  getLocalizedTours,
+} from '../lib/tour-localization'
 import type { TourCategory } from '../data/tour-categories'
 import type { Tour } from '../types/tour'
 
@@ -11,33 +18,37 @@ export function TourCategoryTours({
   category: TourCategory
   categoryTours: Tour[]
 }) {
+  const { language, t } = useLanguage()
+  const localizedCategory = getLocalizedTourCategory(category, language)
+  const localizedTours = getLocalizedTours(categoryTours, language)
+
   return (
     <section className="py-14 md:py-28">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 md:px-8">
         <div className="mb-10 flex flex-col gap-5 md:flex-row md:items-end md:justify-between">
           <div className="max-w-2xl">
             <p className="font-sans text-xs uppercase tracking-luxe text-gold">
-              Related Packages
+              {t.toursPage.relatedPackages}
             </p>
             <h2 className="mt-4 font-serif text-4xl font-medium leading-tight text-foreground md:text-5xl">
-              Plan {category.name}
+              {t.toursPage.planPrefix} {localizedCategory.name}
             </h2>
           </div>
           <Link
             href="/contact"
             className="inline-flex items-center gap-3 font-sans text-xs font-bold uppercase tracking-widest text-forest transition-colors hover:text-gold"
           >
-            Request a Custom Tour
+            {t.toursPage.requestCustomTour}
             <ArrowRight className="size-4" />
           </Link>
         </div>
 
         <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-          {categoryTours.map((tour) => (
+          {localizedTours.map((tour) => (
             <Link
               key={tour.slug}
               href={`/tours/${tour.slug}`}
-              aria-label={`Open dedicated page for ${tour.title}`}
+              aria-label={`${t.toursPage.openDedicatedPageFor} ${tour.title}`}
               className="group relative flex min-h-[440px] cursor-pointer touch-manipulation overflow-hidden border border-cream/18 bg-coffee shadow-2xl shadow-black/20 transition-shadow hover:shadow-coffee/30 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-gold sm:min-h-[500px] md:min-h-[520px]"
             >
               <Image
@@ -64,7 +75,7 @@ export function TourCategoryTours({
                   {tour.description}
                 </p>
                 <span className="mt-6 inline-flex h-12 w-full items-center justify-center gap-2 border border-cream/90 px-5 font-sans text-[0.64rem] font-bold uppercase tracking-[0.14em] text-cream transition-colors group-hover:bg-cream group-hover:text-coffee sm:mt-8 sm:h-14 sm:w-48 sm:text-[0.66rem] sm:tracking-[0.22em]">
-                  Open tour page
+                  {t.toursPage.openTourPage}
                   <ArrowRight className="size-4 transition-transform group-hover:translate-x-1" />
                 </span>
               </div>

@@ -1,15 +1,22 @@
+'use client'
+
 import Link from 'next/link'
+import { useLanguage } from '@/lib/i18n/language'
 import { tourCategories } from '../data/tour-categories'
+import { getLocalizedTourCategories } from '../lib/tour-localization'
 
 export function TourCategoryNav() {
+  const { language, t } = useLanguage()
+  const localizedCategories = getLocalizedTourCategories(tourCategories, language)
+
   return (
     <section className="border-y border-border bg-stone py-8">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 md:px-8">
         <p className="font-sans text-xs uppercase tracking-luxe text-gold">
-          Tour Categories
+          {t.toursPage.categories}
         </p>
         <div className="mt-5 flex gap-3 overflow-x-auto pb-2">
-          {tourCategories.map((category) => (
+          {localizedCategories.map((category) => (
             <Link
               key={category.slug}
               href={`/tours/${category.slug}`}

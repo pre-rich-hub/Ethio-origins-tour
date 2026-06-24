@@ -1,7 +1,12 @@
+'use client'
+
 import Image from 'next/image'
 import Link from 'next/link'
 import { ArrowRight } from 'lucide-react'
 import { tours } from '@/features/tours/data/tours'
+import { getLocalizedTours } from '@/features/tours/lib/tour-localization'
+import { useLanguage } from '@/lib/i18n/language'
+import { getLocalizedDestination } from '../lib/destination-localization'
 import type { Destination } from '../types/destination'
 
 export function RelatedDestinationTours({
@@ -9,6 +14,8 @@ export function RelatedDestinationTours({
 }: {
   destination: Destination
 }) {
+  const { language, t } = useLanguage()
+  const localizedDestination = getLocalizedDestination(destination, language)
   const relatedTours = tours.filter((tour) => {
     if (destination.relatedTourSlugs.length) {
       return destination.relatedTourSlugs.includes(tour.slug)
@@ -17,7 +24,9 @@ export function RelatedDestinationTours({
     return tour.destinationSlugs.includes(destination.slug)
   }).slice(0, 3)
 
-  if (!relatedTours.length) {
+  const localizedTours = getLocalizedTours(relatedTours, language)
+
+  if (!localizedTours.length) {
     return null
   }
 
@@ -27,22 +36,22 @@ export function RelatedDestinationTours({
         <div className="mb-10 flex flex-col gap-5 md:flex-row md:items-end md:justify-between">
           <div>
             <p className="font-sans text-xs uppercase tracking-luxe text-gold">
-              Related Tour Packages
+              {t.destinationsPage.relatedToursEyebrow}
             </p>
             <h2 className="mt-4 font-serif text-4xl font-medium leading-tight text-foreground md:text-5xl">
-              Tours featuring {destination.place}
+              {t.destinationsPage.toursFeaturing} {localizedDestination.place}
             </h2>
           </div>
           <Link
             href="/tours"
             className="inline-flex items-center gap-3 font-sans text-xs font-bold uppercase tracking-widest text-forest transition-colors hover:text-gold"
           >
-            View All Tours
+            {t.destinationsPage.viewAllTours}
             <ArrowRight className="size-4" />
           </Link>
         </div>
         <div className="grid gap-5 md:grid-cols-3">
-          {relatedTours.map((tour) => (
+          {localizedTours.map((tour) => (
             <Link
               key={tour.slug}
               href={`/tours/${tour.slug}`}

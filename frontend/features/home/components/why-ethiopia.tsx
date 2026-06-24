@@ -2,6 +2,7 @@
 
 import { motion } from 'framer-motion'
 import { Reveal } from '@/components/shared/reveal'
+import { useLanguage } from '@/lib/i18n/language'
 
 const facts = [
   { value: 'Ancient', label: 'History' },
@@ -11,6 +12,12 @@ const facts = [
 ]
 
 export function WhyEthiopia() {
+  const { t } = useLanguage()
+  const translatedFacts = facts.map((fact, index) => ({
+    value: t.why.facts[index]?.[0] ?? fact.value,
+    label: t.why.facts[index]?.[1] ?? fact.label,
+  }))
+
   return (
     <section id="about" className="bg-coffee py-20 md:py-28">
       <div className="mx-auto grid max-w-7xl items-center gap-12 px-6 lg:grid-cols-2 lg:gap-16">
@@ -27,20 +34,17 @@ export function WhyEthiopia() {
 
         <div>
           <p className="mb-3 font-sans text-xs uppercase tracking-luxe text-gold">
-            Why Ethiopia
+            {t.why.eyebrow}
           </p>
           <h2 className="text-balance font-serif text-3xl font-medium leading-tight text-cream md:text-5xl">
-            Why Ethiopia Captivates Travelers
+            {t.why.title}
           </h2>
           <p className="mt-4 max-w-md text-pretty font-sans text-base font-light leading-relaxed text-cream/75">
-            Few destinations offer such a remarkable blend of history, culture,
-            nature, and authenticity. Ethiopia is home to ancient civilizations,
-            UNESCO World Heritage Sites, unique wildlife, vibrant traditions,
-            and some of Africa&apos;s most spectacular landscapes.
+            {t.why.description}
           </p>
 
           <div className="mt-10 grid grid-cols-2 gap-x-8 gap-y-8 sm:grid-cols-3">
-            {facts.map((f, i) => (
+            {translatedFacts.map((f, i) => (
               <motion.div
                 key={f.label}
                 initial={{ opacity: 0, y: 20 }}

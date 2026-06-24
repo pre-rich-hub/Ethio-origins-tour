@@ -1,7 +1,12 @@
+'use client'
+
 import Link from 'next/link'
 import { ArrowLeft } from 'lucide-react'
+import { useLanguage } from '@/lib/i18n/language'
 
 export function ToursHero() {
+  const { t } = useLanguage()
+
   return (
     <section className="relative isolate overflow-hidden bg-coffee pt-28 text-cream md:pt-40">
       <img
@@ -17,18 +22,17 @@ export function ToursHero() {
           className="inline-flex items-center gap-2 font-sans text-[0.68rem] uppercase tracking-[0.16em] text-cream/75 transition-colors hover:text-gold sm:text-xs sm:tracking-widest"
         >
           <ArrowLeft className="size-4" />
-          Back Home
+          {t.toursPage.heroBack}
         </Link>
         <div className="mt-10 max-w-4xl md:mt-14">
           <p className="font-sans text-xs uppercase tracking-[0.18em] text-gold sm:tracking-luxe md:text-sm">
-            Dedicated Tours
+            {t.toursPage.heroEyebrow}
           </p>
           <h1 className="mt-5 text-balance font-serif text-4xl font-medium leading-[1.02] sm:text-6xl md:text-7xl">
-            Ethiopia Tour Packages
+            {t.toursPage.heroTitle}
           </h1>
           <p className="mt-7 max-w-2xl text-pretty font-sans text-base font-light leading-relaxed text-cream/82 md:text-lg">
-            Every tour below opens its own dedicated page with route details,
-            highlights, sample itinerary, and private planning options.
+            {t.toursPage.heroDescription}
           </p>
         </div>
       </div>

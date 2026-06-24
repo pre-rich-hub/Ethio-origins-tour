@@ -5,17 +5,19 @@ import Link from 'next/link'
 import { ArrowRight, Clock } from 'lucide-react'
 import { SectionHeading } from '@/components/shared/section-heading'
 import { tours } from '@/features/tours'
+import { useLanguage } from '@/lib/i18n/language'
 
 export function Experiences() {
+  const { t } = useLanguage()
   const featuredTours = tours.slice(0, 9)
 
   return (
     <section id="experiences" className="bg-background py-16 md:py-28">
       <div className="mx-auto max-w-7xl px-4 sm:px-6">
         <SectionHeading
-          eyebrow="Signature Journeys"
-          title="Exceptional Journeys, Expertly Crafted"
-          description="Discover Ethiopia through carefully curated experiences that blend culture, history, nature, and authentic local connections."
+          eyebrow={t.experiences.eyebrow}
+          title={t.experiences.title}
+          description={t.experiences.description}
         />
 
         <div className="mt-10 grid grid-cols-1 gap-5 sm:mt-14 sm:grid-cols-2 sm:gap-8 lg:grid-cols-3">
@@ -59,7 +61,7 @@ export function Experiences() {
                       {exp.description}
                     </p>
                     <span className="mt-5 inline-flex items-center gap-2 font-sans text-sm uppercase tracking-wider text-cream transition-colors group-hover:text-gold group-focus-visible:text-gold sm:mt-6">
-                      Discover Journey
+                      {t.experiences.discover}
                       <ArrowRight className="size-4 transition-transform group-hover:translate-x-1 group-focus-visible:translate-x-1" />
                     </span>
                   </div>
@@ -74,7 +76,7 @@ export function Experiences() {
             href="/tours"
             className="inline-flex h-12 w-full max-w-xs items-center justify-center border border-forest px-6 font-sans text-[0.68rem] font-bold uppercase tracking-[0.18em] text-forest transition-colors hover:bg-forest hover:text-cream focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-gold sm:h-14 sm:w-auto sm:max-w-none sm:text-xs sm:tracking-widest"
           >
-            Explore More
+            {t.experiences.exploreMore}
           </Link>
         </div>
       </div>

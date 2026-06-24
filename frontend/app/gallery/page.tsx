@@ -7,6 +7,7 @@ import {
   GalleryHero,
   GalleryStoryStrip,
 } from '@/features/gallery'
+import { getGalleryImages } from '@/lib/api/cms'
 import { createMetadata } from '@/lib/seo/create-metadata'
 
 export const metadata: Metadata = createMetadata({
@@ -24,13 +25,15 @@ export const metadata: Metadata = createMetadata({
   ogImageAlt: 'Rock-hewn church of Lalibela in warm light',
 })
 
-export default function GalleryPage() {
+export default async function GalleryPage() {
+  const images = await getGalleryImages()
+
   return (
     <main className="bg-background text-foreground">
       <Navbar />
       <GalleryHero />
       <GalleryStoryStrip />
-      <GalleryCollection />
+      <GalleryCollection items={images} />
       <GalleryCta />
       <SiteFooter />
     </main>

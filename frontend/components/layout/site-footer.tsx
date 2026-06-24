@@ -1,3 +1,5 @@
+'use client'
+
 import {
   ArrowRight,
   ExternalLink,
@@ -5,37 +7,8 @@ import {
   MapPin,
   Phone,
 } from 'lucide-react'
-
-const columns = [
-  {
-    title: 'Journeys',
-    links: [
-      { label: 'All Tours', href: '/tours' },
-      { label: 'Signature Journeys', href: '/tours' },
-      { label: 'Private Custom Trips', href: '/contact' },
-      { label: 'Plan Your Journey', href: '/contact' },
-    ],
-  },
-  {
-    title: 'Destinations',
-    links: [
-      { label: 'All Destinations', href: '/destinations' },
-      { label: 'Historic North', href: '/destinations/lalibela' },
-      { label: 'Omo Valley', href: '/destinations/omo-valley' },
-      { label: 'Danakil & Rift Valley', href: '/destinations/danakil-depression' },
-    ],
-  },
-  {
-    title: 'Company',
-    links: [
-      { label: 'About Us', href: '/#about' },
-      { label: 'Our Philosophy', href: '/#about' },
-      { label: 'Responsible Tourism', href: '/#about' },
-      { label: 'Gallery', href: '/gallery' },
-      { label: 'Contact', href: '/contact' },
-    ],
-  },
-]
+import Image from 'next/image'
+import { useLanguage } from '@/lib/i18n/language'
 
 const partnerLinks = [
   {
@@ -159,24 +132,52 @@ function SocialLogo({ icon }: { icon: string }) {
 }
 
 export function SiteFooter() {
+  const { t } = useLanguage()
+  const columns = [
+    {
+      title: t.footer.journeys,
+      links: [
+        { label: t.footer.allTours, href: '/tours' },
+        { label: t.footer.signatureJourneys, href: '/tours' },
+        { label: t.footer.privateTrips, href: '/contact' },
+        { label: t.footer.plan, href: '/contact' },
+      ],
+    },
+    {
+      title: t.footer.destinations,
+      links: [
+        { label: t.footer.allDestinations, href: '/destinations' },
+        { label: t.footer.historicNorth, href: '/destinations/lalibela' },
+        { label: t.footer.omoValley, href: '/destinations/omo-valley' },
+        { label: t.footer.danakil, href: '/destinations/danakil-depression' },
+      ],
+    },
+    {
+      title: t.footer.company,
+      links: [
+        { label: t.footer.about, href: '/#about' },
+        { label: t.footer.philosophy, href: '/#about' },
+        { label: t.footer.responsibleTourism, href: '/#about' },
+        { label: t.footer.gallery, href: '/gallery' },
+        { label: t.footer.contact, href: '/contact' },
+      ],
+    },
+  ]
+
   return (
     <footer className="bg-forest pt-10 text-cream">
       <div className="mx-auto max-w-7xl px-6">
         <div className="grid gap-8 pb-9 lg:grid-cols-12">
           <div className="lg:col-span-4">
-            <div className="flex flex-col leading-none">
-              <span className="font-serif text-2xl font-semibold">
-                Ethio Origins
-              </span>
-              <span className="font-sans text-[0.6rem] uppercase tracking-luxe text-gold">
-                Tours
-              </span>
-            </div>
+            <Image
+              src="/brand/logo-header.png"
+              alt="Ethio Origins Ethiopia Tours"
+              width={900}
+              height={883}
+              className="h-24 w-auto"
+            />
             <p className="mt-4 max-w-xs font-sans text-sm font-light leading-relaxed text-cream/70">
-              Expertly crafted Ethiopian journeys inspired by culture,
-              heritage, nature, and discovery. Creating meaningful travel
-              experiences through authentic local expertise and responsible
-              tourism.
+              {t.footer.description}
             </p>
             <div className="mt-5 flex flex-wrap gap-3">
               {socialLinks.map((link) => (
@@ -217,7 +218,7 @@ export function SiteFooter() {
 
           <div className="lg:col-span-2">
             <h3 className="font-sans text-xs uppercase tracking-widest text-gold">
-              Contact
+              {t.footer.contact}
             </h3>
             <ul className="mt-4 space-y-2.5 font-sans text-sm font-light text-cream/70">
               <li className="flex items-start gap-2">
@@ -244,7 +245,7 @@ export function SiteFooter() {
             <input
               id="footer-email"
               type="email"
-              placeholder="Your email address"
+              placeholder={t.footer.response}
               className="h-14 w-full border border-cream/18 bg-cream/10 px-5 font-sans text-sm text-cream outline-none transition-colors placeholder:text-cream/50 focus:border-gold"
             />
             <button
@@ -252,7 +253,7 @@ export function SiteFooter() {
               className="inline-flex h-14 items-center justify-center gap-3 bg-gold px-8 font-sans text-sm font-semibold uppercase tracking-widest text-coffee transition-colors hover:bg-cream"
             >
               <ArrowRight className="size-4" />
-              Subscribe
+              {t.footer.subscribe}
             </button>
           </form>
         </div>
@@ -263,15 +264,13 @@ export function SiteFooter() {
             <div className="grid gap-5 lg:grid-cols-[0.75fr_1.5fr] lg:items-center">
               <div>
                 <p className="font-sans text-[0.66rem] uppercase tracking-[0.28em] text-gold">
-                  Trusted Travel Platforms
+                  {t.footer.platforms}
                 </p>
                 <h3 className="mt-2 max-w-md font-serif text-2xl font-medium leading-tight text-cream md:text-3xl">
-                  Find us where discerning travelers plan.
+                  {t.footer.platformTitle}
                 </h3>
                 <p className="mt-3 max-w-xl font-sans text-sm font-light leading-relaxed text-cream/62">
-                  Explore our presence across selected global travel platforms
-                  for reviews, curated experiences, stays, and planning
-                  inspiration.
+                  {t.footer.platformDescription}
                 </p>
               </div>
 
@@ -333,15 +332,14 @@ export function SiteFooter() {
 
         <div className="flex flex-col items-center justify-between gap-4 border-t border-cream/10 py-5 sm:flex-row">
           <p className="font-sans text-xs text-cream/50">
-            © {new Date().getFullYear()} Ethio Origins Tours. All rights
-            reserved.
+            © {new Date().getFullYear()} Ethio Origins Tours. {t.footer.rights}
           </p>
           <div className="flex gap-6">
             <span className="font-sans text-xs text-cream/50">
-              Terms
+              {t.footer.terms}
             </span>
             <span className="font-sans text-xs text-cream/50">
-              Privacy
+              {t.footer.privacy}
             </span>
           </div>
         </div>

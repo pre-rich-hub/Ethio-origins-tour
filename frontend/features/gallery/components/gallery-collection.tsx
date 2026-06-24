@@ -1,7 +1,9 @@
 import { MapPin, Sparkles } from 'lucide-react'
 import { galleryImages } from '../data/gallery-images'
 
-export function GalleryCollection() {
+type GalleryImage = (typeof galleryImages)[number]
+
+export function GalleryCollection({ items = galleryImages }: { items?: GalleryImage[] }) {
   return (
     <section id="collection" className="py-16 md:py-24">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 md:px-8">
@@ -23,7 +25,7 @@ export function GalleryCollection() {
         </div>
 
         <div className="grid auto-rows-[220px] gap-4 sm:auto-rows-[240px] md:grid-cols-6 md:gap-5">
-          {galleryImages.map((image, index) => {
+          {items.map((image, index) => {
             const spanClass =
               index % 7 === 0
                 ? 'md:col-span-3 md:row-span-2'

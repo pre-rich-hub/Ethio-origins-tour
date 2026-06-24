@@ -4,6 +4,8 @@ import { motion } from 'framer-motion'
 import Link from 'next/link'
 import { SectionHeading } from '@/components/shared/section-heading'
 import { destinations } from '@/features/destinations'
+import type { Destination } from '@/features/destinations'
+import { useLanguage } from '@/lib/i18n/language'
 
 const featuredDestinationSlugs = [
   'lalibela',
@@ -14,10 +16,14 @@ const featuredDestinationSlugs = [
   'awash-national-park',
 ]
 
-export function FeaturedDestinations() {
-  const featuredDestinations = destinations.filter((destination) =>
+export function FeaturedDestinations({ items = destinations }: { items?: Destination[] }) {
+  const { t } = useLanguage()
+  const featuredDestinations = items.filter((destination) =>
     featuredDestinationSlugs.includes(destination.slug),
   )
+  const visibleDestinations = featuredDestinations.length
+    ? featuredDestinations
+    : items.slice(0, 6)
 
   return (
     <section
@@ -26,9 +32,9 @@ export function FeaturedDestinations() {
     >
       <div className="mx-auto max-w-7xl px-4 sm:px-6">
         <SectionHeading
-          eyebrow="Where to Explore"
-          title="Discover Ethiopia's Remarkable Regions"
-          description="Journey through historic wonders, dramatic landscapes, and authentic cultural experiences across one of Africa's most diverse destinations."
+          eyebrow={t.destinations.eyebrow}
+          title={t.destinations.title}
+          description={t.destinations.description}
           tone="light"
         />
 
@@ -37,12 +43,12 @@ export function FeaturedDestinations() {
             href="/destinations"
             className="inline-flex max-w-full items-center justify-center border border-cream/30 px-4 py-3 text-center font-sans text-[0.68rem] uppercase tracking-[0.16em] text-cream transition-colors hover:border-gold hover:text-gold sm:px-5 sm:text-xs sm:tracking-widest"
           >
-            Explore Destinations
+            {t.destinations.exploreDestinations}
           </Link>
         </div>
 
         <div className="mt-10 flex snap-x snap-mandatory gap-4 overflow-x-auto pb-6 [scrollbar-width:thin] [scrollbar-color:rgba(250,246,236,0.35)_transparent] md:mt-14 md:gap-6">
-          {featuredDestinations.map((d, i) => (
+          {visibleDestinations.map((d, i) => (
             <Link
               key={d.name}
               href={`/destinations/${d.slug}`}
@@ -77,7 +83,7 @@ export function FeaturedDestinations() {
                     {d.description}
                   </p>
                   <span className="mt-6 inline-flex h-12 w-full items-center justify-center border border-cream/90 px-5 font-sans text-[0.64rem] font-bold uppercase tracking-[0.16em] text-cream transition-colors group-hover:bg-cream group-hover:text-coffee sm:mt-8 sm:h-14 sm:w-40 sm:text-[0.66rem] sm:tracking-[0.22em]">
-                    Explore Trip
+                    {t.destinations.exploreTrip}
                   </span>
                 </div>
               </motion.article>
@@ -90,7 +96,7 @@ export function FeaturedDestinations() {
             href="/destinations"
             className="inline-flex h-12 w-full max-w-xs items-center justify-center border border-cream/80 px-6 font-sans text-[0.68rem] font-bold uppercase tracking-[0.18em] text-cream transition-colors hover:bg-cream hover:text-coffee focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-gold sm:h-14 sm:w-auto sm:max-w-none sm:text-xs sm:tracking-widest"
           >
-            Explore More
+            {t.destinations.exploreMore}
           </Link>
         </div>
       </div>

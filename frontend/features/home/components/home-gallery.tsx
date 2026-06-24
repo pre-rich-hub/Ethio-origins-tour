@@ -4,6 +4,7 @@ import { AnimatePresence, motion } from 'framer-motion'
 import Link from 'next/link'
 import { Pause, Play, Sparkles } from 'lucide-react'
 import { useEffect, useState } from 'react'
+import { useLanguage } from '@/lib/i18n/language'
 
 const images = [
   {
@@ -64,12 +65,22 @@ const images = [
   },
 ]
 
-const notes = ['Landscapes', 'Traditions', 'Human Connections']
+type HomeGalleryImage = (typeof images)[number]
 
-export function HomeGallery() {
+export function HomeGallery({ items = images }: { items?: Partial<HomeGalleryImage>[] }) {
+  const { t } = useLanguage()
+  const galleryItems = items.length
+    ? items.map((item, index) => ({
+        src: item.src ?? images[index % images.length].src,
+        alt: item.alt ?? images[index % images.length].alt,
+        title: item.title ?? images[index % images.length].title,
+        place: item.place ?? images[index % images.length].place,
+        cls: item.cls ?? images[index % images.length].cls,
+      }))
+    : images
   const [activeIndex, setActiveIndex] = useState(0)
   const [isPlaying, setIsPlaying] = useState(true)
-  const activeImage = images[activeIndex]
+  const activeImage = galleryItems[activeIndex] ?? galleryItems[0]
 
   useEffect(() => {
     if (!isPlaying) {
@@ -77,11 +88,11 @@ export function HomeGallery() {
     }
 
     const timer = window.setInterval(() => {
-      setActiveIndex((index) => (index + 1) % images.length)
+      setActiveIndex((index) => (index + 1) % galleryItems.length)
     }, 3600)
 
     return () => window.clearInterval(timer)
-  }, [isPlaying])
+  }, [isPlaying, galleryItems.length])
 
   return (
     <section
@@ -119,7 +130,7 @@ export function HomeGallery() {
                   <span className="size-2 rounded-full bg-cream/60" />
                 </div>
                 <p className="font-sans text-[0.58rem] font-bold uppercase tracking-[0.24em] text-cream/70">
-                  Ethio Origins / Visual Reel
+                  {t.gallery.reel}
                 </p>
               </div>
               <figcaption className="absolute inset-x-0 bottom-0 p-5 sm:p-7">
@@ -145,7 +156,7 @@ export function HomeGallery() {
                     type="button"
                     onClick={() => setIsPlaying((value) => !value)}
                     className="inline-flex size-14 shrink-0 items-center justify-center rounded-full border border-cream/35 bg-cream/10 text-cream backdrop-blur-sm transition-colors hover:border-gold hover:bg-gold hover:text-forest"
-                    aria-label={isPlaying ? 'Pause gallery reel' : 'Play gallery reel'}
+                    aria-label={isPlaying ? t.gallery.pause : t.gallery.play}
                   >
                     {isPlaying ? (
                       <Pause className="size-5" aria-hidden="true" />
@@ -161,20 +172,18 @@ export function HomeGallery() {
               <div className="max-w-xl">
                 <p className="flex items-center gap-2 font-sans text-[0.68rem] font-bold uppercase tracking-[0.28em] text-gold">
                   <Sparkles className="size-4" aria-hidden="true" />
-                  A Visual Diary
+                  {t.gallery.eyebrow}
                 </p>
                 <h2 className="mt-4 text-balance font-serif text-4xl font-medium leading-none text-cream md:text-5xl">
-                  Moments That Define Ethiopia
+                  {t.gallery.title}
                 </h2>
                 <p className="mt-5 font-sans text-sm font-light leading-relaxed text-cream/72 md:text-base">
-                  A collection of landscapes, traditions, wildlife,
-                  architecture, and human connections shown as a cinematic
-                  photo reel.
+                  {t.gallery.description}
                 </p>
               </div>
 
               <div className="grid gap-3 sm:grid-cols-3 lg:grid-cols-1">
-                {notes.map((note) => (
+                {t.gallery.notes.map((note) => (
                   <div key={note} className="flex items-center gap-3">
                     <span className="h-px w-10 bg-gold" />
                     <p className="font-sans text-[0.62rem] font-bold uppercase tracking-[0.22em] text-cream/70">
@@ -185,7 +194,7 @@ export function HomeGallery() {
               </div>
 
               <div className="grid grid-cols-4 gap-3 sm:grid-cols-8 lg:grid-cols-4">
-                {images.map((image, index) => (
+                {galleryItems.map((image, index) => (
                   <button
                     key={image.src}
                     type="button"
@@ -198,7 +207,7 @@ export function HomeGallery() {
                         ? 'border-gold opacity-100'
                         : 'border-cream/15 opacity-55 hover:border-cream/45 hover:opacity-100'
                     }`}
-                    aria-label={`Show ${image.title}`}
+                    aria-label={`${t.gallery.show} ${image.title}`}
                   >
                     <img
                       src={image.src}
@@ -214,7 +223,7 @@ export function HomeGallery() {
                 href="/gallery"
                 className="inline-flex w-full items-center justify-center border border-gold bg-gold px-7 py-4 font-sans text-[0.7rem] font-bold uppercase tracking-[0.18em] text-forest transition-colors hover:bg-cream hover:text-forest sm:w-fit"
               >
-                View Full Gallery
+                {t.gallery.view}
               </Link>
             </div>
           </div>

@@ -1,6 +1,7 @@
 import { Analytics } from '@vercel/analytics/next'
 import type { Metadata } from 'next'
 import { JsonLd } from '@/components/seo/json-ld'
+import { LanguageProvider } from '@/lib/i18n/language'
 import { createOrganizationSchema, createWebsiteSchema } from '@/lib/seo/schemas'
 import { siteConfig } from '@/lib/seo/site-config'
 import './globals.css'
@@ -61,10 +62,10 @@ export const metadata: Metadata = {
   category: 'travel',
   icons: {
     icon: [
-      { url: '/icon-light-32x32.png', sizes: '32x32', type: 'image/png' },
-      { url: '/icon-dark-32x32.png', sizes: '32x32', type: 'image/png' },
+      { url: '/favicon.png', sizes: '512x512', type: 'image/png' },
     ],
-    apple: [{ url: '/apple-icon.png', sizes: '180x180', type: 'image/png' }],
+    shortcut: ['/favicon.png'],
+    apple: [{ url: '/apple-icon.png', sizes: '512x512', type: 'image/png' }],
   },
   manifest: '/manifest.webmanifest',
 }
@@ -77,10 +78,12 @@ export default function RootLayout({
   return (
     <html lang="en" className="bg-background">
       <body className="font-sans antialiased">
-        <JsonLd data={createOrganizationSchema()} />
-        <JsonLd data={createWebsiteSchema()} />
-        {children}
-        {process.env.NODE_ENV === 'production' && <Analytics />}
+        <LanguageProvider>
+          <JsonLd data={createOrganizationSchema()} />
+          <JsonLd data={createWebsiteSchema()} />
+          {children}
+          {process.env.NODE_ENV === 'production' && <Analytics />}
+        </LanguageProvider>
       </body>
     </html>
   )

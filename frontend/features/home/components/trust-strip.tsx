@@ -1,6 +1,7 @@
 'use client'
 
 import { Reveal } from '@/components/shared/reveal'
+import { useLanguage } from '@/lib/i18n/language'
 
 const stats = [
   { value: '2,000+', label: 'Travelers Hosted' },
@@ -10,10 +11,16 @@ const stats = [
 ]
 
 export function TrustStrip() {
+  const { t } = useLanguage()
+  const translatedStats = stats.map((stat, index) => ({
+    ...stat,
+    label: t.trust[index] ?? stat.label,
+  }))
+
   return (
     <section id="trust" className="bg-forest py-16 md:py-20">
       <div className="mx-auto grid max-w-6xl grid-cols-2 gap-y-10 px-6 lg:grid-cols-4">
-        {stats.map((s, i) => (
+        {translatedStats.map((s, i) => (
           <Reveal
             key={s.label}
             delay={i}
