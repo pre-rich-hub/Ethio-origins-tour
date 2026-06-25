@@ -36,34 +36,37 @@ export function BlogPostsSection({ items = posts }: { items?: BlogPost[] }) {
             return (
               <article
                 key={post.title}
-                className="group overflow-hidden border border-border bg-card shadow-xl shadow-coffee/5"
+                className="overflow-hidden border border-border bg-card shadow-xl shadow-coffee/5"
               >
-                <div className="relative aspect-[4/3] overflow-hidden bg-coffee">
-                  <img
-                    src={post.image}
-                    alt=""
-                    className="size-full object-cover transition-transform duration-[1.2s] group-hover:scale-105"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/72 via-transparent to-transparent" />
-                  <p className="absolute bottom-5 left-5 font-sans text-[0.62rem] font-bold uppercase tracking-[0.24em] text-gold">
-                    {category}
-                  </p>
-                </div>
-                <div className="p-6">
-                  <p className="flex items-center gap-2 font-sans text-[0.68rem] uppercase tracking-widest text-muted-foreground">
-                    <CalendarDays className="size-3.5 text-gold" />
-                    {date}
-                  </p>
-                  <h2 className="mt-4 font-serif text-3xl font-medium leading-none text-foreground">
-                    {localizedPost?.title ?? post.title}
-                  </h2>
-                  <p className="mt-4 font-sans text-sm font-light leading-relaxed text-muted-foreground">
-                    {excerpt}
-                  </p>
-                  {/* Temporary planning CTA until real article routes and bodies exist. */}
+                <Link href={`/blog/${post.slug}`} className="group block">
+                  <div className="relative aspect-[4/3] overflow-hidden bg-coffee">
+                    <img
+                      src={post.image}
+                      alt=""
+                      className="size-full object-cover transition-transform duration-[1.2s] group-hover:scale-105"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/72 via-transparent to-transparent" />
+                    <p className="absolute bottom-5 left-5 font-sans text-[0.62rem] font-bold uppercase tracking-[0.24em] text-gold">
+                      {category}
+                    </p>
+                  </div>
+                  <div className="p-6">
+                    <p className="flex items-center gap-2 font-sans text-[0.68rem] uppercase tracking-widest text-muted-foreground">
+                      <CalendarDays className="size-3.5 text-gold" />
+                      {date}
+                    </p>
+                    <h2 className="mt-4 font-serif text-3xl font-medium leading-none text-foreground transition-colors group-hover:text-gold">
+                      {localizedPost?.title ?? post.title}
+                    </h2>
+                    <p className="mt-4 font-sans text-sm font-light leading-relaxed text-muted-foreground">
+                      {excerpt}
+                    </p>
+                  </div>
+                </Link>
+                <div className="px-6 pb-6">
                   <Link
                     href="/contact"
-                    className="mt-6 inline-flex items-center gap-2 font-sans text-xs font-bold uppercase tracking-widest text-forest transition-colors hover:text-gold"
+                    className="inline-flex items-center gap-2 font-sans text-xs font-bold uppercase tracking-widest text-forest transition-colors hover:text-gold"
                   >
                     {t.blogPage.cta}
                     <ArrowRight className="size-4" />

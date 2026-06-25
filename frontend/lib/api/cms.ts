@@ -54,10 +54,19 @@ type ApiTour = {
 
 type ApiBlogPost = {
   id: number
+  slug: string
   title: string
   description: string | null
   imageUrl: string | null
+  category: { id: number; name: string; slug: string } | null
   createdAt: string | null
+}
+
+type ApiBlogCategory = {
+  id: number
+  name: string
+  slug: string
+  postCount: number
 }
 
 function slugify(value: string) {
@@ -238,12 +247,49 @@ export async function getBlogPosts() {
   }
 
   return data.items.map((post) => ({
+    slug: post.slug,
     title: post.title,
-    category: 'Travel Insight',
+    category: post.category?.name ?? 'Travel Insight',
     date: post.createdAt
       ? new Intl.DateTimeFormat('en', { month: 'long', year: 'numeric' }).format(new Date(post.createdAt))
       : 'Travel Guide',
     image: imageUrl(post.imageUrl, '/images/exp-northern.png'),
     excerpt: post.description || 'Read the latest Ethio Origins travel insight.',
   }))
+}
+
+export async function getBlogPostBySlug(slug: string) {
+  const data = await apiFetch<ApiBlogPost | null>(`/api/blog/slug/${slug}`, { fallback: null })
+
+  if (data) {
+    return {
+      slug: data.slug,
+      title: data.title,
+      category: data.category?.name ?? 'Travel Insight',
+      date: data.createdAt
+        ? new Intl.DateTimeFormat('en', { month: 'long', year: 'numeric' }).format(new Date(data.createdAt))
+        : '',
+      image: imageUrl(data.imageUrl, '/images/exp-northern.png'),
+      excerpt: data.description || '',
+      description: data.description || '',
+    }
+  }
+
+  const fallback = posts.find((p) => p.slug === slug)
+  if (!fallback) return null
+
+  return {
+    slug: fallback.slug,
+    title: fallback.title,
+    category: fallback.category,
+    date: fallback.date,
+    image: fallback.image,
+    excerpt: fallback.excerpt,
+    description: fallback.excerpt,
+  }
+}
+
+export async function getBlogCategories() {
+  const data = await apiFetch<ApiBlogCategory[]>('/api/blog/categories', { fallback: [] })
+  return data
 }

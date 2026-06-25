@@ -81,17 +81,23 @@ export function mapTour(tour: any, detail = false) {
 }
 
 export function mapBlog(post: any) {
+  const category = post.category
+    ? { id: post.category.id, name: post.category.name, slug: post.category.slug }
+    : null;
+
   return {
     id: post.id,
+    slug: post.slug ?? null,
     title: post.blogTitle,
     description: post.description,
     imageUrl: post.imageUrl,
+    category,
     createdAt: post.createdAt ?? null,
     canonical: {
-      type: "id",
+      type: "slug",
       id: post.id,
-      suggestedPath: `/blog/${post.id}`,
-      slug: null
+      suggestedPath: `/blog/${post.slug ?? post.id}`,
+      slug: post.slug ?? null
     }
   };
 }

@@ -310,12 +310,17 @@ adminRouter.post(
   blogUpload.single("blogImage"),
   asyncHandler(async (req, res) => {
     const imageUrl = req.file ? storedPathForFile(req.file) : undefined;
+    const blogTitle = String(req.body.blogTitle ?? "");
+    const slug = slugify(blogTitle);
     const post = await prisma.blog.create({
       data: {
-        blogTitle: String(req.body.blogTitle ?? ""),
+        slug,
+        blogTitle,
         description: String(req.body.blogDescription ?? ""),
-        imageUrl
-      }
+        imageUrl,
+        categoryId: req.body.categoryId ? Number(req.body.categoryId) : null
+      },
+      include: { category: true }
     });
     return ok(res, "Blog post created successfully", mapBlog(post), 201);
   })
@@ -327,13 +332,18 @@ adminRouter.put(
   asyncHandler(async (req, res) => {
     const id = idParam.parse(req.params.id);
     const imageUrl = req.file ? storedPathForFile(req.file) : undefined;
+    const blogTitle = String(req.body.blogTitle ?? "");
+    const slug = slugify(blogTitle);
     const post = await prisma.blog.update({
       where: { id },
       data: {
-        blogTitle: String(req.body.blogTitle ?? ""),
+        slug,
+        blogTitle,
         description: String(req.body.blogDescription ?? ""),
+        categoryId: req.body.categoryId ? Number(req.body.categoryId) : null,
         ...(imageUrl ? { imageUrl } : {})
-      }
+      },
+      include: { category: true }
     });
     return ok(res, "Blog post updated successfully", mapBlog(post));
   })
@@ -345,6 +355,69 @@ adminRouter.delete(
     const id = idParam.parse(req.params.id);
     await prisma.blog.delete({ where: { id } });
     return ok(res, "Blog post deleted successfully", null);
+  })
+);
+
+adminRouter.get(
+  "/blog-categories",
+  asyncHandler(async (_req, res) => {
+    const categories = await prisma.blogCategory.findMany({
+      include: { _count: { select: { posts: true } } },
+      orderBy: { id: "asc" }
+    });
+    return ok(res, "Blog categories fetched successfully", categories.map((cat) => ({
+      id: cat.id,
+      name: cat.name,
+      slug: cat.slug,
+      postCount: cat._count.posts
+    })));
+  })
+);
+
+adminRouter.post(
+  "/blog-categories",
+  asyncHandler(async (req, res) => {
+    const body = z.object({ name: z.string().min(1) }).parse(req.body);
+    const slug = slugify(body.name);
+    const category = await prisma.blogCategory.create({
+      data: { name: body.name, slug },
+      include: { _count: { select: { posts: true } } }
+    });
+    return ok(res, "Blog category created successfully", {
+      id: category.id,
+      name: category.name,
+      slug: category.slug,
+      postCount: category._count.posts
+    }, 201);
+  })
+);
+
+adminRouter.put(
+  "/blog-categories/:id",
+  asyncHandler(async (req, res) => {
+    const id = idParam.parse(req.params.id);
+    const body = z.object({ name: z.string().min(1) }).parse(req.body);
+    const slug = slugify(body.name);
+    const category = await prisma.blogCategory.update({
+      where: { id },
+      data: { name: body.name, slug },
+      include: { _count: { select: { posts: true } } }
+    });
+    return ok(res, "Blog category updated successfully", {
+      id: category.id,
+      name: category.name,
+      slug: category.slug,
+      postCount: category._count.posts
+    });
+  })
+);
+
+adminRouter.delete(
+  "/blog-categories/:id",
+  asyncHandler(async (req, res) => {
+    const id = idParam.parse(req.params.id);
+    await prisma.blogCategory.delete({ where: { id } });
+    return ok(res, "Blog category deleted successfully", null);
   })
 );
 

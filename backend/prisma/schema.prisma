@@ -120,13 +120,25 @@ model Contact {
 }
 
 model Blog {
-  id          Int       @id @default(autoincrement())
-  blogTitle   String    @map("blog_title")
-  description String?   @db.Text
-  imageUrl    String?   @map("image_url")
-  createdAt   DateTime? @map("created_at")
+  id          Int            @id @default(autoincrement())
+  slug        String         @unique @db.VarChar(255)
+  blogTitle   String         @map("blog_title")
+  description String?        @db.Text
+  imageUrl    String?        @map("image_url")
+  categoryId  Int?
+  category    BlogCategory?  @relation(fields: [categoryId], references: [id])
+  createdAt   DateTime?      @map("created_at")
 
   @@map("blog")
+}
+
+model BlogCategory {
+  id    Int    @id @default(autoincrement())
+  name  String @unique
+  slug  String @unique @db.VarChar(255)
+  posts Blog[]
+
+  @@map("blog_category")
 }
 
 model Testimonial {
