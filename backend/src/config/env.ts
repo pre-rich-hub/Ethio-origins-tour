@@ -32,6 +32,16 @@ const envSchema = z.object({
 
   // Sentry
   SENTRY_DSN: z.string().optional().default(""),
+
+  // Storage
+  STORAGE_DRIVER: z.enum(["local", "s3", "cloudinary"]).default("local"),
+  STORAGE_S3_BUCKET: z.string().optional().default(""),
+  STORAGE_S3_REGION: z.string().optional().default(""),
+  STORAGE_S3_ACCESS_KEY: z.string().optional().default(""),
+  STORAGE_S3_SECRET_KEY: z.string().optional().default(""),
+  STORAGE_CLOUDINARY_CLOUD_NAME: z.string().optional().default(""),
+  STORAGE_CLOUDINARY_API_KEY: z.string().optional().default(""),
+  STORAGE_CLOUDINARY_API_SECRET: z.string().optional().default(""),
 });
 
 export const env = envSchema.parse(process.env);

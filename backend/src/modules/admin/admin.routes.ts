@@ -556,19 +556,46 @@ adminRouter.delete(
 adminRouter.get(
   "/dashboard/stats",
   asyncHandler(async (_req, res) => {
-    const [totalTours, totalDestinations, totalBookings, totalGalleryImages, totalContacts, recentBookings] =
-      await Promise.all([
-        prisma.tour.count(),
-        prisma.destination.count(),
-        prisma.booking.count(),
-        prisma.gallery.count(),
-        prisma.contact.count(),
-        prisma.booking.findMany({
-          include: { tour: true },
-          orderBy: { createdAt: "desc" },
-          take: 5
-        })
-      ]);
+    const thirtyDaysAgo = new Date();
+    thirtyDaysAgo.setDate(thirtyDaysAgo.getDate() - 30);
+
+    const [
+      totalTours,
+      totalDestinations,
+      totalBookings,
+      totalGalleryImages,
+      totalContacts,
+      recentBookings,
+      bookingTrends,
+      topTours
+    ] = await Promise.all([
+      prisma.tour.count(),
+      prisma.destination.count(),
+      prisma.booking.count(),
+      prisma.gallery.count(),
+      prisma.contact.count(),
+      prisma.booking.findMany({
+        include: { tour: true },
+        orderBy: { createdAt: "desc" },
+        take: 5
+      }),
+      prisma.$queryRaw<Array<{ date: Date; count: bigint }>>`
+        SELECT DATE(created_at) as date, COUNT(*)::int as count
+        FROM bookings
+        WHERE created_at >= ${thirtyDaysAgo}
+        GROUP BY DATE(created_at)
+        ORDER BY DATE(created_at) ASC
+      `,
+      prisma.tour.findMany({
+        select: {
+          id: true,
+          tourName: true,
+          _count: { select: { bookings: true } }
+        },
+        orderBy: { bookings: { _count: "desc" } },
+        take: 10
+      })
+    ]);
 
     return ok(res, "Dashboard stats fetched successfully", {
       totals: {
@@ -578,7 +605,16 @@ adminRouter.get(
         galleryImages: totalGalleryImages,
         contacts: totalContacts
       },
-      recentBookings: recentBookings.map(mapBooking)
+      recentBookings: recentBookings.map(mapBooking),
+      bookingTrends: bookingTrends.map((row) => ({
+        date: row.date.toISOString().slice(0, 10),
+        count: Number(row.count)
+      })),
+      topTours: topTours.map((t) => ({
+        id: t.id,
+        name: t.tourName,
+        bookingCount: t._count.bookings
+      }))
     });
   })
 );

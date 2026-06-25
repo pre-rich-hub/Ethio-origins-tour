@@ -15,10 +15,12 @@
     "backfill:slugs": "tsx scripts/backfill-slugs.ts"
   },
   "dependencies": {
+    "@aws-sdk/client-s3": "^3.700.0",
     "@prisma/client": "^6.1.0",
     "@sendgrid/mail": "^8.1.6",
     "@sentry/node": "^10.61.0",
     "@sentry/profiling-node": "^10.61.0",
+    "cloudinary": "^2.5.1",
     "bcryptjs": "^2.4.3",
     "bullmq": "^5.79.1",
     "cookie-parser": "^1.4.7",

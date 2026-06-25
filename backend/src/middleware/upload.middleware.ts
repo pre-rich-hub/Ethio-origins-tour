@@ -1,71 +1,65 @@
 import path from "node:path";
-import fs from "node:fs";
 import multer from "multer";
 import { env } from "../config/env.js";
+import { getStorageProvider } from "../services/storage/index.js";
+import type { UploadKind } from "../services/storage/types.js";
 
-export type UploadKind = "tour" | "destination" | "blog" | "gallery" | "admin";
+export { UploadKind };
 
-const uploadConfig: Record<UploadKind, { dir: string; dbPrefix: string; prefix: string; extensions: string[] }> = {
-  tour: {
-    dir: "assets/images/custom/gallery",
-    dbPrefix: "assets/images/custom/gallery",
-    prefix: "TOUR-",
-    extensions: ["jpg", "jpeg", "png", "webp", "avif"]
-  },
-  destination: {
-    dir: "assets/images/destination",
-    dbPrefix: "assets/images/destination",
-    prefix: "DEST-",
-    extensions: ["jpg", "jpeg", "png", "webp", "avif"]
-  },
-  blog: {
-    dir: "assets/images/blog",
-    dbPrefix: "assets/images/blog",
-    prefix: "BLOG-",
-    extensions: ["jpg", "jpeg", "png", "webp", "avif"]
-  },
-  gallery: {
-    dir: "assets/images/gallery",
-    dbPrefix: "assets/images/gallery",
-    prefix: "IMG-",
-    extensions: ["jpg", "jpeg", "png", "webp", "avif"]
-  },
-  admin: {
-    dir: "assets/images/admin",
-    dbPrefix: "assets/images/admin",
-    prefix: "IMG-",
-    extensions: ["jpg", "jpeg", "png", "webp"]
-  }
-};
+const allowedExtensions = ["jpg", "jpeg", "png", "webp", "avif"];
+
+function createMulterUpload() {
+  return multer({
+    storage: multer.memoryStorage(),
+    limits: { fileSize: env.MAX_UPLOAD_MB * 1024 * 1024 },
+    fileFilter: (_req, file, cb) => {
+      const ext = path.extname(file.originalname).replace(".", "").toLowerCase();
+      cb(null, allowedExtensions.includes(ext) && file.mimetype.startsWith("image/"));
+    }
+  });
+}
 
 export function storedPathForFile(file: Express.Multer.File) {
   return (file as Express.Multer.File & { storedPath?: string }).storedPath;
 }
 
 export function uploadFor(kind: UploadKind) {
-  const config = uploadConfig[kind];
-  const absoluteDir = path.resolve(process.cwd(), env.UPLOAD_ROOT, config.dir);
-  fs.mkdirSync(absoluteDir, { recursive: true });
+  const upload = createMulterUpload();
 
-  const storage = multer.diskStorage({
-    destination: (_req, _file, cb) => cb(null, absoluteDir),
-    filename: (_req, file, cb) => {
-      const ext = path.extname(file.originalname).replace(".", "").toLowerCase();
-      const name = `${config.prefix}${Date.now()}-${Math.round(Math.random() * 1e9)}.${ext}`;
-      (file as Express.Multer.File & { storedPath?: string }).storedPath = `${config.dbPrefix}/${name}`;
-      cb(null, name);
-    }
-  });
+  async function saveToStorage(file: Express.Multer.File) {
+    const provider = await getStorageProvider();
+    const result = await provider.save(file, kind);
+    (file as any).storedPath = result.storedPath;
+  }
 
-  return multer({
-    storage,
-    limits: {
-      fileSize: env.MAX_UPLOAD_MB * 1024 * 1024
+  return {
+    array(field: string, maxCount: number) {
+      const multerMw = upload.array(field, maxCount);
+      return (req: any, res: any, next: any) => {
+        multerMw(req, res, (err?: any) => {
+          if (err) return next(err);
+          const files = (req.files as Express.Multer.File[]) ?? [];
+          Promise.all(files.map(saveToStorage))
+            .then(() => next())
+            .catch(next);
+        });
+      };
     },
-    fileFilter: (_req, file, cb) => {
-      const ext = path.extname(file.originalname).replace(".", "").toLowerCase();
-      const allowedMime = file.mimetype.startsWith("image/");
-      cb(null, config.extensions.includes(ext) && allowedMime);
+
+    single(field: string) {
+      const multerMw = upload.single(field);
+      return (req: any, res: any, next: any) => {
+        multerMw(req, res, async (err?: any) => {
+          if (err) return next(err);
+          if (!req.file) return next();
+          try {
+            await saveToStorage(req.file);
+            next();
+          } catch (e) {
+            next(e);
+          }
+        });
+      };
     }
-  });
+  };
 }
