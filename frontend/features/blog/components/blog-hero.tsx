@@ -1,12 +1,15 @@
+import Image from 'next/image'
 import Link from 'next/link'
 import { ArrowLeft } from 'lucide-react'
 
 export function BlogHero() {
   return (
     <section className="relative isolate overflow-hidden bg-forest pt-28 text-cream md:pt-36">
-      <img
+      <Image
         src="/images/gallery-market.png"
         alt="Vibrant Ethiopian highland market"
+        fill
+        sizes="100vw"
         className="absolute inset-0 z-0 size-full object-cover"
       />
       <div className="absolute inset-0 z-0 bg-[linear-gradient(90deg,rgba(24,55,43,0.96),rgba(24,55,43,0.78)_48%,rgba(0,0,0,0.35))]" />

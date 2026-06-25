@@ -1,3 +1,4 @@
+import Image from 'next/image'
 import {
   ArrowLeft,
   ArrowRight,
@@ -15,9 +16,12 @@ export function DestinationDetailHero({
 }) {
   return (
     <section className="relative isolate min-h-screen overflow-hidden bg-coffee pt-28 text-cream">
-      <img
+      <Image
         src={destination.image}
         alt={destination.imageAlt}
+        fill
+        priority
+        sizes="100vw"
         className="absolute inset-0 z-0 size-full scale-105 object-cover"
       />
       <div className="absolute inset-0 z-0 bg-[linear-gradient(90deg,rgba(12,17,14,0.96)_0%,rgba(29,25,20,0.76)_48%,rgba(12,17,14,0.3)_100%)]" />

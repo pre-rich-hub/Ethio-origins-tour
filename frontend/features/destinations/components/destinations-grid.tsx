@@ -1,5 +1,6 @@
 'use client'
 
+import Image from 'next/image'
 import { useMemo, useState } from 'react'
 import Link from 'next/link'
 import { ArrowRight, MapPin } from 'lucide-react'
@@ -75,9 +76,11 @@ export function DestinationsGrid() {
                 aria-label={`Open dedicated page for ${destination.name}`}
                 className="group relative flex min-h-[440px] cursor-pointer touch-manipulation overflow-hidden border border-cream/18 bg-coffee shadow-2xl shadow-black/20 transition-all duration-300 hover:-translate-y-1 hover:shadow-coffee/30 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-gold sm:min-h-[500px] md:min-h-[520px]"
               >
-                <img
+                <Image
                   src={destination.image}
                   alt={destination.imageAlt}
+                  fill
+                  sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
                   className="absolute inset-0 size-full object-cover transition-transform duration-[1.4s] ease-out group-hover:scale-105"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/28 to-black/10" />

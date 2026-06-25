@@ -1,3 +1,4 @@
+import Image from 'next/image'
 import Link from 'next/link'
 import { ArrowLeft, ArrowRight, Camera } from 'lucide-react'
 import { galleryImages } from '../data/gallery-images'
@@ -7,9 +8,12 @@ export function GalleryHero() {
 
   return (
     <section className="relative isolate overflow-hidden bg-coffee pt-28 text-cream md:pt-36">
-      <img
-        src="/images/exp-northern.png"
+      <Image
+        src="https://res.cloudinary.com/divimnzxa/image/upload/v1782247186/Bet_Giyorgis_Rock-Hewn_Church_at_Lalibela___qffnvp.jpg"
         alt="Rock-hewn church of Lalibela in warm light"
+        fill
+        priority
+        sizes="100vw"
         className="absolute inset-0 z-0 size-full object-cover"
       />
       <div className="absolute inset-0 z-0 bg-[linear-gradient(90deg,rgba(12,18,15,0.96)_0%,rgba(24,55,43,0.82)_42%,rgba(0,0,0,0.28)_100%)]" />
@@ -64,9 +68,11 @@ export function GalleryHero() {
                   index === 1 ? 'lg:-translate-y-10' : 'lg:translate-y-5'
                 }`}
               >
-                <img
+                <Image
                   src={image.src}
                   alt={image.alt}
+                  fill
+                  sizes="(max-width: 640px) 100vw, (max-width: 1024px) 33vw, 18vw"
                   className="absolute inset-0 size-full object-cover transition-transform duration-[1.4s] group-hover:scale-105"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/82 via-black/10 to-transparent" />

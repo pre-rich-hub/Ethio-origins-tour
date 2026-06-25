@@ -1,3 +1,4 @@
+import Image from 'next/image'
 import { MapPin, Sparkles } from 'lucide-react'
 import { galleryImages } from '../data/gallery-images'
 
@@ -36,9 +37,11 @@ export function GalleryCollection() {
                 key={image.src + index}
                 className={`group relative overflow-hidden bg-coffee shadow-xl shadow-coffee/10 transition-transform duration-700 hover:-translate-y-1 ${spanClass}`}
               >
-                <img
+                <Image
                   src={image.src}
                   alt={image.alt}
+                  fill
+                  sizes="(max-width: 768px) 100vw, 33vw"
                   className="absolute inset-0 size-full object-cover transition-transform duration-[1.4s] group-hover:scale-105"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/86 via-black/18 to-transparent" />

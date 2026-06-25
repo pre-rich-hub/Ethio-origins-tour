@@ -1,5 +1,6 @@
 'use client'
 
+import Image from 'next/image'
 import { motion } from 'framer-motion'
 
 export function FinalCta() {
@@ -9,9 +10,11 @@ export function FinalCta() {
       className="relative isolate flex min-h-[80vh] items-center justify-center overflow-hidden bg-coffee py-24"
     >
       <div className="absolute inset-0 z-0">
-        <img
-          src="/images/cta.png"
+        <Image
+          src="https://res.cloudinary.com/divimnzxa/image/upload/v1782305234/Debre_Libanos_anvjli.jpg"
           alt="A traveler overlooking endless Ethiopian mountain ranges at sunset"
+          fill
+          sizes="100vw"
           className="size-full object-cover"
         />
         <div className="absolute inset-0 bg-gradient-to-b from-coffee/70 via-forest/70 to-forest/90" />

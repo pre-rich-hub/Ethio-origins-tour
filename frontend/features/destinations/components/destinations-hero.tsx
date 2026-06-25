@@ -1,11 +1,15 @@
+import Image from 'next/image'
 import { ArrowLeft } from 'lucide-react'
 
 export function DestinationsHero() {
   return (
     <section className="relative isolate overflow-hidden bg-coffee pt-28 text-cream md:pt-40">
-      <img
-        src="/images/hero.png"
+      <Image
+        src="https://res.cloudinary.com/divimnzxa/image/upload/v1782308427/Gondar_Ethiopia_guosib.jpg"
         alt="Ethiopian landscape"
+        fill
+        priority
+        sizes="100vw"
         className="absolute inset-0 z-0 size-full object-cover"
       />
       <div className="absolute inset-0 z-0 bg-[linear-gradient(90deg,rgba(18,27,21,0.9)_0%,rgba(47,36,26,0.72)_48%,rgba(18,27,21,0.45)_100%)]" />

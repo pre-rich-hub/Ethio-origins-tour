@@ -1,12 +1,15 @@
+import Image from 'next/image'
 import { ArrowRight } from 'lucide-react'
 import type { Destination } from '../types/destination'
 
 export function DestinationCta({ destination }: { destination: Destination }) {
   return (
     <section className="relative isolate overflow-hidden py-16 md:py-28">
-      <img
-        src="/images/cta.png"
+      <Image
+        src="https://res.cloudinary.com/divimnzxa/image/upload/v1782305234/Debre_Libanos_anvjli.jpg"
         alt=""
+        fill
+        sizes="100vw"
         className="absolute inset-0 z-0 size-full object-cover"
       />
       <div className="absolute inset-0 z-0 bg-black/70" />

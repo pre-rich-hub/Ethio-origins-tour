@@ -20,7 +20,7 @@ export const metadata: Metadata = createMetadata({
     'Ethiopia Sightseeing Destinations',
     'Best Ethiopia Destinations',
   ],
-  ogImage: '/images/hero.png',
+  ogImage: 'https://res.cloudinary.com/divimnzxa/image/upload/v1782308427/Gondar_Ethiopia_guosib.jpg',
   ogImageAlt: 'Ethiopian highland travel destination landscape',
 })
 

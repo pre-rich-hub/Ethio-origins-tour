@@ -1,3 +1,4 @@
+import Image from 'next/image'
 import Link from 'next/link'
 import { ArrowRight } from 'lucide-react'
 import type { Destination } from '../types/destination'
@@ -36,9 +37,11 @@ export function RelatedDestinations({
               aria-label={`Open dedicated page for ${item.name}`}
               className="group relative flex min-h-[430px] cursor-pointer touch-manipulation overflow-hidden border border-cream/18 bg-coffee shadow-xl shadow-black/10 transition-shadow hover:shadow-coffee/25 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-gold sm:min-h-[480px]"
             >
-              <img
+              <Image
                 src={item.image}
                 alt={item.imageAlt}
+                fill
+                sizes="(max-width: 768px) 100vw, 33vw"
                 className="absolute inset-0 size-full object-cover transition-transform duration-[1.4s] ease-out group-hover:scale-105"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/28 to-black/10" />

@@ -1,5 +1,6 @@
 'use client'
 
+import Image from 'next/image'
 import { motion } from 'framer-motion'
 import Link from 'next/link'
 import { SectionHeading } from '@/components/shared/section-heading'
@@ -56,9 +57,11 @@ export function FeaturedDestinations() {
                 transition={{ duration: 0.6, delay: i * 0.08 }}
                 className="relative flex size-full overflow-hidden rounded-none border border-cream/18 bg-coffee shadow-2xl shadow-black/25"
               >
-                <img
+                <Image
                   src={d.image || '/placeholder.svg'}
                   alt={d.name}
+                  fill
+                  sizes="(max-width: 640px) calc(100vw - 2rem), 420px"
                   className="absolute inset-0 size-full object-cover transition-transform duration-[1.4s] ease-out group-hover:scale-105"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/88 via-black/24 to-black/10" />

@@ -1,24 +1,27 @@
 'use client'
 
+import Image from 'next/image'
 import { motion, useReducedMotion, useScroll, useTransform } from 'framer-motion'
 import { useRef } from 'react'
 import { ArrowRight, ChevronDown } from 'lucide-react'
 
+const MotionImage = motion(Image)
+
 const heroFrames = [
   {
-    src: '/images/hero.png',
+    src: 'https://res.cloudinary.com/divimnzxa/image/upload/v1782244137/Ancient_Wonders_The_Monolithic_Rock-Cut_Church_of_Lalibela_Ethiopia_gh7iwx.jpg',
     alt: 'Sunrise over the Simien Mountains in Ethiopia',
   },
   {
-    src: '/images/exp-simien.png',
+    src: 'https://res.cloudinary.com/divimnzxa/image/upload/v1782244137/Simien_Mountains_Ethiopia_kly2ho.jpg',
     alt: 'Simien Mountains escarpment in Ethiopia',
   },
   {
-    src: '/images/exp-danakil.png',
+    src: 'https://res.cloudinary.com/divimnzxa/image/upload/v1782244137/Ethiopia_h1whvn.jpg',
     alt: 'Danakil Depression landscape in Ethiopia',
   },
   {
-    src: '/images/exp-omo.png',
+    src: 'https://res.cloudinary.com/divimnzxa/image/upload/v1782244137/adiss_ababa_Ethiopia_wj8emk.jpg',
     alt: 'Omo Valley landscape in Ethiopia',
   },
 ]
@@ -40,18 +43,23 @@ export function Hero() {
       className="relative isolate flex min-h-[100svh] items-center overflow-hidden bg-forest pt-24 sm:pt-28"
     >
       <motion.div style={{ y }} className="absolute inset-0 z-0">
-        <img
+        <Image
           src={heroFrames[0].src}
           alt={heroFrames[0].alt}
+          fill
+          priority
+          sizes="100vw"
           className="absolute inset-0 size-full scale-110 object-cover object-center"
         />
         {!reduceMotion &&
           heroFrames.map((frame, i) => (
-            <motion.img
+            <MotionImage
               key={frame.src}
               src={frame.src}
               alt=""
               aria-hidden="true"
+              fill
+              sizes="100vw"
               initial={{
                 opacity: i === 0 ? 1 : 0,
                 scale: 1.08,
