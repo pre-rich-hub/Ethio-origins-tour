@@ -14,6 +14,7 @@ import {
   Image as ImageIcon,
   Star,
   Users,
+  File,
   LogOut,
   ChevronRight,
 } from 'lucide-react'
@@ -27,6 +28,7 @@ const navItems = [
   { href: '/admin/contacts', label: 'Contacts', icon: MessageSquare },
   { href: '/admin/gallery', label: 'Gallery', icon: ImageIcon },
   { href: '/admin/testimonials', label: 'Testimonials', icon: Star },
+  { href: '/admin/documents', label: 'Documents', icon: File },
   { href: '/admin/subscribers', label: 'Subscribers', icon: Users },
 ]
 
