@@ -1,68 +1,22 @@
 'use client'
 
+import Image from 'next/image'
 import { AnimatePresence, motion } from 'framer-motion'
 import Link from 'next/link'
 import { Pause, Play, Sparkles } from 'lucide-react'
 import { useEffect, useState } from 'react'
+import { galleryImages } from '@/features/gallery/data/gallery-images'
 import { useLanguage } from '@/lib/i18n/language'
 
 const images = [
-  {
-    src: '/images/gallery-coffee.png',
-    alt: 'Traditional Ethiopian coffee ceremony',
-    title: 'Coffee Ceremony',
-    place: 'Highland Homes',
-    cls: 'md:col-span-2 md:row-span-2',
-  },
-  {
-    src: '/images/exp-simien.png',
-    alt: 'Gelada monkeys in the Simien Mountains',
-    title: 'Simien Light',
-    place: 'Northern Escarpments',
-    cls: '',
-  },
-  {
-    src: '/images/gallery-dance.png',
-    alt: 'Ethiopian dancers in traditional dress',
-    title: 'Ceremonial Rhythm',
-    place: 'Cultural Evenings',
-    cls: '',
-  },
-  {
-    src: '/images/exp-danakil.png',
-    alt: 'The surreal Danakil Depression',
-    title: 'Danakil Glow',
-    place: 'Afar Triangle',
-    cls: 'md:row-span-2',
-  },
-  {
-    src: '/images/gallery-market.png',
-    alt: 'A vibrant Ethiopian highland market',
-    title: 'Market Color',
-    place: 'Highland Towns',
-    cls: '',
-  },
-  {
-    src: '/images/exp-northern.png',
-    alt: 'Rock-hewn church of Lalibela',
-    title: 'Sacred Stone',
-    place: 'Lalibela',
-    cls: '',
-  },
-  {
-    src: '/images/dest-wonchi.png',
-    alt: 'Wenchi Crater Lake',
-    title: 'Crater Stillness',
-    place: 'Wenchi',
-    cls: '',
-  },
-  {
-    src: '/images/exp-omo.png',
-    alt: 'Omo Valley community member',
-    title: 'Living Heritage',
-    place: 'Omo Valley',
-    cls: '',
-  },
+  galleryImages[6],
+  galleryImages[14],
+  galleryImages[3],
+  galleryImages[20],
+  galleryImages[9],
+  galleryImages[25],
+  galleryImages[1],
+  galleryImages[28],
 ]
 
 type HomeGalleryImage = (typeof images)[number]
@@ -75,7 +29,6 @@ export function HomeGallery({ items = images }: { items?: Partial<HomeGalleryIma
         alt: item.alt ?? images[index % images.length].alt,
         title: item.title ?? images[index % images.length].title,
         place: item.place ?? images[index % images.length].place,
-        cls: item.cls ?? images[index % images.length].cls,
       }))
     : images
   const [activeIndex, setActiveIndex] = useState(0)
@@ -209,9 +162,11 @@ export function HomeGallery({ items = images }: { items?: Partial<HomeGalleryIma
                     }`}
                     aria-label={`${t.gallery.show} ${image.title}`}
                   >
-                    <img
+                    <Image
                       src={image.src}
                       alt=""
+                      fill
+                      sizes="(max-width: 640px) 25vw, (max-width: 1024px) 12.5vw, 25vw"
                       className="size-full object-cover transition-transform duration-700 group-hover:scale-110"
                     />
                     <span className="absolute inset-0 bg-black/20" />

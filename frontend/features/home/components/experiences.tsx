@@ -1,5 +1,6 @@
 'use client'
 
+import Image from 'next/image'
 import { motion } from 'framer-motion'
 import Link from 'next/link'
 import { ArrowRight, Clock } from 'lucide-react'
@@ -35,9 +36,11 @@ export function Experiences() {
                 aria-label={`Open dedicated page for ${exp.title}`}
                 className="group relative flex size-full cursor-pointer touch-manipulation overflow-hidden rounded-md border border-border bg-card shadow-sm transition-shadow hover:shadow-xl focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-gold"
               >
-                <img
+                <Image
                   src={exp.image || '/placeholder.svg'}
                   alt={exp.title}
+                  fill
+                  sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
                   className="absolute inset-0 size-full object-cover transition-transform duration-700 group-hover:scale-105"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/78 via-coffee/18 to-transparent transition-colors duration-500 group-hover:from-black/88 group-hover:via-coffee/28" />

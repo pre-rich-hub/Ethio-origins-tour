@@ -20,7 +20,7 @@ export const metadata: Metadata = createMetadata({
     'Ethiopia Travel Planner',
     'Custom Ethiopia Tour Inquiry',
   ],
-  ogImage: '/images/cta.png',
+  ogImage: 'https://res.cloudinary.com/divimnzxa/image/upload/v1782305234/Debre_Libanos_anvjli.jpg',
   ogImageAlt: 'Ethiopian mountain landscape for private trip planning',
 })
 

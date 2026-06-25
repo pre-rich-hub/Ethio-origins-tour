@@ -1,5 +1,6 @@
 'use client'
 
+import Image from 'next/image'
 import { Sparkles } from 'lucide-react'
 import { useLanguage } from '@/lib/i18n/language'
 import { getLocalizedDestination } from '../lib/destination-localization'
@@ -15,9 +16,11 @@ export function DestinationPersonalization({
 
   return (
     <section className="relative isolate overflow-hidden bg-coffee py-16 text-cream md:py-28">
-      <img
+      <Image
         src={localizedDestination.image}
         alt=""
+        fill
+        sizes="100vw"
         className="absolute inset-0 z-0 size-full object-cover"
       />
       <div className="absolute inset-0 z-0 bg-[linear-gradient(90deg,rgba(12,17,14,0.94),rgba(31,24,18,0.84),rgba(12,17,14,0.62))]" />

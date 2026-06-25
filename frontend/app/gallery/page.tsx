@@ -21,7 +21,7 @@ export const metadata: Metadata = createMetadata({
     'Ethiopia Destination Photography',
     'Explore Ethiopia Photos',
   ],
-  ogImage: '/images/exp-northern.png',
+  ogImage: 'https://res.cloudinary.com/divimnzxa/image/upload/v1782247186/Bet_Giyorgis_Rock-Hewn_Church_at_Lalibela___qffnvp.jpg',
   ogImageAlt: 'Rock-hewn church of Lalibela in warm light',
 })
 

@@ -1,7 +1,7 @@
 'use client'
 
-import { useEffect, useState, useRef } from 'react'
-import { Upload, File as FileIcon, Loader2, CheckCircle, XCircle, Clock, Trash2, AlertCircle } from 'lucide-react'
+import { useCallback, useEffect, useState, useRef } from 'react'
+import { Upload, File as FileIcon, Loader2, CheckCircle, XCircle, Clock } from 'lucide-react'
 
 type DocumentFile = {
   id: number
@@ -21,7 +21,7 @@ export default function AdminDocuments() {
   const [selectedFile, setSelectedFile] = useState<File | null>(null)
   const fileInputRef = useRef<HTMLInputElement>(null)
 
-  async function fetchDocuments() {
+  const fetchDocuments = useCallback(async () => {
     try {
       const res = await fetch('/api/v1/admin/documents', { credentials: 'include' })
       const data = await res.json()
@@ -31,9 +31,15 @@ export default function AdminDocuments() {
     } finally {
       setLoading(false)
     }
-  }
+  }, [])
 
-  useEffect(() => { fetchDocuments() }, [])
+  useEffect(() => {
+    const timeout = window.setTimeout(() => {
+      void fetchDocuments()
+    }, 0)
+
+    return () => window.clearTimeout(timeout)
+  }, [fetchDocuments])
 
   async function handleUpload() {
     if (!selectedFile) return

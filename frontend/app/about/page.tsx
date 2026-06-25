@@ -2,6 +2,7 @@ import type { Metadata } from 'next'
 import Link from 'next/link'
 import { Navbar } from '@/components/layout/navbar'
 import { SiteFooter } from '@/components/layout/site-footer'
+import Image from 'next/image'
 import {
   BrandStory,
   CustomJourneys,
@@ -22,7 +23,7 @@ export const metadata: Metadata = createMetadata({
     'Trusted Ethiopian Tour Operator',
     'Local Ethiopia Tour Company',
   ],
-  ogImage: '/images/story.png',
+  ogImage: 'https://res.cloudinary.com/divimnzxa/image/upload/v1782246561/40462096650629206_q68ntv.jpg',
   ogImageAlt: 'Ethio Origins Tour guide and travelers in the Ethiopian highlands',
 })
 
@@ -31,9 +32,12 @@ export default function AboutPage() {
     <main className="bg-background text-foreground">
       <Navbar />
       <section className="relative isolate overflow-hidden bg-coffee pt-28 text-cream md:pt-40">
-        <img
-          src="/images/story.png"
+        <Image
+          src="https://res.cloudinary.com/divimnzxa/image/upload/v1782246561/40462096650629206_q68ntv.jpg"
           alt="A local guide and travelers walking an Ethiopian highland ridge at golden hour"
+          fill
+          priority
+          sizes="100vw"
           className="absolute inset-0 z-0 size-full object-cover"
         />
         <div className="absolute inset-0 z-0 bg-[linear-gradient(90deg,rgba(18,27,21,0.92)_0%,rgba(47,36,26,0.74)_48%,rgba(18,27,21,0.45)_100%)]" />

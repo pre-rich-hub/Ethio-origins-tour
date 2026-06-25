@@ -1,5 +1,6 @@
 'use client'
 
+import Image from 'next/image'
 import Link from 'next/link'
 import { ArrowRight, CalendarDays } from 'lucide-react'
 import { useLanguage } from '@/lib/i18n/language'
@@ -40,9 +41,11 @@ export function BlogPostsSection({ items = posts }: { items?: BlogPost[] }) {
               >
                 <Link href={`/blog/${post.slug}`} className="group block">
                   <div className="relative aspect-[4/3] overflow-hidden bg-coffee">
-                    <img
+                    <Image
                       src={post.image}
                       alt=""
+                      fill
+                      sizes="(min-width: 768px) 33vw, 100vw"
                       className="size-full object-cover transition-transform duration-[1.2s] group-hover:scale-105"
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-black/72 via-transparent to-transparent" />

@@ -3,7 +3,6 @@
 import {
   createContext,
   useContext,
-  useEffect,
   useMemo,
   useState,
   type ReactNode,
@@ -167,6 +166,7 @@ export const translations = {
       contact: 'Contact',
       response: 'Your email address',
       subscribe: 'Subscribe',
+      subscribing: 'Subscribing...',
       platforms: 'Trusted Travel Platforms',
       platformTitle: 'Find us where discerning travelers plan.',
       platformDescription:
@@ -551,6 +551,7 @@ export const translations = {
       contact: 'Kontakt',
       response: 'Ihre E-Mail-Adresse',
       subscribe: 'Abonnieren',
+      subscribing: 'Abonnieren...',
       platforms: 'Vertrauenswürdige Reiseplattformen',
       platformTitle: 'Dort präsent, wo anspruchsvolle Reisende planen.',
       platformDescription:
@@ -935,6 +936,7 @@ export const translations = {
       contact: 'Contacto',
       response: 'Tu correo electrónico',
       subscribe: 'Suscribirse',
+      subscribing: 'Suscribiendo...',
       platforms: 'Plataformas de viaje confiables',
       platformTitle: 'Encuéntranos donde planifican los viajeros exigentes.',
       platformDescription:
@@ -1319,6 +1321,7 @@ export const translations = {
       contact: 'Contact',
       response: 'Votre adresse e-mail',
       subscribe: "S'abonner",
+      subscribing: 'Abonnement...',
       platforms: 'Plateformes de voyage fiables',
       platformTitle: 'Retrouvez-nous là où les voyageurs exigeants planifient.',
       platformDescription:
@@ -1568,14 +1571,18 @@ const LanguageContext = createContext<{
 } | null>(null)
 
 export function LanguageProvider({ children }: { children: ReactNode }) {
-  const [language, setLanguageState] = useState<LanguageCode>('EN')
+  const [language, setLanguageState] = useState<LanguageCode>(() => {
+    if (typeof window === 'undefined') {
+      return 'EN'
+    }
 
-  useEffect(() => {
     const saved = window.localStorage.getItem(storageKey)
     if (saved === 'EN' || saved === 'DE' || saved === 'ES' || saved === 'FR') {
-      setLanguageState(saved)
+      return saved
     }
-  }, [])
+
+    return 'EN'
+  })
 
   const value = useMemo(
     () => ({

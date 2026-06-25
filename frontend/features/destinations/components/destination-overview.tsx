@@ -1,5 +1,6 @@
 'use client'
 
+import Image from 'next/image'
 import { Check } from 'lucide-react'
 import { useLanguage } from '@/lib/i18n/language'
 import { getLocalizedDestination } from '../lib/destination-localization'
@@ -49,9 +50,11 @@ export function DestinationOverview({
 
         <aside className="sticky top-28">
           <div className="relative overflow-hidden border border-border bg-coffee text-cream shadow-2xl shadow-coffee/10">
-            <img
+            <Image
               src={localizedDestination.image}
               alt=""
+              width={640}
+              height={800}
               className="aspect-[4/5] w-full object-cover"
             />
             <div className="absolute inset-0 bg-gradient-to-t from-black/88 via-black/18 to-transparent" />

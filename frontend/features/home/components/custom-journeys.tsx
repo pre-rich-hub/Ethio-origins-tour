@@ -1,5 +1,6 @@
 'use client'
 
+import Image from 'next/image'
 import { motion } from 'framer-motion'
 import {
   Compass,
@@ -49,9 +50,11 @@ export function CustomJourneys() {
   return (
     <section className="relative isolate overflow-hidden bg-coffee py-20 text-cream md:py-28">
       <div className="absolute inset-0 z-0">
-        <img
-          src="/images/custom.png"
+        <Image
+          src="https://res.cloudinary.com/divimnzxa/image/upload/v1782244137/Ethiopia_h1whvn.jpg"
           alt="Luxury safari camp overlooking the Ethiopian highlands at dusk"
+          fill
+          sizes="100vw"
           className="size-full object-cover"
         />
         <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(24,55,43,0.96),rgba(31,77,58,0.82)_48%,rgba(0,0,0,0.42))]" />

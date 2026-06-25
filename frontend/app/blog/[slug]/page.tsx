@@ -1,4 +1,5 @@
 import { notFound } from 'next/navigation'
+import Image from 'next/image'
 import Link from 'next/link'
 import { ArrowLeft, CalendarDays } from 'lucide-react'
 import type { Metadata } from 'next'
@@ -48,9 +49,12 @@ export default async function BlogPostPage({ params }: Props) {
       <Navbar />
 
       <section className="relative isolate overflow-hidden bg-forest pt-28 text-cream md:pt-36">
-        <img
+        <Image
           src={post.image}
           alt=""
+          fill
+          priority
+          sizes="100vw"
           className="absolute inset-0 z-0 size-full object-cover"
         />
         <div className="absolute inset-0 z-0 bg-[linear-gradient(90deg,rgba(24,55,43,0.96),rgba(24,55,43,0.78)_48%,rgba(0,0,0,0.35))]" />

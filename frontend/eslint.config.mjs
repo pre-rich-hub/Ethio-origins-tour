@@ -1,8 +1,8 @@
-import nextCoreWebVitals from 'eslint-config-next/core-web-vitals'
+import nextVitals from 'eslint-config-next/core-web-vitals'
 import nextTypescript from 'eslint-config-next/typescript'
 
 const eslintConfig = [
-  ...nextCoreWebVitals,
+  ...nextVitals,
   ...nextTypescript,
   {
     ignores: [
@@ -11,6 +11,12 @@ const eslintConfig = [
       'next-env.d.ts',
       'tsconfig.tsbuildinfo',
     ],
+  },
+  {
+    rules: {
+      '@next/next/no-html-link-for-pages': 'off',
+      '@next/next/no-img-element': 'error',
+    },
   },
 ]
 

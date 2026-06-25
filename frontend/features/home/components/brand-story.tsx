@@ -1,5 +1,6 @@
 'use client'
 
+import Image from 'next/image'
 import { Reveal } from '@/components/shared/reveal'
 import { useLanguage } from '@/lib/i18n/language'
 
@@ -10,11 +11,13 @@ export function BrandStory() {
     <section className="bg-background py-20 md:py-28">
       <div className="mx-auto grid max-w-7xl items-center gap-12 px-6 lg:grid-cols-12 lg:gap-16">
         <Reveal className="lg:col-span-5">
-          <div className="overflow-hidden rounded-md">
-            <img
-              src="/images/story.png"
+          <div className="relative h-[400px] overflow-hidden rounded-md md:h-[540px]">
+            <Image
+              src="https://res.cloudinary.com/divimnzxa/image/upload/v1782246561/40462096650629206_q68ntv.jpg"
               alt="A local guide and travelers walking an Ethiopian highland ridge at golden hour"
-              className="h-[400px] w-full object-cover md:h-[540px]"
+              fill
+              sizes="(max-width: 1024px) 100vw, 42vw"
+              className="object-cover"
             />
           </div>
         </Reveal>
