@@ -11,7 +11,7 @@ const testimonials = [
       'The most profound trip of my life. Every detail was flawless, and our guide felt like family by the end.',
     name: 'Eleanor Whitfield',
     country: 'United Kingdom',
-    image: '/images/traveler-1.png',
+    image: 'https://res.cloudinary.com/divimnzxa/image/upload/v1782422861/IMG-20260511-WA0023_l9w0jc.jpg',
     experience: 'Historic Northern Route',
   },
   {
@@ -19,7 +19,7 @@ const testimonials = [
       'Ethio Origins gave us access and stories no other operator could. The Omo Valley left us speechless.',
     name: 'Marcus Lindqvist',
     country: 'Sweden',
-    image: '/images/traveler-2.png',
+    image: 'https://res.cloudinary.com/divimnzxa/image/upload/v1782422777/IMG-20251228-WA0011_zov7pu.jpg',
     experience: 'Omo Valley Discovery',
   },
   {
@@ -27,7 +27,7 @@ const testimonials = [
       'From the Simien sunrises to the coffee ceremonies, it was cinematic, authentic, and deeply moving.',
     name: 'Aisha Rahman',
     country: 'United Arab Emirates',
-    image: '/images/traveler-3.png',
+    image: 'https://res.cloudinary.com/divimnzxa/image/upload/v1782422851/IMG-20260511-WA0028_i3o8fm.jpg',
     experience: 'Simien Mountains Expedition',
   },
 ]

@@ -11,7 +11,7 @@ export function FinalCta() {
     >
       <div className="absolute inset-0 z-0">
         <Image
-          src="/images/cta.png"
+          src="https://res.cloudinary.com/divimnzxa/image/upload/v1782305234/Debre_Libanos_anvjli.jpg"
           alt="A traveler overlooking endless Ethiopian mountain ranges at sunset"
           fill
           sizes="100vw"

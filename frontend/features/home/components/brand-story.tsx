@@ -10,7 +10,7 @@ export function BrandStory() {
         <Reveal className="lg:col-span-5">
           <div className="relative h-[400px] overflow-hidden rounded-md md:h-[540px]">
             <Image
-              src="/images/story.png"
+              src="https://res.cloudinary.com/divimnzxa/image/upload/v1782246561/40462096650629206_q68ntv.jpg"
               alt="A local guide and travelers walking an Ethiopian highland ridge at golden hour"
               fill
               sizes="(max-width: 1024px) 100vw, 42vw"

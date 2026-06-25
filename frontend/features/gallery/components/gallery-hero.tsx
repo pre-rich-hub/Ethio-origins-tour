@@ -9,7 +9,7 @@ export function GalleryHero() {
   return (
     <section className="relative isolate overflow-hidden bg-coffee pt-28 text-cream md:pt-36">
       <Image
-        src="/images/exp-northern.png"
+        src="https://res.cloudinary.com/divimnzxa/image/upload/v1782247186/Bet_Giyorgis_Rock-Hewn_Church_at_Lalibela___qffnvp.jpg"
         alt="Rock-hewn church of Lalibela in warm light"
         fill
         priority

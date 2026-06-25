@@ -18,7 +18,7 @@ export function WhyEthiopia() {
         <Reveal>
           <div className="relative h-[420px] overflow-hidden rounded-md md:h-[560px]">
             <Image
-              src="/images/why-ethiopia.png"
+              src="https://res.cloudinary.com/divimnzxa/image/upload/v1782244137/adiss_ababa_Ethiopia_wj8emk.jpg"
               alt="Ethiopian Orthodox priest holding an ornate cross"
               fill
               sizes="(max-width: 1024px) 100vw, 50vw"

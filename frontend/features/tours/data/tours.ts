@@ -1023,7 +1023,7 @@ export const tours = [
         'Ethiopia 5 Day Tour Package',
         'Danakil Lava Lake and Lalibela Tour',
       ],
-      ogImage: '/images/dest-awash.png',
+      ogImage: 'https://res.cloudinary.com/divimnzxa/image/upload/v1782248873/Dallol_Ethiopia___%CC%97%CC%80__%E0%A9%88_z78ix6.jpg',
       ogImageAlt: 'Lalibela and Danakil Depression adventure',
     },
   },

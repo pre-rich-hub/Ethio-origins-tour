@@ -42,7 +42,7 @@ export function CustomJourneys() {
     <section className="relative isolate overflow-hidden bg-coffee py-20 text-cream md:py-28">
       <div className="absolute inset-0 z-0">
         <Image
-          src="/images/custom.png"
+          src="https://res.cloudinary.com/divimnzxa/image/upload/v1782244137/Ethiopia_h1whvn.jpg"
           alt="Luxury safari camp overlooking the Ethiopian highlands at dusk"
           fill
           sizes="100vw"

@@ -6,7 +6,7 @@ export function DestinationCta({ destination }: { destination: Destination }) {
   return (
     <section className="relative isolate overflow-hidden py-16 md:py-28">
       <Image
-        src="/images/cta.png"
+        src="https://res.cloudinary.com/divimnzxa/image/upload/v1782305234/Debre_Libanos_anvjli.jpg"
         alt=""
         fill
         sizes="100vw"

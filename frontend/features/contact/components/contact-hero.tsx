@@ -5,7 +5,7 @@ export function ContactHero() {
   return (
     <section className="relative isolate flex min-h-[620px] items-end overflow-hidden bg-coffee pt-28 md:min-h-[680px]">
       <Image
-        src="/images/cta.png"
+        src="https://res.cloudinary.com/divimnzxa/image/upload/v1782305234/Debre_Libanos_anvjli.jpg"
         alt="Ethiopian mountain landscape at sunset"
         fill
         priority

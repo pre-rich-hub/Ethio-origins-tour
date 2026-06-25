@@ -28,7 +28,7 @@ export const metadata = createMetadata({
     'Ethiopia Travel Services',
     'Ethiopia Tourism Company',
   ],
-  ogImage: '/images/hero.png',
+  ogImage: 'https://res.cloudinary.com/divimnzxa/image/upload/v1782244137/Ancient_Wonders_The_Monolithic_Rock-Cut_Church_of_Lalibela_Ethiopia_gh7iwx.jpg',
   ogImageAlt: 'Ethiopian landscape with mountain light',
 })
 

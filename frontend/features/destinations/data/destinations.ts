@@ -3,7 +3,8 @@ import type { Destination, DestinationCategory } from '../types/destination'
 const PENDING_OVERVIEW = 'Detailed destination information will be added soon.'
 
 // Pending client assets: used only when no approved destination-specific image exists yet.
-const TEMPORARY_DESTINATION_IMAGE = '/images/hero.png'
+const TEMPORARY_DESTINATION_IMAGE =
+  'https://res.cloudinary.com/divimnzxa/image/upload/v1782244137/Ancient_Wonders_The_Monolithic_Rock-Cut_Church_of_Lalibela_Ethiopia_gh7iwx.jpg'
 
 type DestinationSeed = {
   name: string
@@ -328,7 +329,7 @@ const destinationSeeds: DestinationSeed[] = [
     category: 'lakes-scenic',
     categoryLabel: 'Lakes, Waterfalls, and Scenic Destinations',
     region: 'Arba Minch',
-    image: '/images/client/custom/arbaminch.jpg',
+    image: 'https://res.cloudinary.com/divimnzxa/image/upload/v1782373033/Art_Print__Su_s_Abaya_Lake_at_sunrise_Arbaminch_Ethiopia_36x24in__kgs2br.jpg',
     imageAlt: 'Lake Chamo route near Arba Minch',
     relatedTourSlugs: [
       '10-day-omo-valley-bale-mountains-cultural-adventure',
@@ -365,7 +366,7 @@ const destinationSeeds: DestinationSeed[] = [
     category: 'lakes-scenic',
     categoryLabel: 'Lakes, Waterfalls, and Scenic Destinations',
     region: 'https://res.cloudinary.com/divimnzxa/image/upload/v1782373033/The_Lake_bxxwzm.jpg',
-    image: '/images/exp-rift.png',
+    image: 'https://res.cloudinary.com/divimnzxa/image/upload/v1782373033/The_Lake_bxxwzm.jpg',
     imageAlt: 'Rift Valley lake landscape for Lake Shalla',
   },
   {

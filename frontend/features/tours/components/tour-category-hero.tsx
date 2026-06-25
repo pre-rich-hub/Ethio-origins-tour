@@ -6,7 +6,7 @@ export function TourCategoryHero({ category }: { category: TourCategory }) {
   return (
     <section className="relative isolate overflow-hidden bg-coffee pt-28 text-cream md:pt-40">
       <Image
-        src="/images/hero.png"
+        src="https://res.cloudinary.com/divimnzxa/image/upload/v1782375172/121667627429376236_nlva6g.jpg"
         alt=""
         fill
         priority

@@ -22,7 +22,7 @@ export const metadata: Metadata = createMetadata({
     'Trusted Ethiopian Tour Operator',
     'Local Ethiopia Tour Company',
   ],
-  ogImage: '/images/story.png',
+  ogImage: 'https://res.cloudinary.com/divimnzxa/image/upload/v1782246561/40462096650629206_q68ntv.jpg',
   ogImageAlt: 'Ethio Origins Tour guide and travelers in the Ethiopian highlands',
 })
 
@@ -32,7 +32,7 @@ export default function AboutPage() {
       <Navbar />
       <section className="relative isolate overflow-hidden bg-coffee pt-28 text-cream md:pt-40">
         <Image
-          src="/images/story.png"
+          src="https://res.cloudinary.com/divimnzxa/image/upload/v1782246561/40462096650629206_q68ntv.jpg"
           alt="A local guide and travelers walking an Ethiopian highland ridge at golden hour"
           fill
           priority
