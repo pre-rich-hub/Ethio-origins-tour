@@ -54,57 +54,32 @@ const nextConfig = {
       },
       {
         source: '/tours/13-days-southern-ethiopia-cultural-nature-adventure',
-        destination: '/tours/13-day-southern-ethiopia-cultural-tour',
+        destination: '/tours/10-day-omo-valley-bale-mountains-cultural-adventure',
         permanent: true,
       },
       {
         source: '/tours/8-days-historic-northern-route',
-        destination: '/tours/8-day-historic-northern-route-tour',
-        permanent: true,
-      },
-      {
-        source: '/tours/6-days-simien-mountains-trekking',
-        destination: '/tours/6-day-simien-mountains-trekking-tour',
+        destination: '/tours/5-day-ethiopia-historic-route-tour',
         permanent: true,
       },
       {
         source: '/tours/5-days-danakil-depression-expedition',
-        destination: '/tours/5-day-danakil-depression-tour',
-        permanent: true,
-      },
-      {
-        source: '/tours/7-days-bale-mountains-wildlife-safari',
-        destination: '/tours/7-day-bale-mountains-wildlife-safari',
-        permanent: true,
-      },
-      {
-        source: '/tours/4-days-rift-valley-lakes-retreat',
-        destination: '/tours/4-day-rift-valley-lakes-retreat',
+        destination: '/tours/4-day-danakil-depression-erta-ale-tour',
         permanent: true,
       },
       {
         source: '/tours/3-days-addis-ababa-cultural-city-break',
-        destination: '/tours/3-day-addis-ababa-city-tour',
-        permanent: true,
-      },
-      {
-        source: '/tours/9-days-coffee-heritage-and-highlands',
-        destination: '/tours/9-day-ethiopian-coffee-origin-tour',
+        destination: '/tours/addis-ababa-full-day-city-tour',
         permanent: true,
       },
       {
         source: '/tours/10-days-omo-valley-photography-expedition',
-        destination: '/tours/10-day-omo-valley-photography-tour',
-        permanent: true,
-      },
-      {
-        source: '/tours/5-days-awash-wildlife-and-hot-springs',
-        destination: '/tours/5-day-awash-wildlife-hot-springs-tour',
+        destination: '/tours/8-day-omo-valley-cultural-discovery-tour',
         permanent: true,
       },
       {
         source: '/tours/12-days-ethiopia-grand-circuit',
-        destination: '/tours/12-day-ethiopia-grand-circuit-tour',
+        destination: '/tours/20-day-ethiopia-historical-cultural-adventure',
         permanent: true,
       },
     ]
