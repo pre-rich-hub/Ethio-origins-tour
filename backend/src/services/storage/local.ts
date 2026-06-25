@@ -8,7 +8,8 @@ const uploadConfig: Record<UploadKind, { dir: string; prefix: string }> = {
   destination: { dir: "assets/images/destination",    prefix: "DEST-" },
   blog:        { dir: "assets/images/blog",           prefix: "BLOG-" },
   gallery:     { dir: "assets/images/gallery",        prefix: "IMG-" },
-  admin:       { dir: "assets/images/admin",          prefix: "IMG-" }
+  admin:       { dir: "assets/images/admin",          prefix: "IMG-" },
+  document:    { dir: "data",                         prefix: "DOC-" }
 };
 
 export class LocalStorageProvider implements StorageProvider {

@@ -41,6 +41,10 @@ const envSchema = z.object({
   ANTHROPIC_API_KEY: z.string().optional().default(""),
   GROK_API_KEY: z.string().optional().default(""),
 
+  // Document Ingestion
+  EMBEDDING_MODEL: z.string().default("gemini-embedding-001"),
+  DOCUMENTS_DIR: z.string().default("./data"),
+
   // Storage
   STORAGE_DRIVER: z.enum(["local", "s3", "cloudinary"]).default("local"),
   STORAGE_S3_BUCKET: z.string().optional().default(""),

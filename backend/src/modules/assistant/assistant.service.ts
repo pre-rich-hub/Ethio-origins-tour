@@ -10,6 +10,7 @@ import { createGrokProvider } from "./providers/grok.js";
 import { createTourConnector } from "./connectors/tours.js";
 import { createDestinationConnector } from "./connectors/destinations.js";
 import { createTestimonialConnector } from "./connectors/testimonials.js";
+import { createDocumentConnector } from "./connectors/documents.js";
 import { assistantConfig } from "./assistant.config.js";
 import {
   createConversation,
@@ -21,6 +22,7 @@ const connectors = [
   createTourConnector(),
   createDestinationConnector(),
   createTestimonialConnector(),
+  createDocumentConnector(),
 ];
 
 function createProvider(): LLMProvider {

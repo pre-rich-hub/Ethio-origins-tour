@@ -1,3 +1,6 @@
+import path from "node:path";
+import fs from "node:fs";
+import multer from "multer";
 import { Router } from "express";
 import { z } from "zod";
 import { prisma } from "../../config/database.js";
@@ -20,6 +23,9 @@ import { mapBooking, mapContact } from "../../utils/mappers.js";
 import { bookingStatusSchema, updateBookingStatus } from "../bookings/bookings.routes.js";
 import { sendEmail } from "../../services/email.service.js";
 import { slugify } from "../../utils/slug.js";
+import { env } from "../../config/env.js";
+import { ingestAll } from "../../services/ingestion.js";
+import { logger } from "../../config/pino.js";
 
 export const adminRouter = Router();
 
@@ -692,4 +698,73 @@ adminRouter.get(
       createdAt: s.createdAt
     })));
   })
+);
+
+// Document Management
+
+const docUpload = multer({
+  storage: multer.memoryStorage(),
+  limits: { fileSize: 50 * 1024 * 1024 },
+  fileFilter: (_req, file, cb) => {
+    const ext = path.extname(file.originalname).toLowerCase();
+    const allowed = ext === ".docx";
+    cb(null, allowed);
+  },
+});
+
+adminRouter.get(
+  "/documents",
+  asyncHandler(async (_req, res) => {
+    const documents = await prisma.documentFile.findMany({
+      orderBy: { createdAt: "desc" },
+    });
+    return ok(res, "Documents fetched successfully", documents);
+  }),
+);
+
+adminRouter.post(
+  "/documents/upload",
+  docUpload.single("file"),
+  asyncHandler(async (req, res) => {
+    const file = req.file;
+    if (!file) throw new HttpError(422, "A .docx file is required");
+
+    const docsDir = path.resolve(env.DOCUMENTS_DIR);
+    if (!fs.existsSync(docsDir)) {
+      fs.mkdirSync(docsDir, { recursive: true });
+    }
+
+    const fileName = `${Date.now()}-${file.originalname}`;
+    const filePath = path.join(docsDir, fileName);
+    fs.writeFileSync(filePath, file.buffer);
+
+    const document = await prisma.documentFile.create({
+      data: {
+        filename: fileName,
+        originalName: file.originalname,
+        size: file.size,
+        status: "uploaded",
+      },
+    });
+
+    return ok(res, "Document uploaded successfully", document, 201);
+  }),
+);
+
+adminRouter.post(
+  "/documents/ingest",
+  asyncHandler(async (_req, res) => {
+    const count = await prisma.documentFile.count({ where: { status: "uploaded" } });
+
+    ingestAll()
+      .then((results) => {
+        const successCount = results.filter((r) => r.status === "ingested").length;
+        logger.info({ total: results.length, success: successCount }, "Background ingestion complete");
+      })
+      .catch((err) => {
+        logger.error({ err }, "Background ingestion failed");
+      });
+
+    return ok(res, "Ingestion started", { pending: count });
+  }),
 );

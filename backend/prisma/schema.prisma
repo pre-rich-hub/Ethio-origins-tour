@@ -169,3 +169,27 @@ model TourBlockedDate {
   @@index([tourId, date])
   @@map("tour_blocked_dates")
 }
+
+model DocumentFile {
+  id           Int      @id @default(autoincrement())
+  filename     String   @unique
+  originalName String   @map("original_name")
+  size         Int
+  status       String   @default("uploaded")
+  error        String?  @db.Text
+  createdAt    DateTime @default(now()) @map("created_at")
+  updatedAt    DateTime @updatedAt @map("updated_at")
+
+  @@map("document_files")
+}
+
+model DocumentChunk {
+  id        String  @id @default(uuid())
+  content   String  @db.Text
+  source    String
+  metadata  Json?   @default("{}")
+  embedding String?
+
+  @@index([source])
+  @@map("document_chunks")
+}

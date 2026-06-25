@@ -8,7 +8,8 @@ const uploadConfig: Record<UploadKind, { prefix: string }> = {
   destination: { prefix: "destinations/" },
   blog:        { prefix: "blog/" },
   gallery:     { prefix: "gallery/" },
-  admin:       { prefix: "admin/" }
+  admin:       { prefix: "admin/" },
+  document:    { prefix: "documents/" }
 };
 
 export class S3StorageProvider implements StorageProvider {
