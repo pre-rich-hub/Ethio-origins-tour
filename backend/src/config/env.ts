@@ -44,6 +44,21 @@ const envSchema = z.object({
   STORAGE_CLOUDINARY_API_SECRET: z.string().optional().default(""),
 });
 
-export const env = envSchema.parse(process.env);
+const parsed = envSchema.parse(process.env);
 
-export const isProduction = env.NODE_ENV === "production";
+if (parsed.NODE_ENV === "production") {
+  const required: string[] = [];
+  if (!parsed.SENDGRID_API_KEY) required.push("SENDGRID_API_KEY");
+  if (!parsed.REDIS_URL) required.push("REDIS_URL");
+  if (!parsed.SENTRY_DSN) required.push("SENTRY_DSN");
+
+  if (required.length > 0) {
+    throw new Error(
+      `Missing required environment variables in production: ${required.join(", ")}`
+    );
+  }
+}
+
+export const env = parsed;
+
+export const isProduction = parsed.NODE_ENV === "production";
