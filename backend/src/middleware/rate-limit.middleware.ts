@@ -1,16 +1,23 @@
 import rateLimit from "express-rate-limit";
 
-export const publicFormLimiter = rateLimit({
-  windowMs: 15 * 60 * 1000,
-  limit: 20,
+export const globalLimiter = rateLimit({
+  windowMs: 60 * 1000,
+  limit: 100,
   standardHeaders: true,
-  legacyHeaders: false
+  legacyHeaders: false,
+  skip: (req) => req.path === "/health" || req.path === "/ready"
 });
 
-export const loginLimiter = rateLimit({
-  windowMs: 15 * 60 * 1000,
+export const publicFormLimiter = rateLimit({
+  windowMs: 60 * 1000,
   limit: 10,
   standardHeaders: true,
   legacyHeaders: false
 });
 
+export const loginLimiter = rateLimit({
+  windowMs: 60 * 1000,
+  limit: 10,
+  standardHeaders: true,
+  legacyHeaders: false
+});

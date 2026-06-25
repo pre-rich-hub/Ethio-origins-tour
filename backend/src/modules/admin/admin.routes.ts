@@ -645,3 +645,15 @@ adminRouter.delete(
     return ok(res, "Blocked date deleted successfully", null);
   })
 );
+
+adminRouter.get(
+  "/subscribers",
+  asyncHandler(async (_req, res) => {
+    const subscribers = await prisma.subscriber.findMany({ orderBy: { createdAt: "desc" } });
+    return ok(res, "Subscribers fetched successfully", subscribers.map((s) => ({
+      id: s.id,
+      email: s.email,
+      createdAt: s.createdAt
+    })));
+  })
+);

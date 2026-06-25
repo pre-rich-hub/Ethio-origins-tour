@@ -141,6 +141,14 @@ model BlogCategory {
   @@map("blog_category")
 }
 
+model Subscriber {
+  id        Int      @id @default(autoincrement())
+  email     String   @unique
+  createdAt DateTime @default(now()) @map("created_at")
+
+  @@map("subscribers")
+}
+
 model Testimonial {
   id           Int     @id @default(autoincrement())
   message      String  @db.Text

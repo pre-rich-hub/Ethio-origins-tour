@@ -21,7 +21,17 @@ const envSchema = z.object({
   EMAIL_ENABLED: z.coerce.boolean().default(false),
   UPLOAD_ROOT: z.string().default("."),
   PUBLIC_FILE_BASE_URL: z.string().optional().default(""),
-  MAX_UPLOAD_MB: z.coerce.number().positive().default(5)
+  MAX_UPLOAD_MB: z.coerce.number().positive().default(5),
+
+  // SendGrid
+  SENDGRID_API_KEY: z.string().optional().default(""),
+  SENDGRID_FROM_EMAIL: z.string().optional().default(""),
+
+  // Redis
+  REDIS_URL: z.string().default("redis://localhost:6379"),
+
+  // Sentry
+  SENTRY_DSN: z.string().optional().default(""),
 });
 
 export const env = envSchema.parse(process.env);

@@ -1,5 +1,6 @@
 'use client'
 
+import { useState } from 'react'
 import {
   ArrowRight,
   ExternalLink,
@@ -133,6 +134,36 @@ function SocialLogo({ icon }: { icon: string }) {
 
 export function SiteFooter() {
   const { t } = useLanguage()
+  const [email, setEmail] = useState('')
+  const [status, setStatus] = useState<'idle' | 'loading' | 'success' | 'error'>('idle')
+  const [feedback, setFeedback] = useState('')
+
+  async function handleSubscribe(event: React.FormEvent<HTMLFormElement>) {
+    event.preventDefault()
+    setStatus('loading')
+    setFeedback('')
+
+    try {
+      const response = await fetch('/api/subscribe', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email }),
+      })
+
+      const payload = await response.json()
+
+      if (!response.ok || !payload.success) {
+        throw new Error(payload.message || 'Something went wrong')
+      }
+
+      setEmail('')
+      setStatus('success')
+      setFeedback(payload.message)
+    } catch (error) {
+      setStatus('error')
+      setFeedback(error instanceof Error ? error.message : 'Something went wrong')
+    }
+  }
   const columns = [
     {
       title: t.footer.journeys,
@@ -238,23 +269,34 @@ export function SiteFooter() {
         </div>
 
         <div className="border-t border-cream/10 py-8">
-          <form className="grid gap-3 sm:grid-cols-[1fr_auto]">
+          <form onSubmit={handleSubscribe} className="grid gap-3 sm:grid-cols-[1fr_auto]">
             <label htmlFor="footer-email" className="sr-only">
               Your email address
             </label>
             <input
               id="footer-email"
               type="email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
               placeholder={t.footer.response}
+              required
               className="h-14 w-full border border-cream/18 bg-cream/10 px-5 font-sans text-sm text-cream outline-none transition-colors placeholder:text-cream/50 focus:border-gold"
             />
-            <button
-              type="submit"
-              className="inline-flex h-14 items-center justify-center gap-3 bg-gold px-8 font-sans text-sm font-semibold uppercase tracking-widest text-coffee transition-colors hover:bg-cream"
-            >
-              <ArrowRight className="size-4" />
-              {t.footer.subscribe}
-            </button>
+            <div className="flex flex-col gap-1">
+              <button
+                type="submit"
+                disabled={status === 'loading'}
+                className="inline-flex h-14 items-center justify-center gap-3 bg-gold px-8 font-sans text-sm font-semibold uppercase tracking-widest text-coffee transition-colors hover:bg-cream disabled:opacity-50"
+              >
+                <ArrowRight className="size-4" />
+                {status === 'loading' ? t.footer.subscribing || 'Subscribing...' : t.footer.subscribe}
+              </button>
+              {feedback ? (
+                <p className={`font-sans text-xs ${status === 'success' ? 'text-green-400' : 'text-red-400'}`}>
+                  {feedback}
+                </p>
+              ) : null}
+            </div>
           </form>
         </div>
 

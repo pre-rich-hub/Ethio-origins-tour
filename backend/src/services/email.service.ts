@@ -1,14 +1,6 @@
-import nodemailer from "nodemailer";
 import { env } from "../config/env.js";
-
-const transporter = env.EMAIL_ENABLED
-  ? nodemailer.createTransport({
-      host: env.SMTP_HOST,
-      port: env.SMTP_PORT,
-      secure: env.SMTP_PORT === 465,
-      auth: env.SMTP_USER && env.SMTP_PASS ? { user: env.SMTP_USER, pass: env.SMTP_PASS } : undefined
-    })
-  : null;
+import { logger } from "../config/pino.js";
+import { addEmailJob } from "./queue.service.js";
 
 type SendEmailInput = {
   to: string;
@@ -17,11 +9,35 @@ type SendEmailInput = {
   replyTo?: string;
 };
 
-export async function sendEmail(input: SendEmailInput) {
-  if (!env.EMAIL_ENABLED || !transporter) {
-    console.info("[email disabled]", { to: input.to, subject: input.subject });
+export async function sendMail(input: SendEmailInput) {
+  if (!env.EMAIL_ENABLED) {
+    logger.info({ to: input.to, subject: input.subject }, "[email disabled]");
     return;
   }
+
+  const useSendGrid = Boolean(env.SENDGRID_API_KEY);
+
+  if (useSendGrid) {
+    const sgMail = await import("@sendgrid/mail");
+    sgMail.default.setApiKey(env.SENDGRID_API_KEY);
+    await sgMail.default.send({
+      to: input.to,
+      from: env.SENDGRID_FROM_EMAIL || env.SMTP_FROM,
+      subject: input.subject,
+      html: input.html,
+      text: input.html.replace(/<[^>]+>/g, " "),
+      replyTo: input.replyTo
+    });
+    return;
+  }
+
+  const nodemailer = await import("nodemailer");
+  const transporter = nodemailer.default.createTransport({
+    host: env.SMTP_HOST,
+    port: env.SMTP_PORT,
+    secure: env.SMTP_PORT === 465,
+    auth: env.SMTP_USER && env.SMTP_PASS ? { user: env.SMTP_USER, pass: env.SMTP_PASS } : undefined
+  });
 
   await transporter.sendMail({
     from: env.SMTP_FROM,
@@ -31,6 +47,16 @@ export async function sendEmail(input: SendEmailInput) {
     text: input.html.replace(/<[^>]+>/g, " "),
     replyTo: input.replyTo
   });
+}
+
+export async function sendEmail(input: SendEmailInput) {
+  try {
+    await addEmailJob(input);
+    logger.info({ to: input.to, subject: input.subject }, "Email queued");
+  } catch {
+    logger.warn({ to: input.to, subject: input.subject }, "Queue unavailable — sending inline");
+    await sendMail(input);
+  }
 }
 
 export async function sendBookingAdminEmail(data: {
@@ -108,4 +134,3 @@ export async function sendBookingStatusEmail(data: {
     `
   });
 }
-

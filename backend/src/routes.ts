@@ -10,6 +10,7 @@ import { adminRouter } from "./modules/admin/admin.routes.js";
 import { bookingsRouter } from "./modules/bookings/bookings.routes.js";
 import { contactsRouter } from "./modules/contacts/contacts.routes.js";
 import { seoRouter } from "./modules/seo/seo.routes.js";
+import { subscribeRouter } from "./modules/subscribe/subscribe.routes.js";
 
 export function registerRoutes(app: Express) {
   // API v1 routes
@@ -24,6 +25,7 @@ export function registerRoutes(app: Express) {
   app.use("/api/v1/bookings", bookingsRouter);
   app.use("/api/v1/contact", contactsRouter);
   app.use("/api/v1/seo", seoRouter);
+  app.use("/api/v1/subscribe", subscribeRouter);
 
   // Backward compatibility: redirect old /api/ routes to /api/v1/
   app.use("/api/auth", (_req, res) => {
@@ -58,5 +60,8 @@ export function registerRoutes(app: Express) {
   });
   app.use("/api/seo", (_req, res) => {
     res.redirect(301, `/api/v1/seo${_req.url}`);
+  });
+  app.use("/api/subscribe", (_req, res) => {
+    res.redirect(301, `/api/v1/subscribe${_req.url}`);
   });
 }
