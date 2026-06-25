@@ -29,3 +29,6 @@ backend/uploads/*
 .DS_Store
 .idea/
 .vscode/
+
+# Implementation plan (local only)
+backend/plan.md

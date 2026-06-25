@@ -3,7 +3,7 @@ generator client {
 }
 
 datasource db {
-  provider = "mysql"
+  provider = "postgresql"
   url      = env("DATABASE_URL")
 }
 
@@ -22,6 +22,7 @@ model Admin {
 model Tour {
   id            Int                  @id @default(autoincrement())
   destinationId Int?                 @map("Destination_ID")
+  slug          String               @unique @db.VarChar(255)
   tourName      String               @map("tour_name")
   adultPrice    Decimal?             @map("adult_price") @db.Decimal(10, 2)
   childPrice    Decimal?             @map("child_price") @db.Decimal(10, 2)
@@ -40,12 +41,14 @@ model Tour {
   gallery       Gallery[]
   bookings      Booking[]
   categories    TourCategoryJunction[]
+  blockedDates  TourBlockedDate[]
 
   @@map("tours")
 }
 
 model Destination {
   id              Int      @id @default(autoincrement())
+  slug            String   @unique @db.VarChar(255)
   destinationName String   @map("destination_name")
   description     String?  @db.Text
   imageUrl        String?  @map("image_url")
@@ -133,4 +136,16 @@ model Testimonial {
   profession   String?
 
   @@map("testimonials")
+}
+
+model TourBlockedDate {
+  id     Int      @id @default(autoincrement())
+  tourId Int
+  tour   Tour     @relation(fields: [tourId], references: [id], onDelete: Cascade)
+  date   DateTime @db.Date
+  reason String?
+
+  @@unique([tourId, date])
+  @@index([tourId, date])
+  @@map("tour_blocked_dates")
 }

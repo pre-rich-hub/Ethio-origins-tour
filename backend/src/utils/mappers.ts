@@ -26,7 +26,13 @@ export function mapDestination(destination: any) {
     name: destination.destinationName,
     description: destination.description,
     imageUrl: destination.imageUrl,
-    tourCount: destination._count?.tours ?? undefined
+    tourCount: destination._count?.tours ?? undefined,
+    canonical: {
+      type: "slug",
+      id: destination.id,
+      suggestedPath: `/destinations/${destination.slug ?? destination.id}`,
+      slug: destination.slug ?? null
+    }
   };
 }
 
@@ -66,10 +72,10 @@ export function mapTour(tour: any, detail = false) {
     createdAt: tour.createdAt ?? null,
     updatedAt: tour.updatedAt ?? null,
     canonical: {
-      type: "id",
+      type: "slug",
       id: tour.id,
-      suggestedPath: `/tours/${tour.id}`,
-      slug: null
+      suggestedPath: `/tours/${tour.slug ?? tour.id}`,
+      slug: tour.slug ?? null
     }
   };
 }

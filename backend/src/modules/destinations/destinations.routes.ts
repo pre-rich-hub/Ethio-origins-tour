@@ -34,6 +34,31 @@ destinationsRouter.get(
 );
 
 destinationsRouter.get(
+  "/slug/:slug",
+  asyncHandler(async (req, res) => {
+    const slug = z.string().parse(req.params.slug);
+    const destination = await prisma.destination.findUnique({
+      where: { slug },
+      include: {
+        _count: { select: { tours: true } },
+        tours: {
+          include: {
+            destination: true,
+            gallery: { orderBy: { id: "asc" }, take: 4 },
+            categories: { include: { category: true } }
+          }
+        }
+      }
+    });
+    if (!destination) throw new HttpError(404, "Destination not found");
+    return ok(res, "Destination fetched successfully", {
+      ...mapDestination(destination),
+      tours: destination.tours.map((tour) => mapTour(tour))
+    });
+  })
+);
+
+destinationsRouter.get(
   "/:id",
   asyncHandler(async (req, res) => {
     const id = z.coerce.number().int().positive().parse(req.params.id);
@@ -57,4 +82,3 @@ destinationsRouter.get(
     });
   })
 );
-

@@ -19,6 +19,7 @@ import { removeStoredFile } from "../../services/file.service.js";
 import { mapBooking, mapContact } from "../../utils/mappers.js";
 import { bookingStatusSchema, updateBookingStatus } from "../bookings/bookings.routes.js";
 import { sendEmail } from "../../services/email.service.js";
+import { slugify } from "../../utils/slug.js";
 
 export const adminRouter = Router();
 
@@ -63,11 +64,14 @@ adminRouter.post(
     if (imagePaths.length === 0) throw new HttpError(422, "At least one tour image is required");
 
     const categoryIds = parseCategoryIds(req.body.tourCategories);
+    const tourTitle = String(req.body.tourTitle ?? "");
+    const slug = slugify(tourTitle);
     const created = await prisma.$transaction(async (tx) => {
       const tour = await tx.tour.create({
         data: {
           destinationId: Number(req.body.tourDestination),
-          tourName: String(req.body.tourTitle ?? ""),
+          slug,
+          tourName: tourTitle,
           adultPrice: toNumber(req.body.adultPrice) ?? 0,
           childPrice: toNumber(req.body.childPrice) ?? 0,
           discount: req.body.tourDiscount ? String(req.body.tourDiscount) : null,
@@ -115,13 +119,16 @@ adminRouter.put(
     const categoryIds = parseCategoryIds(req.body.tourCategories);
     const files = (req.files as Express.Multer.File[] | undefined) ?? [];
     const imagePaths = files.map(storedPathForFile).filter((path): path is string => Boolean(path));
+    const tourTitle = String(req.body.tourTitle ?? "");
+    const slug = slugify(tourTitle);
 
     const updated = await prisma.$transaction(async (tx) => {
       await tx.tour.update({
         where: { id },
         data: {
           destinationId: Number(req.body.tourDestination),
-          tourName: String(req.body.tourTitle ?? ""),
+          slug,
+          tourName: tourTitle,
           adultPrice: toNumber(req.body.adultPrice) ?? 0,
           childPrice: toNumber(req.body.childPrice) ?? 0,
           discount: req.body.tourDiscount ? String(req.body.tourDiscount) : null,
@@ -192,9 +199,12 @@ adminRouter.post(
   asyncHandler(async (req, res) => {
     const imageUrl = req.file ? storedPathForFile(req.file) : undefined;
     if (!imageUrl) throw new HttpError(422, "Destination image is required");
+    const destinationName = String(req.body.destinationName ?? "");
+    const slug = slugify(destinationName);
     const destination = await prisma.destination.create({
       data: {
-        destinationName: String(req.body.destinationName ?? ""),
+        slug,
+        destinationName,
         description: String(req.body.destinationDescription ?? ""),
         imageUrl
       },
@@ -210,10 +220,13 @@ adminRouter.put(
   asyncHandler(async (req, res) => {
     const id = idParam.parse(req.params.id);
     const imageUrl = req.file ? storedPathForFile(req.file) : undefined;
+    const destinationName = String(req.body.destinationName ?? "");
+    const slug = slugify(destinationName);
     const destination = await prisma.destination.update({
       where: { id },
       data: {
-        destinationName: String(req.body.destinationName ?? ""),
+        slug,
+        destinationName,
         description: String(req.body.destinationDescription ?? ""),
         ...(imageUrl ? { imageUrl } : {})
       },
@@ -494,5 +507,68 @@ adminRouter.get(
       },
       recentBookings: recentBookings.map(mapBooking)
     });
+  })
+);
+
+const blockedDateSchema = z.object({
+  dates: z.array(z.string().regex(/^\d{4}-\d{2}-\d{2}$/)).min(1),
+  reason: z.string().optional()
+});
+
+adminRouter.get(
+  "/tours/:id/blocked-dates",
+  asyncHandler(async (req, res) => {
+    const id = idParam.parse(req.params.id);
+    const tour = await prisma.tour.findUnique({ where: { id }, select: { id: true } });
+    if (!tour) throw new HttpError(404, "Tour not found");
+
+    const blockedDates = await prisma.tourBlockedDate.findMany({
+      where: { tourId: id },
+      orderBy: { date: "asc" }
+    });
+
+    return ok(res, "Blocked dates fetched successfully", blockedDates.map((bd) => ({
+      id: bd.id,
+      date: bd.date.toISOString().slice(0, 10),
+      reason: bd.reason
+    })));
+  })
+);
+
+adminRouter.post(
+  "/tours/:id/blocked-dates",
+  asyncHandler(async (req, res) => {
+    const id = idParam.parse(req.params.id);
+    const body = blockedDateSchema.parse(req.body);
+
+    const tour = await prisma.tour.findUnique({ where: { id }, select: { id: true } });
+    if (!tour) throw new HttpError(404, "Tour not found");
+
+    const created = await prisma.tourBlockedDate.createMany({
+      data: body.dates.map((date) => ({
+        tourId: id,
+        date: new Date(`${date}T00:00:00.000Z`),
+        reason: body.reason
+      })),
+      skipDuplicates: true
+    });
+
+    return ok(res, `${created.count} blocked dates created successfully`, { count: created.count }, 201);
+  })
+);
+
+adminRouter.delete(
+  "/tours/:id/blocked-dates/:blockedDateId",
+  asyncHandler(async (req, res) => {
+    const id = idParam.parse(req.params.id);
+    const blockedDateId = idParam.parse(req.params.blockedDateId);
+
+    const blockedDate = await prisma.tourBlockedDate.findFirst({
+      where: { id: blockedDateId, tourId: id }
+    });
+    if (!blockedDate) throw new HttpError(404, "Blocked date not found");
+
+    await prisma.tourBlockedDate.delete({ where: { id: blockedDateId } });
+    return ok(res, "Blocked date deleted successfully", null);
   })
 );

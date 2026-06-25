@@ -11,7 +11,8 @@
     "prisma:pull": "prisma db pull",
     "prisma:generate": "prisma generate",
     "prisma:migrate": "prisma migrate dev",
-    "prisma:deploy": "prisma migrate deploy"
+    "prisma:deploy": "prisma migrate deploy",
+    "backfill:slugs": "tsx scripts/backfill-slugs.ts"
   },
   "dependencies": {
     "@prisma/client": "^6.1.0",
