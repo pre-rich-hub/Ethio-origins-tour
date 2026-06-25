@@ -33,6 +33,14 @@ const envSchema = z.object({
   // Sentry
   SENTRY_DSN: z.string().optional().default(""),
 
+  // AI Assistant
+  ASSISTANT_PROVIDER: z.enum(["gemini", "openai", "anthropic", "grok"]).default("gemini"),
+  ASSISTANT_MODEL: z.string().default("gemini-2.0-flash"),
+  GEMINI_API_KEY: z.string().optional().default(""),
+  OPENAI_API_KEY: z.string().optional().default(""),
+  ANTHROPIC_API_KEY: z.string().optional().default(""),
+  GROK_API_KEY: z.string().optional().default(""),
+
   // Storage
   STORAGE_DRIVER: z.enum(["local", "s3", "cloudinary"]).default("local"),
   STORAGE_S3_BUCKET: z.string().optional().default(""),

@@ -11,6 +11,7 @@ import { bookingsRouter } from "./modules/bookings/bookings.routes.js";
 import { contactsRouter } from "./modules/contacts/contacts.routes.js";
 import { seoRouter } from "./modules/seo/seo.routes.js";
 import { subscribeRouter } from "./modules/subscribe/subscribe.routes.js";
+import { assistantRouter } from "./modules/assistant/assistant.routes.js";
 
 export function registerRoutes(app: Express) {
   // API v1 routes
@@ -26,6 +27,7 @@ export function registerRoutes(app: Express) {
   app.use("/api/v1/contact", contactsRouter);
   app.use("/api/v1/seo", seoRouter);
   app.use("/api/v1/subscribe", subscribeRouter);
+  app.use("/api/v1/assistant", assistantRouter);
 
   // Backward compatibility: redirect old /api/ routes to /api/v1/
   app.use("/api/auth", (_req, res) => {
@@ -63,5 +65,8 @@ export function registerRoutes(app: Express) {
   });
   app.use("/api/subscribe", (_req, res) => {
     res.redirect(301, `/api/v1/subscribe${_req.url}`);
+  });
+  app.use("/api/assistant", (_req, res) => {
+    res.redirect(301, `/api/v1/assistant${_req.url}`);
   });
 }

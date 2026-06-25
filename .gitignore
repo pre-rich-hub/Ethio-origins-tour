@@ -32,3 +32,4 @@ backend/uploads/*
 
 # Implementation plan (local only)
 backend/plan.md
+backend/ai-plan.md

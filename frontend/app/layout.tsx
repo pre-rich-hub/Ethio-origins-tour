@@ -4,6 +4,7 @@ import { JsonLd } from '@/components/seo/json-ld'
 import { LanguageProvider } from '@/lib/i18n/language'
 import { createOrganizationSchema, createWebsiteSchema } from '@/lib/seo/schemas'
 import { siteConfig } from '@/lib/seo/site-config'
+import { ChatWidget } from '@/features/assistant/components/chat-widget'
 import './globals.css'
 
 export const metadata: Metadata = {
@@ -82,6 +83,7 @@ export default function RootLayout({
           <JsonLd data={createOrganizationSchema()} />
           <JsonLd data={createWebsiteSchema()} />
           {children}
+          <ChatWidget />
           {process.env.NODE_ENV === 'production' && <Analytics />}
         </LanguageProvider>
       </body>
