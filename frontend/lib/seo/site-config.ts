@@ -11,8 +11,8 @@ export const siteConfig = {
   language: "en",
   country: "ET",
   location: "Addis Ababa, Ethiopia",
-  defaultOgImage: "https://res.cloudinary.com/divimnzxa/image/upload/v1782244137/Ancient_Wonders_The_Monolithic_Rock-Cut_Church_of_Lalibela_Ethiopia_gh7iwx.jpg",
-  logo: "https://res.cloudinary.com/divimnzxa/image/upload/v1782246561/40462096650629206_q68ntv.jpg",
+  defaultOgImage: "/brand/social-profile.png",
+  logo: "/brand/logo-primary.png",
 
   contact: {
     email: "hello@ethioorigins.com",

@@ -1,32 +1,40 @@
+'use client'
+
 import Image from 'next/image'
+import Link from 'next/link'
 import { ArrowRight } from 'lucide-react'
+import { useLanguage } from '@/lib/i18n/language'
+import { getLocalizedTours } from '../lib/tour-localization'
 import type { Tour } from '../types/tour'
 
 export function RelatedTours({ relatedTours }: { relatedTours: Tour[] }) {
+  const { language, t } = useLanguage()
+  const localizedTours = getLocalizedTours(relatedTours, language)
+
   return (
     <section className="bg-background py-16 md:py-24">
       <div className="mx-auto max-w-7xl px-6 md:px-8">
         <div className="mb-10 flex flex-col gap-5 md:flex-row md:items-end md:justify-between">
           <div>
             <p className="font-sans text-xs uppercase tracking-luxe text-gold">
-              More Private Packages
+              {t.toursPage.morePrivatePackages}
             </p>
             <h2 className="mt-4 font-serif text-4xl font-medium leading-tight text-foreground md:text-5xl">
-              Other journeys you may like
+              {t.toursPage.relatedTitle}
             </h2>
           </div>
-          <a
+          <Link
             href="/tours"
             className="inline-flex items-center gap-3 font-sans text-xs font-bold uppercase tracking-widest text-forest transition-colors hover:text-gold"
           >
-            View All Tours
+            {t.toursPage.viewAllTours}
             <ArrowRight className="size-4" />
-          </a>
+          </Link>
         </div>
 
         <div className="grid gap-5 md:grid-cols-3">
-          {relatedTours.map((item) => (
-            <a
+          {localizedTours.map((item) => (
+            <Link
               key={item.slug}
               href={`/tours/${item.slug}`}
               className="group overflow-hidden border border-border bg-card shadow-xl shadow-coffee/5 transition-transform duration-500 hover:-translate-y-1"
@@ -36,7 +44,7 @@ export function RelatedTours({ relatedTours }: { relatedTours: Tour[] }) {
                   src={item.image}
                   alt={item.imageAlt}
                   fill
-                  sizes="(max-width: 768px) 100vw, 33vw"
+                  sizes="(min-width: 768px) 33vw, 100vw"
                   className="size-full object-cover transition-transform duration-[1.2s] group-hover:scale-105"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/12 to-transparent" />
@@ -60,7 +68,7 @@ export function RelatedTours({ relatedTours }: { relatedTours: Tour[] }) {
                   <ArrowRight className="size-4 text-gold transition-transform group-hover:translate-x-1" />
                 </div>
               </div>
-            </a>
+            </Link>
           ))}
         </div>
       </div>

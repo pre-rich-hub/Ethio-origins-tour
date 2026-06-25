@@ -1,5 +1,6 @@
 export const posts = [
   {
+    slug: 'beyond-the-highlights',
     title: 'How to Experience Ethiopia Beyond the Highlights',
     category: 'Travel Insight',
     date: 'June 2026',
@@ -8,6 +9,7 @@ export const posts = [
       'A thoughtful guide to pairing iconic landmarks with slower, more personal cultural encounters.',
   },
   {
+    slug: 'private-ethiopian-journey',
     title: 'The Art of Planning a Private Ethiopian Journey',
     category: 'Private Travel',
     date: 'June 2026',
@@ -16,6 +18,7 @@ export const posts = [
       'What makes a tailor-made itinerary feel seamless, meaningful, and deeply connected to place.',
   },
   {
+    slug: 'landscapes-shape-ethiopian-story',
     title: 'Landscapes That Shape the Ethiopian Story',
     category: 'Nature & Culture',
     date: 'June 2026',

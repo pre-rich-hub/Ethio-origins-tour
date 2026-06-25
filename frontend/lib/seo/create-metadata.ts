@@ -61,6 +61,45 @@ export function createMetadata({
             'max-snippet': -1,
             'max-video-preview': -1,
           },
+    },
+  }
+}
+
+export function createNotFoundMetadata(title = 'Page Not Found'): Metadata {
+  const description =
+    'The requested Ethio Origins Tour page could not be found.'
+
+  return {
+    title,
+    description,
+    alternates: {
+      canonical: '/404',
+    },
+    openGraph: {
+      type: 'website',
+      locale: siteConfig.locale,
+      url: absoluteUrl('/404'),
+      siteName: siteConfig.name,
+      title,
+      description,
+      images: [
+        {
+          url: siteConfig.defaultOgImage,
+          width: 1200,
+          height: 630,
+          alt: `${siteConfig.name} Ethiopia tours`,
         },
+      ],
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title,
+      description,
+      images: [siteConfig.defaultOgImage],
+    },
+    robots: {
+      index: false,
+      follow: false,
+    },
   }
 }

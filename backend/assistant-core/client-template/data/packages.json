@@ -1,0 +1,29 @@
+[
+  {
+    "id": "rome-weekend",
+    "destination": "Rome",
+    "title": "Rome Weekend Escape",
+    "nights": 3,
+    "pricePerPerson": 899,
+    "keywords": ["rome", "italy", "weekend", "food", "history"],
+    "summary": "A compact city break with guided tours, airport transfers, and boutique hotel stays."
+  },
+  {
+    "id": "zanzibar-breeze",
+    "destination": "Zanzibar",
+    "title": "Zanzibar Beach Retreat",
+    "nights": 6,
+    "pricePerPerson": 1450,
+    "keywords": ["zanzibar", "beach", "relax", "island", "honeymoon"],
+    "summary": "A relaxed beach package with beachfront lodging and flexible excursion options."
+  },
+  {
+    "id": "tokyo-essentials",
+    "destination": "Tokyo",
+    "title": "Tokyo Essentials",
+    "nights": 5,
+    "pricePerPerson": 1590,
+    "keywords": ["tokyo", "japan", "city", "culture", "shopping"],
+    "summary": "An urban itinerary with central lodging, rail support, and food recommendations."
+  }
+]

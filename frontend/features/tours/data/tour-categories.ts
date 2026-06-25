@@ -42,6 +42,8 @@ export const tourCategories: TourCategory[] = [
         'Omo Valley Cultural Tours',
         'Ethiopia Heritage Tours',
       ],
+      ogImage: 'https://res.cloudinary.com/divimnzxa/image/upload/v1782246561/Private_Omo_Valley_Tours_From_Addis_Ababa_xvpppa.jpg',
+      ogImageAlt: 'Omo Valley cultural travel experience',
     },
   },
   {
@@ -78,6 +80,8 @@ export const tourCategories: TourCategory[] = [
         'Historic Route Ethiopia',
         'Historical Tour Packages Ethiopia',
       ],
+      ogImage: 'https://res.cloudinary.com/divimnzxa/image/upload/v1782247186/Bet_Giyorgis_Rock-Hewn_Church_at_Lalibela___qffnvp.jpg',
+      ogImageAlt: 'Lalibela heritage site in northern Ethiopia',
     },
   },
   {
@@ -150,6 +154,8 @@ export const tourCategories: TourCategory[] = [
         'Ethiopian Adventure Travel',
         'Explore Ethiopia Tours',
       ],
+      ogImage: 'https://res.cloudinary.com/divimnzxa/image/upload/v1782248873/Dallol_Ethiopia___%CC%97%CC%80__%E0%A9%88_z78ix6.jpg',
+      ogImageAlt: 'Danakil Depression adventure landscape',
     },
   },
   {
@@ -222,6 +228,8 @@ export const tourCategories: TourCategory[] = [
         'Simien Mountains Trekking',
         'Bale Mountains Trekking',
       ],
+      ogImage: 'https://res.cloudinary.com/divimnzxa/image/upload/v1782373760/Day_trek_to_Simien_Mountain_m7u1xw.jpg',
+      ogImageAlt: 'Simien Mountains trekking landscape',
     },
   },
   {
@@ -240,6 +248,8 @@ export const tourCategories: TourCategory[] = [
         'Ethiopia Wildlife Safaris',
         'Endemic Wildlife Ethiopia',
       ],
+      ogImage: 'https://res.cloudinary.com/divimnzxa/image/upload/v1782373759/Trekking_at_Bale_Mountains_3_Days_konkwz.jpg',
+      ogImageAlt: 'Bale Mountains wildlife route',
     },
   },
   {
@@ -258,6 +268,8 @@ export const tourCategories: TourCategory[] = [
         'Ethiopian Coffee Origin Tour',
         'Ethiopia Coffee Experiences',
       ],
+      ogImage: 'https://res.cloudinary.com/divimnzxa/image/upload/v1782422791/FB_IMG_1760436500292_mvpghu.jpg',
+      ogImageAlt: 'Traditional Ethiopian coffee ceremony',
     },
   },
   {
@@ -276,6 +288,8 @@ export const tourCategories: TourCategory[] = [
         'Omo Valley Photography Tours',
         'Ethiopia Landscape Photography Tours',
       ],
+      ogImage: 'https://res.cloudinary.com/divimnzxa/image/upload/v1782246561/Private_Omo_Valley_Tours_From_Addis_Ababa_xvpppa.jpg',
+      ogImageAlt: 'Omo Valley photography route',
     },
   },
   {
@@ -312,6 +326,8 @@ export const tourCategories: TourCategory[] = [
         'Addis Ababa City Tours',
         'Ethiopia Guided City Tours',
       ],
+      ogImage: 'https://res.cloudinary.com/divimnzxa/image/upload/v1782309635/Mercato_Market_-_All_You_SHOULD_Know_Before_Going_2026_Reviews_hgqtip.jpg',
+      ogImageAlt: 'Addis Ababa market and city culture',
     },
   },
   {
@@ -385,6 +401,8 @@ export const tourCategories: TourCategory[] = [
         'Ethiopia Travel Planner',
         'Ethiopia Holiday Planner',
       ],
+      ogImage: 'https://res.cloudinary.com/divimnzxa/image/upload/v1782244137/Ethiopia_h1whvn.jpg',
+      ogImageAlt: 'Customized Ethiopia private journey',
     },
   },
 ]

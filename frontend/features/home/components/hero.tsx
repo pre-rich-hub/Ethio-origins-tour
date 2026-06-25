@@ -2,8 +2,10 @@
 
 import Image from 'next/image'
 import { motion, useReducedMotion, useScroll, useTransform } from 'framer-motion'
+import Link from 'next/link'
 import { useRef } from 'react'
 import { ArrowRight, ChevronDown } from 'lucide-react'
+import { useLanguage } from '@/lib/i18n/language'
 
 const MotionImage = motion(Image)
 
@@ -27,6 +29,7 @@ const heroFrames = [
 ]
 
 export function Hero() {
+  const { t } = useLanguage()
   const ref = useRef<HTMLElement>(null)
   const reduceMotion = useReducedMotion()
   const { scrollYProgress } = useScroll({
@@ -118,7 +121,7 @@ export function Hero() {
             className="mb-5 flex items-center justify-center gap-2 font-sans text-[0.66rem] uppercase tracking-[0.2em] text-gold sm:gap-3 sm:text-xs sm:tracking-luxe md:text-sm"
           >
             <span className="h-px w-7 bg-gold/80 sm:w-10" />
-            The Land of Origins
+            {t.hero.eyebrow}
             <span className="h-px w-7 bg-gold/80 sm:w-10" />
           </motion.p>
           <motion.h1
@@ -127,7 +130,7 @@ export function Hero() {
             transition={{ duration: 1, delay: 0.35 }}
             className="mx-auto max-w-[22rem] text-balance font-serif text-4xl font-medium leading-[0.98] text-cream min-[380px]:text-5xl sm:max-w-none sm:text-6xl md:text-7xl lg:text-8xl"
           >
-            Explore Ethiopia with Local Travel Experts
+            {t.hero.title}
           </motion.h1>
           <motion.p
             initial={{ opacity: 0, y: 20 }}
@@ -135,8 +138,7 @@ export function Hero() {
             transition={{ duration: 0.9, delay: 0.6 }}
             className="mx-auto mt-5 max-w-[21rem] text-pretty font-sans text-sm font-light leading-relaxed text-cream/86 sm:mt-7 sm:max-w-2xl sm:text-base md:text-lg"
           >
-            Expertly crafted journeys through ancient history, vibrant cultures,
-            and extraordinary landscapes.
+            {t.hero.description}
           </motion.p>
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -144,18 +146,18 @@ export function Hero() {
             transition={{ duration: 0.9, delay: 0.8 }}
             className="mt-8 flex flex-col justify-center gap-3 sm:mt-10 sm:flex-row sm:gap-4"
           >
-            <a
-              href="/#experiences"
+            <Link
+              href="/tours"
               className="inline-flex h-12 w-full items-center justify-center gap-2 rounded-sm bg-gold px-6 font-sans text-xs uppercase tracking-widest text-coffee transition-transform hover:-translate-y-0.5 sm:h-14 sm:w-auto sm:px-7 sm:text-sm"
             >
-              Explore Tours
+              {t.hero.primaryCta}
               <ArrowRight className="size-4" />
-            </a>
+            </Link>
             <a
               href="/contact"
               className="inline-flex h-12 w-full items-center justify-center rounded-sm border border-cream/55 px-6 font-sans text-xs uppercase tracking-widest text-cream backdrop-blur-sm transition-colors hover:bg-cream/10 sm:h-14 sm:w-auto sm:px-7 sm:text-sm"
             >
-              Plan Your Journey
+              {t.hero.secondaryCta}
             </a>
           </motion.div>
         </div>
@@ -163,7 +165,7 @@ export function Hero() {
 
       <motion.a
         href="/#trust"
-        aria-label="Scroll down"
+        aria-label={t.hero.scroll}
         initial={{ opacity: 0 }}
         animate={{ opacity: 1, y: [0, 10, 0] }}
         transition={{

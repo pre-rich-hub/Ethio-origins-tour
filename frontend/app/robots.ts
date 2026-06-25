@@ -9,9 +9,13 @@ export default function robots(): MetadataRoute.Robots {
         allow: '/',
         disallow: [
           '/api/',
+          '/api/admin/',
+          '/api/auth/',
           '/admin/',
           '/dashboard/',
           '/preview/',
+          '/*?gclid=',
+          '/*?utm_',
         ],
       },
     ],

@@ -1,9 +1,13 @@
+'use client'
+
 import Image from 'next/image'
 import Link from 'next/link'
 import { ArrowLeft, ArrowRight, Camera } from 'lucide-react'
+import { useLanguage } from '@/lib/i18n/language'
 import { galleryImages } from '../data/gallery-images'
 
 export function GalleryHero() {
+  const { t } = useLanguage()
   const featuredImages = [galleryImages[0], galleryImages[5], galleryImages[3]]
 
   return (
@@ -55,7 +59,7 @@ export function GalleryHero() {
                 href="/contact"
                 className="inline-flex items-center justify-center border border-cream/30 px-7 py-4 font-sans text-[0.7rem] font-bold uppercase tracking-[0.18em] text-cream transition-colors hover:border-gold hover:text-gold"
               >
-                Plan This Journey
+                {t.finalCta.primary}
               </Link>
             </div>
           </div>

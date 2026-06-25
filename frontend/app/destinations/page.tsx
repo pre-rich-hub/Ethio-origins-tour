@@ -6,6 +6,7 @@ import {
   DestinationsGrid,
   DestinationsHero,
 } from '@/features/destinations'
+import { getDestinations } from '@/lib/api/cms'
 import { createMetadata } from '@/lib/seo/create-metadata'
 
 export const metadata: Metadata = createMetadata({
@@ -24,12 +25,14 @@ export const metadata: Metadata = createMetadata({
   ogImageAlt: 'Ethiopian highland travel destination landscape',
 })
 
-export default function DestinationsPage() {
+export default async function DestinationsPage() {
+  const destinations = await getDestinations()
+
   return (
     <main className="bg-background text-foreground">
       <Navbar />
       <DestinationsHero />
-      <DestinationsGrid />
+      <DestinationsGrid items={destinations} />
       <DestinationExtrasSection />
       <SiteFooter />
     </main>

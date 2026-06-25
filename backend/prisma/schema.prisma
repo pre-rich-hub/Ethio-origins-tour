@@ -1,0 +1,195 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// Validate with `prisma db pull` against a staging database before production launch.
+
+model Admin {
+  id            Int     @id @default(autoincrement())
+  name          String? @map("name")
+  email         String? @unique @map("email")
+  password      String? @map("password")
+  profilePicUrl String? @map("profile_pic_url")
+
+  @@map("admin_table")
+}
+
+model Tour {
+  id            Int                  @id @default(autoincrement())
+  destinationId Int?                 @map("Destination_ID")
+  slug          String               @unique @db.VarChar(255)
+  tourName      String               @map("tour_name")
+  adultPrice    Decimal?             @map("adult_price") @db.Decimal(10, 2)
+  childPrice    Decimal?             @map("child_price") @db.Decimal(10, 2)
+  discount      String?
+  rating        Decimal?             @db.Decimal(3, 1)
+  noOfRates     Int?                 @map("no_of_rates")
+  isFeatured    Boolean?             @default(false) @map("is_featured")
+  overview      String?              @db.Text
+  included      String?              @db.Text
+  excluded      String?              @db.Text
+  itinerary     String?              @db.Text
+  journeyMap    String?              @map("journey_map") @db.Text
+  createdAt     DateTime?            @map("created_at")
+  updatedAt     DateTime?            @map("updated_at")
+  destination   Destination?         @relation(fields: [destinationId], references: [id])
+  gallery       Gallery[]
+  bookings      Booking[]
+  categories    TourCategoryJunction[]
+  blockedDates  TourBlockedDate[]
+
+  @@map("tours")
+}
+
+model Destination {
+  id              Int      @id @default(autoincrement())
+  slug            String   @unique @db.VarChar(255)
+  destinationName String   @map("destination_name")
+  description     String?  @db.Text
+  imageUrl        String?  @map("image_url")
+  tours           Tour[]
+
+  @@map("destinations")
+}
+
+model TourCategory {
+  id           Int                    @id @default(autoincrement())
+  categoryName String                 @map("category_name")
+  createdAt    DateTime?              @map("created_at")
+  tours        TourCategoryJunction[]
+
+  @@map("tour_category")
+}
+
+model TourCategoryJunction {
+  tourId     Int          @map("Tour_ID")
+  categoryId Int          @map("Category_ID")
+  tour       Tour         @relation(fields: [tourId], references: [id])
+  category   TourCategory @relation(fields: [categoryId], references: [id])
+
+  @@id([tourId, categoryId])
+  @@map("tour_category_junction")
+}
+
+model Gallery {
+  id       Int     @id @default(autoincrement())
+  imageUrl String  @map("Image_url")
+  tourId   Int?    @map("Tour_ID")
+  tour     Tour?   @relation(fields: [tourId], references: [id])
+
+  @@map("gallery")
+}
+
+model GalleryTable {
+  id       Int    @id @default(autoincrement())
+  imageUrl String @map("Image_url")
+
+  @@map("gallery_table")
+}
+
+model Booking {
+  id           Int       @id @default(autoincrement())
+  tourId       Int?      @map("Tour_ID")
+  fullName     String    @map("full_name")
+  email        String
+  phone        String
+  country      String
+  chosenDate   DateTime  @map("chosen_date") @db.Date
+  adults       Int       @map("no_of_adults")
+  children     Int       @map("no_of_children")
+  status       String?   @default("Pending")
+  createdAt    DateTime? @map("created_at")
+  tour         Tour?     @relation(fields: [tourId], references: [id])
+
+  @@map("bookings")
+}
+
+model Contact {
+  id        Int       @id @default(autoincrement())
+  name      String
+  email     String
+  message   String    @db.Text
+  createdAt DateTime? @map("created_at")
+
+  @@map("contacts")
+}
+
+model Blog {
+  id          Int            @id @default(autoincrement())
+  slug        String         @unique @db.VarChar(255)
+  blogTitle   String         @map("blog_title")
+  description String?        @db.Text
+  imageUrl    String?        @map("image_url")
+  categoryId  Int?
+  category    BlogCategory?  @relation(fields: [categoryId], references: [id])
+  createdAt   DateTime?      @map("created_at")
+
+  @@map("blog")
+}
+
+model BlogCategory {
+  id    Int    @id @default(autoincrement())
+  name  String @unique
+  slug  String @unique @db.VarChar(255)
+  posts Blog[]
+
+  @@map("blog_category")
+}
+
+model Subscriber {
+  id        Int      @id @default(autoincrement())
+  email     String   @unique
+  createdAt DateTime @default(now()) @map("created_at")
+
+  @@map("subscribers")
+}
+
+model Testimonial {
+  id           Int     @id @default(autoincrement())
+  message      String  @db.Text
+  reviewerName String  @map("reviewer_name")
+  profession   String?
+
+  @@map("testimonials")
+}
+
+model TourBlockedDate {
+  id     Int      @id @default(autoincrement())
+  tourId Int
+  tour   Tour     @relation(fields: [tourId], references: [id], onDelete: Cascade)
+  date   DateTime @db.Date
+  reason String?
+
+  @@unique([tourId, date])
+  @@index([tourId, date])
+  @@map("tour_blocked_dates")
+}
+
+model DocumentFile {
+  id           Int      @id @default(autoincrement())
+  filename     String   @unique
+  originalName String   @map("original_name")
+  size         Int
+  status       String   @default("uploaded")
+  error        String?  @db.Text
+  createdAt    DateTime @default(now()) @map("created_at")
+  updatedAt    DateTime @updatedAt @map("updated_at")
+
+  @@map("document_files")
+}
+
+model DocumentChunk {
+  id        String  @id @default(uuid())
+  content   String  @db.Text
+  source    String
+  metadata  Json?   @default("{}")
+  embedding String?
+
+  @@index([source])
+  @@map("document_chunks")
+}

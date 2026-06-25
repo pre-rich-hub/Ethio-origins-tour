@@ -2,7 +2,6 @@ import type { Metadata } from 'next'
 import { notFound, permanentRedirect } from 'next/navigation'
 import { Navbar } from '@/components/layout/navbar'
 import { SiteFooter } from '@/components/layout/site-footer'
-import { Breadcrumbs } from '@/components/seo/breadcrumbs'
 import { JsonLd } from '@/components/seo/json-ld'
 import {
   DestinationCta,
@@ -13,13 +12,17 @@ import {
   RelatedDestinationTours,
   RelatedDestinations,
   destinations,
-  getDestination,
 } from '@/features/destinations'
-import { createMetadata } from '@/lib/seo/create-metadata'
+import { getDestinationByRoute } from '@/lib/api/cms'
+import {
+  createMetadata,
+  createNotFoundMetadata,
+} from '@/lib/seo/create-metadata'
 import {
   createBreadcrumbSchema,
   createDestinationSchema,
 } from '@/lib/seo/schemas'
+import { DestinationBreadcrumbs } from './destination-breadcrumbs'
 
 type DestinationPageProps = {
   params: Promise<{
@@ -48,17 +51,10 @@ export async function generateMetadata({
     permanentRedirect(`/destinations/${destinationRedirects[slug]}`)
   }
 
-  const destination = getDestination(slug)
+  const destination = await getDestinationByRoute(slug)
 
   if (!destination) {
-    return {
-      title: 'Destination Not Found',
-      description: 'The requested Ethiopia destination page could not be found.',
-      robots: {
-        index: false,
-        follow: false,
-      },
-    }
+    return createNotFoundMetadata('Destination Not Found')
   }
 
   return createMetadata(destination.seo)
@@ -71,7 +67,7 @@ export default async function DestinationPage({ params }: DestinationPageProps) 
     permanentRedirect(`/destinations/${destinationRedirects[slug]}`)
   }
 
-  const destination = getDestination(slug)
+  const destination = await getDestinationByRoute(slug)
 
   if (!destination) {
     notFound()
@@ -95,15 +91,7 @@ export default async function DestinationPage({ params }: DestinationPageProps) 
   return (
     <main className="bg-background text-foreground">
       <Navbar />
-      <div className="mx-auto max-w-7xl px-4 py-5 sm:px-6 md:px-8">
-        <Breadcrumbs
-          items={[
-            { label: 'Home', href: '/' },
-            { label: 'Destinations', href: '/destinations' },
-            { label: destination.name, href: `/destinations/${destination.slug}` },
-          ]}
-        />
-      </div>
+      <DestinationBreadcrumbs destination={destination} />
       <JsonLd
         data={createBreadcrumbSchema([
           { name: 'Home', path: '/' },

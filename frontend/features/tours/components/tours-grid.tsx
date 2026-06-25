@@ -1,25 +1,33 @@
+'use client'
+
 import Image from 'next/image'
 import Link from 'next/link'
 import { ArrowRight, Clock, MapPin } from 'lucide-react'
+import { useLanguage } from '@/lib/i18n/language'
 import { tours } from '../data/tours'
+import { getLocalizedTours } from '../lib/tour-localization'
+import type { Tour } from '../types/tour'
 
-export function ToursGrid() {
+export function ToursGrid({ items = tours }: { items?: Tour[] }) {
+  const { language, t } = useLanguage()
+  const localizedTours = getLocalizedTours(items, language)
+
   return (
     <section className="py-14 md:py-28">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 md:px-8">
         <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-          {tours.map((tour) => (
+          {localizedTours.map((tour) => (
             <Link
               key={tour.slug}
               href={`/tours/${tour.slug}`}
-              aria-label={`Open dedicated page for ${tour.title}`}
+              aria-label={`${t.toursPage.openDedicatedPageFor} ${tour.title}`}
               className="group relative flex min-h-[440px] cursor-pointer touch-manipulation overflow-hidden border border-cream/18 bg-coffee shadow-2xl shadow-black/20 transition-shadow hover:shadow-coffee/30 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-gold sm:min-h-[500px] md:min-h-[520px]"
             >
               <Image
                 src={tour.image || '/placeholder.svg'}
                 alt={tour.imageAlt}
                 fill
-                sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                sizes="(min-width: 1024px) 33vw, (min-width: 768px) 50vw, 100vw"
                 className="absolute inset-0 size-full object-cover transition-transform duration-[1.4s] ease-out group-hover:scale-105"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/30 to-black/10" />
@@ -40,7 +48,7 @@ export function ToursGrid() {
                   {tour.description}
                 </p>
                 <span className="mt-6 inline-flex h-12 w-full items-center justify-center gap-2 border border-cream/90 px-5 font-sans text-[0.64rem] font-bold uppercase tracking-[0.14em] text-cream transition-colors group-hover:bg-cream group-hover:text-coffee sm:mt-8 sm:h-14 sm:w-48 sm:text-[0.66rem] sm:tracking-[0.22em]">
-                  Open tour page
+                  {t.toursPage.openTourPage}
                   <ArrowRight className="size-4 transition-transform group-hover:translate-x-1" />
                 </span>
               </div>

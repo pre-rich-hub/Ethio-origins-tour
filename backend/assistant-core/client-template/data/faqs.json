@@ -1,0 +1,20 @@
+[
+  {
+    "id": "faq-cancellation",
+    "question": "What is your cancellation policy?",
+    "answer": "Most packages can be cancelled without penalty up to 30 days before departure.",
+    "keywords": ["cancel", "cancellation", "refund", "policy"]
+  },
+  {
+    "id": "faq-deposit",
+    "question": "How does the deposit work?",
+    "answer": "A 20% deposit secures the booking and the balance is due 21 days before travel.",
+    "keywords": ["deposit", "payment", "balance", "book"]
+  },
+  {
+    "id": "faq-baggage",
+    "question": "Is checked baggage included?",
+    "answer": "Checked baggage is included on most international packages.",
+    "keywords": ["baggage", "luggage", "checked", "included"]
+  }
+]

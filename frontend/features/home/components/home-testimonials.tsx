@@ -4,6 +4,7 @@ import Image from 'next/image'
 import { motion } from 'framer-motion'
 import { Quote } from 'lucide-react'
 import { SectionHeading } from '@/components/shared/section-heading'
+import { useLanguage } from '@/lib/i18n/language'
 
 const testimonials = [
   {
@@ -33,17 +34,23 @@ const testimonials = [
 ]
 
 export function HomeTestimonials() {
+  const { t } = useLanguage()
+  const translatedTestimonials = testimonials.map((testimonial, index) => ({
+    ...testimonial,
+    quote: t.testimonials.items[index] ?? testimonial.quote,
+  }))
+
   return (
     <section className="bg-sand py-20 md:py-28">
       <div className="mx-auto max-w-7xl px-6">
         <SectionHeading
-          eyebrow="Guest Experiences"
-          title="Experiences Shared By Our Guests"
-          description="Travelers from around the world choose Ethio Origins Tours to experience Ethiopia in a deeper, more meaningful way. Their stories reflect the unforgettable moments, personal connections, and extraordinary discoveries that define our journeys."
+          eyebrow={t.testimonials.eyebrow}
+          title={t.testimonials.title}
+          description={t.testimonials.description}
         />
 
         <div className="mt-14 grid gap-8 md:grid-cols-3">
-          {testimonials.map((t, i) => (
+          {translatedTestimonials.map((t, i) => (
             <motion.figure
               key={t.name}
               initial={{ opacity: 0, y: 30 }}
