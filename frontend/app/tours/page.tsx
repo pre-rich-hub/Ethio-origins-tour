@@ -17,7 +17,7 @@ export const metadata: Metadata = createMetadata({
     'Ethiopia Guided Tours',
     'Ethiopia Tour Booking',
   ],
-  ogImage: '/images/client/custom/omo-valley.jpg',
+  ogImage: 'https://res.cloudinary.com/divimnzxa/image/upload/v1782375172/121667627429376236_nlva6g.jpg',
   ogImageAlt: 'Guided Ethiopia tour package experience',
 })
 

@@ -729,6 +729,7 @@ const destinationSeeds: DestinationSeed[] = [
     category: 'tribal-cultural',
     categoryLabel: 'Tribal and Cultural Destinations',
     region: 'Amhara Region',
+    image: 'https://res.cloudinary.com/divimnzxa/image/upload/v1782409308/Blue_Nile_Ethiopia_xi94qy.jpg',
     relatedTourSlugs: [
       '20-day-ethiopia-historical-cultural-adventure',
       '6-day-ethiopia-holiday-package',
@@ -742,6 +743,7 @@ const destinationSeeds: DestinationSeed[] = [
     category: 'tribal-cultural',
     categoryLabel: 'Tribal and Cultural Destinations',
     region: 'Tigray',
+    image: 'https://res.cloudinary.com/divimnzxa/image/upload/v1782409307/ethiopia_-_afar_danakil_and_tigray_s72fy4.jpg',
     relatedTourSlugs: [
       '4-day-danakil-depression-erta-ale-tour',
       '20-day-ethiopia-historical-cultural-adventure',
@@ -754,6 +756,7 @@ const destinationSeeds: DestinationSeed[] = [
     category: 'historical-religious',
     categoryLabel: 'Historical and Religious Destinations',
     region: 'Amhara Region',
+    image: 'https://res.cloudinary.com/divimnzxa/image/upload/v1782409307/Debre_Markos_gsqbsn.jpg',
     relatedTourSlugs: [
       '20-day-ethiopia-historical-cultural-adventure',
     ],
@@ -764,6 +767,7 @@ const destinationSeeds: DestinationSeed[] = [
     category: 'historical-religious',
     categoryLabel: 'Historical and Religious Destinations',
     region: 'Tigray',
+    image: 'https://res.cloudinary.com/divimnzxa/image/upload/v1782409308/Connaisez-vous_ce_lieu___iywh6c.jpg',
     relatedTourSlugs: [
       '20-day-ethiopia-historical-cultural-adventure',
     ],
@@ -774,6 +778,7 @@ const destinationSeeds: DestinationSeed[] = [
     category: 'tribal-cultural',
     categoryLabel: 'Tribal and Cultural Destinations',
     region: 'Amhara Region',
+    image: 'https://res.cloudinary.com/divimnzxa/image/upload/v1782409308/Kombolcha_Ethiopia_bhzjqt.jpg',
     relatedTourSlugs: [
       '20-day-ethiopia-historical-cultural-adventure',
     ],
@@ -784,6 +789,7 @@ const destinationSeeds: DestinationSeed[] = [
     category: 'tribal-cultural',
     categoryLabel: 'Tribal and Cultural Destinations',
     region: 'Amhara Region',
+    image: 'https://res.cloudinary.com/divimnzxa/image/upload/v1782409309/%E1%8A%A0%E1%8B%8D%E1%88%AB%E1%89%A3_%E1%89%A0%E1%88%81%E1%88%88%E1%89%B5_%E1%8C%88%E1%8C%BF_%E1%8A%A0%E1%88%AB%E1%89%A3_%E1%8B%AD%E1%88%8F%E1%89%BD%E1%8A%8B%E1%88%8D_%E1%8B%AD%E1%88%85_%E1%8A%90%E1%8B%8D_AWRA_AMBA_IS_AN_u8j7l6.jpg',
     relatedTourSlugs: [
       '6-day-ethiopia-holiday-package',
     ],
@@ -794,6 +800,7 @@ const destinationSeeds: DestinationSeed[] = [
     category: 'historical-religious',
     categoryLabel: 'Historical and Religious Destinations',
     region: 'North Shewa',
+    image: 'https://res.cloudinary.com/divimnzxa/image/upload/v1782367798/Debre_Damo_Monastery_1_stbkmb.jpg',
     relatedTourSlugs: [
       '1-day-debre-libanos-portuguese-bridge-tour',
     ],
@@ -804,6 +811,7 @@ const destinationSeeds: DestinationSeed[] = [
     category: 'historical-religious',
     categoryLabel: 'Historical and Religious Destinations',
     region: 'North Shewa',
+    image: 'https://res.cloudinary.com/divimnzxa/image/upload/v1782305237/Portuguese_bridge_in_Ethiopia_lcrpjy.jpg',
     relatedTourSlugs: [
       '1-day-debre-libanos-portuguese-bridge-tour',
     ],
@@ -814,6 +822,7 @@ const destinationSeeds: DestinationSeed[] = [
     category: 'mountains-wildlife',
     categoryLabel: 'Mountains, Parks, and Wildlife',
     region: 'North Shewa',
+    image: 'https://res.cloudinary.com/divimnzxa/image/upload/v1782420837/b1d1ef428ec22c684bfb91f85e21bdcc_ofk69q.jpg',
     relatedTourSlugs: [
       '1-day-debre-libanos-portuguese-bridge-tour',
     ],
@@ -824,6 +833,7 @@ const destinationSeeds: DestinationSeed[] = [
     category: 'adventure-geological',
     categoryLabel: 'Adventure and Geological Wonders',
     region: 'Afar Region',
+    image: 'https://res.cloudinary.com/divimnzxa/image/upload/v1782420786/8aebaa31ba3242656bcd71a29bfed6f7_ppa48t.jpg',
     relatedTourSlugs: [
       '5-day-lalibela-danakil-depression-tour',
     ],
@@ -834,6 +844,7 @@ const destinationSeeds: DestinationSeed[] = [
     category: 'adventure-geological',
     categoryLabel: 'Adventure and Geological Wonders',
     region: 'Afar Region',
+    image: 'https://res.cloudinary.com/divimnzxa/image/upload/v1782420786/images_21_us8g4j.jpg',
     relatedTourSlugs: [
       '4-day-danakil-depression-erta-ale-tour',
       '5-day-lalibela-danakil-depression-tour',
@@ -845,6 +856,7 @@ const destinationSeeds: DestinationSeed[] = [
     category: 'historical-religious',
     categoryLabel: 'Historical and Religious Destinations',
     region: 'Eastern Ethiopia',
+    image: 'https://res.cloudinary.com/divimnzxa/image/upload/v1782420786/0171081f43c070fcdd428eecac6a9981_1_uqyx3j.jpg',
     relatedTourSlugs: [
       '3-day-harar-cultural-historical-tour',
     ],
@@ -855,6 +867,7 @@ const destinationSeeds: DestinationSeed[] = [
     category: 'tribal-cultural',
     categoryLabel: 'Tribal and Cultural Destinations',
     region: 'Eastern Ethiopia',
+    image: 'https://res.cloudinary.com/divimnzxa/image/upload/v1782420785/images_22_vstagn.jpg',
     relatedTourSlugs: [
       '3-day-harar-cultural-historical-tour',
     ],
@@ -865,7 +878,7 @@ const destinationSeeds: DestinationSeed[] = [
     category: 'historical-religious',
     categoryLabel: 'Historical and Religious Destinations',
     region: 'Addis Ababa',
-    image: '/images/gallery-market.png',
+    image: 'https://res.cloudinary.com/divimnzxa/image/upload/v1782418812/e69c67638ad625242b725d4cf0222d38_ioi74i.jpg',
     imageAlt: 'Addis Ababa city view from Mount Entoto',
     relatedTourSlugs: [
       'addis-ababa-full-day-city-tour',
@@ -877,7 +890,7 @@ const destinationSeeds: DestinationSeed[] = [
     category: 'historical-religious',
     categoryLabel: 'Historical and Religious Destinations',
     region: 'Addis Ababa',
-    image: '/images/gallery-market.png',
+    image: 'https://res.cloudinary.com/divimnzxa/image/upload/v1782418812/34983b89a312ab272b5a6733cb4b4f9d_xl5owx.jpg',
     imageAlt: 'Addis Ababa cultural museum route',
     relatedTourSlugs: [
       'addis-ababa-full-day-city-tour',
@@ -889,7 +902,7 @@ const destinationSeeds: DestinationSeed[] = [
     category: 'historical-religious',
     categoryLabel: 'Historical and Religious Destinations',
     region: 'Addis Ababa',
-    image: '/images/gallery-market.png',
+    image: 'https://res.cloudinary.com/divimnzxa/image/upload/v1782418812/c96f1342ee770fbd542da8d001037d25_j5q9dt.jpg',
     imageAlt: 'Addis Ababa route including St. George Cathedral',
     relatedTourSlugs: [
       'addis-ababa-full-day-city-tour',
@@ -901,7 +914,7 @@ const destinationSeeds: DestinationSeed[] = [
     category: 'lakes-scenic',
     categoryLabel: 'Lakes, Waterfalls, and Scenic Destinations',
     region: 'Oromia Highlands',
-    image: '/images/dest-wonchi.png',
+    image: 'https://res.cloudinary.com/divimnzxa/image/upload/v1782418811/db8f09af81bff25c06392061279cbad0_hj2i7w.jpg',
     imageAlt: 'Mount Wonchi and crater lake landscape',
     relatedTourSlugs: [
       'wonchi-crater-lake-day-tour',
@@ -913,7 +926,7 @@ const destinationSeeds: DestinationSeed[] = [
     category: 'historical-religious',
     categoryLabel: 'Historical and Religious Destinations',
     region: 'Wonchi Crater Lake',
-    image: '/images/dest-wonchi.png',
+    image: 'https://res.cloudinary.com/divimnzxa/image/upload/v1782418812/a5e2a36f8228bed26dd787f4391e6c97_ay3bzk.jpg',
     imageAlt: 'Wonchi Crater Lake route to Cherkos Monastery',
     relatedTourSlugs: [
       'wonchi-crater-lake-day-tour',
@@ -925,16 +938,19 @@ const destinationSeeds: DestinationSeed[] = [
     category: 'historical-religious',
     categoryLabel: 'Historical and Religious Destinations',
     region: 'Central Ethiopia',
+    image: 'https://res.cloudinary.com/divimnzxa/image/upload/v1782418812/images_19_tbsm7z.jpg',
     relatedTourSlugs: [
       '10-day-omo-valley-bale-mountains-cultural-adventure',
     ],
   },
+
   {
     name: 'Adadi Maryam',
     slug: 'adadi-maryam',
     category: 'historical-religious',
     categoryLabel: 'Historical and Religious Destinations',
     region: 'Central Ethiopia',
+    image: 'https://res.cloudinary.com/divimnzxa/image/upload/v1782418810/b7629a45b4fddb499922b561f6d9e452_q7rlwp.jpg',
     relatedTourSlugs: [
       '10-day-omo-valley-bale-mountains-cultural-adventure',
     ],
@@ -945,7 +961,7 @@ const destinationSeeds: DestinationSeed[] = [
     category: 'tribal-cultural',
     categoryLabel: 'Tribal and Cultural Destinations',
     region: 'Omo Valley',
-    image: '/images/exp-omo.png',
+    image: 'https://res.cloudinary.com/divimnzxa/image/upload/v1782418810/28dc268081262da536816558cda045b7_ptzzb1.jpg',
     imageAlt: 'Omo Valley route through Karo villages',
     relatedTourSlugs: [
       '10-day-omo-valley-bale-mountains-cultural-adventure',
@@ -953,12 +969,13 @@ const destinationSeeds: DestinationSeed[] = [
     ],
   },
   {
+
     name: 'Nyangatom',
     slug: 'nyangatom',
     category: 'tribal-cultural',
     categoryLabel: 'Tribal and Cultural Destinations',
     region: 'Omo Valley',
-    image: '/images/exp-omo.png',
+    image: 'https://res.cloudinary.com/divimnzxa/image/upload/v1782418810/b80708fa1e01b9c8a27a17cfa98d399d_wteen9.jpg',
     imageAlt: 'Omo Valley route through Nyangatom communities',
     relatedTourSlugs: [
       '10-day-omo-valley-bale-mountains-cultural-adventure',
@@ -970,7 +987,7 @@ const destinationSeeds: DestinationSeed[] = [
     category: 'tribal-cultural',
     categoryLabel: 'Tribal and Cultural Destinations',
     region: 'Omo Valley',
-    image: '/images/exp-omo.png',
+    image: 'https://res.cloudinary.com/divimnzxa/image/upload/v1782418810/f07270bdea82c893b67f1591a22ad452_vfxody.jpg',
     imageAlt: 'Omo River route near Omorate',
     relatedTourSlugs: [
       '10-day-omo-valley-bale-mountains-cultural-adventure',
@@ -982,7 +999,7 @@ const destinationSeeds: DestinationSeed[] = [
     category: 'tribal-cultural',
     categoryLabel: 'Tribal and Cultural Destinations',
     region: 'Omo Valley',
-    image: '/images/exp-omo.png',
+    image: 'https://res.cloudinary.com/divimnzxa/image/upload/v1782418810/ef68c3f54e3e53cc5c577c5861481054_i9vh0f.jpg',
     imageAlt: 'Omo Valley route through Dassanech communities',
     relatedTourSlugs: [
       '10-day-omo-valley-bale-mountains-cultural-adventure',
@@ -994,7 +1011,7 @@ const destinationSeeds: DestinationSeed[] = [
     category: 'lakes-scenic',
     categoryLabel: 'Lakes, Waterfalls, and Scenic Destinations',
     region: 'Great Rift Valley',
-    image: '/images/client/custom/hawassa.jpg',
+    image: 'https://res.cloudinary.com/divimnzxa/image/upload/v1782418811/1e495d865c921ec714a6292880d7a338_rjokov.jpg',
     imageAlt: 'Hawassa lake region in Southern Ethiopia',
     relatedTourSlugs: [
       '10-day-omo-valley-bale-mountains-cultural-adventure',

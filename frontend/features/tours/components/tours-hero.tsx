@@ -5,7 +5,7 @@ export function ToursHero() {
   return (
     <section className="relative isolate overflow-hidden bg-coffee pt-28 text-cream md:pt-40">
       <Image
-        src="/images/client/custom/omo-valley.jpg"
+        src="https://res.cloudinary.com/divimnzxa/image/upload/v1782375172/121667627429376236_nlva6g.jpg"
         alt="Ethiopian cultural journey"
         fill
         priority

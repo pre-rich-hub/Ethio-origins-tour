@@ -5,7 +5,7 @@ export function DestinationsHero() {
   return (
     <section className="relative isolate overflow-hidden bg-coffee pt-28 text-cream md:pt-40">
       <Image
-        src="/images/hero.png"
+        src="https://res.cloudinary.com/divimnzxa/image/upload/v1782308427/Gondar_Ethiopia_guosib.jpg"
         alt="Ethiopian landscape"
         fill
         priority
