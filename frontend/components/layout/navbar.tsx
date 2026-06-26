@@ -78,15 +78,19 @@ export function Navbar() {
           : 'bg-transparent'
       }`}
     >
-      <nav className="mx-auto flex max-w-7xl items-center justify-between px-5 py-4 md:px-8 md:py-5">
-        <Link href="/#home" className="flex items-center" aria-label="Ethio Origins Tour home">
+      <nav className="mx-auto flex max-w-7xl items-center justify-between px-5 py-3 md:px-8 md:py-4">
+        <Link
+          href="/#home"
+          className="flex h-16 w-16 shrink-0 items-center justify-center md:h-20 md:w-20"
+          aria-label="Ethio Origins Tour home"
+        >
           <Image
             src="/brand/logo-header.png"
             alt="Ethio Origins Ethiopia Tours"
             width={900}
             height={883}
             priority
-            className="h-14 w-auto md:h-16"
+            className="h-full w-full object-contain"
           />
         </Link>
 
@@ -224,14 +228,14 @@ export function Navbar() {
                   setOpen(false)
                   setExpandedMobile(null)
                 }}
-                className="flex items-center"
+                className="flex h-16 w-16 shrink-0 items-center justify-center"
               >
                 <Image
                   src="/brand/logo-header.png"
                   alt="Ethio Origins Ethiopia Tours"
                   width={900}
                   height={883}
-                  className="h-16 w-auto"
+                  className="h-full w-full object-contain"
                 />
               </Link>
               <button

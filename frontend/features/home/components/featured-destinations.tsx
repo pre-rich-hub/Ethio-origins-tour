@@ -19,12 +19,18 @@ const featuredDestinationSlugs = [
 
 export function FeaturedDestinations({ items = destinations }: { items?: Destination[] }) {
   const { t } = useLanguage()
-  const featuredDestinations = items.filter((destination) =>
-    featuredDestinationSlugs.includes(destination.slug),
-  )
-  const visibleDestinations = featuredDestinations.length
-    ? featuredDestinations
-    : items.slice(0, 6)
+  const availableDestinations = [...items, ...destinations]
+  const visibleDestinations = [
+    ...featuredDestinationSlugs
+      .map((slug) =>
+        availableDestinations.find((destination) => destination.slug === slug),
+      )
+      .filter((destination): destination is Destination => Boolean(destination)),
+    ...availableDestinations,
+  ].filter(
+    (destination, index, allDestinations) =>
+      allDestinations.findIndex((item) => item.slug === destination.slug) === index,
+  ).slice(0, 6)
 
   return (
     <section
