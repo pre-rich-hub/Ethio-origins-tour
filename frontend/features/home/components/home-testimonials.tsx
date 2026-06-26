@@ -5,6 +5,7 @@ import { motion } from 'framer-motion'
 import { Quote } from 'lucide-react'
 import { SectionHeading } from '@/components/shared/section-heading'
 import { useLanguage } from '@/lib/i18n/language'
+import { cloudinaryImage, cloudinaryTransforms } from '@/lib/images/cloudinary'
 
 const testimonials = [
   {
@@ -65,7 +66,7 @@ export function HomeTestimonials() {
               </blockquote>
               <figcaption className="mt-7 flex items-center gap-4 border-t border-coffee/10 pt-6">
                 <Image
-                  src={t.image || '/placeholder.svg'}
+                  src={cloudinaryImage(t.image || '/placeholder.svg', cloudinaryTransforms.thumbnail)}
                   alt={t.name}
                   width={48}
                   height={48}

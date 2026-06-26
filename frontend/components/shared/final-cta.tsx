@@ -3,6 +3,7 @@
 import Image from 'next/image'
 import { motion } from 'framer-motion'
 import { useLanguage } from '@/lib/i18n/language'
+import { cloudinaryImage, cloudinaryTransforms } from '@/lib/images/cloudinary'
 
 export function FinalCta() {
   const { t } = useLanguage()
@@ -14,7 +15,10 @@ export function FinalCta() {
     >
       <div className="absolute inset-0 z-0">
         <Image
-          src="https://res.cloudinary.com/divimnzxa/image/upload/v1782305234/Debre_Libanos_anvjli.jpg"
+          src={cloudinaryImage(
+            'https://res.cloudinary.com/divimnzxa/image/upload/v1782305234/Debre_Libanos_anvjli.jpg',
+            cloudinaryTransforms.hero,
+          )}
           alt="A traveler overlooking endless Ethiopian mountain ranges at sunset"
           fill
           sizes="100vw"

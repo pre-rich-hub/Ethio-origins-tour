@@ -3,6 +3,7 @@
 import Image from 'next/image'
 import { Check } from 'lucide-react'
 import { useLanguage } from '@/lib/i18n/language'
+import { cloudinaryImage, cloudinaryTransforms } from '@/lib/images/cloudinary'
 import { getLocalizedDestination } from '../lib/destination-localization'
 import type { Destination } from '../types/destination'
 
@@ -51,7 +52,7 @@ export function DestinationOverview({
         <aside className="sticky top-28">
           <div className="relative overflow-hidden border border-border bg-coffee text-cream shadow-2xl shadow-coffee/10">
             <Image
-              src={localizedDestination.image}
+              src={cloudinaryImage(localizedDestination.image, cloudinaryTransforms.portrait)}
               alt=""
               width={640}
               height={800}

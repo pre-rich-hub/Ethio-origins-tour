@@ -201,10 +201,10 @@ export function SiteFooter() {
         <div className="grid gap-8 pb-9 lg:grid-cols-12">
           <div className="lg:col-span-4">
             <Image
-              src="/brand/logo-header.png"
+              src="/brand/logo-header-420.webp"
               alt="Ethio Origins Ethiopia Tours"
-              width={900}
-              height={883}
+              width={420}
+              height={412}
               className="h-24 w-auto"
             />
             <p className="mt-4 max-w-xs font-sans text-sm font-light leading-relaxed text-cream/70">

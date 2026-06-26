@@ -4,6 +4,7 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { ArrowRight, Clock, MapPin } from 'lucide-react'
 import { useLanguage } from '@/lib/i18n/language'
+import { cloudinaryImage, cloudinaryTransforms } from '@/lib/images/cloudinary'
 import { tours } from '../data/tours'
 import { getLocalizedTours } from '../lib/tour-localization'
 import type { Tour } from '../types/tour'
@@ -24,7 +25,7 @@ export function ToursGrid({ items = tours }: { items?: Tour[] }) {
               className="group relative flex min-h-[440px] cursor-pointer touch-manipulation overflow-hidden border border-cream/18 bg-coffee shadow-2xl shadow-black/20 transition-shadow hover:shadow-coffee/30 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-gold sm:min-h-[500px] md:min-h-[520px]"
             >
               <Image
-                src={tour.image || '/placeholder.svg'}
+                src={cloudinaryImage(tour.image || '/placeholder.svg', cloudinaryTransforms.card)}
                 alt={tour.imageAlt}
                 fill
                 sizes="(min-width: 1024px) 33vw, (min-width: 768px) 50vw, 100vw"

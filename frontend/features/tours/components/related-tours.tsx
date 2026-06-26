@@ -4,6 +4,7 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { ArrowRight } from 'lucide-react'
 import { useLanguage } from '@/lib/i18n/language'
+import { cloudinaryImage, cloudinaryTransforms } from '@/lib/images/cloudinary'
 import { getLocalizedTours } from '../lib/tour-localization'
 import type { Tour } from '../types/tour'
 
@@ -41,7 +42,7 @@ export function RelatedTours({ relatedTours }: { relatedTours: Tour[] }) {
             >
               <div className="relative aspect-[4/3] overflow-hidden bg-coffee">
                 <Image
-                  src={item.image}
+                  src={cloudinaryImage(item.image, cloudinaryTransforms.card)}
                   alt={item.imageAlt}
                   fill
                   sizes="(min-width: 768px) 33vw, 100vw"

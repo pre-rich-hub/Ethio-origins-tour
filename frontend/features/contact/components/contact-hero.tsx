@@ -4,6 +4,7 @@ import Link from 'next/link'
 import { ArrowLeft } from 'lucide-react'
 import { useLanguage } from '@/lib/i18n/language'
 import Image from 'next/image'
+import { cloudinaryImage, cloudinaryTransforms } from '@/lib/images/cloudinary'
 
 export function ContactHero() {
   const { t } = useLanguage()
@@ -11,7 +12,10 @@ export function ContactHero() {
   return (
     <section className="relative isolate flex min-h-[620px] items-end overflow-hidden bg-coffee pt-28 md:min-h-[680px]">
       <Image
-        src="https://res.cloudinary.com/divimnzxa/image/upload/v1782305234/Debre_Libanos_anvjli.jpg"
+        src={cloudinaryImage(
+          'https://res.cloudinary.com/divimnzxa/image/upload/v1782305234/Debre_Libanos_anvjli.jpg',
+          cloudinaryTransforms.hero,
+        )}
         alt="Ethiopian mountain landscape at sunset"
         fill
         priority

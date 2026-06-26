@@ -1,10 +1,14 @@
+const withBundleAnalyzer =
+  process.env.ANALYZE === 'true'
+    ? (await import('@next/bundle-analyzer')).default({ enabled: true })
+    : (config) => config
+
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   typescript: {
     ignoreBuildErrors: true,
   },
   images: {
-    unoptimized: true,
     remotePatterns: [
       {
         protocol: 'https',
@@ -86,4 +90,4 @@ const nextConfig = {
   },
 }
 
-export default nextConfig
+export default withBundleAnalyzer(nextConfig)

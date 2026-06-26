@@ -7,6 +7,7 @@ import { SectionHeading } from '@/components/shared/section-heading'
 import { destinations } from '@/features/destinations'
 import type { Destination } from '@/features/destinations'
 import { useLanguage } from '@/lib/i18n/language'
+import { cloudinaryImage, cloudinaryTransforms } from '@/lib/images/cloudinary'
 
 const featuredDestinationSlugs = [
   'lalibela',
@@ -70,7 +71,7 @@ export function FeaturedDestinations({ items = destinations }: { items?: Destina
                 className="relative flex size-full overflow-hidden rounded-none border border-cream/18 bg-coffee shadow-2xl shadow-black/25"
               >
                 <Image
-                  src={d.image || '/placeholder.svg'}
+                  src={cloudinaryImage(d.image || '/placeholder.svg', cloudinaryTransforms.card)}
                   alt={d.name}
                   fill
                   sizes="(max-width: 640px) calc(100vw - 2rem), 420px"

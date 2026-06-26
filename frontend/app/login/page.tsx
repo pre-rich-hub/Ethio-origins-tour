@@ -47,12 +47,11 @@ export default function LoginPage() {
         <div className="bg-cream/95 backdrop-blur-sm rounded-2xl shadow-2xl p-8 md:p-10">
           <div className="flex justify-center mb-8">
             <Image
-              src="/brand/logo-header.png"
+              src="/brand/logo-header-420.webp"
               alt="Ethio Origins"
-              width={180}
-              height={60}
+              width={420}
+              height={412}
               className="h-12 w-auto"
-              priority
             />
           </div>
 

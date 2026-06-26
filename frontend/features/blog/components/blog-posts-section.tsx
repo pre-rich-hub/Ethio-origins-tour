@@ -4,6 +4,7 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { ArrowRight, CalendarDays } from 'lucide-react'
 import { useLanguage } from '@/lib/i18n/language'
+import { cloudinaryImage, cloudinaryTransforms } from '@/lib/images/cloudinary'
 import { posts } from '../data/posts'
 
 type BlogPost = (typeof posts)[number]
@@ -42,7 +43,7 @@ export function BlogPostsSection({ items = posts }: { items?: BlogPost[] }) {
                 <Link href={`/blog/${post.slug}`} className="group block">
                   <div className="relative aspect-[4/3] overflow-hidden bg-coffee">
                     <Image
-                      src={post.image}
+                      src={cloudinaryImage(post.image, cloudinaryTransforms.card)}
                       alt=""
                       fill
                       sizes="(min-width: 768px) 33vw, 100vw"

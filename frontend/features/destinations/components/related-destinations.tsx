@@ -4,6 +4,7 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { ArrowRight } from 'lucide-react'
 import { useLanguage } from '@/lib/i18n/language'
+import { cloudinaryImage, cloudinaryTransforms } from '@/lib/images/cloudinary'
 import { getLocalizedDestinations } from '../lib/destination-localization'
 import type { Destination } from '../types/destination'
 
@@ -48,7 +49,7 @@ export function RelatedDestinations({
               className="group relative flex min-h-[430px] cursor-pointer touch-manipulation overflow-hidden border border-cream/18 bg-coffee shadow-xl shadow-black/10 transition-shadow hover:shadow-coffee/25 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-gold sm:min-h-[480px]"
             >
               <Image
-                src={item.image}
+                src={cloudinaryImage(item.image, cloudinaryTransforms.card)}
                 alt={item.imageAlt}
                 fill
                 sizes="(min-width: 768px) 33vw, 100vw"

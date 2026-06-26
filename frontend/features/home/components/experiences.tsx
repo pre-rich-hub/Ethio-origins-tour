@@ -7,6 +7,7 @@ import { ArrowRight, Clock } from 'lucide-react'
 import { SectionHeading } from '@/components/shared/section-heading'
 import { tours } from '@/features/tours'
 import { useLanguage } from '@/lib/i18n/language'
+import { cloudinaryImage, cloudinaryTransforms } from '@/lib/images/cloudinary'
 
 export function Experiences() {
   const { t } = useLanguage()
@@ -37,7 +38,7 @@ export function Experiences() {
                 className="group relative flex size-full cursor-pointer touch-manipulation overflow-hidden rounded-md border border-border bg-card shadow-sm transition-shadow hover:shadow-xl focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-gold"
               >
                 <Image
-                  src={exp.image || '/placeholder.svg'}
+                  src={cloudinaryImage(exp.image || '/placeholder.svg', cloudinaryTransforms.card)}
                   alt={exp.title}
                   fill
                   sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
@@ -59,7 +60,7 @@ export function Experiences() {
                     </p>
                   </div>
 
-                  <div className="mt-4 max-h-40 overflow-hidden opacity-100 transition-all duration-500 ease-out sm:mt-0 sm:max-h-0 sm:opacity-0 sm:group-hover:mt-4 sm:group-hover:max-h-40 sm:group-hover:opacity-100 sm:group-focus-visible:mt-4 sm:group-focus-visible:max-h-40 sm:group-focus-visible:opacity-100">
+                  <div className="mt-4 overflow-hidden opacity-100 transition-opacity duration-500 ease-out sm:opacity-0 sm:group-hover:opacity-100 sm:group-focus-visible:opacity-100">
                     <p className="font-sans text-sm font-light leading-relaxed text-cream/86">
                       {exp.description}
                     </p>

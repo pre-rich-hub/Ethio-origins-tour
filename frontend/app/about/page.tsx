@@ -9,6 +9,7 @@ import {
   TrustStrip,
   WhyEthiopia,
 } from '@/features/home'
+import { cloudinaryImage, cloudinaryTransforms } from '@/lib/images/cloudinary'
 import { createMetadata } from '@/lib/seo/create-metadata'
 
 export const metadata: Metadata = createMetadata({
@@ -33,7 +34,10 @@ export default function AboutPage() {
       <Navbar />
       <section className="relative isolate overflow-hidden bg-coffee pt-28 text-cream md:pt-40">
         <Image
-          src="https://res.cloudinary.com/divimnzxa/image/upload/v1782246561/40462096650629206_q68ntv.jpg"
+          src={cloudinaryImage(
+            'https://res.cloudinary.com/divimnzxa/image/upload/v1782246561/40462096650629206_q68ntv.jpg',
+            cloudinaryTransforms.hero,
+          )}
           alt="A local guide and travelers walking an Ethiopian highland ridge at golden hour"
           fill
           priority
