@@ -57,9 +57,9 @@ export function GalleryCollection({ items = galleryImages }: { items?: GalleryIm
                     <p className="font-sans text-[0.62rem] font-bold uppercase tracking-[0.24em] text-gold">
                       Frame {String(index + 1).padStart(2, '0')}
                     </p>
-                    <h2 className="mt-2 font-serif text-3xl font-medium leading-none text-cream">
+                    <h3 className="mt-2 font-serif text-3xl font-medium leading-none text-cream">
                       {image.title}
-                    </h2>
+                    </h3>
                   </div>
                 </figcaption>
               </figure>

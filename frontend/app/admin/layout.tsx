@@ -1,44 +1,56 @@
-'use client'
-
-import { useEffect, useState } from 'react'
-import { useRouter } from 'next/navigation'
+import type { Metadata } from 'next'
+import { cookies } from 'next/headers'
+import { redirect } from 'next/navigation'
 import { AdminSidebar } from '@/components/admin/sidebar'
-import { Loader2 } from 'lucide-react'
+import { getApiBaseUrl } from '@/lib/api/client'
 
-export default function AdminLayout({ children }: { children: React.ReactNode }) {
-  const router = useRouter()
-  const [state, setState] = useState<'loading' | 'authenticated' | 'redirecting'>('loading')
+export const metadata: Metadata = {
+  title: {
+    default: 'Admin',
+    template: '%s | Admin',
+  },
+  robots: {
+    index: false,
+    follow: false,
+  },
+}
 
-  useEffect(() => {
-    let cancelled = false
+async function hasValidAdminSession() {
+  const cookieStore = await cookies()
+  const cookieHeader = cookieStore
+    .getAll()
+    .map((cookie) => `${cookie.name}=${cookie.value}`)
+    .join('; ')
 
-    fetch('/api/v1/auth/me', { credentials: 'include' })
-      .then((res) => {
-        if (cancelled) return
-        if (res.ok) return res.json()
-        throw new Error('not authenticated')
-      })
-      .then((data) => {
-        if (cancelled) return
-        if (data?.success) setState('authenticated')
-        else throw new Error('not authenticated')
-      })
-      .catch(() => {
-        if (!cancelled) {
-          setState('redirecting')
-          router.replace('/login')
-        }
-      })
+  if (!cookieHeader) return false
 
-    return () => { cancelled = true }
-  }, [router])
+  try {
+    const response = await fetch(`${getApiBaseUrl()}/api/v1/auth/me`, {
+      headers: {
+        Accept: 'application/json',
+        Cookie: cookieHeader,
+      },
+      cache: 'no-store',
+    })
 
-  if (state !== 'authenticated') {
-    return (
-      <div className="min-h-screen bg-background flex items-center justify-center">
-        <Loader2 className="animate-spin text-gold" size={32} />
-      </div>
-    )
+    if (!response.ok) return false
+
+    const payload = (await response.json()) as { success?: boolean }
+    return payload.success === true
+  } catch {
+    return false
+  }
+}
+
+export default async function AdminLayout({
+  children,
+}: {
+  children: React.ReactNode
+}) {
+  const authenticated = await hasValidAdminSession()
+
+  if (!authenticated) {
+    redirect('/login')
   }
 
   return (

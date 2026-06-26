@@ -1,4 +1,5 @@
 import type { MetadataRoute } from 'next'
+import { isPublishedCompletePost, posts } from '@/features/blog/data/posts'
 import { destinations } from '@/features/destinations'
 import { tourCategories, tours } from '@/features/tours'
 import { absoluteUrl } from '@/lib/seo/urls'
@@ -42,17 +43,29 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     },
   ]
 
-  const destinationPages: MetadataRoute.Sitemap = destinations.map((destination) => ({
-    url: absoluteUrl(destination.seo.canonicalPath),
-    changeFrequency: 'monthly',
-    priority: 0.8,
-  }))
+  const destinationPages: MetadataRoute.Sitemap = destinations
+    .filter((destination) => destination.indexable)
+    .map((destination) => ({
+      url: absoluteUrl(destination.seo.canonicalPath),
+      changeFrequency: 'monthly',
+      priority: 0.8,
+    }))
 
-  const categoryPages: MetadataRoute.Sitemap = tourCategories.map((category) => ({
-    url: absoluteUrl(category.seo.canonicalPath),
-    changeFrequency: 'monthly',
-    priority: 0.7,
-  }))
+  const blogPages: MetadataRoute.Sitemap = posts
+    .filter(isPublishedCompletePost)
+    .map((post) => ({
+      url: absoluteUrl(`/blog/${post.slug}`),
+      changeFrequency: 'monthly',
+      priority: 0.6,
+    }))
+
+  const categoryPages: MetadataRoute.Sitemap = tourCategories
+    .filter((category) => category.indexable)
+    .map((category) => ({
+      url: absoluteUrl(category.seo.canonicalPath),
+      changeFrequency: 'monthly',
+      priority: 0.7,
+    }))
 
   const tourPages: MetadataRoute.Sitemap = tours.map((tour) => ({
     url: absoluteUrl(tour.seo.canonicalPath),
@@ -65,5 +78,6 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     ...destinationPages,
     ...categoryPages,
     ...tourPages,
+    ...blogPages,
   ]
 }

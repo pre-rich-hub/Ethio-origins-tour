@@ -1,6 +1,6 @@
 import type { Destination, DestinationCategory } from '../types/destination'
 
-// Pending client assets: used only when no approved destination-specific image exists yet.
+// Fallback asset used only when no approved destination-specific image exists yet.
 const TEMPORARY_DESTINATION_IMAGE =
   'https://res.cloudinary.com/divimnzxa/image/upload/v1782244137/Ancient_Wonders_The_Monolithic_Rock-Cut_Church_of_Lalibela_Ethiopia_gh7iwx.jpg'
 
@@ -18,10 +18,19 @@ type DestinationSeed = {
   itinerary?: string[]
   bestFor?: string
   relatedTourSlugs?: string[]
+  relatedDestinationSlugs?: string[]
+  travelTips?: string[]
+  culturalNotes?: string[]
+  faq?: Array<{
+    question: string
+    answer: string
+  }>
   seoTitle?: string
   seoDescription?: string
   primaryKeyword?: string
   secondaryKeywords?: string[]
+  contentStatus?: 'complete' | 'partial' | 'thin'
+  indexable?: boolean
 }
 
 const destinationCopyByCategory: Record<
@@ -1125,57 +1134,394 @@ const destinationSeeds: DestinationSeed[] = [
   },
 ]
 
+const completeDestinationSlugs = new Set([
+  'lalibela',
+  'wenchi-crater-lake',
+  'bale-mountains-national-park',
+  'awash-national-park',
+  'danakil-depression',
+  'omo-valley',
+])
+
+const destinationContentOverrides: Record<string, Partial<DestinationSeed>> = {
+  'addis-ababa': {
+    shortDescription:
+      'Addis Ababa is the main arrival gateway for Ethio Origins Tour journeys and a natural starting point for museums, markets, churches, Entoto views, and onward routes.',
+    overview:
+      'Use Addis Ababa as a practical and cultural introduction to Ethiopia before continuing to historic, southern, eastern, or nature-focused itineraries. Approved tour routes include city sightseeing around Mount Entoto, the National Museum, Ethnological Museum, Holy Trinity Cathedral, St. George Cathedral, Merkato, coffee, food, and final departure logistics.',
+    highlights: [
+      'Mount Entoto viewpoints and city context',
+      'National Museum and Ethnological Museum visits in approved city routes',
+      'Holy Trinity Cathedral, St. George Cathedral, Merkato, and traditional food experiences',
+      'Flexible arrival, departure, and connecting-day planning for private Ethiopia tours',
+    ],
+    itinerary: [
+      'Begin with airport arrival or hotel pickup in Addis Ababa',
+      'Visit museums, churches, Entoto viewpoints, markets, or food stops based on timing',
+      'Connect onward to northern, southern, eastern, Danakil, or day-trip routes',
+      'Return for shopping, rest, a cultural dinner, or international departure',
+    ],
+    seoTitle: 'Addis Ababa Travel Guide & City Tours',
+    seoDescription:
+      'Plan Addis Ababa city touring with museums, Entoto views, churches, Merkato, food stops and private Ethiopia tour connections.',
+    primaryKeyword: 'Addis Ababa Travel Guide',
+    secondaryKeywords: ['Addis Ababa City Tours', 'Addis Ababa Sightseeing Tour'],
+    contentStatus: 'partial',
+  },
+  gondar: {
+    shortDescription:
+      'Gondar anchors northern Ethiopia historic routes with royal castles, church art, and onward access to the Simien Mountains.',
+    overview:
+      'Approved historic-route itineraries use Gondar for Fasil Ghebbi, Fasilides Castle, palace compounds, Debre Birhan Selassie Church, Kuskuam Palace, and connections between Bahir Dar, Lake Tana, Simien Mountains, Lalibela, and Aksum.',
+    highlights: [
+      'Royal Enclosure and Fasil Ghebbi visits in historic-route tours',
+      'Debre Birhan Selassie Church and Gondar heritage interpretation',
+      'Useful connection point for Bahir Dar, Simien Mountains, and Lalibela routes',
+      'Private pacing for castle, church, and northern heritage touring',
+    ],
+    itinerary: [
+      'Arrive from Bahir Dar, Simien Mountains, or another northern route point',
+      'Tour Gondar castles, churches, and palace sites with local interpretation',
+      'Continue toward Simien Mountains, Lalibela, or Aksum depending on itinerary',
+      'Use Gondar as an overnight base for northern Ethiopia touring',
+    ],
+    seoTitle: 'Gondar Castles and Historical Tours',
+    seoDescription:
+      'Explore Gondar castles, Fasil Ghebbi, Debre Birhan Selassie Church and northern Ethiopia historic-route connections.',
+    primaryKeyword: 'Gondar Historical Tours',
+    contentStatus: 'partial',
+  },
+  aksum: {
+    shortDescription:
+      'Aksum is a northern Ethiopia heritage stop focused on stelae fields, archaeological sites, and ancient kingdom history.',
+    overview:
+      'Approved historic-route tours include Aksum for the Northern Stelae Field, archaeological museum, royal tombs, Queen of Sheba palace ruins, Ezana inscriptions, and St. Mary of Zion Church, with onward links to Tigray, Mekele, Lalibela, and Addis Ababa.',
+    highlights: [
+      'Ancient stelae fields and archaeological interpretation',
+      'Royal tombs, inscriptions, palace ruins, and church heritage',
+      'Northern-route links with Tigray churches, Mekele, Lalibela, and Gondar',
+      'Strong fit for historical, religious, and UNESCO-heritage themed journeys',
+    ],
+    itinerary: [
+      'Fly or travel into Aksum as part of a northern route',
+      'Visit stelae fields, museum sites, tombs, inscriptions, and church landmarks',
+      'Continue toward Tigray, Mekele, Lalibela, or Addis Ababa',
+      'Pair Aksum with Gondar, Bahir Dar, and Lalibela for a complete historic route',
+    ],
+    seoTitle: 'Aksum Archaeological and Heritage Tours',
+    seoDescription:
+      'Plan Aksum heritage touring with stelae fields, archaeological sites, royal history and northern Ethiopia route connections.',
+    primaryKeyword: 'Aksum Tours Ethiopia',
+    contentStatus: 'partial',
+  },
+  harar: {
+    shortDescription:
+      'Harar is an eastern Ethiopia cultural and historical destination known in approved tours for Jugol, markets, museums, traditional homes, and the Hyena Feeding Ceremony.',
+    overview:
+      'Ethio Origins Tour routes feature Harar Old Town, Harari homes, Arthur Rimbaud House, Ras Mekonnen House, Harari Museum, Aweday Market, Dire Dawa connections, and the evening Hyena Feeding Ceremony.',
+    highlights: [
+      'Harar Jugol and traditional Harari home visits',
+      'Aweday Market, museums, city heritage, and Dire Dawa routing',
+      'Evening Hyena Feeding Ceremony where included by itinerary',
+      'Useful eastern Ethiopia pairing with historical and cultural tours',
+    ],
+    itinerary: [
+      'Travel via Dire Dawa or overland route toward Harar',
+      'Visit Old Town, markets, museums, and traditional Harari homes',
+      'Join the evening Hyena Feeding Ceremony when scheduled',
+      'Return toward Addis Ababa or continue through eastern Ethiopia routes',
+    ],
+    seoTitle: 'Harar Cultural Tours and Old City Guide',
+    seoDescription:
+      'Explore Harar cultural tours featuring Jugol, Harari homes, markets, museums, Dire Dawa and the Hyena Feeding Ceremony.',
+    primaryKeyword: 'Harar Cultural Tours',
+    contentStatus: 'partial',
+  },
+  'lake-tana': {
+    shortDescription:
+      'Lake Tana is a northern Ethiopia route highlight for monastery boat trips, lakeside stays, and Bahir Dar connections.',
+    overview:
+      'Approved itineraries visit Lake Tana from Bahir Dar for boat excursions to selected monasteries such as Ura Kidane Mehret, Azwa Maryam, Mehal Zege Giorgis, or Bete Maryam depending on timing and access.',
+    highlights: [
+      'Boat excursions from Bahir Dar to selected Lake Tana monasteries',
+      'Painted church interiors, manuscripts, sacred treasures, and lakeside context',
+      'Pairs naturally with Blue Nile Falls, Gondar, and northern historic routes',
+      'Flexible access based on local timing and route conditions',
+    ],
+    itinerary: [
+      'Base in Bahir Dar or a lakeside hotel',
+      'Take a boat excursion to selected Lake Tana monasteries',
+      'Add Blue Nile viewpoints or Bezawit Hill where the itinerary supports it',
+      'Continue toward Gondar, Lalibela, or another northern route stop',
+    ],
+    seoTitle: 'Lake Tana Monasteries and Boat Tours',
+    seoDescription:
+      'Plan Lake Tana boat tours from Bahir Dar with monastery visits and northern Ethiopia historic-route connections.',
+    primaryKeyword: 'Lake Tana Monastery Tours',
+    contentStatus: 'partial',
+  },
+  'blue-nile-falls': {
+    shortDescription:
+      'Blue Nile Falls is a Bahir Dar-area nature and heritage stop included in northern Ethiopia historic routes.',
+    overview:
+      'Approved tours use Blue Nile Falls as a countryside walk and scenic stop before continuing to Gondar or other northern-route destinations, often paired with Lake Tana and Bahir Dar.',
+    highlights: [
+      'Countryside walk and waterfall viewpoints near Bahir Dar',
+      'Natural break within northern Ethiopia heritage itineraries',
+      'Pairs with Lake Tana, Bezawit Hill, Gondar, and Bahir Dar stays',
+      'Flexible timing according to the wider route plan',
+    ],
+    itinerary: [
+      'Depart from Bahir Dar toward Blue Nile Falls',
+      'Walk through countryside sections and visit waterfall viewpoints',
+      'Return for lunch or continue toward Gondar based on itinerary',
+      'Combine with Lake Tana monastery touring where scheduled',
+    ],
+    seoTitle: 'Blue Nile Falls Tours from Bahir Dar',
+    seoDescription:
+      'Visit Blue Nile Falls from Bahir Dar as part of northern Ethiopia tours with Lake Tana and Gondar route connections.',
+    primaryKeyword: 'Blue Nile Falls Tours',
+    contentStatus: 'partial',
+  },
+  'simien-mountains-national-park': {
+    shortDescription:
+      'Simien Mountains National Park adds highland scenery, guided hikes, and wildlife viewing to northern Ethiopia itineraries.',
+    overview:
+      'Approved routes include Simien Mountains excursions or overnight stops for dramatic cliffs, valleys, escarpments, Gelada Baboons, Walia Ibex where conditions allow, birdlife, and scenic highland walking.',
+    highlights: [
+      'Guided hikes through cliffs, valleys, and escarpments',
+      'Gelada Baboon and highland wildlife viewing opportunities',
+      'Pairs with Gondar, Aksum, and northern Ethiopia heritage routes',
+      'Suitable for nature, photography, trekking, and historic-route extensions',
+    ],
+    itinerary: [
+      'Travel from Gondar or another northern base toward the park',
+      'Meet local guide or park support where required',
+      'Walk viewpoints and wildlife areas according to conditions',
+      'Return to Gondar or continue through the northern route',
+    ],
+    seoTitle: 'Simien Mountains Trekking and Wildlife Tours',
+    seoDescription:
+      'Plan Simien Mountains tours with guided highland walks, wildlife viewing and northern Ethiopia route connections.',
+    primaryKeyword: 'Simien Mountains Tours',
+    contentStatus: 'partial',
+  },
+  'erta-ale': {
+    shortDescription:
+      'Erta Ale is the volcanic highlight of Danakil-focused expeditions in approved Ethio Origins Tour routes.',
+    overview:
+      'Approved Danakil itineraries connect Erta Ale with Semera, Hamed Ela, Dallol, salt flats, Afar cultural context, and expedition-style logistics. It should only be visited through properly supported routes.',
+    highlights: [
+      'Volcanic landscape focus within Danakil Depression expeditions',
+      'Pairs with Dallol, salt flats, Hamed Ela, and Afar desert routing',
+      'Requires careful timing, local support, and realistic expedition pacing',
+      'Best suited to adventure and geological tour intent',
+    ],
+    itinerary: [
+      'Travel with local support through the approved Danakil route',
+      'Continue toward Erta Ale according to timing and safety conditions',
+      'Pair with Dallol, salt formations, and Hamed Ela where scheduled',
+      'Return toward Mekele, Semera, or onward route points',
+    ],
+    seoTitle: 'Erta Ale Volcano Tours in the Danakil Depression',
+    seoDescription:
+      'Plan Erta Ale volcano touring as part of supported Danakil Depression expeditions with Dallol and Afar desert routes.',
+    primaryKeyword: 'Erta Ale Volcano Tour',
+    contentStatus: 'partial',
+  },
+  dallol: {
+    shortDescription:
+      'Dallol is a Danakil Depression geological stop known in approved tours for colorful mineral formations, salt landscapes, and Afar desert routing.',
+    overview:
+      'Approved Danakil itineraries feature Dallol alongside salt flats, salt extraction areas, camel caravans, Afar community context, Hamed Ela, Erta Ale, and Mekele or Semera logistics.',
+    highlights: [
+      'Colorful sulfur, mineral, salt, and geothermal landscapes in approved routes',
+      'Salt extraction sites and camel caravan context where scheduled',
+      'Pairs naturally with Erta Ale, Hamed Ela, and wider Danakil expeditions',
+      'Requires supported logistics, timing, and route planning',
+    ],
+    itinerary: [
+      'Travel into the Danakil route with local support',
+      'Visit Dallol formations, salt areas, and viewpoints according to conditions',
+      'Continue toward Hamed Ela, Erta Ale, Mekele, or Semera as scheduled',
+      'Keep timing flexible around heat, access, and safety conditions',
+    ],
+    seoTitle: 'Dallol Tours and Danakil Depression Landscapes',
+    seoDescription:
+      'Explore Dallol as part of supported Danakil Depression tours with salt flats, mineral formations and Afar desert routes.',
+    primaryKeyword: 'Dallol Tour Ethiopia',
+    contentStatus: 'partial',
+  },
+  jinka: {
+    shortDescription:
+      'Jinka is a Southern Ethiopia cultural route base used for Omo Valley Museum visits, Ari village time, and access to Mago National Park.',
+    overview:
+      'Approved Omo Valley tours travel through Jinka for Ari village visits, regional museum context, and routes into Mago National Park for Mursi community visits.',
+    highlights: [
+      'Omo Valley Museum context in approved cultural itineraries',
+      'Ari village visits near Jinka where scheduled',
+      'Access point for Mago National Park and Mursi community visits',
+      'Useful overnight base for Southern Ethiopia overland routes',
+    ],
+    itinerary: [
+      'Arrive in Jinka through Arba Minch, Konso, or southern route points',
+      'Visit nearby Ari community or Omo Valley Museum according to itinerary',
+      'Continue into Mago National Park where scheduled',
+      'Travel onward to Turmi, Konso, or another Omo Valley stop',
+    ],
+    seoTitle: 'Jinka Omo Valley Cultural Tours',
+    seoDescription:
+      'Plan Jinka travel within Omo Valley tours including Ari village visits, Omo Valley Museum and Mago National Park access.',
+    primaryKeyword: 'Jinka Omo Valley Tours',
+    contentStatus: 'partial',
+  },
+  turmi: {
+    shortDescription:
+      'Turmi is an Omo Valley base for Hamer cultural experiences and excursions toward Karo, Nyangatom, Omorate, and Dassanech communities.',
+    overview:
+      'Approved Southern Ethiopia tours use Turmi for Hamer village visits, optional cultural events when available, and day excursions to Karo, Nyangatom, Omorate, and Dassanech areas.',
+    highlights: [
+      'Hamer village visits and cultural context in approved itineraries',
+      'Excursions toward Karo, Nyangatom, Omorate, and Dassanech communities',
+      'Important base for Omo Valley overland routing',
+      'Flexible scheduling around local events, markets, and lodge availability',
+    ],
+    itinerary: [
+      'Arrive in Turmi from Jinka or another Omo Valley route point',
+      'Visit Hamer community experiences according to the itinerary',
+      'Use Turmi as a base for Karo, Nyangatom, Omorate, or Dassanech excursions',
+      'Continue toward Konso or another Southern Ethiopia stop',
+    ],
+    seoTitle: 'Turmi Omo Valley Cultural Tours',
+    seoDescription:
+      'Plan Turmi visits within Omo Valley cultural tours featuring Hamer experiences and excursions to nearby communities.',
+    primaryKeyword: 'Turmi Omo Valley Tours',
+    contentStatus: 'partial',
+  },
+  'bahir-dar': {
+    shortDescription:
+      'Bahir Dar is a northern Ethiopia base for Lake Tana monastery trips, Blue Nile Falls, and onward historic-route travel to Gondar.',
+    overview:
+      'Approved itineraries use Bahir Dar for lakeside stays, Lake Tana boat excursions, selected monastery visits, Bezawit Hill, Blue Nile Falls, and onward drives toward Gondar.',
+    highlights: [
+      'Lake Tana boat excursions and monastery visits',
+      'Blue Nile Falls and Bezawit Hill where included by itinerary',
+      'Natural connection between Addis Ababa, Lake Tana, and Gondar',
+      'Strong fit for historic route and cultural heritage tours',
+    ],
+    itinerary: [
+      'Arrive in Bahir Dar by road or flight according to route',
+      'Take Lake Tana monastery boat excursions where scheduled',
+      'Visit Blue Nile Falls or nearby viewpoints as itinerary allows',
+      'Continue toward Gondar, Lalibela, or another northern route stop',
+    ],
+    seoTitle: 'Bahir Dar Lake Tana and Blue Nile Falls Tours',
+    seoDescription:
+      'Plan Bahir Dar touring with Lake Tana monasteries, Blue Nile Falls and northern Ethiopia historic-route connections.',
+    primaryKeyword: 'Bahir Dar Tours',
+    contentStatus: 'partial',
+  },
+  'arba-minch': {
+    shortDescription:
+      'Arba Minch is a Southern Ethiopia route stop for Lake Chamo boat trips and onward travel toward Dorze, Konso, Jinka, and the Omo Valley.',
+    overview:
+      'Approved Omo Valley tours use Arba Minch for overnight routing, Lake Chamo boat excursions, crocodile and hippo viewing opportunities, and connections toward Dorze, Konso, and Jinka.',
+    highlights: [
+      'Lake Chamo boat excursions in approved Southern Ethiopia routes',
+      'Connection point for Dorze, Konso, Jinka, and Omo Valley travel',
+      'Wildlife and birdlife viewing around Lake Chamo where conditions allow',
+      'Useful pacing stop on private overland journeys',
+    ],
+    itinerary: [
+      'Travel south from Addis Ababa or arrive from nearby route points',
+      'Use Arba Minch as an overnight base for Lake Chamo or Dorze routing',
+      'Continue toward Jinka, Konso, Turmi, or Hawassa',
+      'Adjust pacing to the wider Southern Ethiopia itinerary',
+    ],
+    seoTitle: 'Arba Minch and Lake Chamo Tours',
+    seoDescription:
+      'Plan Arba Minch travel within Southern Ethiopia tours including Lake Chamo, Dorze, Konso, Jinka and Omo Valley routes.',
+    primaryKeyword: 'Arba Minch Tours',
+    contentStatus: 'partial',
+  },
+}
+
 function buildDestination(seed: DestinationSeed): Destination {
-  const categoryCopy = destinationCopyByCategory[seed.category]
+  const mergedSeed = {
+    ...seed,
+    ...destinationContentOverrides[seed.slug],
+  }
+  const categoryCopy = destinationCopyByCategory[mergedSeed.category]
+  const hasUniqueBody = Boolean(
+    mergedSeed.shortDescription &&
+      mergedSeed.overview &&
+      mergedSeed.highlights?.length &&
+      mergedSeed.itinerary?.length,
+  )
+  const contentStatus =
+    mergedSeed.contentStatus ||
+    (completeDestinationSlugs.has(mergedSeed.slug)
+      ? 'complete'
+      : hasUniqueBody
+        ? 'partial'
+        : 'thin')
+  const indexable = mergedSeed.indexable ?? contentStatus === 'complete'
   const shortDescription =
-    seed.shortDescription || categoryCopy.shortDescription(seed.name, seed.region)
-  const overview = seed.overview || categoryCopy.overview(seed.name, seed.region)
-  const image = seed.image || TEMPORARY_DESTINATION_IMAGE
-  const primaryKeyword = seed.primaryKeyword || `${seed.name} Tours`
-  const title = seed.seoTitle || `${seed.name} Tours`
+    mergedSeed.shortDescription || categoryCopy.shortDescription(mergedSeed.name, mergedSeed.region)
+  const overview = mergedSeed.overview || categoryCopy.overview(mergedSeed.name, mergedSeed.region)
+  const image = mergedSeed.image || TEMPORARY_DESTINATION_IMAGE
+  const primaryKeyword = mergedSeed.primaryKeyword || `${mergedSeed.name} Tours`
+  const title = mergedSeed.seoTitle || `${mergedSeed.name} Travel Information`
   const description =
-    seed.seoDescription ||
-    `${shortDescription} Plan a guided visit with Ethio Origins Tour, including route timing, local context, and practical travel support.`
+    mergedSeed.seoDescription ||
+    `${shortDescription} This page is available for itinerary context while detailed destination content is being reviewed.`
   const highlights =
-    seed.highlights || categoryCopy.highlights(seed.name, seed.region)
+    mergedSeed.highlights || categoryCopy.highlights(mergedSeed.name, mergedSeed.region)
   const itinerary =
-    seed.itinerary || categoryCopy.itinerary(seed.name, seed.region)
+    mergedSeed.itinerary || categoryCopy.itinerary(mergedSeed.name, mergedSeed.region)
 
   return {
-    slug: seed.slug,
-    name: seed.name,
-    category: seed.category,
-    categoryLabel: seed.categoryLabel,
-    region: seed.region,
+    slug: mergedSeed.slug,
+    name: mergedSeed.name,
+    category: mergedSeed.category,
+    categoryLabel: mergedSeed.categoryLabel,
+    region: mergedSeed.region,
     shortDescription,
     overview,
-    relatedTourSlugs: seed.relatedTourSlugs || [],
-    gallery: seed.image ? [image] : [],
-    place: seed.region,
+    relatedTourSlugs: mergedSeed.relatedTourSlugs || [],
+    relatedDestinationSlugs: mergedSeed.relatedDestinationSlugs || [],
+    travelTips: mergedSeed.travelTips || [],
+    culturalNotes: mergedSeed.culturalNotes || [],
+    faq: mergedSeed.faq || [],
+    gallery: mergedSeed.image ? [image] : [],
+    place: mergedSeed.region,
     duration: 'Custom',
     description: shortDescription,
     intro: overview,
     image,
     highlights,
-    bestFor: seed.bestFor || categoryCopy.bestFor,
+    bestFor: mergedSeed.bestFor || categoryCopy.bestFor,
     itinerary,
+    contentStatus,
+    indexable,
     imageAlt:
-      seed.imageAlt ||
-      `${seed.name} destination in Ethiopia - temporary image pending client assets`,
+      mergedSeed.imageAlt ||
+      `${mergedSeed.name} destination in Ethiopia`,
     seo: {
       title,
       description,
-      canonicalPath: `/destinations/${seed.slug}`,
+      canonicalPath: `/destinations/${mergedSeed.slug}`,
       primaryKeyword,
-      secondaryKeywords: seed.secondaryKeywords || [
-        seed.name,
-        seed.categoryLabel,
+      secondaryKeywords: mergedSeed.secondaryKeywords || [
+        mergedSeed.name,
+        mergedSeed.categoryLabel,
         'Ethiopia Destinations',
       ],
+      noIndex: !indexable,
       ogImage: image,
       ogImageAlt:
-        seed.imageAlt ||
-        `${seed.name} destination in Ethiopia - temporary image pending client assets`,
+        mergedSeed.imageAlt ||
+        `${mergedSeed.name} destination in Ethiopia`,
     },
   }
 }

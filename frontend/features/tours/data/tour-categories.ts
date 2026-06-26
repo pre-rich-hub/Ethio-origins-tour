@@ -1,13 +1,23 @@
 import type { SeoData } from '@/lib/seo/seo-types'
 
+export type TourCategoryContentStatus = 'complete' | 'partial' | 'thin' | 'empty'
+
 export type TourCategory = {
   slug: string
   name: string
   description: string
+  contentStatus: TourCategoryContentStatus
+  indexable: boolean
+  indexabilityReason: string
   seo: SeoData
 }
 
-export const tourCategories: TourCategory[] = [
+type TourCategorySeed = Omit<
+  TourCategory,
+  'contentStatus' | 'indexable' | 'indexabilityReason'
+>
+
+const tourCategorySeeds: TourCategorySeed[] = [
   {
     slug: 'day-tours',
     name: 'Ethiopia Day Tours',
@@ -406,3 +416,131 @@ export const tourCategories: TourCategory[] = [
     },
   },
 ]
+
+const categoryQuality: Record<
+  string,
+  Pick<TourCategory, 'contentStatus' | 'indexable' | 'indexabilityReason'>
+> = {
+  'day-tours': {
+    contentStatus: 'complete',
+    indexable: true,
+    indexabilityReason: 'Three relevant day tours with clear commercial day-trip intent.',
+  },
+  'cultural-tours': {
+    contentStatus: 'complete',
+    indexable: true,
+    indexabilityReason: 'Strong broad commercial category with many relevant cultural tours.',
+  },
+  'omo-valley-tours': {
+    contentStatus: 'complete',
+    indexable: true,
+    indexabilityReason: 'Primary broad Omo Valley tour-package landing page.',
+  },
+  'historical-tours': {
+    contentStatus: 'complete',
+    indexable: true,
+    indexabilityReason: 'Broad heritage-tour intent, distinct from the historic-route category.',
+  },
+  'religious-pilgrimage-tours': {
+    contentStatus: 'complete',
+    indexable: true,
+    indexabilityReason: 'Multiple relevant faith and pilgrimage tours with unique intent.',
+  },
+  'ethiopia-holiday-packages': {
+    contentStatus: 'complete',
+    indexable: true,
+    indexabilityReason: 'Commercial holiday-package intent with two relevant packages.',
+  },
+  'festival-tours': {
+    contentStatus: 'thin',
+    indexable: false,
+    indexabilityReason: 'Only one matching tour; hold from indexing until more festival content exists.',
+  },
+  'nature-adventure-tours': {
+    contentStatus: 'complete',
+    indexable: true,
+    indexabilityReason: 'Primary broad adventure category with several relevant packages.',
+  },
+  'southern-ethiopia-tours': {
+    contentStatus: 'complete',
+    indexable: true,
+    indexabilityReason: 'Regional commercial category with several southern Ethiopia packages.',
+  },
+  'nature-tours': {
+    contentStatus: 'partial',
+    indexable: false,
+    indexabilityReason: 'Overlaps adventure and wildlife categories; noindex until differentiated.',
+  },
+  'nature-geological-tours': {
+    contentStatus: 'complete',
+    indexable: true,
+    indexabilityReason: 'Primary broad Danakil/geological tour category with clear intent.',
+  },
+  'trekking-hiking-tours': {
+    contentStatus: 'thin',
+    indexable: false,
+    indexabilityReason: 'Only one matching package; noindex until trekking content expands.',
+  },
+  'wildlife-tours': {
+    contentStatus: 'complete',
+    indexable: true,
+    indexabilityReason: 'Multiple wildlife and nature packages with distinct wildlife intent.',
+  },
+  'coffee-tours': {
+    contentStatus: 'empty',
+    indexable: false,
+    indexabilityReason: 'No matching coffee tour packages are currently available.',
+  },
+  'photography-tours': {
+    contentStatus: 'complete',
+    indexable: true,
+    indexabilityReason: 'Many relevant tours can serve photography-aware travel intent.',
+  },
+  'birdwatching-tours': {
+    contentStatus: 'partial',
+    indexable: false,
+    indexabilityReason: 'Two matching tours but strong overlap with nature/wildlife pages.',
+  },
+  'city-tours': {
+    contentStatus: 'complete',
+    indexable: true,
+    indexabilityReason: 'Two relevant city-tour packages with clear sightseeing intent.',
+  },
+  'addis-ababa-excursions': {
+    contentStatus: 'thin',
+    indexable: false,
+    indexabilityReason: 'Only one matching excursion; day-tours remains the stronger landing page.',
+  },
+  'unesco-heritage-tours': {
+    contentStatus: 'complete',
+    indexable: true,
+    indexabilityReason: 'Multiple relevant UNESCO-oriented tours with distinct heritage intent.',
+  },
+  'ethiopia-historic-route-tours': {
+    contentStatus: 'complete',
+    indexable: true,
+    indexabilityReason: 'Primary exact-match historic-route landing page.',
+  },
+  'private-customized-tours': {
+    contentStatus: 'complete',
+    indexable: true,
+    indexabilityReason: 'Strong commercial private/custom tour intent with broad support.',
+  },
+}
+
+export const tourCategories: TourCategory[] = tourCategorySeeds.map((category) => {
+  const quality = categoryQuality[category.slug] ?? {
+    contentStatus: 'thin' as const,
+    indexable: false,
+    indexabilityReason: 'Category requires manual review before indexing.',
+  }
+
+  return {
+    ...category,
+    ...quality,
+    seo: {
+      ...category.seo,
+      noIndex: !quality.indexable,
+    },
+  }
+})

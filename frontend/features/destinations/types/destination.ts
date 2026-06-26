@@ -25,6 +25,15 @@ export type Destination = {
   highlights: string[]
   bestFor: string
   itinerary: string[]
+  travelTips?: string[]
+  culturalNotes?: string[]
+  relatedDestinationSlugs?: string[]
+  faq?: Array<{
+    question: string
+    answer: string
+  }>
+  contentStatus: 'complete' | 'partial' | 'thin'
+  indexable: boolean
   imageAlt: string
   seo: SeoData
 }

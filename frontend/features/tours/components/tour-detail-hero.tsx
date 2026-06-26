@@ -3,6 +3,7 @@
 import Image from 'next/image'
 import Link from 'next/link'
 import { ArrowLeft, ArrowRight, Clock, MapPin, Users } from 'lucide-react'
+import { trackSeoEvent } from '@/lib/analytics/events'
 import { useLanguage } from '@/lib/i18n/language'
 import { cloudinaryImage, cloudinaryTransforms } from '@/lib/images/cloudinary'
 import { getLocalizedTour } from '../lib/tour-localization'
@@ -111,6 +112,12 @@ export function TourDetailHero({ gallery, tour }: TourDetailHeroProps) {
 
             <a
               href="/contact"
+              onClick={() =>
+                trackSeoEvent('tour_inquiry_clicked', {
+                  tourSlug: tour.slug,
+                  ctaLocation: 'tour_detail_hero',
+                })
+              }
               className="mt-6 inline-flex h-14 w-full items-center justify-center gap-3 bg-gold px-6 font-sans text-sm uppercase tracking-widest text-coffee transition-transform hover:-translate-y-0.5"
             >
               {t.toursPage.bookThisTour}

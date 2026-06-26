@@ -92,13 +92,27 @@ export default async function BlogPostPage({ params }: Props) {
       <section className="py-16 md:py-24">
         <div className="mx-auto max-w-3xl px-6 md:px-8">
           <div className="prose prose-lg max-w-none prose-headings:font-serif prose-headings:text-foreground prose-p:font-sans prose-p:text-muted-foreground prose-p:leading-relaxed prose-a:text-forest prose-a:no-underline hover:prose-a:underline">
-            {post.description ? (
-              post.description.split('\n').map((paragraph: string, i: number) => (
-                <p key={i}>{paragraph}</p>
-              ))
-            ) : (
-              <p className="text-muted-foreground">Content coming soon.</p>
-            )}
+            {'body' in post && Array.isArray(post.body)
+              ? post.body.map((block, i) => {
+                  if (block.type === 'heading') {
+                    return <h2 key={i}>{block.text}</h2>
+                  }
+
+                  if (block.type === 'list') {
+                    return (
+                      <ul key={i}>
+                        {block.items.map((item) => (
+                          <li key={item}>{item}</li>
+                        ))}
+                      </ul>
+                    )
+                  }
+
+                  return <p key={i}>{block.text}</p>
+                })
+              : post.description.split('\n').map((paragraph: string, i: number) => (
+                  <p key={i}>{paragraph}</p>
+                ))}
           </div>
         </div>
       </section>

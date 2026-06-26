@@ -5,6 +5,7 @@ import { motion, useReducedMotion, useScroll, useTransform } from 'framer-motion
 import Link from 'next/link'
 import { useEffect, useRef, useState } from 'react'
 import { ArrowRight, ChevronDown } from 'lucide-react'
+import { trackSeoEvent } from '@/lib/analytics/events'
 import { useLanguage } from '@/lib/i18n/language'
 import { cloudinaryImage, cloudinaryTransforms } from '@/lib/images/cloudinary'
 
@@ -174,6 +175,12 @@ export function Hero() {
             </Link>
             <a
               href="/contact"
+              onClick={() =>
+                trackSeoEvent('main_contact_cta_clicked', {
+                  route: '/',
+                  ctaLocation: 'homepage_hero',
+                })
+              }
               className="inline-flex h-12 w-full items-center justify-center rounded-sm border border-cream/55 px-6 font-sans text-xs uppercase tracking-widest text-cream backdrop-blur-sm transition-colors hover:bg-cream/10 sm:h-14 sm:w-auto sm:px-7 sm:text-sm"
             >
               {t.hero.secondaryCta}

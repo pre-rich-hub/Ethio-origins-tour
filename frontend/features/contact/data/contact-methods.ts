@@ -1,12 +1,6 @@
-import { Mail, MapPin, Phone } from 'lucide-react'
+import { Mail, MapPin } from 'lucide-react'
 
 export const contactMethods = [
-  {
-    icon: Phone,
-    label: 'Call or WhatsApp',
-    value: '+251 900 000 000',
-    href: 'https://wa.me/251900000000',
-  },
   {
     icon: Mail,
     label: 'Email',

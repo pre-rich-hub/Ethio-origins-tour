@@ -39,14 +39,12 @@ export const tours = [
       'Endemic Wildlife and Birdwatching',
       'Farewell Cultural Dinner',
     ],
-    // Pending client data: a separate full included-services list was not provided in the client document.
-    included: [
-      'Daily meals are specified within each itinerary day; separate included services are pending client confirmation.',
-    ],
-    // Pending client data: a separate full excluded-services list was not provided in the client document.
-    excluded: [
-      'Pending client confirmation: excluded services were not provided in the client document.',
-    ],
+    contentStatus: 'client-review',
+    requiresClientReview: true,
+    internalReviewNote:
+      'Approved title mentions Danakil, but the supplied itinerary does not include Danakil activities. Detailed included and excluded service lists were not supplied in the source document.',
+    included: [],
+    excluded: [],
     itinerary: [
       {
         day: 1,
@@ -201,13 +199,13 @@ export const tours = [
     ],
     importantNote:
       'The order of visits within the Omo Valley may vary depending on market days, local events, and lodge availability to ensure the best possible experience.',
-    // Pending client data: pricing was not provided in the client document.
+    // Source document note: pricing was not provided in the client document.
     adultPrice: 0,
-    // Pending client data: pricing was not provided in the client document.
+    // Source document note: pricing was not provided in the client document.
     childPrice: 0,
-    // Pending client data: rating was not provided in the client document.
+    // Source document note: rating was not provided in the client document.
     rating: 0,
-    // Pending client data: review count was not provided in the client document.
+    // Source document note: review count was not provided in the client document.
     reviewCount: 0,
     destination: 'Omo Valley',
     bestFor: 'Omo Valley culture, Southern Ethiopia communities, UNESCO heritage, Rift Valley scenery, wildlife viewing, photography, and private cultural travel',
@@ -228,14 +226,10 @@ export const tours = [
       'Rift Valley Scenic Drive',
       'Farewell Cultural Dinner',
     ],
-    // Pending client data: a separate full included-services list was not provided in the client document.
-    included: [
-      'Daily meals are specified within each itinerary day; separate included services are pending client confirmation.',
-    ],
-    // Pending client data: a separate full excluded-services list was not provided in the client document.
-    excluded: [
-      'Pending client confirmation: excluded services were not provided in the client document.',
-    ],
+    contentStatus: 'partial',
+    internalReviewNote: 'Detailed included and excluded service lists were not supplied in the source document.',
+    included: [],
+    excluded: [],
     itinerary: [
       {
         day: 1,
@@ -382,14 +376,14 @@ export const tours = [
       'Beza Kula Christmas Celebration',
       'Cultural and Religious Experiences',
     ],
-    // Pending client data: included services were not provided in the client document.
+    // Source document note: included services were not provided in the client document.
     included: [
       'Domestic flight coordination',
       'Private vehicle transfers',
       'Professional English-speaking guide',
       'Entrance fees for listed sites',
     ],
-    // Pending client data: excluded services were not provided in the client document.
+    // Source document note: excluded services were not provided in the client document.
     excluded: [
       'International flights',
       'Personal shopping and souvenirs',
@@ -480,12 +474,10 @@ export const tours = [
       'Nakuto La\'ab Monastery',
       'Traditional Ethiopian Cultural Dinner',
     ],
-    included: [
-      'Pending client confirmation: included services were not provided in the client document.',
-    ],
-    excluded: [
-      'Pending client confirmation: excluded services were not provided in the client document.',
-    ],
+    contentStatus: 'partial',
+    internalReviewNote: 'Detailed included and excluded service lists were not supplied in the source document.',
+    included: [],
+    excluded: [],
     itinerary: [
       {
         day: 1,
@@ -585,13 +577,13 @@ export const tours = [
       'Explore Dallol, salt flats, Afar culture and the active Erta Ale lava lake on a four-day guided Danakil Depression adventure in Ethiopia.',
     intro:
       'Experience one of the most extraordinary and otherworldly landscapes on Earth. Explore Dallol hydrothermal fields, sulfur and mineral formations, salt flats, camel caravans, Afar settlements and the legendary Erta Ale Volcano, home to a remarkable lava lake.',
-    // Pending client data: pricing was not provided in the client document.
+    // Source document note: pricing was not provided in the client document.
     adultPrice: 1650,
-    // Pending client data: pricing was not provided in the client document.
+    // Source document note: pricing was not provided in the client document.
     childPrice: 1350,
-    // Pending client data: rating was not provided in the client document.
+    // Source document note: rating was not provided in the client document.
     rating: 4.7,
-    // Pending client data: review count was not provided in the client document.
+    // Source document note: review count was not provided in the client document.
     reviewCount: 19,
     destination: 'Danakil Depression',
     bestFor: 'Adventure travelers, geology, desert landscapes, Afar culture, volcano trekking, and photography',
@@ -605,14 +597,14 @@ export const tours = [
       'Desert Landscapes',
       'Geological Wonders',
     ],
-    // Pending client data: included services were not provided in the client document.
+    // Source document note: included services were not provided in the client document.
     included: [
       'Afar permits and local coordination',
       '4WD vehicle with driver',
       'Cook and camping support',
       'Professional guide',
     ],
-    // Pending client data: excluded services were not provided in the client document.
+    // Source document note: excluded services were not provided in the client document.
     excluded: [
       'Personal expenses',
       'Travel insurance',
@@ -709,12 +701,10 @@ export const tours = [
       'Karo Cultural Excursion',
       'Konso Cultural Landscape',
     ],
-    included: [
-      'Pending client confirmation: included services were not provided in the client document.',
-    ],
-    excluded: [
-      'Pending client confirmation: excluded services were not provided in the client document.',
-    ],
+    contentStatus: 'partial',
+    internalReviewNote: 'Detailed included and excluded service lists were not supplied in the source document.',
+    included: [],
+    excluded: [],
     itinerary: [
       {
         day: 1,
@@ -1218,13 +1208,13 @@ export const tours = [
       'Explore Addis Ababa, Bahir Dar, Gondar, Simien Mountains, Axum, Danakil, Lalibela, Harar, Omo Valley and Bale Mountains on a 27-day Ethiopia tour.',
     intro:
       'Discover the extraordinary diversity of Ethiopia on this comprehensive 27-day adventure that combines the country\'s most iconic historical, cultural, tribal, wildlife and natural attractions. Travel through ancient kingdoms, UNESCO World Heritage Sites, spectacular mountain landscapes, active volcanoes, colorful desert formations, vibrant communities and breathtaking national parks.',
-    // Pending client data: pricing was not provided in the client document.
+    // Source document note: pricing was not provided in the client document.
     adultPrice: 0,
-    // Pending client data: pricing was not provided in the client document.
+    // Source document note: pricing was not provided in the client document.
     childPrice: 0,
-    // Pending client data: rating was not provided in the client document.
+    // Source document note: rating was not provided in the client document.
     rating: 0,
-    // Pending client data: review count was not provided in the client document.
+    // Source document note: review count was not provided in the client document.
     reviewCount: 0,
     destination: 'Ethiopia Grand Adventure',
     bestFor: 'Complete Ethiopia travel, history, culture, UNESCO heritage, Danakil volcano landscapes, Omo Valley communities, wildlife, photography, and private long-form adventure',
@@ -1250,14 +1240,10 @@ export const tours = [
       'Bale Mountains National Park',
       'Traditional Ethiopian Cultural Experiences',
     ],
-    // Pending client data: a separate full included-services list was not provided in the client document.
-    included: [
-      'Pending client confirmation: included services were not provided in the client document.',
-    ],
-    // Pending client data: excluded services were not provided in the client document.
-    excluded: [
-      'Pending client confirmation: excluded services were not provided in the client document.',
-    ],
+    contentStatus: 'partial',
+    internalReviewNote: 'Detailed included and excluded service lists were not supplied in the source document.',
+    included: [],
+    excluded: [],
     itinerary: [
       {
         day: 1,
@@ -1546,12 +1532,10 @@ export const tours = [
       'Simien Mountains National Park, Gelada Baboons, Walia Ibex, Axum, Yeha, Gheralta, Tigray churches and Lalibela',
       'Awash National Park, Awash Falls, natural hot springs, Harar, Hyena Feeding Ceremony and farewell cultural dinner',
     ],
-    included: [
-      'Pending client confirmation: included services were not provided in the client document.',
-    ],
-    excluded: [
-      'Pending client confirmation: excluded services were not provided in the client document.',
-    ],
+    contentStatus: 'partial',
+    internalReviewNote: 'Detailed included and excluded service lists were not supplied in the source document.',
+    included: [],
+    excluded: [],
     itinerary: [
       {
         day: 1,
@@ -1950,18 +1934,18 @@ export const tours = [
     highlights: 'Axum · Lake Tana · Gondar · Simien Mountains · Lalibela',
     description:
       'Explore Addis Ababa, Axum, Tigray, Bahir Dar, Lake Tana, Gondar, Simien Mountains and Lalibela on a 14-day Northern Ethiopia journey.',
-    // Client confirmation needed: the approved title mentions Danakil Depression,
+    // Internal review note: the approved title mentions Danakil Depression,
     // but the supplied 14-day itinerary contains no Danakil, Dallol, Erta Ale,
     // Hamed Ela, Semera, or Afar expedition content.
     intro:
       'Discover the rich history, spectacular landscapes and ancient Christian heritage of Northern Ethiopia on this unforgettable 14-day journey. Explore the legendary cities of Axum, Bahir Dar, Gondar and Lalibela, visit UNESCO World Heritage Sites, cruise across Lake Tana to centuries-old monasteries, hike in the breathtaking Simien Mountains, and experience Ethiopia\'s vibrant culture and traditions.',
-    // Pending client data: pricing was not provided in the client document.
+    // Source document note: pricing was not provided in the client document.
     adultPrice: 0,
-    // Pending client data: pricing was not provided in the client document.
+    // Source document note: pricing was not provided in the client document.
     childPrice: 0,
-    // Pending client data: rating was not provided in the client document.
+    // Source document note: rating was not provided in the client document.
     rating: 0,
-    // Pending client data: review count was not provided in the client document.
+    // Source document note: review count was not provided in the client document.
     reviewCount: 0,
     destination: 'Northern Ethiopia Historic Route',
     bestFor: 'Northern Ethiopia history, UNESCO heritage, churches, monasteries, Simien Mountains scenery, cultural traditions, and private historic route travel',
@@ -1981,14 +1965,10 @@ export const tours = [
       'Ethiopian Cultural Dinner',
       'UNESCO World Heritage Sites',
     ],
-    // Pending client data: included services were not provided in the client document.
-    included: [
-      'Pending client confirmation: included services were not provided in the client document.',
-    ],
-    // Pending client data: excluded services were not provided in the client document.
-    excluded: [
-      'Pending client confirmation: excluded services were not provided in the client document.',
-    ],
+    contentStatus: 'partial',
+    internalReviewNote: 'Detailed included and excluded service lists were not supplied in the source document.',
+    included: [],
+    excluded: [],
     itinerary: [
       {
         day: 1,
@@ -2028,7 +2008,7 @@ export const tours = [
       {
         day: 6,
         title: 'Mekele - Axum | Historical Exploration',
-        // Client confirmation needed: the source document names this route as
+        // Internal review note: the source document names this route as
         // Mekele to Axum but says guests return to their hotel; preserve until confirmed.
         activities:
           'Explore additional archaeological and historical sites of northern Ethiopia before returning to your hotel. Learn about the rise and fall of the Axumite civilization and its lasting influence on Ethiopian culture and Christianity.',

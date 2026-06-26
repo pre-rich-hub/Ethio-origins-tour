@@ -7,7 +7,10 @@ import { getLocalizedTourCategories } from '../lib/tour-localization'
 
 export function TourCategoryNav() {
   const { language, t } = useLanguage()
-  const localizedCategories = getLocalizedTourCategories(tourCategories, language)
+  const localizedCategories = getLocalizedTourCategories(
+    tourCategories.filter((category) => category.contentStatus !== 'empty'),
+    language,
+  )
 
   return (
     <section className="border-y border-border bg-stone py-8">

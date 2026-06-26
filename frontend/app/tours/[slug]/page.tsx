@@ -39,6 +39,55 @@ const tourRedirects: Record<string, string> = {
   '8-days-historic-northern-route': '3-day-lalibela-genna-festival-tour',
 }
 
+function getDurationDays(duration: string) {
+  const value = Number.parseInt(duration, 10)
+  return Number.isNaN(value) ? 1 : value
+}
+
+function getRelatedTours(tour: (typeof tours)[number]) {
+  const currentDestinations = new Set(tour.destinationSlugs)
+  const currentCategories = new Set(tour.categorySlugs)
+  const currentRegions = new Set(
+    tour.region
+      .split(',')
+      .map((region) => region.trim().toLowerCase())
+      .filter(Boolean),
+  )
+  const currentDays = getDurationDays(tour.duration)
+
+  return tours
+    .filter((item) => item.slug !== tour.slug)
+    .map((item) => {
+      const sharedDestinations = item.destinationSlugs.filter((slug) =>
+        currentDestinations.has(slug),
+      ).length
+      const sharedCategories = item.categorySlugs.filter((slug) =>
+        currentCategories.has(slug),
+      ).length
+      const sharedRegions = item.region
+        .split(',')
+        .map((region) => region.trim().toLowerCase())
+        .filter((region) => currentRegions.has(region)).length
+      const durationDelta = Math.abs(getDurationDays(item.duration) - currentDays)
+
+      return {
+        item,
+        score:
+          sharedDestinations * 10 +
+          sharedCategories * 4 +
+          sharedRegions * 2 +
+          Math.max(0, 3 - durationDelta),
+      }
+    })
+    .filter(({ score }) => score > 0)
+    .sort((a, b) => {
+      if (b.score !== a.score) return b.score - a.score
+      return a.item.slug.localeCompare(b.item.slug)
+    })
+    .slice(0, 3)
+    .map(({ item }) => item)
+}
+
 export function generateStaticParams() {
   return [
     ...tours.map((tour) => ({ slug: tour.slug })),
@@ -112,9 +161,7 @@ export default async function TourPage({ params }: TourPageProps) {
   }
 
   const gallery = tour.gallery?.length ? tour.gallery : [tour.image]
-  const relatedTours = tours
-    .filter((item) => item.slug !== tour.slug)
-    .slice(0, 3)
+  const relatedTours = getRelatedTours(tour)
 
   return (
     <main className="bg-stone text-foreground">

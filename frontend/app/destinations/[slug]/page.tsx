@@ -32,6 +32,9 @@ type DestinationPageProps = {
 
 const destinationRedirects: Record<string, string> = {
   'lalibela-and-the-north': 'lalibela',
+  'lalibela-rock-hewn-church': 'lalibela',
+  'lalibela-rock-hewn-churches': 'lalibela',
+  'lalibela-rock-hewn-churches-ethiopia': 'lalibela',
   'omo-valley-cultures': 'omo-valley',
   'wonchi-crater-lake': 'wenchi-crater-lake',
   'awash-and-rift-valley': 'awash-national-park',
@@ -99,14 +102,16 @@ export default async function DestinationPage({ params }: DestinationPageProps) 
           { name: destination.name, path: `/destinations/${destination.slug}` },
         ])}
       />
-      <JsonLd
-        data={createDestinationSchema({
-          description: destination.description,
-          image: destination.image,
-          name: destination.name,
-          path: `/destinations/${destination.slug}`,
-        })}
-      />
+      {destination.indexable ? (
+        <JsonLd
+          data={createDestinationSchema({
+            description: destination.description,
+            image: destination.image,
+            name: destination.name,
+            path: `/destinations/${destination.slug}`,
+          })}
+        />
+      ) : null}
       <DestinationDetailHero destination={destination} />
       <DestinationOverview destination={destination} />
       <DestinationSampleFlow destination={destination} />

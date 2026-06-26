@@ -3,11 +3,93 @@ const withBundleAnalyzer =
     ? (await import('@next/bundle-analyzer')).default({ enabled: true })
     : (config) => config
 
+const isProductionDeployment =
+  process.env.VERCEL_ENV === 'production' ||
+  process.env.NEXT_PUBLIC_DEPLOYMENT_ENV === 'production' ||
+  process.env.DEPLOYMENT_ENV === 'production'
+
+function normalizeUrl(value) {
+  return value.replace(/\/+$/, '')
+}
+
+function parseUrl(value, label) {
+  try {
+    const url = new URL(value)
+
+    if (!['http:', 'https:'].includes(url.protocol)) {
+      throw new Error(`${label} must use http or https.`)
+    }
+
+    return url
+  } catch (error) {
+    throw new Error(
+      `${label} must be a valid absolute URL.${error instanceof Error ? ` ${error.message}` : ''}`,
+    )
+  }
+}
+
+function isLocalhost(url) {
+  return ['localhost', '127.0.0.1', '0.0.0.0', '::1'].includes(url.hostname)
+}
+
+function isPreviewLikeUrl(url) {
+  const hostname = url.hostname.toLowerCase()
+
+  return (
+    hostname.endsWith('.vercel.app') ||
+    hostname.includes('staging') ||
+    hostname.includes('preview')
+  )
+}
+
+function getValidatedSiteUrl() {
+  const rawSiteUrl =
+    process.env.NEXT_PUBLIC_SITE_URL || 'https://ethiooriginstour.com'
+  const siteUrl = parseUrl(normalizeUrl(rawSiteUrl), 'NEXT_PUBLIC_SITE_URL')
+
+  if (isProductionDeployment) {
+    if (!process.env.NEXT_PUBLIC_SITE_URL) {
+      throw new Error('NEXT_PUBLIC_SITE_URL is required for production deployments.')
+    }
+
+    if (isLocalhost(siteUrl)) {
+      throw new Error('NEXT_PUBLIC_SITE_URL cannot be localhost in production.')
+    }
+
+    if (isPreviewLikeUrl(siteUrl)) {
+      throw new Error(
+        'NEXT_PUBLIC_SITE_URL cannot be a preview or staging URL in production.',
+      )
+    }
+  }
+
+  return normalizeUrl(siteUrl.toString())
+}
+
+function getValidatedApiBaseUrl() {
+  const rawApiBaseUrl =
+    process.env.API_BASE_URL ||
+    process.env.NEXT_PUBLIC_API_BASE_URL ||
+    'http://localhost:5000'
+  const apiBaseUrl = parseUrl(normalizeUrl(rawApiBaseUrl), 'API base URL')
+
+  if (isProductionDeployment) {
+    if (!process.env.API_BASE_URL && !process.env.NEXT_PUBLIC_API_BASE_URL) {
+      throw new Error('API_BASE_URL or NEXT_PUBLIC_API_BASE_URL is required in production.')
+    }
+
+    if (isLocalhost(apiBaseUrl)) {
+      throw new Error('API base URL cannot be localhost in production.')
+    }
+  }
+
+  return normalizeUrl(apiBaseUrl.toString())
+}
+
+getValidatedSiteUrl()
+
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  typescript: {
-    ignoreBuildErrors: true,
-  },
   images: {
     remotePatterns: [
       {
@@ -18,14 +100,46 @@ const nextConfig = {
     ],
   },
   async rewrites() {
-    const apiBaseUrl = (
-      process.env.NEXT_PUBLIC_API_BASE_URL || 'http://localhost:5000'
-    ).replace(/\/$/, '')
+    const apiBaseUrl = getValidatedApiBaseUrl()
 
     return [
       {
         source: '/api/:path*',
         destination: `${apiBaseUrl}/api/:path*`,
+      },
+    ]
+  },
+  async headers() {
+    const securityHeaders = [
+      {
+        key: 'X-Content-Type-Options',
+        value: 'nosniff',
+      },
+      {
+        key: 'Referrer-Policy',
+        value: 'strict-origin-when-cross-origin',
+      },
+      {
+        key: 'Permissions-Policy',
+        value: 'camera=(), microphone=(), geolocation=()',
+      },
+      {
+        key: 'X-Frame-Options',
+        value: 'DENY',
+      },
+    ]
+
+    if (isProductionDeployment) {
+      securityHeaders.push({
+        key: 'Strict-Transport-Security',
+        value: 'max-age=31536000; includeSubDomains; preload',
+      })
+    }
+
+    return [
+      {
+        source: '/:path*',
+        headers: securityHeaders,
       },
     ]
   },
@@ -44,16 +158,6 @@ const nextConfig = {
       {
         source: '/contact.php',
         destination: '/contact',
-        permanent: true,
-      },
-      {
-        source: '/destinations/lalibela',
-        destination: '/destinations/lalibela-and-the-north',
-        permanent: true,
-      },
-      {
-        source: '/destinations/omo-valley',
-        destination: '/destinations/omo-valley-cultures',
         permanent: true,
       },
       {

@@ -49,7 +49,10 @@ export function CustomJourneys() {
   }))
 
   return (
-    <section className="relative isolate overflow-hidden bg-coffee py-20 text-cream md:py-28">
+    <section
+      id="responsible-tourism"
+      className="relative isolate overflow-hidden bg-coffee py-20 text-cream md:py-28"
+    >
       <div className="absolute inset-0 z-0">
         <Image
           src={cloudinaryImage(

@@ -2,7 +2,7 @@
 
 import { useState, useRef, useEffect, useCallback } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
-import { Bot, MessageCircle, Sparkles, X } from 'lucide-react'
+import { Bot, Sparkles, X } from 'lucide-react'
 import { ChatMessageBubble } from './chat-message'
 import { ChatInput } from './chat-input'
 import { ChatToggle } from './chat-toggle'
@@ -133,18 +133,9 @@ export function ChatWidget({ defaultOpen = false }: { defaultOpen?: boolean }) {
         )}
       </AnimatePresence>
 
-      {/* Toggle buttons — AI on top, WhatsApp below (rendered after panel to stay on top) */}
+      {/* Toggle button rendered after panel to stay on top. */}
       <div className="fixed bottom-5 right-5 z-50 flex flex-col items-center gap-3">
         {!isOpen && <ChatToggle isOpen={isOpen} onClick={() => setIsOpen(true)} />}
-        <a
-          href="https://wa.me/251900000000"
-          target="_blank"
-          rel="noopener noreferrer"
-          aria-label="Chat on WhatsApp"
-          className="flex size-12 items-center justify-center rounded-full border border-cream/30 bg-forest/80 text-cream shadow-lg backdrop-blur-md transition-transform hover:scale-105 hover:text-gold"
-        >
-          <MessageCircle className="size-5" />
-        </a>
       </div>
     </>
   )
