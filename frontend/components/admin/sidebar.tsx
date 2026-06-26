@@ -52,12 +52,11 @@ export function AdminSidebar() {
     <aside className="fixed left-0 top-0 h-screen w-64 bg-forest flex flex-col z-50">
       <div className="flex items-center gap-3 px-6 h-16 border-b border-cream/10">
         <Image
-          src="/brand/logo-header.png"
+          src="/brand/logo-header-420.webp"
           alt="Ethio Origins"
-          width={140}
-          height={45}
+          width={420}
+          height={412}
           className="h-8 w-auto"
-          priority
         />
       </div>
 

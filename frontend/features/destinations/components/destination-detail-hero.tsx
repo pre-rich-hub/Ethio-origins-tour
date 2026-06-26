@@ -11,6 +11,7 @@ import {
   MapPin,
 } from 'lucide-react'
 import { useLanguage } from '@/lib/i18n/language'
+import { cloudinaryImage, cloudinaryTransforms } from '@/lib/images/cloudinary'
 import { getLocalizedDestination } from '../lib/destination-localization'
 import type { Destination } from '../types/destination'
 
@@ -25,7 +26,7 @@ export function DestinationDetailHero({
   return (
     <section className="relative isolate min-h-screen overflow-hidden bg-coffee pt-28 text-cream">
       <Image
-        src={localizedDestination.image}
+        src={cloudinaryImage(localizedDestination.image, cloudinaryTransforms.hero)}
         alt={localizedDestination.imageAlt}
         fill
         priority

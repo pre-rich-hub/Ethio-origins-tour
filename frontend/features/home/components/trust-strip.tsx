@@ -4,8 +4,8 @@ import { Reveal } from '@/components/shared/reveal'
 import { useLanguage } from '@/lib/i18n/language'
 
 const stats = [
-  { value: '2,000+', label: 'Travelers Hosted' },
-  { value: '50+', label: 'Curated Experiences' },
+  { value: '20+', label: 'Travelers Hosted' },
+  { value: '5+', label: 'Curated Experiences' },
   { value: '98%', label: 'Guest Satisfaction' },
   { value: '100%', label: 'Local Expertise' },
 ]

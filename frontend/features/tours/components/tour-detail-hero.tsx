@@ -4,6 +4,7 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { ArrowLeft, ArrowRight, Clock, MapPin, Users } from 'lucide-react'
 import { useLanguage } from '@/lib/i18n/language'
+import { cloudinaryImage, cloudinaryTransforms } from '@/lib/images/cloudinary'
 import { getLocalizedTour } from '../lib/tour-localization'
 import type { Tour } from '../types/tour'
 
@@ -19,7 +20,7 @@ export function TourDetailHero({ gallery, tour }: TourDetailHeroProps) {
   return (
     <section className="relative isolate overflow-hidden bg-coffee pt-28 text-cream md:pt-36">
       <Image
-        src={localizedTour.image}
+        src={cloudinaryImage(localizedTour.image, cloudinaryTransforms.hero)}
         alt={localizedTour.imageAlt}
         fill
         priority
@@ -98,7 +99,7 @@ export function TourDetailHero({ gallery, tour }: TourDetailHeroProps) {
                   className="relative aspect-[4/3] overflow-hidden border border-cream/12 bg-black"
                 >
                   <Image
-                    src={image}
+                    src={cloudinaryImage(image, cloudinaryTransforms.thumbnail)}
                     alt=""
                     fill
                     sizes="(min-width: 1024px) 180px, 50vw"

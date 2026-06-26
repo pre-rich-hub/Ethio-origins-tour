@@ -5,6 +5,7 @@ import Link from 'next/link'
 import { useMemo, useState } from 'react'
 import { ArrowRight, Clock, MapPin } from 'lucide-react'
 import { useLanguage } from '@/lib/i18n/language'
+import { cloudinaryImage, cloudinaryTransforms } from '@/lib/images/cloudinary'
 import { destinations } from '../data/destinations'
 import { getLocalizedDestinations } from '../lib/destination-localization'
 import type { Destination, DestinationCategory } from '../types/destination'
@@ -27,6 +28,13 @@ export function DestinationsGrid({
 }) {
   const { language, t } = useLanguage()
   const [activeFilter, setActiveFilter] = useState<DestinationFilter>('all')
+  const [visibleState, setVisibleState] = useState<{
+    filter: DestinationFilter
+    count: number
+  }>({
+    filter: 'all',
+    count: 18,
+  })
   const localizedItems = useMemo(
     () => getLocalizedDestinations(items, language),
     [items, language],
@@ -45,6 +53,10 @@ export function DestinationsGrid({
       (destination) => destination.category === activeFilter,
     )
   }, [activeFilter, localizedItems])
+  const visibleCount =
+    visibleState.filter === activeFilter ? visibleState.count : 18
+  const visibleDestinations = filteredDestinations.slice(0, visibleCount)
+  const hasMoreDestinations = visibleCount < filteredDestinations.length
 
   return (
     <section className="py-14 md:py-28">
@@ -73,7 +85,7 @@ export function DestinationsGrid({
 
         {filteredDestinations.length ? (
           <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-            {filteredDestinations.map((destination) => (
+            {visibleDestinations.map((destination) => (
               <Link
                 key={destination.slug}
                 href={`/destinations/${destination.slug}`}
@@ -81,7 +93,7 @@ export function DestinationsGrid({
                 className="group relative flex min-h-[440px] cursor-pointer touch-manipulation overflow-hidden border border-cream/18 bg-coffee shadow-2xl shadow-black/20 transition-all duration-300 hover:-translate-y-1 hover:shadow-coffee/30 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-gold sm:min-h-[500px] md:min-h-[520px]"
               >
                 <Image
-                  src={destination.image}
+                  src={cloudinaryImage(destination.image, cloudinaryTransforms.card)}
                   alt={destination.imageAlt}
                   fill
                   sizes="(min-width: 1024px) 33vw, (min-width: 768px) 50vw, 100vw"
@@ -113,6 +125,23 @@ export function DestinationsGrid({
             ))}
           </div>
         ) : null}
+
+        {hasMoreDestinations && (
+          <div className="mt-10 text-center">
+            <button
+              type="button"
+              onClick={() =>
+                setVisibleState({
+                  filter: activeFilter,
+                  count: Math.min(visibleCount + 18, filteredDestinations.length),
+                })
+              }
+              className="inline-flex h-12 w-full max-w-xs items-center justify-center border border-forest px-6 font-sans text-[0.68rem] font-bold uppercase tracking-[0.18em] text-forest transition-colors hover:bg-forest hover:text-cream focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-gold sm:h-14 sm:w-auto sm:max-w-none sm:text-xs sm:tracking-widest"
+            >
+              Load more destinations
+            </button>
+          </div>
+        )}
       </div>
     </section>
   )

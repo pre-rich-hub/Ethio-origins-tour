@@ -1,5 +1,6 @@
 import Image from 'next/image'
 import { MapPin, Sparkles } from 'lucide-react'
+import { cloudinaryImage, cloudinaryTransforms } from '@/lib/images/cloudinary'
 import { galleryImages } from '../data/gallery-images'
 
 type GalleryImage = (typeof galleryImages)[number]
@@ -40,7 +41,7 @@ export function GalleryCollection({ items = galleryImages }: { items?: GalleryIm
                 className={`group relative overflow-hidden bg-coffee shadow-xl shadow-coffee/10 transition-transform duration-700 hover:-translate-y-1 ${spanClass}`}
               >
                 <Image
-                  src={image.src}
+                  src={cloudinaryImage(image.src, cloudinaryTransforms.gallery)}
                   alt={image.alt}
                   fill
                   sizes="(max-width: 768px) 100vw, 33vw"

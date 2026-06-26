@@ -4,6 +4,7 @@ import Image from 'next/image'
 import { motion } from 'framer-motion'
 import { Reveal } from '@/components/shared/reveal'
 import { useLanguage } from '@/lib/i18n/language'
+import { cloudinaryImage, cloudinaryTransforms } from '@/lib/images/cloudinary'
 
 const facts = [
   { value: 'Ancient', label: 'History' },
@@ -25,7 +26,10 @@ export function WhyEthiopia() {
         <Reveal>
           <div className="relative h-[420px] overflow-hidden rounded-md md:h-[560px]">
             <Image
-              src="https://res.cloudinary.com/divimnzxa/image/upload/v1782244137/adiss_ababa_Ethiopia_wj8emk.jpg"
+              src={cloudinaryImage(
+                'https://res.cloudinary.com/divimnzxa/image/upload/v1782244137/adiss_ababa_Ethiopia_wj8emk.jpg',
+                cloudinaryTransforms.portrait,
+              )}
               alt="Ethiopian Orthodox priest holding an ornate cross"
               fill
               sizes="(max-width: 1024px) 100vw, 50vw"

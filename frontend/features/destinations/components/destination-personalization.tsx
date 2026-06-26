@@ -3,6 +3,7 @@
 import Image from 'next/image'
 import { Sparkles } from 'lucide-react'
 import { useLanguage } from '@/lib/i18n/language'
+import { cloudinaryImage, cloudinaryTransforms } from '@/lib/images/cloudinary'
 import { getLocalizedDestination } from '../lib/destination-localization'
 import type { Destination } from '../types/destination'
 
@@ -17,7 +18,7 @@ export function DestinationPersonalization({
   return (
     <section className="relative isolate overflow-hidden bg-coffee py-16 text-cream md:py-28">
       <Image
-        src={localizedDestination.image}
+        src={cloudinaryImage(localizedDestination.image, cloudinaryTransforms.hero)}
         alt=""
         fill
         sizes="100vw"

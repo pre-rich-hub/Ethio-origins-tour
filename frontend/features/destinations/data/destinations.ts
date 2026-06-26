@@ -1,7 +1,5 @@
 import type { Destination, DestinationCategory } from '../types/destination'
 
-const PENDING_OVERVIEW = 'Detailed destination information will be added soon.'
-
 // Pending client assets: used only when no approved destination-specific image exists yet.
 const TEMPORARY_DESTINATION_IMAGE =
   'https://res.cloudinary.com/divimnzxa/image/upload/v1782244137/Ancient_Wonders_The_Monolithic_Rock-Cut_Church_of_Lalibela_Ethiopia_gh7iwx.jpg'
@@ -24,6 +22,113 @@ type DestinationSeed = {
   seoDescription?: string
   primaryKeyword?: string
   secondaryKeywords?: string[]
+}
+
+const destinationCopyByCategory: Record<
+  DestinationCategory,
+  {
+    shortDescription: (name: string, region: string) => string
+    overview: (name: string, region: string) => string
+    highlights: (name: string, region: string) => string[]
+    itinerary: (name: string, region: string) => string[]
+    bestFor: string
+  }
+> = {
+  'historical-religious': {
+    shortDescription: (name, region) =>
+      `${name} is a meaningful heritage stop in ${region}, shaped by Ethiopia's faith traditions, historic routes, architecture, and local memory.`,
+    overview: (name, region) =>
+      `Explore ${name} with context-rich guiding that connects the site to ${region}'s religious heritage, royal history, local communities, and wider Ethiopian travel routes.`,
+    highlights: (name, region) => [
+      `Guided interpretation of ${name}'s history, faith, and cultural importance`,
+      `Time for photography, quiet observation, and respectful local encounters in ${region}`,
+      'Flexible pacing that works as a focused visit or part of a longer historic route',
+      'Practical support with timing, access, local etiquette, and onward travel planning',
+    ],
+    itinerary: (name, region) => [
+      `Arrive in ${region} and meet your local guide`,
+      `Visit ${name} with historical and cultural interpretation`,
+      'Pause for photos, nearby viewpoints, or local community stops',
+      'Continue to the next heritage site or return to your base',
+    ],
+    bestFor: 'History lovers, faith heritage, architecture, photography, and cultural context',
+  },
+  'lakes-scenic': {
+    shortDescription: (name, region) =>
+      `${name} offers a calm scenic break in ${region}, with lake views, open landscapes, birdlife, and relaxed nature-focused travel moments.`,
+    overview: (name, region) =>
+      `Plan ${name} as a gentle nature stop where travelers can slow down, enjoy ${region}'s scenery, add short walks or boat experiences where available, and connect the route with nearby towns or cultural sites.`,
+    highlights: (name, region) => [
+      `Scenic viewpoints and relaxed time around ${name}`,
+      `Nature-focused travel through ${region}'s lake and highland landscapes`,
+      'Good opportunities for photography, birdlife, fresh air, and slow pacing',
+      'Easy pairing with nearby towns, cultural visits, or longer southern routes',
+    ],
+    itinerary: (name, region) => [
+      `Travel through ${region} toward ${name}`,
+      'Stop at the best viewpoints and lakeside areas',
+      'Add a walk, boat ride, market stop, or nearby cultural visit when available',
+      'Continue onward or return at an easy pace',
+    ],
+    bestFor: 'Scenic drives, soft nature, photography, birding, families, and relaxed itineraries',
+  },
+  'mountains-wildlife': {
+    shortDescription: (name, region) =>
+      `${name} brings travelers into ${region}'s wilder side, with mountain scenery, national-park landscapes, wildlife habitat, and fresh outdoor air.`,
+    overview: (name, region) =>
+      `Visit ${name} for a nature-forward journey through ${region}, balancing scenic drives, guided walks, wildlife viewing possibilities, and flexible outdoor time suited to the season and route conditions.`,
+    highlights: (name, region) => [
+      `Mountain, park, or wilderness scenery around ${name}`,
+      `Guided nature time adapted to ${region}'s terrain and season`,
+      'Wildlife, birding, viewpoints, and landscape photography where conditions allow',
+      'Careful planning around access, permits, driving times, and comfort level',
+    ],
+    itinerary: (name, region) => [
+      `Enter ${region} and continue toward ${name}`,
+      'Meet local guides or park staff where required',
+      'Enjoy viewpoints, nature walks, game drives, or wildlife stops',
+      'Return to the main route or continue deeper into the highlands',
+    ],
+    bestFor: 'Nature, wildlife, trekking, birding, mountain scenery, and outdoor photography',
+  },
+  'adventure-geological': {
+    shortDescription: (name, region) =>
+      `${name} is an adventurous geological destination in ${region}, known for dramatic terrain, unusual landscapes, and expedition-style travel.`,
+    overview: (name, region) =>
+      `Experience ${name} with careful logistics, local support, and realistic pacing through ${region}'s rugged environment, making room for geology, desert scenery, caves, volcanic features, or remote landscapes as the route allows.`,
+    highlights: (name, region) => [
+      `Distinctive geological scenery and adventure travel around ${name}`,
+      `Locally supported logistics across ${region}'s remote or rugged terrain`,
+      'Strong photo opportunities during cooler hours and key landscape stops',
+      'Route planning that prioritizes safety, timing, permits, and conditions',
+    ],
+    itinerary: (name, region) => [
+      `Briefing and departure toward ${name} in ${region}`,
+      'Travel with local support through the main access route',
+      'Explore the key geological, desert, cave, or wildlife features',
+      'Return safely or continue to the next expedition stop',
+    ],
+    bestFor: 'Adventure travel, geology, remote landscapes, photography, and expedition routes',
+  },
+  'tribal-cultural': {
+    shortDescription: (name, region) =>
+      `${name} is a cultural gateway in ${region}, offering respectful community encounters, market life, local traditions, and regional travel connections.`,
+    overview: (name, region) =>
+      `Travel to ${name} with local guidance that centers respect, consent, and cultural context while connecting travelers with ${region}'s communities, landscapes, markets, and daily life.`,
+    highlights: (name, region) => [
+      `Respectful cultural encounters connected to ${name}`,
+      `Market, village, craft, or community experiences shaped by ${region}'s local rhythm`,
+      'Guidance on etiquette, photography consent, and meaningful interaction',
+      'Flexible overland pacing that links naturally with nearby southern or regional routes',
+    ],
+    itinerary: (name, region) => [
+      `Arrive in ${region} and continue toward ${name}`,
+      'Meet local guides or community hosts where appropriate',
+      'Visit markets, villages, viewpoints, or cultural sites with respectful pacing',
+      'Continue to the next cultural stop or return to your lodge',
+    ],
+    bestFor: 'Cultural immersion, markets, community visits, photography, and overland journeys',
+  },
 }
 
 const destinationSeeds: DestinationSeed[] = [
@@ -365,7 +470,7 @@ const destinationSeeds: DestinationSeed[] = [
     slug: 'lake-shalla',
     category: 'lakes-scenic',
     categoryLabel: 'Lakes, Waterfalls, and Scenic Destinations',
-    region: 'https://res.cloudinary.com/divimnzxa/image/upload/v1782373033/The_Lake_bxxwzm.jpg',
+    region: 'Great Rift Valley',
     image: 'https://res.cloudinary.com/divimnzxa/image/upload/v1782373033/The_Lake_bxxwzm.jpg',
     imageAlt: 'Rift Valley lake landscape for Lake Shalla',
   },
@@ -1020,33 +1125,21 @@ const destinationSeeds: DestinationSeed[] = [
   },
 ]
 
-function createPendingHighlights(name: string) {
-  return [
-    name,
-    'Category and region confirmed from the client destination list',
-    'Detailed destination information will be added soon',
-  ]
-}
-
-function createPendingItinerary(name: string) {
-  return [
-    `Plan around ${name}`,
-    'Add verified route details',
-    'Confirm timing with the client',
-  ]
-}
-
 function buildDestination(seed: DestinationSeed): Destination {
-  const shortDescription = seed.shortDescription || PENDING_OVERVIEW
-  const overview = seed.overview || PENDING_OVERVIEW
+  const categoryCopy = destinationCopyByCategory[seed.category]
+  const shortDescription =
+    seed.shortDescription || categoryCopy.shortDescription(seed.name, seed.region)
+  const overview = seed.overview || categoryCopy.overview(seed.name, seed.region)
   const image = seed.image || TEMPORARY_DESTINATION_IMAGE
   const primaryKeyword = seed.primaryKeyword || `${seed.name} Tours`
   const title = seed.seoTitle || `${seed.name} Tours`
   const description =
     seed.seoDescription ||
-    `Plan a visit to ${seed.name}, part of Ethiopia's ${seed.categoryLabel.toLowerCase()}. Detailed destination information will be added soon.`
-  const highlights = seed.highlights || createPendingHighlights(seed.name)
-  const itinerary = seed.itinerary || createPendingItinerary(seed.name)
+    `${shortDescription} Plan a guided visit with Ethio Origins Tour, including route timing, local context, and practical travel support.`
+  const highlights =
+    seed.highlights || categoryCopy.highlights(seed.name, seed.region)
+  const itinerary =
+    seed.itinerary || categoryCopy.itinerary(seed.name, seed.region)
 
   return {
     slug: seed.slug,
@@ -1064,7 +1157,7 @@ function buildDestination(seed: DestinationSeed): Destination {
     intro: overview,
     image,
     highlights,
-    bestFor: seed.bestFor || seed.categoryLabel,
+    bestFor: seed.bestFor || categoryCopy.bestFor,
     itinerary,
     imageAlt:
       seed.imageAlt ||

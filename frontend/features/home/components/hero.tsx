@@ -3,9 +3,10 @@
 import Image from 'next/image'
 import { motion, useReducedMotion, useScroll, useTransform } from 'framer-motion'
 import Link from 'next/link'
-import { useRef } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { ArrowRight, ChevronDown } from 'lucide-react'
 import { useLanguage } from '@/lib/i18n/language'
+import { cloudinaryImage, cloudinaryTransforms } from '@/lib/images/cloudinary'
 
 const MotionImage = motion(Image)
 
@@ -32,12 +33,29 @@ export function Hero() {
   const { t } = useLanguage()
   const ref = useRef<HTMLElement>(null)
   const reduceMotion = useReducedMotion()
+  const [loadAnimatedSlides, setLoadAnimatedSlides] = useState(false)
   const { scrollYProgress } = useScroll({
     target: ref,
     offset: ['start start', 'end start'],
   })
   const y = useTransform(scrollYProgress, [0, 1], ['0%', '18%'])
   const overlayOpacity = useTransform(scrollYProgress, [0, 1], [0.62, 0.86])
+
+  useEffect(() => {
+    if (reduceMotion) return
+
+    if ('requestIdleCallback' in window) {
+      const idleId = window.requestIdleCallback(
+        () => setLoadAnimatedSlides(true),
+        { timeout: 2500 },
+      )
+
+      return () => window.cancelIdleCallback(idleId)
+    }
+
+    const timeout = globalThis.setTimeout(() => setLoadAnimatedSlides(true), 1800)
+    return () => globalThis.clearTimeout(timeout)
+  }, [reduceMotion])
 
   return (
     <section
@@ -47,24 +65,25 @@ export function Hero() {
     >
       <motion.div style={{ y }} className="absolute inset-0 z-0">
         <Image
-          src={heroFrames[0].src}
+          src={cloudinaryImage(heroFrames[0].src, cloudinaryTransforms.hero)}
           alt={heroFrames[0].alt}
           fill
           priority
           sizes="100vw"
           className="absolute inset-0 size-full scale-110 object-cover object-center"
         />
-        {!reduceMotion &&
-          heroFrames.map((frame, i) => (
+        {loadAnimatedSlides &&
+          !reduceMotion &&
+          heroFrames.slice(1).map((frame, i) => (
             <MotionImage
               key={frame.src}
-              src={frame.src}
+              src={cloudinaryImage(frame.src, cloudinaryTransforms.hero)}
               alt=""
               aria-hidden="true"
               fill
               sizes="100vw"
               initial={{
-                opacity: i === 0 ? 1 : 0,
+                opacity: 0,
                 scale: 1.08,
                 x: i % 2 === 0 ? '-1.5%' : '1.5%',
               }}
@@ -77,19 +96,19 @@ export function Hero() {
                 opacity: {
                   duration: 24,
                   repeat: Infinity,
-                  delay: i * 6,
+                  delay: i * 6 + 1,
                   times: [0, 0.12, 0.34, 0.48],
                 },
                 scale: {
                   duration: 24,
                   repeat: Infinity,
-                  delay: i * 6,
+                  delay: i * 6 + 1,
                   ease: 'linear',
                 },
                 x: {
                   duration: 24,
                   repeat: Infinity,
-                  delay: i * 6,
+                  delay: i * 6 + 1,
                   ease: 'linear',
                 },
               }}

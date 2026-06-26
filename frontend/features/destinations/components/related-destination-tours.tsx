@@ -6,6 +6,7 @@ import { ArrowRight } from 'lucide-react'
 import { tours } from '@/features/tours/data/tours'
 import { getLocalizedTours } from '@/features/tours/lib/tour-localization'
 import { useLanguage } from '@/lib/i18n/language'
+import { cloudinaryImage, cloudinaryTransforms } from '@/lib/images/cloudinary'
 import { getLocalizedDestination } from '../lib/destination-localization'
 import type { Destination } from '../types/destination'
 
@@ -59,7 +60,7 @@ export function RelatedDestinationTours({
             >
               <div className="relative aspect-[4/3] overflow-hidden bg-coffee">
                 <Image
-                  src={tour.image}
+                  src={cloudinaryImage(tour.image, cloudinaryTransforms.card)}
                   alt={tour.imageAlt}
                   fill
                   sizes="(min-width: 768px) 33vw, 100vw"

@@ -10,6 +10,7 @@ import {
   UserRound,
 } from 'lucide-react'
 import { useLanguage } from '@/lib/i18n/language'
+import { cloudinaryImage, cloudinaryTransforms } from '@/lib/images/cloudinary'
 
 const features = [
   {
@@ -51,7 +52,10 @@ export function CustomJourneys() {
     <section className="relative isolate overflow-hidden bg-coffee py-20 text-cream md:py-28">
       <div className="absolute inset-0 z-0">
         <Image
-          src="https://res.cloudinary.com/divimnzxa/image/upload/v1782244137/Ethiopia_h1whvn.jpg"
+          src={cloudinaryImage(
+            'https://res.cloudinary.com/divimnzxa/image/upload/v1782244137/Ethiopia_h1whvn.jpg',
+            cloudinaryTransforms.hero,
+          )}
           alt="Luxury safari camp overlooking the Ethiopian highlands at dusk"
           fill
           sizes="100vw"

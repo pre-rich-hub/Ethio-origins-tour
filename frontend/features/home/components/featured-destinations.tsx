@@ -7,6 +7,7 @@ import { SectionHeading } from '@/components/shared/section-heading'
 import { destinations } from '@/features/destinations'
 import type { Destination } from '@/features/destinations'
 import { useLanguage } from '@/lib/i18n/language'
+import { cloudinaryImage, cloudinaryTransforms } from '@/lib/images/cloudinary'
 
 const featuredDestinationSlugs = [
   'lalibela',
@@ -19,12 +20,18 @@ const featuredDestinationSlugs = [
 
 export function FeaturedDestinations({ items = destinations }: { items?: Destination[] }) {
   const { t } = useLanguage()
-  const featuredDestinations = items.filter((destination) =>
-    featuredDestinationSlugs.includes(destination.slug),
-  )
-  const visibleDestinations = featuredDestinations.length
-    ? featuredDestinations
-    : items.slice(0, 6)
+  const availableDestinations = [...items, ...destinations]
+  const visibleDestinations = [
+    ...featuredDestinationSlugs
+      .map((slug) =>
+        availableDestinations.find((destination) => destination.slug === slug),
+      )
+      .filter((destination): destination is Destination => Boolean(destination)),
+    ...availableDestinations,
+  ].filter(
+    (destination, index, allDestinations) =>
+      allDestinations.findIndex((item) => item.slug === destination.slug) === index,
+  ).slice(0, 6)
 
   return (
     <section
@@ -64,7 +71,7 @@ export function FeaturedDestinations({ items = destinations }: { items?: Destina
                 className="relative flex size-full overflow-hidden rounded-none border border-cream/18 bg-coffee shadow-2xl shadow-black/25"
               >
                 <Image
-                  src={d.image || '/placeholder.svg'}
+                  src={cloudinaryImage(d.image || '/placeholder.svg', cloudinaryTransforms.card)}
                   alt={d.name}
                   fill
                   sizes="(max-width: 640px) calc(100vw - 2rem), 420px"

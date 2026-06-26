@@ -4,6 +4,7 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { ArrowLeft, ArrowRight, Camera } from 'lucide-react'
 import { useLanguage } from '@/lib/i18n/language'
+import { cloudinaryImage, cloudinaryTransforms } from '@/lib/images/cloudinary'
 import { galleryImages } from '../data/gallery-images'
 
 export function GalleryHero() {
@@ -13,7 +14,10 @@ export function GalleryHero() {
   return (
     <section className="relative isolate overflow-hidden bg-coffee pt-28 text-cream md:pt-36">
       <Image
-        src="https://res.cloudinary.com/divimnzxa/image/upload/v1782247186/Bet_Giyorgis_Rock-Hewn_Church_at_Lalibela___qffnvp.jpg"
+        src={cloudinaryImage(
+          'https://res.cloudinary.com/divimnzxa/image/upload/v1782247186/Bet_Giyorgis_Rock-Hewn_Church_at_Lalibela___qffnvp.jpg',
+          cloudinaryTransforms.hero,
+        )}
         alt="Rock-hewn church of Lalibela in warm light"
         fill
         priority
@@ -73,7 +77,7 @@ export function GalleryHero() {
                 }`}
               >
                 <Image
-                  src={image.src}
+                  src={cloudinaryImage(image.src, cloudinaryTransforms.card)}
                   alt={image.alt}
                   fill
                   sizes="(max-width: 640px) 100vw, (max-width: 1024px) 33vw, 18vw"

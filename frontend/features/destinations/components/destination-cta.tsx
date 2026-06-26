@@ -3,6 +3,7 @@
 import Image from 'next/image'
 import { ArrowRight } from 'lucide-react'
 import { useLanguage } from '@/lib/i18n/language'
+import { cloudinaryImage, cloudinaryTransforms } from '@/lib/images/cloudinary'
 import { getLocalizedDestination } from '../lib/destination-localization'
 import type { Destination } from '../types/destination'
 
@@ -13,7 +14,10 @@ export function DestinationCta({ destination }: { destination: Destination }) {
   return (
     <section className="relative isolate overflow-hidden py-16 md:py-28">
       <Image
-        src="https://res.cloudinary.com/divimnzxa/image/upload/v1782305234/Debre_Libanos_anvjli.jpg"
+        src={cloudinaryImage(
+          'https://res.cloudinary.com/divimnzxa/image/upload/v1782305234/Debre_Libanos_anvjli.jpg',
+          cloudinaryTransforms.hero,
+        )}
         alt=""
         fill
         sizes="100vw"

@@ -7,6 +7,9 @@ import { Pause, Play, Sparkles } from 'lucide-react'
 import { useEffect, useState } from 'react'
 import { galleryImages } from '@/features/gallery/data/gallery-images'
 import { useLanguage } from '@/lib/i18n/language'
+import { cloudinaryImage, cloudinaryTransforms } from '@/lib/images/cloudinary'
+
+const MotionImage = motion(Image)
 
 const images = [
   galleryImages[6],
@@ -64,10 +67,12 @@ export function HomeGallery({ items = images }: { items?: Partial<HomeGalleryIma
               className="relative min-h-[420px] overflow-hidden border border-cream/15 bg-black sm:min-h-[520px] lg:min-h-[620px]"
             >
               <AnimatePresence mode="wait">
-                <motion.img
+                <MotionImage
                   key={activeImage.src}
-                  src={activeImage.src}
+                  src={cloudinaryImage(activeImage.src, cloudinaryTransforms.gallery)}
                   alt={activeImage.alt}
+                  fill
+                  sizes="(max-width: 1024px) 100vw, 58vw"
                   initial={{ opacity: 0, scale: 1.04 }}
                   animate={{ opacity: 1, scale: 1 }}
                   exit={{ opacity: 0, scale: 1.02 }}
@@ -163,7 +168,7 @@ export function HomeGallery({ items = images }: { items?: Partial<HomeGalleryIma
                     aria-label={`${t.gallery.show} ${image.title}`}
                   >
                     <Image
-                      src={image.src}
+                      src={cloudinaryImage(image.src, cloudinaryTransforms.thumbnail)}
                       alt=""
                       fill
                       sizes="(max-width: 640px) 25vw, (max-width: 1024px) 12.5vw, 25vw"

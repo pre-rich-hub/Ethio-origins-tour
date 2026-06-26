@@ -6,6 +6,7 @@ import type { Metadata } from 'next'
 import { Navbar } from '@/components/layout/navbar'
 import { SiteFooter } from '@/components/layout/site-footer'
 import { getBlogPostBySlug } from '@/lib/api/cms'
+import { cloudinaryImage, cloudinaryTransforms } from '@/lib/images/cloudinary'
 import { createMetadata } from '@/lib/seo/create-metadata'
 
 type Props = {
@@ -50,7 +51,7 @@ export default async function BlogPostPage({ params }: Props) {
 
       <section className="relative isolate overflow-hidden bg-forest pt-28 text-cream md:pt-36">
         <Image
-          src={post.image}
+          src={cloudinaryImage(post.image, cloudinaryTransforms.hero)}
           alt=""
           fill
           priority

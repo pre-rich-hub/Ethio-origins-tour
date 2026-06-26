@@ -4,6 +4,7 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { ArrowLeft } from 'lucide-react'
 import { useLanguage } from '@/lib/i18n/language'
+import { cloudinaryImage, cloudinaryTransforms } from '@/lib/images/cloudinary'
 import { getLocalizedTourCategory } from '../lib/tour-localization'
 import type { TourCategory } from '../data/tour-categories'
 
@@ -14,7 +15,10 @@ export function TourCategoryHero({ category }: { category: TourCategory }) {
   return (
     <section className="relative isolate overflow-hidden bg-coffee pt-28 text-cream md:pt-40">
       <Image
-        src="https://res.cloudinary.com/divimnzxa/image/upload/v1782375172/121667627429376236_nlva6g.jpg"
+        src={cloudinaryImage(
+          'https://res.cloudinary.com/divimnzxa/image/upload/v1782375172/121667627429376236_nlva6g.jpg',
+          cloudinaryTransforms.hero,
+        )}
         alt=""
         fill
         priority

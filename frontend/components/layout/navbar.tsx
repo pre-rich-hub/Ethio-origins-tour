@@ -2,7 +2,7 @@
 
 import Link from 'next/link'
 import Image from 'next/image'
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { AnimatePresence, motion } from 'framer-motion'
 import { Check, ChevronDown, Globe2, Menu, X } from 'lucide-react'
 import { destinations } from '@/features/destinations'
@@ -27,6 +27,7 @@ type NavLink = {
 export function Navbar() {
   const { language, setLanguage, t } = useLanguage()
   const [scrolled, setScrolled] = useState(false)
+  const scrolledRef = useRef(false)
   const [open, setOpen] = useState(false)
   const [languageMenuOpen, setLanguageMenuOpen] = useState(false)
   const [expandedMobile, setExpandedMobile] = useState<string | null>(null)
@@ -64,10 +65,33 @@ export function Navbar() {
   ]
 
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 40)
-    onScroll()
+    let frameId: number | null = null
+
+    const updateScrolledState = () => {
+      frameId = null
+      const nextScrolled = window.scrollY > 40
+
+      if (scrolledRef.current !== nextScrolled) {
+        scrolledRef.current = nextScrolled
+        setScrolled(nextScrolled)
+      }
+    }
+
+    const onScroll = () => {
+      if (frameId === null) {
+        frameId = window.requestAnimationFrame(updateScrolledState)
+      }
+    }
+
+    updateScrolledState()
     window.addEventListener('scroll', onScroll, { passive: true })
-    return () => window.removeEventListener('scroll', onScroll)
+
+    return () => {
+      if (frameId !== null) {
+        window.cancelAnimationFrame(frameId)
+      }
+      window.removeEventListener('scroll', onScroll)
+    }
   }, [])
 
   return (
@@ -78,15 +102,19 @@ export function Navbar() {
           : 'bg-transparent'
       }`}
     >
-      <nav className="mx-auto flex max-w-7xl items-center justify-between px-5 py-4 md:px-8 md:py-5">
-        <Link href="/#home" className="flex items-center" aria-label="Ethio Origins Tour home">
+      <nav className="mx-auto flex max-w-7xl items-center justify-between px-5 py-3 md:px-8 md:py-4">
+        <Link
+          href="/#home"
+          className="flex h-16 w-16 shrink-0 items-center justify-center md:h-20 md:w-20"
+          aria-label="Ethio Origins Tour home"
+        >
           <Image
-            src="/brand/logo-header.png"
+            src="/brand/logo-header-420.webp"
             alt="Ethio Origins Ethiopia Tours"
-            width={900}
-            height={883}
+            width={420}
+            height={412}
             priority
-            className="h-14 w-auto md:h-16"
+            className="h-full w-full object-contain"
           />
         </Link>
 
@@ -224,14 +252,14 @@ export function Navbar() {
                   setOpen(false)
                   setExpandedMobile(null)
                 }}
-                className="flex items-center"
+                className="flex h-16 w-16 shrink-0 items-center justify-center"
               >
                 <Image
-                  src="/brand/logo-header.png"
+                  src="/brand/logo-header-420.webp"
                   alt="Ethio Origins Ethiopia Tours"
-                  width={900}
-                  height={883}
-                  className="h-16 w-auto"
+                  width={420}
+                  height={412}
+                  className="h-full w-full object-contain"
                 />
               </Link>
               <button

@@ -14,6 +14,7 @@ export function BlogHero() {
         src="/images/gallery-market.png"
         alt="Vibrant Ethiopian highland market"
         fill
+        priority
         sizes="100vw"
         className="absolute inset-0 z-0 size-full object-cover"
       />
