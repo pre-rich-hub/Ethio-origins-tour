@@ -835,7 +835,7 @@ function localizeTourDetails<T extends Tour>(
     arrivalInfo?: string[]
     importantNote?: string
   } = {
-    included: templates.included,
+    included: tour.included.length ? templates.included : [],
     itinerary,
     moments: tour.moments.map((_, index) =>
       templates.moment(destination, index),

@@ -1,4 +1,4 @@
-import { posts } from '@/features/blog/data/posts'
+import { isPublishedCompletePost, posts } from '@/features/blog/data/posts'
 import { destinations as fallbackDestinations } from '@/features/destinations/data/destinations'
 import type { Destination } from '@/features/destinations/types/destination'
 import { galleryImages } from '@/features/gallery/data/gallery-images'
@@ -103,7 +103,7 @@ function normalizeItineraryItem(item: unknown, index: number) {
       day: index + 1,
       title: `Day ${index + 1}`,
       activities: item,
-      overnight: 'To be confirmed',
+      overnight: 'Route plan detail',
     }
   }
 
@@ -113,7 +113,7 @@ function normalizeItineraryItem(item: unknown, index: number) {
       day: Number(value.day ?? index + 1),
       title: String(value.title ?? `Day ${index + 1}`),
       activities: String(value.activities ?? value.description ?? ''),
-      overnight: String(value.overnight ?? 'To be confirmed'),
+      overnight: String(value.overnight ?? 'Route plan detail'),
       meals: value.meals ? String(value.meals) : undefined,
     }
   }
@@ -122,7 +122,7 @@ function normalizeItineraryItem(item: unknown, index: number) {
     day: index + 1,
     title: `Day ${index + 1}`,
     activities: '',
-    overnight: 'To be confirmed',
+    overnight: 'Route plan detail',
   }
 }
 
@@ -246,37 +246,16 @@ export async function getBlogPosts() {
     return posts
   }
 
-  return data.items.map((post) => ({
-    slug: post.slug,
-    title: post.title,
-    category: post.category?.name ?? 'Travel Insight',
-    date: post.createdAt
-      ? new Intl.DateTimeFormat('en', { month: 'long', year: 'numeric' }).format(new Date(post.createdAt))
-      : 'Travel Guide',
-    image: imageUrl(post.imageUrl, '/images/exp-northern.png'),
-    excerpt: post.description || 'Read the latest Ethio Origins travel insight.',
-  }))
+  return posts
 }
 
 export async function getBlogPostBySlug(slug: string) {
   const data = await apiFetch<ApiBlogPost | null>(`/api/blog/slug/${slug}`, { fallback: null })
 
-  if (data) {
-    return {
-      slug: data.slug,
-      title: data.title,
-      category: data.category?.name ?? 'Travel Insight',
-      date: data.createdAt
-        ? new Intl.DateTimeFormat('en', { month: 'long', year: 'numeric' }).format(new Date(data.createdAt))
-        : '',
-      image: imageUrl(data.imageUrl, '/images/exp-northern.png'),
-      excerpt: data.description || '',
-      description: data.description || '',
-    }
-  }
+  if (data) return null
 
   const fallback = posts.find((p) => p.slug === slug)
-  if (!fallback) return null
+  if (!fallback || !isPublishedCompletePost(fallback)) return null
 
   return {
     slug: fallback.slug,
@@ -285,7 +264,14 @@ export async function getBlogPostBySlug(slug: string) {
     date: fallback.date,
     image: fallback.image,
     excerpt: fallback.excerpt,
-    description: fallback.excerpt,
+    description: fallback.body?.map((block) => {
+      if (block.type === 'list') return block.items.join('\n')
+      return block.text
+    }).join('\n\n') || fallback.excerpt,
+    body: fallback.body,
+    author: fallback.author,
+    publishedAt: fallback.publishedAt,
+    updatedAt: fallback.updatedAt,
   }
 }
 

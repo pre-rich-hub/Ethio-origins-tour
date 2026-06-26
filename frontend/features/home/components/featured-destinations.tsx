@@ -6,6 +6,7 @@ import Link from 'next/link'
 import { SectionHeading } from '@/components/shared/section-heading'
 import { destinations } from '@/features/destinations'
 import type { Destination } from '@/features/destinations'
+import { trackSeoEvent } from '@/lib/analytics/events'
 import { useLanguage } from '@/lib/i18n/language'
 import { cloudinaryImage, cloudinaryTransforms } from '@/lib/images/cloudinary'
 
@@ -60,6 +61,12 @@ export function FeaturedDestinations({ items = destinations }: { items?: Destina
             <Link
               key={d.name}
               href={`/destinations/${d.slug}`}
+              onClick={() =>
+                trackSeoEvent('destination_card_clicked', {
+                  destinationSlug: d.slug,
+                  ctaLocation: 'homepage_featured_destinations',
+                })
+              }
               aria-label={`Open dedicated page for ${d.name}`}
               className="group block h-[450px] min-w-[calc(100vw-2rem)] snap-center cursor-pointer touch-manipulation focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-gold sm:h-[520px] sm:min-w-[390px] lg:h-[580px] lg:min-w-[390px] xl:min-w-[420px]"
             >

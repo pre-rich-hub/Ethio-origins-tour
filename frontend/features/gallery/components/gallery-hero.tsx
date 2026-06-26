@@ -88,9 +88,9 @@ export function GalleryHero() {
                   <p className="font-sans text-[0.58rem] font-bold uppercase tracking-[0.22em] text-gold">
                     {image.place}
                   </p>
-                  <h2 className="mt-2 font-serif text-2xl font-medium leading-none text-cream">
+                  <h3 className="mt-2 font-serif text-2xl font-medium leading-none text-cream">
                     {image.title}
-                  </h2>
+                  </h3>
                 </figcaption>
               </figure>
             ))}

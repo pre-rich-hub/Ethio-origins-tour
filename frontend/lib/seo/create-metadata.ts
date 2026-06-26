@@ -17,6 +17,7 @@ export function createMetadata({
   type = 'website',
 }: CreateMetadataInput): Metadata {
   const image = ogImage || siteConfig.defaultOgImage
+  const shouldNoIndex = noIndex || !siteConfig.publicIndexingAllowed
 
   return {
     title,
@@ -46,10 +47,10 @@ export function createMetadata({
       description,
       images: [image],
     },
-    robots: noIndex
+    robots: shouldNoIndex
       ? {
           index: false,
-          follow: false,
+          follow: siteConfig.publicIndexingAllowed,
         }
       : {
           index: true,

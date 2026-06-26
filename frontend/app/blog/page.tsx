@@ -8,7 +8,7 @@ import { createMetadata } from '@/lib/seo/create-metadata'
 export const metadata: Metadata = createMetadata({
   title: 'Ethiopia Travel Guide, Tips & Inspiration',
   description:
-    'Plan your journey with practical Ethiopia travel guides, destination advice, cultural insights, trekking tips and itinerary ideas.',
+    'Follow the Ethio Origins Tour journal for Ethiopia travel planning notes, destination context and future guide articles as they are published.',
   canonicalPath: '/blog',
   primaryKeyword: 'Ethiopia Travel Guide',
   secondaryKeywords: [

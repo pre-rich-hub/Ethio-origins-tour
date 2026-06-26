@@ -33,6 +33,11 @@ export function Navbar() {
   const [expandedMobile, setExpandedMobile] = useState<string | null>(null)
   const selectedLanguage =
     languages.find((item) => item.code === language) ?? languages[0]
+  const navDestinations = [...destinations].sort((a, b) => {
+    if (a.indexable && !b.indexable) return -1
+    if (!a.indexable && b.indexable) return 1
+    return a.name.localeCompare(b.name)
+  })
   const links: NavLink[] = [
     { label: t.nav.home, href: '/#home' },
     {
@@ -41,7 +46,7 @@ export function Navbar() {
       previewLimit: 4,
       seeMoreHref: '/destinations',
       seeMoreLabel: t.nav.seeMoreDestinations,
-      children: destinations.map((destination) => ({
+      children: navDestinations.map((destination) => ({
         label: destination.name,
         href: `/destinations/${destination.slug}`,
         meta: destination.place,

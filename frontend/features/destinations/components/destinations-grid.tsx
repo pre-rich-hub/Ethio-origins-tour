@@ -4,6 +4,7 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { useMemo, useState } from 'react'
 import { ArrowRight, Clock, MapPin } from 'lucide-react'
+import { trackSeoEvent } from '@/lib/analytics/events'
 import { useLanguage } from '@/lib/i18n/language'
 import { cloudinaryImage, cloudinaryTransforms } from '@/lib/images/cloudinary'
 import { destinations } from '../data/destinations'
@@ -89,6 +90,12 @@ export function DestinationsGrid({
               <Link
                 key={destination.slug}
                 href={`/destinations/${destination.slug}`}
+                onClick={() =>
+                  trackSeoEvent('destination_card_clicked', {
+                    destinationSlug: destination.slug,
+                    ctaLocation: 'destinations_grid',
+                  })
+                }
                 aria-label={`${t.destinationsPage.openPage} ${destination.name}`}
                 className="group relative flex min-h-[440px] cursor-pointer touch-manipulation overflow-hidden border border-cream/18 bg-coffee shadow-2xl shadow-black/20 transition-all duration-300 hover:-translate-y-1 hover:shadow-coffee/30 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-gold sm:min-h-[500px] md:min-h-[520px]"
               >
@@ -110,9 +117,9 @@ export function DestinationsGrid({
                     <MapPin className="size-3.5" />
                     {destination.place}
                   </p>
-                  <h2 className="mt-3 max-w-[18rem] font-sans text-base font-bold uppercase leading-snug tracking-[0.1em] text-cream sm:mt-4 sm:tracking-[0.18em] md:text-lg">
+                  <h3 className="mt-3 max-w-[18rem] font-sans text-base font-bold uppercase leading-snug tracking-[0.1em] text-cream sm:mt-4 sm:tracking-[0.18em] md:text-lg">
                     {destination.name}
-                  </h2>
+                  </h3>
                   <p className="mt-3 max-w-[20rem] font-sans text-sm font-light leading-relaxed text-cream/80">
                     {destination.description}
                   </p>

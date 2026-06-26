@@ -2,6 +2,19 @@ import type { MetadataRoute } from 'next'
 import { siteConfig } from '@/lib/seo/site-config'
 
 export default function robots(): MetadataRoute.Robots {
+  if (!siteConfig.publicIndexingAllowed) {
+    return {
+      rules: [
+        {
+          userAgent: '*',
+          disallow: '/',
+        },
+      ],
+      sitemap: `${siteConfig.url}/sitemap.xml`,
+      host: siteConfig.url,
+    }
+  }
+
   return {
     rules: [
       {

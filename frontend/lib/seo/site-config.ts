@@ -1,12 +1,15 @@
+import { getPublicEnv } from '@/lib/env'
+
+const publicEnv = getPublicEnv()
+
 export const siteConfig = {
   name: "Ethio Origins Tour",
   alternateName: "Ethio Origin Tours",
   shortName: "Ethio Origins",
   description:
     "Explore Ethiopia with a trusted local tour company offering cultural, historical, adventure, trekking, wildlife, coffee, and customized tours.",
-  url:
-    process.env.NEXT_PUBLIC_SITE_URL?.replace(/\/$/, "") ||
-    "https://ethiooriginstour.com",
+  url: publicEnv.siteUrl,
+  publicIndexingAllowed: publicEnv.publicIndexingAllowed,
   locale: "en_US",
   language: "en",
   country: "ET",
@@ -16,7 +19,7 @@ export const siteConfig = {
 
   contact: {
     email: "hello@ethioorigins.com",
-    phone: "+251 900 000 000",
+    phone: "",
     address: "Bole Road, Addis Ababa, Ethiopia",
   },
 

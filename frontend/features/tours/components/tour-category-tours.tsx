@@ -4,6 +4,7 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { ArrowRight, Clock, MapPin } from 'lucide-react'
 import { useLanguage } from '@/lib/i18n/language'
+import { trackSeoEvent } from '@/lib/analytics/events'
 import { cloudinaryImage, cloudinaryTransforms } from '@/lib/images/cloudinary'
 import {
   getLocalizedTourCategory,
@@ -22,6 +23,7 @@ export function TourCategoryTours({
   const { language, t } = useLanguage()
   const localizedCategory = getLocalizedTourCategory(category, language)
   const localizedTours = getLocalizedTours(categoryTours, language)
+  const isEmpty = localizedTours.length === 0
 
   return (
     <section className="py-14 md:py-28">
@@ -44,12 +46,45 @@ export function TourCategoryTours({
           </Link>
         </div>
 
+        {isEmpty ? (
+          <div className="border border-border bg-card p-8 md:p-10">
+            <h3 className="font-serif text-3xl font-medium text-foreground">
+              New journeys are being prepared.
+            </h3>
+            <p className="mt-4 max-w-2xl font-sans text-sm font-light leading-relaxed text-muted-foreground">
+              This category is available for planning context, but no matching
+              tour packages are currently published. Explore all tours or ask
+              the team to design a private itinerary around this interest.
+            </p>
+            <div className="mt-7 flex flex-col gap-3 sm:flex-row">
+              <Link
+                href="/tours"
+                className="inline-flex h-12 items-center justify-center bg-forest px-5 font-sans text-xs font-bold uppercase tracking-widest text-cream transition-colors hover:bg-coffee"
+              >
+                View All Tours
+              </Link>
+              <Link
+                href="/contact"
+                className="inline-flex h-12 items-center justify-center border border-forest px-5 font-sans text-xs font-bold uppercase tracking-widest text-forest transition-colors hover:bg-forest hover:text-cream"
+              >
+                Request a Custom Tour
+              </Link>
+            </div>
+          </div>
+        ) : (
         <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
           {localizedTours.map((tour) => (
             <Link
-              key={tour.slug}
-              href={`/tours/${tour.slug}`}
-              aria-label={`${t.toursPage.openDedicatedPageFor} ${tour.title}`}
+                key={tour.slug}
+                href={`/tours/${tour.slug}`}
+                onClick={() =>
+                  trackSeoEvent('tour_card_clicked', {
+                    tourSlug: tour.slug,
+                    categorySlug: category.slug,
+                    ctaLocation: 'tour_category_grid',
+                  })
+                }
+                aria-label={`${t.toursPage.openDedicatedPageFor} ${tour.title}`}
               className="group relative flex min-h-[440px] cursor-pointer touch-manipulation overflow-hidden border border-cream/18 bg-coffee shadow-2xl shadow-black/20 transition-shadow hover:shadow-coffee/30 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-gold sm:min-h-[500px] md:min-h-[520px]"
             >
               <Image
@@ -69,9 +104,9 @@ export function TourCategoryTours({
                   <MapPin className="size-3.5" />
                   {tour.destination}
                 </p>
-                <h2 className="mt-3 max-w-[20rem] font-sans text-base font-bold uppercase leading-snug tracking-[0.1em] text-cream sm:mt-4 sm:tracking-[0.18em] md:text-lg">
+                <h3 className="mt-3 max-w-[20rem] font-sans text-base font-bold uppercase leading-snug tracking-[0.1em] text-cream sm:mt-4 sm:tracking-[0.18em] md:text-lg">
                   {tour.title}
-                </h2>
+                </h3>
                 <p className="mt-3 max-w-[22rem] font-sans text-sm font-light leading-relaxed text-cream/80">
                   {tour.description}
                 </p>
@@ -83,6 +118,7 @@ export function TourCategoryTours({
             </Link>
           ))}
         </div>
+        )}
       </div>
     </section>
   )

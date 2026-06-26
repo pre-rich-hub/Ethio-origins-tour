@@ -3,75 +3,29 @@
 import { useState } from 'react'
 import {
   ArrowRight,
-  ExternalLink,
   Mail,
   MapPin,
-  Phone,
 } from 'lucide-react'
 import Image from 'next/image'
+import { trackSeoEvent } from '@/lib/analytics/events'
+import { validateNewsletterEmail } from '@/lib/forms/validation'
 import { useLanguage } from '@/lib/i18n/language'
 
-const partnerLinks = [
-  {
-    label: 'Tripadvisor',
-    href: 'https://www.tripadvisor.com',
-    meta: 'Recommended on',
-    color: '#34E0A1',
-    textColor: '#001A12',
-    mark: 'owl',
-  },
-  {
-    label: 'Viator',
-    href: 'https://www.viator.com',
-    meta: 'Listed on',
-    color: '#00A680',
-    textColor: '#001F18',
-    mark: 'V',
-  },
-  {
-    label: 'Booking.com',
-    href: 'https://www.booking.com',
-    meta: 'Book with',
-    color: '#006CE4',
-    textColor: '#FFFFFF',
-    mark: 'B',
-  },
-  {
-    label: 'TouristLink',
-    href: 'https://www.touristlink.com',
-    meta: 'Featured on',
-    color: '#1B75BB',
-    textColor: '#FFFFFF',
-    mark: 'TL',
-  },
-]
+const partnerLinks: Array<{
+  label: string
+  href: string
+  meta: string
+  color: string
+  textColor: string
+  mark: string
+}> = []
 
-const socialLinks = [
-  {
-    label: 'Facebook',
-    href: 'https://www.facebook.com',
-    color: '#1877F2',
-    icon: 'facebook',
-  },
-  {
-    label: 'Instagram',
-    href: 'https://www.instagram.com',
-    color: '#E4405F',
-    icon: 'instagram',
-  },
-  {
-    label: 'Telegram',
-    href: 'https://t.me',
-    color: '#26A5E4',
-    icon: 'telegram',
-  },
-  {
-    label: 'WhatsApp',
-    href: 'https://wa.me/251900000000',
-    color: '#25D366',
-    icon: 'whatsapp',
-  },
-]
+const socialLinks: Array<{
+  label: string
+  href: string
+  color: string
+  icon: string
+}> = []
 
 function SocialLogo({ icon }: { icon: string }) {
   if (icon === 'facebook') {
@@ -137,31 +91,62 @@ export function SiteFooter() {
   const [email, setEmail] = useState('')
   const [status, setStatus] = useState<'idle' | 'loading' | 'success' | 'error'>('idle')
   const [feedback, setFeedback] = useState('')
+  const [emailError, setEmailError] = useState('')
+  const [renderedAt, setRenderedAt] = useState(() => Date.now())
 
   async function handleSubscribe(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault()
+    if (status === 'loading') return
     setStatus('loading')
     setFeedback('')
+    setEmailError('')
+
+    const formData = new FormData(event.currentTarget)
+    const honeypot = String(formData.get('subscriberCompany') || '')
+    const validation = validateNewsletterEmail(
+      email,
+      honeypot,
+      Date.now() - renderedAt,
+    )
+
+    if (!validation.success) {
+      setStatus('error')
+      setEmailError(validation.errors.email || '')
+      setFeedback(validation.errors.form || 'Please enter a valid email address.')
+      trackSeoEvent('newsletter_submit_failed', {
+        ctaLocation: 'site_footer',
+        resultCode: validation.errors.form ? 'spam_or_timing' : 'validation_error',
+      })
+      return
+    }
 
     try {
       const response = await fetch('/api/subscribe', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email }),
+        body: JSON.stringify({ email: email.trim() }),
       })
 
-      const payload = await response.json()
+      const payload = (await response.json()) as { success?: boolean }
 
       if (!response.ok || !payload.success) {
-        throw new Error(payload.message || 'Something went wrong')
+        throw new Error('Subscription failed')
       }
 
       setEmail('')
+      setRenderedAt(Date.now())
       setStatus('success')
-      setFeedback(payload.message)
-    } catch (error) {
+      setFeedback('Thanks. Please check your inbox if confirmation is required.')
+      trackSeoEvent('newsletter_submit_success', {
+        ctaLocation: 'site_footer',
+      })
+    } catch {
       setStatus('error')
-      setFeedback(error instanceof Error ? error.message : 'Something went wrong')
+      setFeedback('We could not subscribe you right now. Please try again later.')
+      trackSeoEvent('newsletter_submit_failed', {
+        ctaLocation: 'site_footer',
+        resultCode: 'server_or_network_error',
+      })
     }
   }
   const columns = [
@@ -186,9 +171,9 @@ export function SiteFooter() {
     {
       title: t.footer.company,
       links: [
-        { label: t.footer.about, href: '/#about' },
-        { label: t.footer.philosophy, href: '/#about' },
-        { label: t.footer.responsibleTourism, href: '/#about' },
+        { label: t.footer.about, href: '/about' },
+        { label: t.footer.philosophy, href: '/about#philosophy' },
+        { label: t.footer.responsibleTourism, href: '/about#responsible-tourism' },
         { label: t.footer.gallery, href: '/gallery' },
         { label: t.footer.contact, href: '/contact' },
       ],
@@ -257,10 +242,6 @@ export function SiteFooter() {
                 Bole Road, Addis Ababa, Ethiopia
               </li>
               <li className="flex items-center gap-2">
-                <Phone className="size-4 shrink-0 text-gold" />
-                +251 900 000 000
-              </li>
-              <li className="flex items-center gap-2">
                 <Mail className="size-4 shrink-0 text-gold" />
                 hello@ethioorigins.com
               </li>
@@ -273,6 +254,14 @@ export function SiteFooter() {
             <label htmlFor="footer-email" className="sr-only">
               Your email address
             </label>
+            <label className="absolute left-[-9999px] top-auto h-px w-px overflow-hidden">
+              Company
+              <input
+                name="subscriberCompany"
+                tabIndex={-1}
+                autoComplete="off"
+              />
+            </label>
             <input
               id="footer-email"
               type="email"
@@ -280,6 +269,9 @@ export function SiteFooter() {
               onChange={(e) => setEmail(e.target.value)}
               placeholder={t.footer.response}
               required
+              maxLength={120}
+              aria-invalid={Boolean(emailError)}
+              aria-describedby={emailError ? 'footer-email-error' : undefined}
               className="h-14 w-full border border-cream/18 bg-cream/10 px-5 font-sans text-sm text-cream outline-none transition-colors placeholder:text-cream/50 focus:border-gold"
             />
             <div className="flex flex-col gap-1">
@@ -291,8 +283,17 @@ export function SiteFooter() {
                 <ArrowRight className="size-4" />
                 {status === 'loading' ? t.footer.subscribing || 'Subscribing...' : t.footer.subscribe}
               </button>
+              {emailError ? (
+                <p id="footer-email-error" className="font-sans text-xs text-red-400">
+                  {emailError}
+                </p>
+              ) : null}
               {feedback ? (
-                <p className={`font-sans text-xs ${status === 'success' ? 'text-green-400' : 'text-red-400'}`}>
+                <p
+                  role={status === 'error' ? 'alert' : 'status'}
+                  aria-live={status === 'error' ? 'assertive' : 'polite'}
+                  className={`font-sans text-xs ${status === 'success' ? 'text-green-400' : 'text-red-400'}`}
+                >
                   {feedback}
                 </p>
               ) : null}
@@ -300,6 +301,7 @@ export function SiteFooter() {
           </form>
         </div>
 
+        {partnerLinks.length ? (
         <div className="border-t border-cream/10 py-6">
           <div className="relative overflow-hidden border border-cream/12 bg-[linear-gradient(135deg,rgba(250,246,236,0.08),rgba(250,246,236,0.025))] p-4 shadow-2xl shadow-black/10 backdrop-blur-sm md:p-5">
             <div className="pointer-events-none absolute inset-x-8 top-0 h-px bg-gradient-to-r from-transparent via-gold/60 to-transparent" />
@@ -360,10 +362,6 @@ export function SiteFooter() {
                       <p className="font-sans text-base font-extrabold leading-snug tracking-tight text-forest underline decoration-forest/50 underline-offset-2">
                         Ethio Origins Tours &amp; Travel
                       </p>
-                      <ExternalLink
-                        className="mx-auto mt-2 size-3.5 text-forest/45 transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5"
-                        aria-hidden="true"
-                      />
                     </div>
                   </a>
                 ))}
@@ -371,6 +369,7 @@ export function SiteFooter() {
             </div>
           </div>
         </div>
+        ) : null}
 
         <div className="flex flex-col items-center justify-between gap-4 border-t border-cream/10 py-5 sm:flex-row">
           <p className="font-sans text-xs text-cream/50">

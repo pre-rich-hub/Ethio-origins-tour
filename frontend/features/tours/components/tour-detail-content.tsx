@@ -1,6 +1,7 @@
 'use client'
 
 import { AlertCircle, Check, MapPin, Plane } from 'lucide-react'
+import { trackSeoEvent } from '@/lib/analytics/events'
 import { useLanguage } from '@/lib/i18n/language'
 import { getLocalizedTour } from '../lib/tour-localization'
 import type { Tour } from '../types/tour'
@@ -17,6 +18,21 @@ export function TourDetailContent({ tour }: { tour: Tour }) {
     typeof localizedTour.importantNote === 'string'
       ? localizedTour.importantNote
       : undefined
+  const hasIncludedServices = localizedTour.included.length > 0
+
+  function renderActivityText(text: string) {
+    return text
+      .split(/(?=Meals:)/)
+      .filter(Boolean)
+      .map((part) => (
+        <p
+          key={part}
+          className="mt-3 font-sans text-sm font-light leading-relaxed text-muted-foreground first:mt-0"
+        >
+          {part}
+        </p>
+      ))
+  }
 
   return (
     <section className="pb-20 pt-16 md:pb-28 md:pt-20">
@@ -32,9 +48,11 @@ export function TourDetailContent({ tour }: { tour: Tour }) {
             <a href="#itinerary" className="px-3 py-5 hover:text-forest">
               {t.toursPage.itinerary}
             </a>
-            <a href="#practical-info" className="px-3 py-5 hover:text-forest">
-              {t.toursPage.practicalInfo}
-            </a>
+            {hasIncludedServices ? (
+              <a href="#practical-info" className="px-3 py-5 hover:text-forest">
+                {t.toursPage.practicalInfo}
+              </a>
+            ) : null}
           </div>
 
           <div className="space-y-16 p-6 md:p-10">
@@ -120,9 +138,9 @@ export function TourDetailContent({ tour }: { tour: Tour }) {
                       <p className="font-serif text-2xl font-medium leading-snug text-foreground">
                         {item.title}
                       </p>
-                      <p className="mt-3 font-sans text-sm font-light leading-relaxed text-muted-foreground">
-                        {item.activities}
-                      </p>
+                      <div className="mt-3 space-y-2">
+                        {renderActivityText(item.activities)}
+                      </div>
                       <p className="mt-3 font-sans text-xs uppercase tracking-widest text-gold">
                         {t.toursPage.overnight}: {item.overnight}
                       </p>
@@ -137,23 +155,25 @@ export function TourDetailContent({ tour }: { tour: Tour }) {
               </div>
             </section>
 
-            <section id="practical-info">
-              <p className="font-sans text-xs uppercase tracking-luxe text-gold">
-                {t.toursPage.practicalInfo}
-              </p>
-              <h2 className="mt-4 font-serif text-4xl font-medium text-foreground">
-                {t.toursPage.includedTitle}
-              </h2>
-              <div className="mt-8 grid gap-4 sm:grid-cols-2">
-                {localizedTour.included.map((item) => (
-                  <div key={item} className="border border-border p-5">
-                    <p className="font-sans text-sm font-light leading-relaxed text-muted-foreground">
-                      {item}
-                    </p>
-                  </div>
-                ))}
-              </div>
-            </section>
+            {hasIncludedServices ? (
+              <section id="practical-info">
+                <p className="font-sans text-xs uppercase tracking-luxe text-gold">
+                  {t.toursPage.practicalInfo}
+                </p>
+                <h2 className="mt-4 font-serif text-4xl font-medium text-foreground">
+                  {t.toursPage.includedTitle}
+                </h2>
+                <div className="mt-8 grid gap-4 sm:grid-cols-2">
+                  {localizedTour.included.map((item) => (
+                    <div key={item} className="border border-border p-5">
+                      <p className="font-sans text-sm font-light leading-relaxed text-muted-foreground">
+                        {item}
+                      </p>
+                    </div>
+                  ))}
+                </div>
+              </section>
+            ) : null}
           </div>
         </div>
 
@@ -168,6 +188,12 @@ export function TourDetailContent({ tour }: { tour: Tour }) {
             </p>
             <a
               href="/contact"
+              onClick={() =>
+                trackSeoEvent('tour_inquiry_clicked', {
+                  tourSlug: tour.slug,
+                  ctaLocation: 'tour_detail_aside',
+                })
+              }
               className="mt-7 inline-flex h-12 w-full items-center justify-center bg-forest px-5 font-sans text-xs uppercase tracking-widest text-cream transition-colors hover:bg-coffee"
             >
               {t.toursPage.requestProposal}
