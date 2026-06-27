@@ -1,7 +1,6 @@
 'use client'
 
 import Image from 'next/image'
-import { motion } from 'framer-motion'
 import { Quote } from 'lucide-react'
 import { SectionHeading } from '@/components/shared/section-heading'
 import { useLanguage } from '@/lib/i18n/language'
@@ -51,16 +50,12 @@ export function HomeTestimonials() {
         />
 
         <div className="mt-14 grid gap-8 md:grid-cols-3">
-          {translatedTestimonials.map((t, i) => (
-            <motion.figure
+          {translatedTestimonials.map((t) => (
+            <figure
               key={t.name}
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: '-40px' }}
-              transition={{ duration: 0.6, delay: i * 0.12 }}
               className="flex flex-col rounded-md border border-coffee/10 bg-cream p-8 shadow-sm"
             >
-              <Quote className="size-8 text-gold" strokeWidth={1.5} />
+              <Quote className="size-8 text-gold-dark" strokeWidth={1.5} />
               <blockquote className="mt-5 flex-1 text-pretty font-serif text-xl font-medium italic leading-relaxed text-foreground">
                 &ldquo;{t.quote}&rdquo;
               </blockquote>
@@ -81,7 +76,7 @@ export function HomeTestimonials() {
                   </div>
                 </div>
               </figcaption>
-            </motion.figure>
+            </figure>
           ))}
         </div>
       </div>

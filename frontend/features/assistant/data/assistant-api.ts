@@ -1,5 +1,11 @@
 import type { AssistantResponse } from '../types'
 
+interface ApiPayload {
+  success?: boolean
+  message?: string
+  data?: AssistantResponse
+}
+
 export async function sendChatMessage(
   message: string,
   conversationId?: string,
@@ -10,11 +16,32 @@ export async function sendChatMessage(
     body: JSON.stringify({ message, conversationId }),
   })
 
-  const payload = await res.json()
+  const responseText = await res.text()
+  let payload: ApiPayload | null = null
 
-  if (!res.ok || !payload.success) {
-    throw new Error(payload.message || 'Chat request failed')
+  if (responseText) {
+    try {
+      payload = JSON.parse(responseText) as ApiPayload
+    } catch {
+      // Next.js returns a non-JSON response when its backend rewrite cannot be reached.
+    }
   }
 
-  return payload.data as AssistantResponse
+  if (!res.ok || !payload?.success) {
+    if (payload?.message) {
+      throw new Error(payload.message)
+    }
+
+    if (res.status >= 500 || !payload) {
+      throw new Error('The assistant service is unavailable. Make sure the backend is running and try again.')
+    }
+
+    throw new Error('Chat request failed')
+  }
+
+  if (!payload.data) {
+    throw new Error('The assistant returned an invalid response. Please try again.')
+  }
+
+  return payload.data
 }

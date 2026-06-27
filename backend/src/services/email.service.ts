@@ -9,6 +9,19 @@ type SendEmailInput = {
   replyTo?: string;
 };
 
+function escapeHtml(value: string): string {
+  return value.replace(/[&<>'"]/g, (character) => {
+    const entities: Record<string, string> = {
+      "&": "&amp;",
+      "<": "&lt;",
+      ">": "&gt;",
+      "'": "&#39;",
+      '"': "&quot;",
+    };
+    return entities[character];
+  });
+}
+
 export async function sendMail(input: SendEmailInput) {
   if (!env.EMAIL_ENABLED) {
     logger.info({ to: input.to, subject: input.subject }, "[email disabled]");
@@ -57,6 +70,27 @@ export async function sendEmail(input: SendEmailInput) {
     logger.warn({ to: input.to, subject: input.subject }, "Queue unavailable — sending inline");
     await sendMail(input);
   }
+}
+
+export async function sendContactAdminEmail(data: {
+  name: string;
+  email: string;
+  message: string;
+}) {
+  if (!env.ADMIN_EMAIL) return;
+
+  await sendEmail({
+    to: env.ADMIN_EMAIL,
+    replyTo: data.email,
+    subject: `New Contact Inquiry - ${data.name}`,
+    html: `
+      <h1>New Contact Inquiry</h1>
+      <p><strong>Name:</strong> ${escapeHtml(data.name)}</p>
+      <p><strong>Email:</strong> ${escapeHtml(data.email)}</p>
+      <p><strong>Message and itinerary details:</strong></p>
+      <p>${escapeHtml(data.message).replace(/\n/g, "<br>")}</p>
+    `,
+  });
 }
 
 export async function sendBookingAdminEmail(data: {

@@ -1,17 +1,23 @@
 'use client'
 
 import Image from 'next/image'
-import { motion } from 'framer-motion'
 import Link from 'next/link'
 import { ArrowRight, Clock } from 'lucide-react'
 import { SectionHeading } from '@/components/shared/section-heading'
-import { tours } from '@/features/tours'
 import { useLanguage } from '@/lib/i18n/language'
 import { cloudinaryImage, cloudinaryTransforms } from '@/lib/images/cloudinary'
 
-export function Experiences() {
+export type ExperienceCard = {
+  title: string
+  slug: string
+  image: string
+  duration: string
+  highlights: string
+  description: string
+}
+
+export function Experiences({ items }: { items: ExperienceCard[] }) {
   const { t } = useLanguage()
-  const featuredTours = tours.slice(0, 9)
 
   return (
     <section id="experiences" className="bg-background py-16 md:py-28">
@@ -23,13 +29,9 @@ export function Experiences() {
         />
 
         <div className="mt-10 grid grid-cols-1 gap-5 sm:mt-14 sm:grid-cols-2 sm:gap-8 lg:grid-cols-3">
-          {featuredTours.map((exp, i) => (
-            <motion.div
+          {items.map((exp) => (
+            <div
               key={exp.title}
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: '-60px' }}
-              transition={{ duration: 0.6, delay: (i % 3) * 0.1 }}
               className="h-[430px] sm:h-[460px]"
             >
               <Link
@@ -71,7 +73,7 @@ export function Experiences() {
                   </div>
                 </div>
               </Link>
-            </motion.div>
+            </div>
           ))}
         </div>
 

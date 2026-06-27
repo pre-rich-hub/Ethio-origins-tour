@@ -1,39 +1,22 @@
 'use client'
 
 import Image from 'next/image'
-import { AnimatePresence, motion } from 'framer-motion'
 import Link from 'next/link'
 import { Pause, Play, Sparkles } from 'lucide-react'
 import { useEffect, useState } from 'react'
-import { galleryImages } from '@/features/gallery/data/gallery-images'
 import { useLanguage } from '@/lib/i18n/language'
 import { cloudinaryImage, cloudinaryTransforms } from '@/lib/images/cloudinary'
 
-const MotionImage = motion(Image)
+type HomeGalleryImage = {
+  src: string
+  alt: string
+  title: string
+  place: string
+}
 
-const images = [
-  galleryImages[6],
-  galleryImages[14],
-  galleryImages[3],
-  galleryImages[20],
-  galleryImages[9],
-  galleryImages[25],
-  galleryImages[1],
-  galleryImages[28],
-]
-
-type HomeGalleryImage = (typeof images)[number]
-
-export function HomeGallery({ items = images }: { items?: Partial<HomeGalleryImage>[] }) {
+export function HomeGallery({ items }: { items: HomeGalleryImage[] }) {
   const { t } = useLanguage()
-  const galleryItems = items.length
-    ? items.map((item, index) => ({
-        src: item.src ?? images[index % images.length].src,
-        alt: item.alt ?? images[index % images.length].alt,
-        title: item.title ?? images[index % images.length].title,
-        place: item.place ?? images[index % images.length].place,
-      }))
-    : images
+  const galleryItems = items
   const [activeIndex, setActiveIndex] = useState(0)
   const [isPlaying, setIsPlaying] = useState(true)
   const activeImage = galleryItems[activeIndex] ?? galleryItems[0]
@@ -59,27 +42,17 @@ export function HomeGallery({ items = images }: { items?: Partial<HomeGalleryIma
         <div className="relative overflow-hidden border border-cream/15 bg-[#101a15] shadow-2xl shadow-black/30">
           <div className="absolute inset-0 bg-[radial-gradient(circle_at_20%_0%,rgba(201,162,39,0.18),transparent_34%),linear-gradient(135deg,rgba(31,77,58,0.9),rgba(16,26,21,0.96)_54%,rgba(0,0,0,0.86))]" />
           <div className="relative grid gap-8 p-4 md:p-6 lg:grid-cols-[1.25fr_0.75fr] lg:p-8">
-            <motion.div
-              initial={{ opacity: 0, y: 22 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: '-40px' }}
-              transition={{ duration: 0.7 }}
+            <div
               className="relative min-h-[420px] overflow-hidden border border-cream/15 bg-black sm:min-h-[520px] lg:min-h-[620px]"
             >
-              <AnimatePresence mode="wait">
-                <MotionImage
+                <Image
                   key={activeImage.src}
                   src={cloudinaryImage(activeImage.src, cloudinaryTransforms.gallery)}
                   alt={activeImage.alt}
                   fill
                   sizes="(max-width: 1024px) 100vw, 58vw"
-                  initial={{ opacity: 0, scale: 1.04 }}
-                  animate={{ opacity: 1, scale: 1 }}
-                  exit={{ opacity: 0, scale: 1.02 }}
-                  transition={{ duration: 0.8, ease: 'easeOut' }}
                   className="absolute inset-0 size-full object-cover"
                 />
-              </AnimatePresence>
               <div className="absolute inset-0 bg-gradient-to-t from-black/88 via-black/16 to-black/20" />
               <div className="absolute inset-x-0 top-0 flex items-center justify-between border-b border-cream/10 bg-black/20 px-4 py-3 backdrop-blur-sm">
                 <div className="flex items-center gap-2">
@@ -93,13 +66,7 @@ export function HomeGallery({ items = images }: { items?: Partial<HomeGalleryIma
               </div>
               <figcaption className="absolute inset-x-0 bottom-0 p-5 sm:p-7">
                 <div className="mb-5 h-1 overflow-hidden bg-cream/15">
-                  <motion.div
-                    key={`${activeImage.src}-${isPlaying}`}
-                    className="h-full bg-gold"
-                    initial={{ width: '0%' }}
-                    animate={{ width: isPlaying ? '100%' : '0%' }}
-                    transition={{ duration: 3.6, ease: 'linear' }}
-                  />
+                  <div className={`h-full bg-gold transition-[width] duration-[3600ms] linear ${isPlaying ? 'w-full' : 'w-0'}`} />
                 </div>
                 <div className="flex flex-col gap-5 sm:flex-row sm:items-end sm:justify-between">
                   <div>
@@ -124,7 +91,7 @@ export function HomeGallery({ items = images }: { items?: Partial<HomeGalleryIma
                   </button>
                 </div>
               </figcaption>
-            </motion.div>
+            </div>
 
             <div className="flex flex-col justify-between gap-7">
               <div className="max-w-xl">

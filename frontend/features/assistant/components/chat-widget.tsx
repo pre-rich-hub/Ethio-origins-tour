@@ -8,6 +8,7 @@ import { ChatInput } from './chat-input'
 import { ChatToggle } from './chat-toggle'
 import { sendChatMessage } from '../data/assistant-api'
 import type { ChatMessage } from '../types'
+import { WhatsAppButton } from './whatsapp-button'
 
 export function ChatWidget({ defaultOpen = false }: { defaultOpen?: boolean }) {
   const [isOpen, setIsOpen] = useState(defaultOpen)
@@ -135,6 +136,7 @@ export function ChatWidget({ defaultOpen = false }: { defaultOpen?: boolean }) {
 
       {/* Toggle button rendered after panel to stay on top. */}
       <div className="fixed bottom-5 right-5 z-50 flex flex-col items-center gap-3">
+        <WhatsAppButton />
         {!isOpen && <ChatToggle isOpen={isOpen} onClick={() => setIsOpen(true)} />}
       </div>
     </>

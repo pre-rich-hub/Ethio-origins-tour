@@ -111,7 +111,7 @@ export function TourDetailHero({ gallery, tour }: TourDetailHeroProps) {
             </div>
 
             <a
-              href="/contact"
+              href={`/contact?tour=${encodeURIComponent(`${localizedTour.title} (${localizedTour.duration})`)}`}
               onClick={() =>
                 trackSeoEvent('tour_inquiry_clicked', {
                   tourSlug: tour.slug,

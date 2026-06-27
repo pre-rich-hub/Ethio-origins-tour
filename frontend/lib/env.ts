@@ -102,6 +102,9 @@ export function getPublicEnv(): PublicEnv {
     apiBaseUrl: normalizeUrl(apiBaseUrl.toString()),
     isProductionDeployment: productionDeployment,
     isPreviewDeployment: previewDeployment,
-    publicIndexingAllowed: productionDeployment && !previewDeployment,
+    // Localhost is not publicly crawlable, so emitting index/follow locally is
+    // safe and lets Lighthouse validate the same directives as production.
+    // Explicit preview/staging deployments remain protected from indexing.
+    publicIndexingAllowed: !previewDeployment && !isPreviewLikeUrl(siteUrl),
   }
 }

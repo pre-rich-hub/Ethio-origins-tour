@@ -16,13 +16,14 @@ export function SectionHeading({
   const isCenter = align === 'center'
   const titleColor = tone === 'light' ? 'text-cream' : 'text-foreground'
   const descColor = tone === 'light' ? 'text-cream/75' : 'text-muted-foreground'
+  const eyebrowColor = tone === 'light' ? 'text-gold' : 'text-gold-dark'
   return (
     <div
       className={`max-w-2xl ${isCenter ? 'mx-auto text-center' : 'text-left'}`}
     >
       {eyebrow && (
         <Reveal>
-          <p className="mb-3 font-sans text-xs uppercase tracking-luxe text-gold">
+          <p className={`mb-3 font-sans text-xs uppercase tracking-luxe ${eyebrowColor}`}>
             {eyebrow}
           </p>
         </Reveal>

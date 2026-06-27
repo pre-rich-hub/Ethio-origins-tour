@@ -5,11 +5,13 @@ import {
   ArrowRight,
   Mail,
   MapPin,
+  Phone,
 } from 'lucide-react'
 import Image from 'next/image'
 import { trackSeoEvent } from '@/lib/analytics/events'
 import { validateNewsletterEmail } from '@/lib/forms/validation'
 import { useLanguage } from '@/lib/i18n/language'
+import { siteConfig } from '@/lib/seo/site-config'
 
 const partnerLinks: Array<{
   label: string
@@ -18,14 +20,52 @@ const partnerLinks: Array<{
   color: string
   textColor: string
   mark: string
-}> = []
+}> = [
+  {
+    label: 'Tripadvisor',
+    href: siteConfig.social.tripadvisor,
+    meta: 'Traveler reviews',
+    color: '#34E0A1',
+    textColor: '#001A17',
+    mark: 'owl',
+  },
+  {
+    label: 'Tourist.com',
+    href: siteConfig.social.tourist,
+    meta: 'Travel profile',
+    color: '#1677FF',
+    textColor: '#FFFFFF',
+    mark: 'T',
+  },
+  {
+    label: 'Google Maps',
+    href: 'https://maps.app.goo.gl/HSzn7PiL5KWzdWD99',
+    meta: 'Find our location',
+    color: '#4285F4',
+    textColor: '#FFFFFF',
+    mark: 'G',
+  },
+]
 
 const socialLinks: Array<{
   label: string
   href: string
   color: string
   icon: string
-}> = []
+}> = [
+  {
+    label: 'Instagram',
+    href: siteConfig.social.instagram,
+    color: '#E8B4CC',
+    icon: 'instagram',
+  },
+  {
+    label: 'Facebook',
+    href: siteConfig.social.facebook,
+    color: '#8AB4F8',
+    icon: 'facebook',
+  },
+]
 
 function SocialLogo({ icon }: { icon: string }) {
   if (icon === 'facebook') {
@@ -237,13 +277,34 @@ export function SiteFooter() {
               {t.footer.contact}
             </h3>
             <ul className="mt-4 space-y-2.5 font-sans text-sm font-light text-cream/70">
-              <li className="flex items-start gap-2">
+              <li>
+                <a
+                  href="https://maps.app.goo.gl/HSzn7PiL5KWzdWD99"
+                  target="_blank"
+                  rel="noreferrer"
+                  className="flex items-start gap-2 transition-colors hover:text-cream"
+                >
                 <MapPin className="mt-0.5 size-4 shrink-0 text-gold" />
                 Bole Road, Addis Ababa, Ethiopia
+                </a>
               </li>
               <li className="flex items-center gap-2">
                 <Mail className="size-4 shrink-0 text-gold" />
-                hello@ethioorigins.com
+                <a href="mailto:info@ethiooriginstour.com" className="transition-colors hover:text-cream">
+                  info@ethiooriginstour.com
+                </a>
+              </li>
+              <li className="flex items-center gap-2">
+                <Phone className="size-4 shrink-0 text-gold" />
+                <a href="tel:+251935257197" className="transition-colors hover:text-cream">
+                  +251 93 525 7197
+                </a>
+              </li>
+              <li className="flex items-center gap-2">
+                <Phone className="size-4 shrink-0 text-gold" />
+                <a href="tel:+251707990306" className="transition-colors hover:text-cream">
+                  +251 70 799 0306
+                </a>
               </li>
             </ul>
           </div>
@@ -376,12 +437,12 @@ export function SiteFooter() {
             © {new Date().getFullYear()} Ethio Origins Tours. {t.footer.rights}
           </p>
           <div className="flex gap-6">
-            <span className="font-sans text-xs text-cream/50">
+            <a href="/terms" className="font-sans text-xs text-cream/50 transition-colors hover:text-cream">
               {t.footer.terms}
-            </span>
-            <span className="font-sans text-xs text-cream/50">
+            </a>
+            <a href="/privacy" className="font-sans text-xs text-cream/50 transition-colors hover:text-cream">
               {t.footer.privacy}
-            </span>
+            </a>
           </div>
         </div>
       </div>

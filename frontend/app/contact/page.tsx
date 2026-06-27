@@ -9,27 +9,36 @@ import {
 import { createMetadata } from '@/lib/seo/create-metadata'
 
 export const metadata: Metadata = createMetadata({
-  title: 'Contact Us to Plan Your Ethiopia Tour',
+  title: 'Customized Ethiopia Tours & Private Travel Planning',
   description:
-    'Contact Ethio Origins Tour to plan a private, group or customized Ethiopia journey. Share your dates, interests and preferred destinations with our local team.',
+    'Plan private and customized Ethiopia tours with local travel experts. Share your dates, interests and preferred destinations for a tailored itinerary.',
   canonicalPath: '/contact',
-  primaryKeyword: 'Contact Ethio Origins Tour',
+  primaryKeyword: 'Ethiopia Customized Tours',
   secondaryKeywords: [
     'Ethiopia Tour Booking',
     'Plan an Ethiopia Tour',
     'Ethiopia Travel Planner',
     'Custom Ethiopia Tour Inquiry',
+    'Ethiopia Travel Planner',
+    'Private Tours Ethiopia',
+    'Ethiopia Travel Services',
   ],
   ogImage: 'https://res.cloudinary.com/divimnzxa/image/upload/v1782305234/Debre_Libanos_anvjli.jpg',
   ogImageAlt: 'Ethiopian mountain landscape for private trip planning',
 })
 
-export default function ContactPage() {
+export default async function ContactPage({
+  searchParams,
+}: {
+  searchParams: Promise<{ tour?: string }>
+}) {
+  const { tour } = await searchParams
+
   return (
     <main className="bg-background text-foreground">
       <Navbar />
       <ContactHero />
-      <ContactFormSection />
+      <ContactFormSection selectedTour={tour?.slice(0, 200)} />
       <ContactPlanningSteps />
       <SiteFooter />
     </main>

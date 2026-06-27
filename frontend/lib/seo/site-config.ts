@@ -5,6 +5,7 @@ const publicEnv = getPublicEnv()
 export const siteConfig = {
   name: "Ethio Origins Tour",
   alternateName: "Ethio Origin Tours",
+  alternateNames: ["Ethio Origin Tour", "Ethio Origin Tours", "Ethio Origin Travel and Tours"],
   shortName: "Ethio Origins",
   description:
     "Explore Ethiopia with a trusted local tour company offering cultural, historical, adventure, trekking, wildlife, coffee, and customized tours.",
@@ -18,15 +19,17 @@ export const siteConfig = {
   logo: "/brand/logo-primary.png",
 
   contact: {
-    email: "hello@ethioorigins.com",
-    phone: "",
+    email: "info@ethiooriginstour.com",
+    phone: "+251935257197",
+    phones: ["+251935257197", "+251707990306"],
     address: "Bole Road, Addis Ababa, Ethiopia",
   },
 
   social: {
-    facebook: "",
-    instagram: "",
+    facebook: "https://www.facebook.com/share/1D7dR4farF/",
+    instagram: "https://www.instagram.com/ethio_origin_tour?igsh=NWV1ZjlnaWdrNXc=",
     youtube: "",
-    tripadvisor: "",
+    tripadvisor: "https://www.tripadvisor.co.uk/Attraction_Review-g293791-d34400247-Reviews-Ethio_Origins_tour-Addis_Ababa.html",
+    tourist: "https://tourist.com/p/39570",
   },
 } as const;

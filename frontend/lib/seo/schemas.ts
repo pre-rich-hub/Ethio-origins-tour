@@ -23,16 +23,37 @@ export function createOrganizationSchema() {
 
   return compactObject({
     '@context': 'https://schema.org',
-    '@type': 'TravelAgency',
+    '@type': 'Organization',
+    '@id': absoluteUrl('/#organization'),
     name: siteConfig.name,
-    alternateName: siteConfig.alternateName,
+    alternateName: siteConfig.alternateNames,
     url: siteConfig.url,
     logo: absoluteUrl(siteConfig.logo),
     description: siteConfig.description,
-    telephone: siteConfig.contact.phone,
+    telephone: siteConfig.contact.phones,
     email: siteConfig.contact.email,
     address: siteConfig.contact.address,
     sameAs,
+  })
+}
+
+export function createTravelAgencySchema() {
+  const sameAs = Object.values(siteConfig.social).filter(Boolean)
+
+  return compactObject({
+    '@context': 'https://schema.org',
+    '@type': 'TravelAgency',
+    '@id': absoluteUrl('/#travel-agency'),
+    name: siteConfig.name,
+    alternateName: siteConfig.alternateNames,
+    url: siteConfig.url,
+    logo: absoluteUrl(siteConfig.logo),
+    description: siteConfig.description,
+    telephone: siteConfig.contact.phones,
+    email: siteConfig.contact.email,
+    address: siteConfig.contact.address,
+    sameAs,
+    parentOrganization: { '@id': absoluteUrl('/#organization') },
   })
 }
 
@@ -41,12 +62,27 @@ export function createWebsiteSchema() {
     '@context': 'https://schema.org',
     '@type': 'WebSite',
     name: siteConfig.name,
-    alternateName: siteConfig.alternateName,
+    alternateName: siteConfig.alternateNames,
     url: siteConfig.url,
     publisher: {
       '@type': 'Organization',
       name: siteConfig.name,
     },
+  }
+}
+
+export function createFaqSchema(items: readonly { question: string; answer: string }[]) {
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    mainEntity: items.map((item) => ({
+      '@type': 'Question',
+      name: item.question,
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text: item.answer,
+      },
+    })),
   }
 }
 

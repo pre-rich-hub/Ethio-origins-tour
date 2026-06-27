@@ -144,6 +144,8 @@ const destinationSeeds: DestinationSeed[] = [
   {
     name: 'Addis Ababa',
     slug: 'addis-ababa',
+    primaryKeyword: 'Addis Ababa City Tours',
+    secondaryKeywords: ['Addis Ababa Sightseeing Tours', 'Ethiopia City Tours'],
     category: 'historical-religious',
     categoryLabel: 'Historical and Religious Destinations',
     region: 'Central Ethiopia',
@@ -162,7 +164,6 @@ const destinationSeeds: DestinationSeed[] = [
       '10-day-omo-valley-bale-mountains-cultural-adventure',
       '12-day-historic-north-omo-valley-tour',
     ],
-    primaryKeyword: 'Addis Ababa City Tours',
   },
   {
     name: 'Lalibela Rock-Hewn Churches',
@@ -197,8 +198,9 @@ const destinationSeeds: DestinationSeed[] = [
     ],
     seoTitle: 'Lalibela Tours & Rock-Hewn Churches',
     seoDescription: 'Explore Lalibela rock-hewn churches with local guides on historical northern Ethiopia tours featuring highland culture and sacred heritage.',
-    primaryKeyword: 'Lalibela Tours',
+    primaryKeyword: 'Lalibela Tour Packages',
     secondaryKeywords: [
+      'Lalibela Tours',
       'Lalibela Tour Packages',
       'Lalibela Historical Tours',
       'Lalibela Guided Tours',
@@ -208,6 +210,8 @@ const destinationSeeds: DestinationSeed[] = [
   {
     name: 'Gondar',
     slug: 'gondar',
+    primaryKeyword: 'Gondar Historical Tours',
+    secondaryKeywords: ['Gondar Castle Tour', 'Northern Ethiopia Historical Tours'],
     category: 'historical-religious',
     categoryLabel: 'Historical and Religious Destinations',
     region: 'Amhara Highlands',
@@ -219,11 +223,12 @@ const destinationSeeds: DestinationSeed[] = [
       '5-day-ethiopia-historic-route-tour',
       '12-day-historic-north-omo-valley-tour',
     ],
-    primaryKeyword: 'Gondar Historical Tours',
   },
   {
     name: 'Aksum',
     slug: 'aksum',
+    primaryKeyword: 'Axum Tours Ethiopia',
+    secondaryKeywords: ['Aksum Historical Tours', 'Northern Ethiopia Heritage Tours'],
     category: 'historical-religious',
     categoryLabel: 'Historical and Religious Destinations',
     region: 'Tigray',
@@ -232,7 +237,6 @@ const destinationSeeds: DestinationSeed[] = [
       '20-day-ethiopia-historical-cultural-adventure',
       '5-day-ethiopia-historic-route-tour',
     ],
-    primaryKeyword: 'Aksum Tours Ethiopia',
   },
   {
     name: 'Harar',
@@ -495,6 +499,8 @@ const destinationSeeds: DestinationSeed[] = [
   {
     name: 'Simien Mountains National Park',
     slug: 'simien-mountains-national-park',
+    primaryKeyword: 'Simien Mountains Tours',
+    secondaryKeywords: ['Simien Mountains Trekking', 'Ethiopia Trekking Tours'],
     category: 'mountains-wildlife',
     categoryLabel: 'Mountains, Parks, and Wildlife',
     region: 'Northern Ethiopia',
@@ -504,7 +510,6 @@ const destinationSeeds: DestinationSeed[] = [
       '20-day-ethiopia-historical-cultural-adventure',
       '12-day-historic-north-omo-valley-tour',
     ],
-    primaryKeyword: 'Simien Mountains Tours',
   },
   {
     name: 'Bale Mountains National Park',
@@ -1135,7 +1140,11 @@ const destinationSeeds: DestinationSeed[] = [
 ]
 
 const completeDestinationSlugs = new Set([
+  'addis-ababa',
   'lalibela',
+  'gondar',
+  'aksum',
+  'simien-mountains-national-park',
   'wenchi-crater-lake',
   'bale-mountains-national-park',
   'awash-national-park',

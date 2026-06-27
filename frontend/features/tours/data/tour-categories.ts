@@ -125,6 +125,9 @@ const tourCategorySeeds: TourCategorySeed[] = [
       primaryKeyword: 'Ethiopia Holiday Packages',
       secondaryKeywords: [
         'Ethiopia Vacation Package',
+        'Ethiopia Vacation Packages',
+        'Ethiopia Family Vacations',
+        'Ethiopia Honeymoon Tours',
         'Northern Ethiopia Tour',
         'Ethiopia Cultural Holiday',
       ],
@@ -161,6 +164,7 @@ const tourCategorySeeds: TourCategorySeed[] = [
       primaryKeyword: 'Ethiopia Adventure Tours',
       secondaryKeywords: [
         'Ethiopia Nature Tours',
+        'Ethiopia Eco Tours',
         'Ethiopian Adventure Travel',
         'Explore Ethiopia Tours',
       ],
@@ -236,6 +240,7 @@ const tourCategorySeeds: TourCategorySeed[] = [
       secondaryKeywords: [
         'Ethiopia Hiking Tours',
         'Simien Mountains Trekking',
+        'Simien Mountains Tours',
         'Bale Mountains Trekking',
       ],
       ogImage: 'https://res.cloudinary.com/divimnzxa/image/upload/v1782373760/Day_trek_to_Simien_Mountain_m7u1xw.jpg',
@@ -390,6 +395,9 @@ const tourCategorySeeds: TourCategorySeed[] = [
       secondaryKeywords: [
         'Northern Ethiopia Historical Tour',
         'Bahir Dar Gondar Lalibela Axum Tour',
+        'Gondar Historical Tours',
+        'Axum Tours Ethiopia',
+        'Lalibela Tour Packages',
         'Ethiopia UNESCO Heritage Tour',
       ],
     },
@@ -407,6 +415,10 @@ const tourCategorySeeds: TourCategorySeed[] = [
       primaryKeyword: 'Private Tours Ethiopia',
       secondaryKeywords: [
         'Ethiopia Customized Tours',
+        'Ethiopia Group Tours',
+        'Ethiopia Luxury Tours',
+        'Ethiopia Budget Tours',
+        'Affordable Ethiopia Tours',
         'Tailor-Made Ethiopia Tours',
         'Ethiopia Travel Planner',
         'Ethiopia Holiday Planner',

@@ -29,7 +29,7 @@ export const translations = {
       blog: 'Blog',
       contact: 'Contact Us',
       contactShort: 'Contact',
-      plan: 'Plan Your Journey',
+      plan: 'Talk to Expert',
       seeMoreDestinations: 'See more destinations',
       seeMoreTours: 'See more tours',
       all: 'All',
@@ -42,7 +42,7 @@ export const translations = {
       description:
         'Expertly crafted journeys through ancient history, vibrant cultures, and extraordinary landscapes.',
       primaryCta: 'Explore Tours',
-      secondaryCta: 'Plan Your Journey',
+      secondaryCta: 'Talk to Expert',
       scroll: 'Scroll down',
     },
     trust: [
@@ -152,7 +152,7 @@ export const translations = {
       allTours: 'All Tours',
       signatureJourneys: 'Signature Journeys',
       privateTrips: 'Private Custom Trips',
-      plan: 'Plan Your Journey',
+      plan: 'Talk to Expert',
       destinations: 'Destinations',
       allDestinations: 'All Destinations',
       historicNorth: 'Historic North',
@@ -324,9 +324,9 @@ export const translations = {
     contactPage: {
       heroBack: 'Back Home',
       eyebrow: 'Contact Us',
-      title: 'Plan Your Ethiopian Journey',
+      title: 'Plan Your Customized Ethiopia Tour',
       description:
-        'Speak with our Addis Ababa-based travel designers about private cultural routes, nature escapes, heritage journeys, and fully bespoke itineraries across Ethiopia.',
+        'Speak with our Ethiopia travel planners about private cultural routes, nature escapes, heritage journeys, and fully customized itineraries across Ethiopia.',
       privatePlanning: 'Private Planning',
       replyWindow: 'Reply Window',
       tailorMade: 'Tailor Made',
@@ -401,7 +401,7 @@ export const translations = {
       title: 'Your Ethiopian Story Starts Here',
       description:
         "Whether you're seeking adventure, culture, wildlife, or history, we'll create a journey you'll never forget.",
-      primary: 'Plan Your Journey',
+      primary: 'Talk to Expert',
       secondary: 'Contact Us',
     },
   },

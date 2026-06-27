@@ -126,6 +126,8 @@ function publicRouteSet({ tours, destinations, tourCategories, posts, isPublishe
     '/contact',
     '/destinations',
     '/gallery',
+    '/terms',
+    '/privacy',
     '/tours',
     '/login',
     '/admin',
@@ -181,7 +183,7 @@ const { tours } = loadTs('features/tours/data/tours.ts')
 const { tourCategories } = loadTs('features/tours/data/tour-categories.ts')
 const { destinations } = loadTs('features/destinations/data/destinations.ts')
 const { posts, isPublishedCompletePost } = loadTs('features/blog/data/posts.ts')
-const { contentKeywordTargets } = loadTs('lib/seo/content-keyword-map.ts')
+const { contentKeywordTargets, requiredCommercialKeywords } = loadTs('lib/seo/content-keyword-map.ts')
 const schemas = loadTs('lib/seo/schemas.ts')
 const { validateJsonLd } = loadTs('lib/seo/validate-json-ld.ts')
 const { getPublicEnv } = loadTs('lib/env.ts')
@@ -237,7 +239,7 @@ for (const post of posts) {
 }
 assert(!read('features/blog/components/blog-posts-section.tsx').includes('href={`/blog/${post.slug}`}') || read('features/blog/components/blog-posts-section.tsx').includes('isCompletePost'), 'Blog listing must not link to incomplete detail posts.')
 
-const mainRoutes = ['/', '/about', '/blog', '/contact', '/destinations', '/gallery', '/tours']
+const mainRoutes = ['/', '/about', '/blog', '/contact', '/destinations', '/gallery', '/privacy', '/terms', '/tours']
 const sitemapUrls = new Set([
   ...mainRoutes.map(absolute),
   ...destinations.filter((destination) => destination.indexable).map((destination) => absolute(destination.seo.canonicalPath)),
@@ -287,9 +289,11 @@ const metadataRecords = [
   { route: '/tours', title: 'Ethiopia Tour Packages & Guided Tours', description: 'Browse Ethiopia tour packages for cultural journeys, historical routes, trekking, wildlife, coffee experiences, private tours and group adventures.', primaryKeyword: 'Ethiopia Tour Packages', indexable: true },
   { route: '/destinations', title: 'Ethiopia Travel Destinations & Places to Visit', description: "Discover Ethiopia's leading travel destinations, including Lalibela, Omo Valley, Danakil Depression, Bale Mountains, Wenchi Crater Lake, Awash National Park, festivals and adventure experiences.", primaryKeyword: 'Ethiopia Travel Destinations', indexable: true },
   { route: '/about', title: 'About Our Local Ethiopia Tour Company', description: 'Learn about Ethio Origins Tour, our local guides, travel expertise, values and commitment to responsible, memorable journeys across Ethiopia.', primaryKeyword: 'About Ethio Origins Tour', indexable: true },
-  { route: '/contact', title: 'Contact Us to Plan Your Ethiopia Tour', description: 'Contact Ethio Origins Tour to plan a private, group or customized Ethiopia journey. Share your dates, interests and preferred destinations with our local team.', primaryKeyword: 'Contact Ethio Origins Tour', indexable: true },
+  { route: '/contact', title: 'Customized Ethiopia Tours & Private Travel Planning', description: 'Plan private and customized Ethiopia tours with local travel experts. Share your dates, interests and preferred destinations for a tailored itinerary.', primaryKeyword: 'Ethiopia Customized Tours', indexable: true },
   { route: '/gallery', title: 'Ethiopia Travel Gallery', description: "Explore photographs of Ethiopia's landscapes, historical sites, cultural experiences, wildlife and destinations featured in our guided tours.", primaryKeyword: 'Ethiopia Travel Gallery', indexable: true },
   { route: '/blog', title: 'Ethiopia Travel Guide, Tips & Inspiration', description: 'Follow the Ethio Origins Tour journal for Ethiopia travel planning notes, destination context and future guide articles as they are published.', primaryKeyword: 'Ethiopia Travel Guide', indexable: true },
+  { route: '/terms', title: 'Terms and Conditions', description: 'Read the terms and conditions for using Ethio Origins Tour services and booking travel in Ethiopia.', primaryKeyword: 'Ethio Origins Tour Terms and Conditions', indexable: true },
+  { route: '/privacy', title: 'Privacy Policy', description: 'Learn how Ethio Origins Tour collects, uses, protects, and shares personal information.', primaryKeyword: 'Ethio Origins Tour Privacy Policy', indexable: true },
   ...tours.map((tour) => ({ route: `/tours/${tour.slug}`, ...tour.seo, indexable: true })),
   ...tourCategories.map((category) => ({ route: `/tours/${category.slug}`, ...category.seo, indexable: category.indexable })),
   ...destinations.map((destination) => ({ route: `/destinations/${destination.slug}`, ...destination.seo, indexable: destination.indexable })),
@@ -335,10 +339,22 @@ for (const target of contentKeywordTargets) {
   assert(routeSet.has(target.route), `Keyword target route does not exist: ${target.route}.`)
   if (!target.indexable) assert(!sitemapUrls.has(absolute(target.route)), `Noindex keyword target must not be in sitemap: ${target.route}.`)
 }
+const mappedKeywords = new Set(
+  contentKeywordTargets
+    .flatMap((target) => [target.primaryKeyword, ...target.secondaryKeywords])
+    .map((keyword) => keyword.toLowerCase()),
+)
+for (const keyword of requiredCommercialKeywords) {
+  assert(mappedKeywords.has(keyword.toLowerCase()), `Commercial keyword is not assigned to a target page: ${keyword}.`)
+}
 
 const schemasToValidate = [
   schemas.createOrganizationSchema(),
+  schemas.createTravelAgencySchema(),
   schemas.createWebsiteSchema(),
+  schemas.createFaqSchema([
+    { question: 'How do I book?', answer: 'Contact the local travel team.' },
+  ]),
   schemas.createBreadcrumbSchema([
     { name: 'Home', path: '/' },
     { name: 'Tours', path: '/tours' },

@@ -1,7 +1,6 @@
 'use client'
 
 import Image from 'next/image'
-import { motion } from 'framer-motion'
 import {
   Compass,
   Handshake,
@@ -85,13 +84,9 @@ export function CustomJourneys() {
         </div>
 
         <div className="mt-14 grid gap-5 md:grid-cols-2 xl:grid-cols-4">
-          {translatedFeatures.map((f, i) => (
-            <motion.article
+          {translatedFeatures.map((f) => (
+            <article
               key={f.title}
-              initial={{ opacity: 0, y: 24 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: '-40px' }}
-              transition={{ duration: 0.55, delay: i * 0.08 }}
               className="group min-h-[310px] border border-cream/16 bg-cream/8 p-7 shadow-2xl shadow-black/10 backdrop-blur-sm transition-colors hover:border-gold/60 hover:bg-cream/12"
             >
               <div className="flex items-start justify-between gap-5">
@@ -108,7 +103,7 @@ export function CustomJourneys() {
               <p className="mt-4 font-sans text-sm font-light leading-relaxed text-cream/70">
                 {f.text}
               </p>
-            </motion.article>
+            </article>
           ))}
         </div>
 

@@ -1,10 +1,8 @@
 'use client'
 
 import Image from 'next/image'
-import { motion } from 'framer-motion'
 import Link from 'next/link'
 import { SectionHeading } from '@/components/shared/section-heading'
-import { destinations } from '@/features/destinations'
 import type { Destination } from '@/features/destinations'
 import { trackSeoEvent } from '@/lib/analytics/events'
 import { useLanguage } from '@/lib/i18n/language'
@@ -19,16 +17,15 @@ const featuredDestinationSlugs = [
   'awash-national-park',
 ]
 
-export function FeaturedDestinations({ items = destinations }: { items?: Destination[] }) {
+export function FeaturedDestinations({ items }: { items: Destination[] }) {
   const { t } = useLanguage()
-  const availableDestinations = [...items, ...destinations]
   const visibleDestinations = [
     ...featuredDestinationSlugs
       .map((slug) =>
-        availableDestinations.find((destination) => destination.slug === slug),
+        items.find((destination) => destination.slug === slug),
       )
       .filter((destination): destination is Destination => Boolean(destination)),
-    ...availableDestinations,
+    ...items,
   ].filter(
     (destination, index, allDestinations) =>
       allDestinations.findIndex((item) => item.slug === destination.slug) === index,
@@ -57,7 +54,7 @@ export function FeaturedDestinations({ items = destinations }: { items?: Destina
         </div>
 
         <div className="mt-10 flex snap-x snap-mandatory gap-4 overflow-x-auto pb-6 [scrollbar-width:thin] [scrollbar-color:rgba(250,246,236,0.35)_transparent] md:mt-14 md:gap-6">
-          {visibleDestinations.map((d, i) => (
+          {visibleDestinations.map((d) => (
             <Link
               key={d.name}
               href={`/destinations/${d.slug}`}
@@ -70,11 +67,7 @@ export function FeaturedDestinations({ items = destinations }: { items?: Destina
               aria-label={`Open dedicated page for ${d.name}`}
               className="group block h-[450px] min-w-[calc(100vw-2rem)] snap-center cursor-pointer touch-manipulation focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-gold sm:h-[520px] sm:min-w-[390px] lg:h-[580px] lg:min-w-[390px] xl:min-w-[420px]"
             >
-              <motion.article
-                initial={{ opacity: 0, y: 28 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, margin: '-40px' }}
-                transition={{ duration: 0.6, delay: i * 0.08 }}
+              <article
                 className="relative flex size-full overflow-hidden rounded-none border border-cream/18 bg-coffee shadow-2xl shadow-black/25"
               >
                 <Image
@@ -103,7 +96,7 @@ export function FeaturedDestinations({ items = destinations }: { items?: Destina
                     {t.destinations.exploreTrip}
                   </span>
                 </div>
-              </motion.article>
+              </article>
             </Link>
           ))}
         </div>

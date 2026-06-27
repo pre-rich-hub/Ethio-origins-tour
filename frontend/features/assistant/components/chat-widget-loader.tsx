@@ -3,6 +3,7 @@
 import dynamic from 'next/dynamic'
 import { Bot } from 'lucide-react'
 import { useState } from 'react'
+import { WhatsAppButton } from './whatsapp-button'
 
 const ChatWidget = dynamic(
   () => import('./chat-widget').then((mod) => mod.ChatWidget),
@@ -18,6 +19,7 @@ export function ChatWidgetLoader() {
 
   return (
     <div className="fixed bottom-5 right-5 z-50 flex flex-col items-center gap-3">
+      <WhatsAppButton />
       <button
         type="button"
         onClick={() => setEnabled(true)}

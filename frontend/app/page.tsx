@@ -16,6 +16,7 @@ import {
   TrustStrip,
   WhyEthiopia,
 } from '@/features/home'
+import { tours } from '@/features/tours'
 
 export const metadata = createMetadata({
   title: 'Ethiopia Tour Company & Local Travel Experts',
@@ -40,13 +41,21 @@ export default async function Page() {
     getFeaturedDestinations(),
     getGalleryImages(),
   ])
+  const featuredTours = tours.slice(0, 6).map((tour) => ({
+    title: tour.title,
+    slug: tour.slug,
+    image: tour.image,
+    duration: tour.duration,
+    highlights: tour.highlights,
+    description: tour.description,
+  }))
 
   return (
     <main className="overflow-x-hidden">
       <Navbar />
       <Hero />
       <TrustStrip />
-      <Experiences />
+      <Experiences items={featuredTours} />
       <FeaturedDestinations items={featuredDestinations} />
       <WhyEthiopia />
       <CustomJourneys />

@@ -2,7 +2,7 @@ import { Analytics } from '@vercel/analytics/next'
 import type { Metadata } from 'next'
 import { JsonLd } from '@/components/seo/json-ld'
 import { LanguageProvider } from '@/lib/i18n/language'
-import { createOrganizationSchema, createWebsiteSchema } from '@/lib/seo/schemas'
+import { createOrganizationSchema, createTravelAgencySchema, createWebsiteSchema } from '@/lib/seo/schemas'
 import { siteConfig } from '@/lib/seo/site-config'
 import { ChatWidgetLoader } from '@/features/assistant/components/chat-widget-loader'
 import './globals.css'
@@ -68,9 +68,9 @@ export const metadata: Metadata = {
   category: 'travel',
   icons: {
     icon: [
-      { url: '/favicon.png', sizes: '512x512', type: 'image/png' },
+      { url: '/icon-light-32x32.png', sizes: '32x32', type: 'image/png' },
     ],
-    shortcut: ['/favicon.png'],
+    shortcut: ['/icon-light-32x32.png'],
     apple: [{ url: '/apple-icon.png', sizes: '512x512', type: 'image/png' }],
   },
   manifest: '/manifest.webmanifest',
@@ -86,6 +86,7 @@ export default function RootLayout({
       <body className="font-sans antialiased">
         <LanguageProvider>
           <JsonLd data={createOrganizationSchema()} />
+          <JsonLd data={createTravelAgencySchema()} />
           <JsonLd data={createWebsiteSchema()} />
           {children}
           <ChatWidgetLoader />

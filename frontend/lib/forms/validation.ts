@@ -53,10 +53,6 @@ export function validateContactInquiry(input: ContactValidationInput) {
     errors.preferredMonth = 'Preferred month must be 80 characters or fewer.'
   }
 
-  if (!bounded(input.message, 20, 2500)) {
-    errors.message = 'Tell us a little more, using 20 to 2500 characters.'
-  }
-
   return {
     success: Object.keys(errors).length === 0,
     errors,

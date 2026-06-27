@@ -27,7 +27,7 @@ export function BrandStory() {
         </Reveal>
 
         <div className="lg:col-span-7">
-          <p className="mb-3 font-sans text-xs uppercase tracking-luxe text-gold">
+          <p className="mb-3 font-sans text-xs uppercase tracking-luxe text-gold-dark">
             {t.story.eyebrow}
           </p>
           <h2 className="text-balance font-serif text-3xl font-medium leading-tight text-foreground md:text-5xl">

@@ -1,7 +1,6 @@
 'use client'
 
 import Image from 'next/image'
-import { motion } from 'framer-motion'
 import { Reveal } from '@/components/shared/reveal'
 import { useLanguage } from '@/lib/i18n/language'
 import { cloudinaryImage, cloudinaryTransforms } from '@/lib/images/cloudinary'
@@ -51,13 +50,9 @@ export function WhyEthiopia() {
           </p>
 
           <div className="mt-10 grid grid-cols-2 gap-x-8 gap-y-8 sm:grid-cols-3">
-            {translatedFacts.map((f, i) => (
-              <motion.div
+            {translatedFacts.map((f) => (
+              <div
                 key={f.label}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.5, delay: i * 0.08 }}
               >
                 <div className="font-serif text-3xl font-medium text-gold md:text-4xl">
                   {f.value}
@@ -65,7 +60,7 @@ export function WhyEthiopia() {
                 <div className="mt-1 font-sans text-xs uppercase tracking-wider text-cream/70">
                   {f.label}
                 </div>
-              </motion.div>
+              </div>
             ))}
           </div>
         </div>

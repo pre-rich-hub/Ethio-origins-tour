@@ -3,11 +3,22 @@
 import Link from 'next/link'
 import Image from 'next/image'
 import { useEffect, useRef, useState } from 'react'
-import { AnimatePresence, motion } from 'framer-motion'
 import { Check, ChevronDown, Globe2, Menu, X } from 'lucide-react'
-import { destinations } from '@/features/destinations'
-import { tours } from '@/features/tours'
 import { languages, useLanguage } from '@/lib/i18n/language'
+
+const navDestinations: NavChild[] = [
+  { label: 'Lalibela', href: '/destinations/lalibela', meta: 'Amhara Highlands' },
+  { label: 'Omo Valley', href: '/destinations/omo-valley', meta: 'Southern Ethiopia' },
+  { label: 'Danakil Depression', href: '/destinations/danakil-depression', meta: 'Afar Region' },
+  { label: 'Bale Mountains', href: '/destinations/bale-mountains-national-park', meta: 'Oromia Highlands' },
+]
+
+const navTours: NavChild[] = [
+  { label: 'Omo Valley & Bale Mountains', href: '/tours/10-day-omo-valley-bale-mountains-cultural-adventure', meta: '10 Days' },
+  { label: 'Omo Valley Cultural Discovery', href: '/tours/8-day-omo-valley-cultural-discovery-tour', meta: '8 Days' },
+  { label: 'Lalibela Christmas Festival', href: '/tours/3-day-lalibela-genna-festival-tour', meta: '3 Days' },
+  { label: 'Danakil & Erta Ale Adventure', href: '/tours/4-day-danakil-depression-erta-ale-tour', meta: '4 Days' },
+]
 
 type NavChild = {
   label: string
@@ -33,11 +44,6 @@ export function Navbar() {
   const [expandedMobile, setExpandedMobile] = useState<string | null>(null)
   const selectedLanguage =
     languages.find((item) => item.code === language) ?? languages[0]
-  const navDestinations = [...destinations].sort((a, b) => {
-    if (a.indexable && !b.indexable) return -1
-    if (!a.indexable && b.indexable) return 1
-    return a.name.localeCompare(b.name)
-  })
   const links: NavLink[] = [
     { label: t.nav.home, href: '/#home' },
     {
@@ -46,11 +52,7 @@ export function Navbar() {
       previewLimit: 4,
       seeMoreHref: '/destinations',
       seeMoreLabel: t.nav.seeMoreDestinations,
-      children: navDestinations.map((destination) => ({
-        label: destination.name,
-        href: `/destinations/${destination.slug}`,
-        meta: destination.place,
-      })),
+      children: navDestinations,
     },
     {
       label: t.nav.tours,
@@ -58,11 +60,7 @@ export function Navbar() {
       previewLimit: 4,
       seeMoreHref: '/tours',
       seeMoreLabel: t.nav.seeMoreTours,
-      children: tours.map((tour) => ({
-        label: tour.title,
-        href: `/tours/${tour.slug}`,
-        meta: tour.duration,
-      })),
+      children: navTours,
     },
     { label: t.nav.gallery, href: '/gallery' },
     { label: t.nav.blog, href: '/blog' },
@@ -242,12 +240,8 @@ export function Navbar() {
         </div>
       </nav>
 
-      <AnimatePresence>
-        {open && (
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
+      {open && (
+          <div
             className="fixed inset-0 z-50 flex flex-col bg-background text-foreground lg:hidden"
           >
             <div className="flex items-start justify-between px-5 py-6">
@@ -280,12 +274,9 @@ export function Navbar() {
             </div>
 
             <ul className="flex flex-1 flex-col justify-center gap-5 px-8 pb-16 text-center">
-              {links.map((l, i) => (
-                <motion.li
+              {links.map((l) => (
+                <li
                   key={l.href}
-                  initial={{ opacity: 0, x: -20 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  transition={{ delay: 0.05 * i + 0.1 }}
                 >
                   {l.children && (
                     <>
@@ -305,12 +296,8 @@ export function Navbar() {
                           }`}
                         />
                       </button>
-                      <AnimatePresence>
-                        {expandedMobile === l.label && (
-                          <motion.div
-                            initial={{ opacity: 0, height: 0 }}
-                            animate={{ opacity: 1, height: 'auto' }}
-                            exit={{ opacity: 0, height: 0 }}
+                      {expandedMobile === l.label && (
+                          <div
                             className="mx-auto mt-3 grid max-w-xs gap-2 overflow-hidden border-y border-forest/10 py-3"
                           >
                             <a
@@ -338,9 +325,8 @@ export function Navbar() {
                                   {child.label}
                                 </a>
                               ))}
-                          </motion.div>
-                        )}
-                      </AnimatePresence>
+                          </div>
+                      )}
                     </>
                   )}
                   {!l.children && (
@@ -355,7 +341,7 @@ export function Navbar() {
                       {l.href === '/contact' ? t.nav.contactShort : l.label}
                     </a>
                   )}
-                </motion.li>
+                </li>
               ))}
             </ul>
 
@@ -402,9 +388,8 @@ export function Navbar() {
                 {t.nav.plan}
               </a>
             </div>
-          </motion.div>
-        )}
-      </AnimatePresence>
+          </div>
+      )}
     </header>
   )
 }

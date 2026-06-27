@@ -187,7 +187,7 @@ export function TourDetailContent({ tour }: { tour: Tour }) {
               {localizedTour.description} {t.toursPage.asideDescription}
             </p>
             <a
-              href="/contact"
+              href={`/contact?tour=${encodeURIComponent(`${localizedTour.title} (${localizedTour.duration})`)}`}
               onClick={() =>
                 trackSeoEvent('tour_inquiry_clicked', {
                   tourSlug: tour.slug,

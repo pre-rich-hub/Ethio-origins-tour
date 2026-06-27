@@ -43,6 +43,7 @@
   --color-sand: var(--sand);
   --color-stone: var(--stone);
   --color-gold: var(--gold);
+  --color-gold-dark: var(--gold-dark);
   --color-cream: var(--cream);
 
   --radius-sm: calc(var(--radius) * 0.6);
@@ -64,6 +65,7 @@
   --sand: #f4e8d0;
   --stone: #f1eadf;
   --gold: #c9a227;
+  --gold-dark: #765d00;
   --cream: #faf8f4;
 
   --background: #faf8f4;

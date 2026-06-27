@@ -23,7 +23,7 @@ function FieldLabel({ children }: { children: ReactNode }) {
   )
 }
 
-export function ContactFormSection() {
+export function ContactFormSection({ selectedTour }: { selectedTour?: string }) {
   const { t } = useLanguage()
   const [status, setStatus] = useState<'idle' | 'loading' | 'success' | 'error'>('idle')
   const [message, setMessage] = useState('')
@@ -33,6 +33,7 @@ export function ContactFormSection() {
   async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault()
     if (status === 'loading') return
+    const form = event.currentTarget
     setStatus('loading')
     setMessage('')
     setErrors({})
@@ -41,7 +42,7 @@ export function ContactFormSection() {
       ctaLocation: 'contact_form',
     })
 
-    const formData = new FormData(event.currentTarget)
+    const formData = new FormData(form)
     const name = String(formData.get('name') || '').trim()
     const email = String(formData.get('email') || '').trim()
     const phone = String(formData.get('phone') || '').trim()
@@ -71,6 +72,7 @@ export function ContactFormSection() {
 
     const selectedStyles = formData.getAll('journeyStyle').join(', ')
     const details = [
+      selectedTour ? `Selected tour: ${selectedTour}` : '',
       `${t.contactPage.form.phone}: ${phone || t.contactPage.form.notProvided}`,
       `${t.contactPage.form.month}: ${preferredMonth || t.contactPage.form.notProvided}`,
       `${t.contactPage.form.journeyStyle}: ${selectedStyles || t.contactPage.form.notSelected}`,
@@ -81,31 +83,27 @@ export function ContactFormSection() {
     ].join('\n')
 
     try {
-      const response = await fetch('/api/contact', {
+      const response = await fetch('/api/v1/contact', {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          name,
-          email,
-          message: details,
-        }),
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ name, email, message: details }),
       })
+      const responseText = await response.text()
+      const payload = responseText
+        ? (JSON.parse(responseText) as { success?: boolean; message?: string })
+        : null
 
-      const payload = (await response.json()) as { success?: boolean }
-
-      if (!response.ok || !payload.success) {
-        throw new Error(t.contactPage.form.error)
+      if (!response.ok || !payload?.success) {
+        throw new Error(payload?.message || t.contactPage.form.error)
       }
 
-      event.currentTarget.reset()
+      form.reset()
       setRenderedAt(Date.now())
       setStatus('success')
-      setMessage(t.contactPage.form.success)
+      setMessage('Thank you. Your inquiry has been sent successfully.')
       trackSeoEvent('contact_submit_success', {
         route: '/contact',
-        ctaLocation: 'contact_form',
+        ctaLocation: 'contact_form_email',
       })
     } catch {
       setStatus('error')
@@ -125,6 +123,16 @@ export function ContactFormSection() {
           className="border border-border bg-card p-6 shadow-xl shadow-coffee/5 md:p-10"
         >
           <div className="grid gap-5 md:grid-cols-2">
+            {selectedTour ? (
+              <div className="border border-gold/40 bg-gold/10 p-4 md:col-span-2">
+                <span className="block font-sans text-[0.68rem] font-semibold uppercase tracking-widest text-muted-foreground">
+                  Selected tour
+                </span>
+                <span className="mt-1 block font-serif text-xl text-foreground">
+                  {selectedTour}
+                </span>
+              </div>
+            ) : null}
             <label>
               <FieldLabel>{t.contactPage.form.fullName}</FieldLabel>
               <input
@@ -255,12 +263,9 @@ export function ContactFormSection() {
               aria-describedby={errors.message ? 'contact-message-error' : undefined}
               aria-invalid={Boolean(errors.message)}
               className={inputClass}
-              maxLength={2500}
-              minLength={20}
               name="message"
               rows={6}
               placeholder={t.contactPage.form.messagePlaceholder}
-              required
             />
             {errors.message ? (
               <span id="contact-message-error" className="mt-2 block text-sm text-red-700">

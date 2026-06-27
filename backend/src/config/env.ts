@@ -35,7 +35,7 @@ const envSchema = z.object({
 
   // AI Assistant
   ASSISTANT_PROVIDER: z.enum(["gemini", "openai", "anthropic", "grok"]).default("gemini"),
-  ASSISTANT_MODEL: z.string().default("gemini-2.0-flash"),
+  ASSISTANT_MODEL: z.string().default("gemini-2.5-flash"),
   GEMINI_API_KEY: z.string().optional().default(""),
   OPENAI_API_KEY: z.string().optional().default(""),
   ANTHROPIC_API_KEY: z.string().optional().default(""),

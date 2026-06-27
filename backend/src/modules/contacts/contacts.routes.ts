@@ -5,6 +5,7 @@ import { asyncHandler } from "../../utils/async-handler.js";
 import { ok } from "../../utils/api-response.js";
 import { publicFormLimiter } from "../../middleware/rate-limit.middleware.js";
 import { mapContact } from "../../utils/mappers.js";
+import { sendContactAdminEmail } from "../../services/email.service.js";
 
 export const contactsRouter = Router();
 
@@ -20,6 +21,7 @@ contactsRouter.post(
   asyncHandler(async (req, res) => {
     const body = contactCreateSchema.parse(req.body);
     const contact = await prisma.contact.create({ data: body });
+    await sendContactAdminEmail(body);
     return ok(res, "Contact request submitted successfully", mapContact(contact), 201);
   })
 );
