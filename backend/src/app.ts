@@ -16,7 +16,9 @@ import { healthRouter } from "./modules/health/health.routes.js";
 
 export const app = express();
 
-app.use(helmet());
+app.use(
+  typeof helmet === "function" ? (helmet as any)() : (helmet as any).default(),
+);
 app.use(
   cors({
     origin: env.FRONTEND_ORIGIN,
