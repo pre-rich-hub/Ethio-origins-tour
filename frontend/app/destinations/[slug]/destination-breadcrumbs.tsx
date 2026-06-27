@@ -14,7 +14,7 @@ export function DestinationBreadcrumbs({
   const localizedDestination = getLocalizedDestination(destination, language)
 
   return (
-    <div className="mx-auto max-w-7xl px-4 py-5 sm:px-6 md:px-8">
+    <div className="mx-auto max-w-7xl px-4 pb-5 pt-28 sm:px-6 md:px-8 md:pt-32">
       <Breadcrumbs
         items={[
           { label: t.destinationsPage.breadcrumbsHome, href: '/' },

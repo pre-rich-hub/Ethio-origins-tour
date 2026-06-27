@@ -35,7 +35,7 @@ type NavLink = {
   seeMoreLabel?: string
 }
 
-export function Navbar() {
+export function Navbar({ solid = false }: { solid?: boolean } = {}) {
   const { language, setLanguage, t } = useLanguage()
   const [scrolled, setScrolled] = useState(false)
   const scrolledRef = useRef(false)
@@ -100,7 +100,7 @@ export function Navbar() {
   return (
     <header
       className={`fixed inset-x-0 top-0 z-50 transition-all duration-500 ${
-        scrolled
+        solid || scrolled
           ? 'bg-forest/95 backdrop-blur-md shadow-lg shadow-forest/20'
           : 'bg-transparent'
       }`}

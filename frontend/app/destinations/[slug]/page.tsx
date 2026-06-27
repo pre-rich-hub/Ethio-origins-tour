@@ -93,7 +93,7 @@ export default async function DestinationPage({ params }: DestinationPageProps) 
 
   return (
     <main className="bg-background text-foreground">
-      <Navbar />
+      <Navbar solid />
       <DestinationBreadcrumbs destination={destination} />
       <JsonLd
         data={createBreadcrumbSchema([
