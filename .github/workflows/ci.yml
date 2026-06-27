@@ -23,6 +23,8 @@ env:
   SENDGRID_API_KEY: ""
   SENTRY_DSN: ""
   EMAIL_ENABLED: "false"
+  ASSISTANT_PROVIDER: gemini
+  GEMINI_API_KEY: "dummy-key-for-ci-testing-purposes-only"
 
 jobs:
   validate:
