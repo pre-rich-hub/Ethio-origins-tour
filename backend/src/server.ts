@@ -8,25 +8,30 @@ import { registerRoutes } from "./routes.js";
 import { createEmailWorker } from "./services/queue.service.js";
 import { sendMail } from "./services/email.service.js";
 
-initSentry();
+const isVercel = Boolean(process.env.VERCEL);
 
+initSentry();
 registerRoutes(app);
 installFinalMiddleware();
 
-createEmailWorker(sendMail);
+if (!isVercel) {
+  createEmailWorker(sendMail);
 
-const server = app.listen(env.PORT, () => {
-  logger.info({ port: env.PORT }, "Backend API listening");
-});
+  const server = app.listen(env.PORT, () => {
+    logger.info({ port: env.PORT }, "Backend API listening");
+  });
 
-async function shutdown() {
-  logger.info("Shutting down...");
-  await prisma.$disconnect();
-  if (redis) {
-    await redis.quit();
+  async function shutdown() {
+    logger.info("Shutting down...");
+    await prisma.$disconnect();
+    if (redis) {
+      await redis.quit();
+    }
+    server.close(() => process.exit(0));
   }
-  server.close(() => process.exit(0));
+
+  process.on("SIGINT", shutdown);
+  process.on("SIGTERM", shutdown);
 }
 
-process.on("SIGINT", shutdown);
-process.on("SIGTERM", shutdown);
+export default app;

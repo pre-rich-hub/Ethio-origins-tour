@@ -61,8 +61,6 @@ const parsed = envSchema.parse(process.env);
 if (parsed.NODE_ENV === "production") {
   const required: string[] = [];
   if (!parsed.SENDGRID_API_KEY) required.push("SENDGRID_API_KEY");
-  if (!parsed.REDIS_URL) required.push("REDIS_URL");
-  if (!parsed.SENTRY_DSN) required.push("SENTRY_DSN");
 
   if (required.length > 0) {
     throw new Error(
