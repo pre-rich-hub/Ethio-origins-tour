@@ -29,6 +29,27 @@ export async function sendMail(input: SendEmailInput) {
   }
 
   const useSendGrid = Boolean(env.SENDGRID_API_KEY);
+  const useSmtp = Boolean(env.SMTP_HOST);
+
+  if (useSmtp) {
+    const nodemailer = await import("nodemailer");
+    const transporter = nodemailer.default.createTransport({
+      host: env.SMTP_HOST,
+      port: env.SMTP_PORT,
+      secure: env.SMTP_PORT === 465,
+      auth: env.SMTP_USER && env.SMTP_PASS ? { user: env.SMTP_USER, pass: env.SMTP_PASS } : undefined
+    });
+
+    await transporter.sendMail({
+      from: env.SMTP_FROM,
+      to: input.to,
+      subject: input.subject,
+      html: input.html,
+      text: input.html.replace(/<[^>]+>/g, " "),
+      replyTo: input.replyTo
+    });
+    return;
+  }
 
   if (useSendGrid) {
     const sgMail = await import("@sendgrid/mail");
@@ -62,7 +83,14 @@ export async function sendMail(input: SendEmailInput) {
   });
 }
 
+const isVercel = Boolean(process.env.VERCEL);
+
 export async function sendEmail(input: SendEmailInput) {
+  if (isVercel) {
+    await sendMail(input);
+    return;
+  }
+
   try {
     await addEmailJob(input);
     logger.info({ to: input.to, subject: input.subject }, "Email queued");

@@ -60,7 +60,11 @@ const parsed = envSchema.parse(process.env);
 
 if (parsed.NODE_ENV === "production") {
   const required: string[] = [];
-  if (!parsed.SENDGRID_API_KEY) required.push("SENDGRID_API_KEY");
+  const hasSendGrid = Boolean(parsed.SENDGRID_API_KEY);
+  const hasSmtp = Boolean(parsed.SMTP_HOST) && Boolean(parsed.SMTP_USER) && Boolean(parsed.SMTP_PASS);
+  if (!hasSendGrid && !hasSmtp) {
+    required.push("SENDGRID_API_KEY or complete SMTP configuration (SMTP_HOST, SMTP_USER, SMTP_PASS)");
+  }
 
   if (required.length > 0) {
     throw new Error(
