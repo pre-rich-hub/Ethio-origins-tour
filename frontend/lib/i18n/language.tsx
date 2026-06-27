@@ -87,7 +87,7 @@ export const translations = {
         'Local expertise, private planning, and authentic access come together to create journeys that feel personal, polished, and deeply connected to place.',
       features: [
         [
-          '15+',
+          '3+',
           'Years Local Expertise',
           'Deep regional knowledge shaped by years of planning and guiding journeys across Ethiopia.',
         ],

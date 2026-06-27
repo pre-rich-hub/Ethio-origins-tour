@@ -93,6 +93,28 @@ export async function sendContactAdminEmail(data: {
   });
 }
 
+export async function sendSubscriberAdminEmail(data: {
+  email: string;
+  subscribedAt: Date;
+}) {
+  if (!env.ADMIN_EMAIL) return;
+
+  const subscribersUrl = `${env.FRONTEND_ORIGIN.replace(/\/$/, "")}/admin/subscribers`;
+
+  await sendEmail({
+    to: env.ADMIN_EMAIL,
+    replyTo: data.email,
+    subject: `New Newsletter Subscriber - ${data.email}`,
+    html: `
+      <h1>New Newsletter Subscriber</h1>
+      <p>A new visitor subscribed to the Ethio Origins Tours newsletter.</p>
+      <p><strong>Email:</strong> ${escapeHtml(data.email)}</p>
+      <p><strong>Subscribed:</strong> ${escapeHtml(data.subscribedAt.toISOString())}</p>
+      <p><a href="${escapeHtml(subscribersUrl)}">View all subscribers</a></p>
+    `,
+  });
+}
+
 export async function sendBookingAdminEmail(data: {
   bookingId: number;
   fullName: string;

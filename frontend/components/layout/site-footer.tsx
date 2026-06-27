@@ -176,7 +176,7 @@ export function SiteFooter() {
       setEmail('')
       setRenderedAt(Date.now())
       setStatus('success')
-      setFeedback('Thanks. Please check your inbox if confirmation is required.')
+      setFeedback('Thanks! You are now subscribed to our newsletter.')
       trackSeoEvent('newsletter_submit_success', {
         ctaLocation: 'site_footer',
       })

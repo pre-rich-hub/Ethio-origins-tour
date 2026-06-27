@@ -14,7 +14,7 @@ import { cloudinaryImage, cloudinaryTransforms } from '@/lib/images/cloudinary'
 const features = [
   {
     icon: ShieldCheck,
-    stat: '15+',
+    stat: '3+',
     title: 'Years Local Expertise',
     text: 'Deep regional knowledge shaped by years of planning and guiding journeys across Ethiopia.',
   },
