@@ -28,7 +28,13 @@ export async function sendMail(input: SendEmailInput) {
     return;
   }
 
-  const useSendGrid = Boolean(env.SENDGRID_API_KEY);
+  // Deliver internal notifications locally when the admin mailbox lives on the
+  // same cPanel mail server. This avoids unnecessary SendGrid filtering and
+  // keeps customer-facing transactional mail on SendGrid.
+  const isAdminNotification =
+    Boolean(env.ADMIN_EMAIL) &&
+    input.to.trim().toLowerCase() === env.ADMIN_EMAIL.trim().toLowerCase();
+  const useSendGrid = Boolean(env.SENDGRID_API_KEY) && !isAdminNotification;
   const useSmtp = Boolean(env.SMTP_HOST);
 
   if (useSmtp) {

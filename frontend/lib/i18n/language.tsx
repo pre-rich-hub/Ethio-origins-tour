@@ -113,10 +113,10 @@ export const translations = {
     },
     gallery: {
       reel: 'Ethio Origins / Visual Reel',
-      eyebrow: 'A Visual Diary',
-      title: 'Moments That Define Ethiopia',
+      eyebrow: 'Through the Traveler’s Lens',
+      title: 'Ethiopia, Seen and Experienced',
       description:
-        'A collection of landscapes, traditions, wildlife, architecture, and human connections shown as a cinematic photo reel.',
+        'Discover the landscapes, heritage, wildlife, and everyday moments travelers encounter while exploring Ethiopia.',
       notes: ['Landscapes', 'Traditions', 'Human Connections'],
       view: 'View Full Gallery',
       pause: 'Pause gallery reel',
@@ -498,10 +498,10 @@ export const translations = {
     },
     gallery: {
       reel: 'Ethio Origins / Visuelle Reise',
-      eyebrow: 'Ein visuelles Tagebuch',
-      title: 'Momente, die Äthiopien prägen',
+      eyebrow: 'Durch die Augen der Reisenden',
+      title: 'Äthiopien sehen und erleben',
       description:
-        'Eine Sammlung von Landschaften, Traditionen, Tierwelt, Architektur und menschlichen Begegnungen als filmische Fotoreise.',
+        'Entdecken Sie die Landschaften, das Kulturerbe, die Tierwelt und die alltäglichen Momente, die Reisende bei ihrer Erkundung Äthiopiens erleben.',
       notes: ['Landschaften', 'Traditionen', 'Menschliche Begegnungen'],
       view: 'Galerie ansehen',
       pause: 'Galerie pausieren',
@@ -883,10 +883,10 @@ export const translations = {
     },
     gallery: {
       reel: 'Ethio Origins / Reel visual',
-      eyebrow: 'Un diario visual',
-      title: 'Momentos que definen Etiopía',
+      eyebrow: 'A través de la mirada del viajero',
+      title: 'Etiopía, vista y vivida',
       description:
-        'Una colección de paisajes, tradiciones, vida silvestre, arquitectura y conexiones humanas presentada como un reel fotográfico cinematográfico.',
+        'Descubre los paisajes, el patrimonio, la vida silvestre y los momentos cotidianos que encuentran los viajeros al explorar Etiopía.',
       notes: ['Paisajes', 'Tradiciones', 'Conexiones humanas'],
       view: 'Ver galería completa',
       pause: 'Pausar galería',
@@ -1268,10 +1268,10 @@ export const translations = {
     },
     gallery: {
       reel: 'Ethio Origins / Carnet visuel',
-      eyebrow: 'Un journal visuel',
-      title: "Les moments qui définissent l'Éthiopie",
+      eyebrow: 'À travers le regard des voyageurs',
+      title: "L’Éthiopie, vue et vécue",
       description:
-        'Une collection de paysages, traditions, faune, architecture et liens humains présentée comme un récit photographique cinématographique.',
+        'Découvrez les paysages, le patrimoine, la faune et les moments du quotidien que rencontrent les voyageurs en explorant l’Éthiopie.',
       notes: ['Paysages', 'Traditions', 'Liens humains'],
       view: 'Voir toute la galerie',
       pause: 'Mettre la galerie en pause',
