@@ -34,12 +34,13 @@ const envSchema = z.object({
   SENTRY_DSN: z.string().optional().default(""),
 
   // AI Assistant
-  ASSISTANT_PROVIDER: z.enum(["gemini", "openai", "anthropic", "grok"]).default("gemini"),
+  ASSISTANT_PROVIDER: z.enum(["gemini", "openai", "anthropic", "grok", "nvidia"]).default("gemini"),
   ASSISTANT_MODEL: z.string().default("gemini-2.5-flash"),
   GEMINI_API_KEY: z.string().optional().default(""),
   OPENAI_API_KEY: z.string().optional().default(""),
   ANTHROPIC_API_KEY: z.string().optional().default(""),
   GROK_API_KEY: z.string().optional().default(""),
+  NVIDIA_API_KEY: z.string().optional().default(""),
 
   // Document Ingestion
   EMBEDDING_MODEL: z.string().default("gemini-embedding-001"),

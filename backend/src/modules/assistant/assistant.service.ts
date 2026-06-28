@@ -7,6 +7,7 @@ import { createGeminiProvider } from "./providers/gemini.js";
 import { createOpenAIProvider } from "./providers/openai.js";
 import { createAnthropicProvider } from "./providers/anthropic.js";
 import { createGrokProvider } from "./providers/grok.js";
+import { createNvidiaProvider } from "./providers/nvidia.js";
 import { createTourConnector } from "./connectors/tours.js";
 import { createDestinationConnector } from "./connectors/destinations.js";
 import { createTestimonialConnector } from "./connectors/testimonials.js";
@@ -68,6 +69,17 @@ function createProvider(): LLMProvider {
       }
       return createGrokProvider({
         apiKey: env.GROK_API_KEY,
+        model: env.ASSISTANT_MODEL,
+      });
+    }
+    case "nvidia": {
+      if (!env.NVIDIA_API_KEY) {
+        throw new Error(
+          "NVIDIA_API_KEY is required when ASSISTANT_PROVIDER=nvidia",
+        );
+      }
+      return createNvidiaProvider({
+        apiKey: env.NVIDIA_API_KEY,
         model: env.ASSISTANT_MODEL,
       });
     }

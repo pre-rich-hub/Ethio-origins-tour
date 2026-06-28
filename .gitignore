@@ -34,3 +34,4 @@ backend/uploads/*
 backend/plan.md
 backend/ai-plan.md
 backend/data/*.docx
+.venv/

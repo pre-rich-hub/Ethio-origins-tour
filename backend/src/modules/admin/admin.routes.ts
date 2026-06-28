@@ -61,6 +61,119 @@ const destinationUpload = uploadFor("destination");
 const blogUpload = uploadFor("blog");
 const galleryUpload = uploadFor("gallery");
 
+adminRouter.get(
+  "/tours",
+  asyncHandler(async (_req, res) => {
+    const tours = await prisma.tour.findMany({
+      include: {
+        destination: true,
+        gallery: { orderBy: { id: "asc" } },
+        categories: { include: { category: true } }
+      },
+      orderBy: { id: "desc" }
+    });
+    return ok(res, "Tours fetched successfully", tours.map((t) => mapTour(t)));
+  })
+);
+
+adminRouter.get(
+  "/tours/:id",
+  asyncHandler(async (req, res) => {
+    const id = idParam.parse(req.params.id);
+    const tour = await prisma.tour.findUnique({
+      where: { id },
+      include: {
+        destination: true,
+        gallery: { orderBy: { id: "asc" } },
+        categories: { include: { category: true } }
+      }
+    });
+    if (!tour) throw new HttpError(404, "Tour not found");
+    return ok(res, "Tour fetched successfully", mapTour(tour, true));
+  })
+);
+
+adminRouter.get(
+  "/destinations",
+  asyncHandler(async (_req, res) => {
+    const destinations = await prisma.destination.findMany({
+      include: { _count: { select: { tours: true } } },
+      orderBy: { id: "desc" }
+    });
+    return ok(res, "Destinations fetched successfully", destinations.map(mapDestination));
+  })
+);
+
+adminRouter.get(
+  "/destinations/:id",
+  asyncHandler(async (req, res) => {
+    const id = idParam.parse(req.params.id);
+    const destination = await prisma.destination.findUnique({
+      where: { id },
+      include: { _count: { select: { tours: true } } }
+    });
+    if (!destination) throw new HttpError(404, "Destination not found");
+    return ok(res, "Destination fetched successfully", mapDestination(destination));
+  })
+);
+
+adminRouter.get(
+  "/categories",
+  asyncHandler(async (_req, res) => {
+    const categories = await prisma.tourCategory.findMany({
+      include: { _count: { select: { tours: true } } },
+      orderBy: { id: "asc" }
+    });
+    return ok(res, "Categories fetched successfully", categories.map(mapCategory));
+  })
+);
+
+adminRouter.get(
+  "/blog",
+  asyncHandler(async (_req, res) => {
+    const posts = await prisma.blog.findMany({
+      include: { category: true },
+      orderBy: { id: "desc" }
+    });
+    return ok(res, "Blog posts fetched successfully", posts.map(mapBlog));
+  })
+);
+
+adminRouter.get(
+  "/blog/:id",
+  asyncHandler(async (req, res) => {
+    const id = idParam.parse(req.params.id);
+    const post = await prisma.blog.findUnique({
+      where: { id },
+      include: { category: true }
+    });
+    if (!post) throw new HttpError(404, "Blog post not found");
+    return ok(res, "Blog post fetched successfully", mapBlog(post));
+  })
+);
+
+adminRouter.get(
+  "/gallery",
+  asyncHandler(async (_req, res) => {
+    const images = await prisma.gallery.findMany({
+      include: { tour: { select: { id: true, tourName: true } } },
+      orderBy: { id: "desc" }
+    });
+    return ok(res, "Gallery images fetched successfully", images.map((img) => ({
+      ...mapGalleryImage(img),
+      tour: img.tour ? { id: img.tour.id, name: img.tour.tourName } : null
+    })));
+  })
+);
+
+adminRouter.get(
+  "/testimonials",
+  asyncHandler(async (_req, res) => {
+    const testimonials = await prisma.testimonial.findMany({ orderBy: { id: "desc" } });
+    return ok(res, "Testimonials fetched successfully", testimonials.map(mapTestimonial));
+  })
+);
+
 adminRouter.post(
   "/tours",
   tourUpload.array("tourImages", 20),
