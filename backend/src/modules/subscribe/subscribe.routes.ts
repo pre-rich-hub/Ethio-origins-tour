@@ -26,10 +26,12 @@ subscribeRouter.post(
 
     const subscriber = await prisma.subscriber.create({ data: { email } });
 
-    void sendSubscriberAdminEmail({
-      email: subscriber.email,
-      subscribedAt: subscriber.createdAt
-    }).catch((error: unknown) => {
+    try {
+      await sendSubscriberAdminEmail({
+        email: subscriber.email,
+        subscribedAt: subscriber.createdAt
+      });
+    } catch (error: unknown) {
       logger.error(
         {
           subscriberId: subscriber.id,
@@ -37,7 +39,7 @@ subscribeRouter.post(
         },
         "Subscriber saved, but admin notification could not be sent"
       );
-    });
+    }
 
     return ok(res, "Thanks for subscribing!", null, 201);
   })

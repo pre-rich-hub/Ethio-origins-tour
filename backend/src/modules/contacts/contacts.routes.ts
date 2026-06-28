@@ -23,7 +23,9 @@ contactsRouter.post(
     const body = contactCreateSchema.parse(req.body);
     const contact = await prisma.contact.create({ data: body });
 
-    void sendContactAdminEmail(body).catch((error: unknown) => {
+    try {
+      await sendContactAdminEmail(body);
+    } catch (error: unknown) {
       logger.error(
         {
           contactId: contact.id,
@@ -31,7 +33,7 @@ contactsRouter.post(
         },
         "Contact inquiry saved, but admin notification could not be sent"
       );
-    });
+    }
 
     return ok(res, "Contact request submitted successfully", mapContact(contact), 201);
   })
