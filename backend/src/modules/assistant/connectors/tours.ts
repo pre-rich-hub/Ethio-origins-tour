@@ -12,7 +12,14 @@ interface TourRecord extends KeywordRecord {
   slug: string;
   adultPrice: number | null;
   childPrice: number | null;
+  discount: string | null;
+  rating: number | null;
+  noOfRates: number | null;
   overview: string | null;
+  included: string | null;
+  excluded: string | null;
+  itinerary: string | null;
+  journeyMap: string | null;
   destinationName: string | null;
 }
 
@@ -22,6 +29,9 @@ export class TourConnector implements DataConnector<TourRecord> {
     return rankResults<TourRecord>(all, query, [
       "tourName",
       "overview",
+      "included",
+      "excluded",
+      "itinerary",
       "destinationName",
     ]);
   }
@@ -38,12 +48,21 @@ export class TourConnector implements DataConnector<TourRecord> {
       slug: t.slug,
       adultPrice: t.adultPrice ? Number(t.adultPrice) : null,
       childPrice: t.childPrice ? Number(t.childPrice) : null,
+      discount: t.discount ?? null,
+      rating: t.rating ? Number(t.rating) : null,
+      noOfRates: t.noOfRates ?? null,
       overview: t.overview ?? "",
+      included: t.included ?? null,
+      excluded: t.excluded ?? null,
+      itinerary: t.itinerary ?? null,
+      journeyMap: t.journeyMap ?? null,
       destinationName: t.destination?.destinationName ?? null,
       keywords: [
         t.tourName,
         t.destination?.destinationName ?? "",
         t.overview ?? "",
+        t.itinerary ?? "",
+        t.included ?? "",
       ].filter(Boolean),
     }));
   }

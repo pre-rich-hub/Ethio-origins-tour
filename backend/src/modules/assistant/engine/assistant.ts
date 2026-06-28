@@ -69,10 +69,11 @@ export class Assistant {
     const results: unknown[] = [];
     const seen = new Set<string>();
 
-    for (const connector of this.connectors) {
-      const searchResults = await connector.search(searchQuery);
-      const data = searchResults.length > 0 ? searchResults : await connector.getAll();
+    const connectorResults = await Promise.all(
+      this.connectors.map((connector) => connector.search(searchQuery)),
+    );
 
+    for (const data of connectorResults) {
       for (const item of data) {
         const serialized = serializeValue(item);
         if (seen.has(serialized)) continue;
