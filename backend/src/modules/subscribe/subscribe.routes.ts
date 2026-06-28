@@ -5,6 +5,7 @@ import { asyncHandler } from "../../utils/async-handler.js";
 import { ok } from "../../utils/api-response.js";
 import { publicFormLimiter } from "../../middleware/rate-limit.middleware.js";
 import { sendSubscriberAdminEmail } from "../../services/email.service.js";
+import { logger } from "../../config/pino.js";
 
 export const subscribeRouter = Router();
 
@@ -25,9 +26,17 @@ subscribeRouter.post(
 
     const subscriber = await prisma.subscriber.create({ data: { email } });
 
-    await sendSubscriberAdminEmail({
+    void sendSubscriberAdminEmail({
       email: subscriber.email,
       subscribedAt: subscriber.createdAt
+    }).catch((error: unknown) => {
+      logger.error(
+        {
+          subscriberId: subscriber.id,
+          err: error instanceof Error ? error.message : "Unknown email error"
+        },
+        "Subscriber saved, but admin notification could not be sent"
+      );
     });
 
     return ok(res, "Thanks for subscribing!", null, 201);
