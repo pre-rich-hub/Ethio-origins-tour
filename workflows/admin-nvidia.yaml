@@ -1,0 +1,111 @@
+name: "Add admin CRUD pages and NVIDIA provider"
+stages:
+  - id: plan
+    type: ai
+    prompt: |
+      Read the following files and create a detailed implementation plan:
+      - backend/src/modules/admin/admin.routes.ts (existing CRUD endpoints)
+      - frontend/app/admin/admin-dashboard.tsx (frontend pattern)
+      - frontend/app/admin/layout.tsx (admin layout with auth)
+      - frontend/components/admin/sidebar.tsx (nav items - Tours, Destinations, etc.)
+      - backend/src/modules/assistant/providers/openai.ts (NVIDIA will follow this pattern)
+      - backend/src/modules/assistant/assistant.service.ts (provider registration)
+      - backend/src/config/env.ts (provider config)
+
+      Output a plan in plan.md covering:
+      1. Missing backend GET endpoints for admin (list tours, get tour, etc.)
+      2. Frontend tour CRUD pages (list, create form, edit form)
+      3. NVIDIA provider implementation
+      4. File-by-file summary of changes needed
+
+    output: plan.md
+    requires_approval: true
+
+  - id: backend-endpoints
+    type: ai
+    prompt: |
+      Using plan.md as guide, add these missing GET endpoints to backend/src/modules/admin/admin.routes.ts:
+      - GET /tours — list all tours with gallery, destination, categories (use mapTour)
+      - GET /tours/:id — get single tour with all relations for edit form
+      - GET /destinations — list all destinations
+      - GET /destinations/:id — get single destination
+      - GET /categories — list all tour categories
+      - GET /blog — list all blog posts
+      - GET /blog/:id — get single blog post
+      - GET /gallery — list all gallery images
+      - GET /testimonials — list all testimonials
+      - GET /testimonials/:id — get single testimonial
+
+      Read backend/src/utils/mappers.ts for the response format pattern.
+      Read existing GET endpoints in admin.routes.ts (e.g., /subscribers at line 691) for style.
+    depends_on: [plan]
+
+  - id: tours-list-page
+    type: ai
+    prompt: |
+      Create the admin tours list page:
+      - frontend/app/admin/tours/page.tsx (server component, import ToursClient)
+      - frontend/app/admin/tours/tours-client.tsx (client component)
+      The page should:
+      - Call GET /api/v1/admin/tours for data
+      - Show a table with: name, destination, price, rating, featured status
+      - "Add Tour" button linking to /admin/tours/new
+      - Edit/Delete actions per row (edit links to /admin/tours/[id])
+      - Fetch wrapper: credentials: 'include'
+
+      Pattern to follow: frontend/app/admin/admin-dashboard.tsx
+      UI: Tailwind classes (bg-white, border-border, text-forest, text-gold, etc.)
+      Icons: lucide-react
+    depends_on: [backend-endpoints]
+
+  - id: tours-form-page
+    type: ai
+    prompt: |
+      Create the admin tour create/edit form pages:
+      - frontend/app/admin/tours/new/page.tsx
+      - frontend/app/admin/tours/[id]/page.tsx
+      - frontend/app/admin/tours/tour-form.tsx (shared form component)
+
+      The form should handle:
+      - Tour name, slug (auto-generated from name)
+      - Destination dropdown (fetch from GET /api/v1/admin/destinations)
+      - Adult price, child price, discount
+      - Rating, featured toggle
+      - Overview (textarea)
+      - Included/Excluded (dynamic array of strings)
+      - Itinerary (dynamic array of {day, title, description} objects)
+      - Image upload (multiple, up to 20)
+      - Category selection (checkboxes)
+
+      Use fetch with credentials: 'include'.
+      POST/PUT to /api/v1/admin/tours / /api/v1/admin/tours/:id (FormData for multipart).
+      Pattern: follow the existing Tailwind/shadcn UI from the dashboard.
+    depends_on: [backend-endpoints]
+
+  - id: nvidia-provider
+    type: ai
+    prompt: |
+      Add NVIDIA as an AI provider for the assistant.
+
+      1. Create backend/src/modules/assistant/providers/nvidia.ts
+         - Copy the exact pattern from openai.ts
+         - NVIDIA uses OpenAI-compatible API at https://integrate.api.nvidia.com/v1
+         - Auth header: Authorization: Bearer ${this.apiKey}
+
+      2. Update backend/src/config/env.ts line 37-42:
+         - Add "nvidia" to the ASSISTANT_PROVIDER enum
+         - Add NVIDIA_API_KEY: z.string().optional().default("")
+
+      3. Update backend/src/modules/assistant/assistant.service.ts:
+         - Import createNvidiaProvider
+         - Add case "nvidia" in createProvider switch
+
+      Read the existing openai.ts, anthropic.ts, grok.ts for exact patterns.
+    depends_on: [plan]
+
+  - id: verify
+    type: shell
+    command: "cd backend && npx tsc --noEmit"
+    depends_on: [tours-list-page, tours-form-page, nvidia-provider]
+    on_fail: retry
+    max_retries: 2
