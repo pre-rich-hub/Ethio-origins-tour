@@ -578,10 +578,10 @@ export function SiteFooter() {
             © {new Date().getFullYear()} Ethio Origins Tours. {t.footer.rights}
           </p>
           <div className="flex gap-6">
-            <a href="/terms" className="font-sans text-xs text-cream/50 transition-colors hover:text-cream">
+            <a href="/terms" className="font-sans text-sm text-cream/60 transition-colors hover:text-cream">
               {t.footer.terms}
             </a>
-            <a href="/privacy" className="font-sans text-xs text-cream/50 transition-colors hover:text-cream">
+            <a href="/privacy" className="font-sans text-sm text-cream/60 transition-colors hover:text-cream">
               {t.footer.privacy}
             </a>
           </div>

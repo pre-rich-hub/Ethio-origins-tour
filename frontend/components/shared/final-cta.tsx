@@ -5,7 +5,13 @@ import { motion } from 'framer-motion'
 import { useLanguage } from '@/lib/i18n/language'
 import { cloudinaryImage, cloudinaryTransforms } from '@/lib/images/cloudinary'
 
-export function FinalCta() {
+export function FinalCta({
+  primaryHref = '/contact',
+  primaryLabel,
+}: {
+  primaryHref?: string
+  primaryLabel?: string
+} = {}) {
   const { t } = useLanguage()
 
   return (
@@ -63,10 +69,10 @@ export function FinalCta() {
           className="mt-9 flex flex-col items-center justify-center gap-4 sm:flex-row"
         >
           <a
-            href="/contact"
+            href={primaryHref}
             className="w-full rounded-sm bg-gold px-8 py-4 font-sans text-sm uppercase tracking-widest text-coffee transition-transform hover:-translate-y-0.5 sm:w-auto"
           >
-            {t.finalCta.primary}
+            {primaryLabel ?? t.finalCta.primary}
           </a>
           <a
             href="/contact"

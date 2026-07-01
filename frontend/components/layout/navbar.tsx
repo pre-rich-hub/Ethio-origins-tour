@@ -58,6 +58,7 @@ export function Navbar({ solid = false }: { solid?: boolean } = {}) {
     languages.find((item) => item.code === language) ?? languages[0]
   const links: NavLink[] = [
     { label: t.nav.home, href: '/#home' },
+    { label: t.nav.about, href: '/about' },
     {
       label: t.nav.destinations,
       href: '/destinations',

@@ -23,6 +23,7 @@ export const translations = {
   EN: {
     nav: {
       home: 'Home',
+      about: 'About Us',
       destinations: 'Destinations',
       tours: 'Tours',
       gallery: 'Gallery',
@@ -180,8 +181,8 @@ export const translations = {
       platformDescription:
         'Explore our presence across selected global travel platforms for reviews, curated experiences, stays, and planning inspiration.',
       rights: 'All rights reserved.',
-      terms: 'Terms',
-      privacy: 'Privacy',
+      terms: 'Terms and Conditions',
+      privacy: 'Privacy Policy',
     },
     destinationsPage: {
       heroBack: 'Back Home',
@@ -416,6 +417,7 @@ export const translations = {
   DE: {
     nav: {
       home: 'Startseite',
+      about: 'Über uns',
       destinations: 'Reiseziele',
       tours: 'Touren',
       gallery: 'Galerie',
@@ -573,8 +575,8 @@ export const translations = {
       platformDescription:
         'Entdecken Sie unsere Präsenz auf ausgewählten globalen Reiseplattformen für Bewertungen, kuratierte Erlebnisse, Aufenthalte und Inspiration.',
       rights: 'Alle Rechte vorbehalten.',
-      terms: 'Bedingungen',
-      privacy: 'Datenschutz',
+      terms: 'Allgemeine Geschäftsbedingungen',
+      privacy: 'Datenschutzrichtlinie',
     },
     destinationsPage: {
       heroBack: 'Zurück zur Startseite',
@@ -809,6 +811,7 @@ export const translations = {
   ES: {
     nav: {
       home: 'Inicio',
+      about: 'Sobre nosotros',
       destinations: 'Destinos',
       tours: 'Tours',
       gallery: 'Galería',
@@ -966,8 +969,8 @@ export const translations = {
       platformDescription:
         'Explora nuestra presencia en plataformas globales seleccionadas para reseñas, experiencias curadas, alojamientos e inspiración.',
       rights: 'Todos los derechos reservados.',
-      terms: 'Términos',
-      privacy: 'Privacidad',
+      terms: 'Términos y condiciones',
+      privacy: 'Política de privacidad',
     },
     destinationsPage: {
       heroBack: 'Volver al inicio',
@@ -1202,6 +1205,7 @@ export const translations = {
   FR: {
     nav: {
       home: 'Accueil',
+      about: 'À propos',
       destinations: 'Destinations',
       tours: 'Circuits',
       gallery: 'Galerie',
@@ -1359,8 +1363,8 @@ export const translations = {
       platformDescription:
         'Découvrez notre présence sur des plateformes mondiales sélectionnées pour les avis, les expériences, les séjours et l’inspiration.',
       rights: 'Tous droits réservés.',
-      terms: 'Conditions',
-      privacy: 'Confidentialité',
+      terms: 'Conditions générales',
+      privacy: 'Politique de confidentialité',
     },
     destinationsPage: {
       heroBack: "Retour à l'accueil",
