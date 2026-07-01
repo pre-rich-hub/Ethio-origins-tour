@@ -9,6 +9,7 @@ import {
   DestinationOverview,
   DestinationPersonalization,
   DestinationSampleFlow,
+  DestinationTravelGuide,
   RelatedDestinationTours,
   RelatedDestinations,
   destinations,
@@ -114,6 +115,7 @@ export default async function DestinationPage({ params }: DestinationPageProps) 
       ) : null}
       <DestinationDetailHero destination={destination} />
       <DestinationOverview destination={destination} />
+      <DestinationTravelGuide destination={destination} />
       <DestinationSampleFlow destination={destination} />
       <DestinationPersonalization destination={destination} />
       <RelatedDestinationTours destination={destination} />

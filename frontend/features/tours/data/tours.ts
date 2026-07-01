@@ -2122,8 +2122,8 @@ export const tours = [
       'https://res.cloudinary.com/divimnzxa/image/upload/f_auto,q_auto,w_400,h_300,c_fill,g_auto/v1782308427/Gondar_Ethiopia_guosib.jpg',
     ],
     duration: '5 Days',
-    region: 'Addis Ababa, Bahir Dar, Gondar, Lalibela, Aksum',
-    highlights: 'Lake Tana · Gondar · Lalibela · Aksum',
+    region: 'Addis Ababa, Bahir Dar, Gondar, Lalibela, Axum',
+    highlights: 'Lake Tana · Gondar · Lalibela · Axum',
     description:
       'Explore Bahir Dar, Lake Tana, Gondar, Lalibela and Axum on a five-day journey through Ethiopia\'s historic route and UNESCO heritage sites.',
     intro:
@@ -2223,7 +2223,7 @@ export const tours = [
       'private-customized-tours',
       'ethiopia-holiday-packages',
     ],
-    imageAlt: 'Five-day Ethiopia historic route tour through Bahir Dar Gondar Lalibela and Aksum',
+    imageAlt: 'Five-day Ethiopia historic route tour through Bahir Dar Gondar Lalibela and Axum',
     seo: {
       title: '5-Day Ethiopia Historic Route Tour',
       description:

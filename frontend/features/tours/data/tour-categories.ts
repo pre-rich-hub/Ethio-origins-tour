@@ -371,7 +371,7 @@ const tourCategorySeeds: TourCategorySeed[] = [
     seo: {
       title: 'Ethiopia UNESCO Heritage Tours',
       description:
-        'Explore Ethiopia UNESCO heritage tours featuring Harar Jugol, Lalibela, Gondar, Aksum and guided historical cultural routes.',
+        'Explore Ethiopia UNESCO heritage tours featuring Harar Jugol, Lalibela, Gondar, Axum and guided historical cultural routes.',
       canonicalPath: '/tours/unesco-heritage-tours',
       primaryKeyword: 'Ethiopia UNESCO Heritage Tours',
       secondaryKeywords: [
@@ -385,11 +385,11 @@ const tourCategorySeeds: TourCategorySeed[] = [
     slug: 'ethiopia-historic-route-tours',
     name: 'Ethiopia Historic Route Tours',
     description:
-      'Northern Ethiopia heritage tours linking Bahir Dar, Lake Tana, Gondar, Lalibela, Aksum and other historic route highlights.',
+      'Northern Ethiopia heritage tours linking Bahir Dar, Lake Tana, Gondar, Lalibela, Axum and other historic route highlights.',
     seo: {
       title: 'Ethiopia Historic Route Tours',
       description:
-        'Explore Ethiopia historic route tours through Bahir Dar, Lake Tana, Gondar, Lalibela, Aksum and northern UNESCO heritage sites.',
+        'Explore Ethiopia historic route tours through Bahir Dar, Lake Tana, Gondar, Lalibela, Axum and northern UNESCO heritage sites.',
       canonicalPath: '/tours/ethiopia-historic-route-tours',
       primaryKeyword: 'Ethiopia Historic Route Tour',
       secondaryKeywords: [

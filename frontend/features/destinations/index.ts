@@ -4,6 +4,7 @@ export { DestinationExtrasSection } from './components/destination-extras-sectio
 export { DestinationOverview } from './components/destination-overview'
 export { DestinationPersonalization } from './components/destination-personalization'
 export { DestinationSampleFlow } from './components/destination-sample-flow'
+export { DestinationTravelGuide } from './components/destination-travel-guide'
 export { DestinationsGrid } from './components/destinations-grid'
 export { DestinationsHero } from './components/destinations-hero'
 export { RelatedDestinations } from './components/related-destinations'

@@ -12,7 +12,7 @@ export const tourFaqs = [
   {
     question: 'Which destinations can I include in an Ethiopia tour?',
     answer:
-      'Popular routes include Lalibela, Gondar, Aksum, the Simien Mountains, Danakil Depression, Omo Valley, Bale Mountains, Harar and Addis Ababa. These can be combined when travel time and local conditions allow.',
+      'Popular routes include Lalibela, Gondar, Axum, the Simien Mountains, Danakil Depression, Omo Valley, Bale Mountains, Harar and Addis Ababa. These can be combined when travel time and local conditions allow.',
   },
   {
     question: 'Are local guides included in your Ethiopia tours?',

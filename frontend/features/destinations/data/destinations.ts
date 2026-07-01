@@ -140,6 +140,289 @@ const destinationCopyByCategory: Record<
   },
 }
 
+// Original place summaries informed by destination material from Aman Ethiopia
+// Tours, Enat Tours, and Visit Ethiopia Travel. The wording is written for
+// Ethio Origins Tour and is not copied from the source sites.
+const destinationPlaceDescriptions: Record<string, string> = {
+  'addis-ababa':
+    'Ethiopia’s highland capital blends major museums, historic churches, busy Merkato, contemporary culture, and broad city views from Mount Entoto.',
+  lalibela:
+    'Lalibela is celebrated for eleven medieval churches carved from living rock, linked by trenches and passages and still central to Ethiopian Orthodox worship.',
+  gondar:
+    'Gondar preserves the royal compounds of Fasil Ghebbi, centuries-old castles, Fasilides’ Bath, and the richly painted Debre Birhan Selassie Church.',
+  aksum:
+    'Axum reveals the legacy of an ancient trading kingdom through monumental stelae, royal tombs, archaeological remains, inscriptions, and enduring sacred traditions.',
+  harar:
+    'Inside Harar Jugol’s old walls, narrow lanes lead to colorful Harari homes, lively markets, historic shrines, museums, and the city’s well-known evening hyena tradition.',
+  tiya:
+    'Tiya is a UNESCO-listed archaeological site where carved standing stones mark part of a remarkable prehistoric burial complex south of Addis Ababa.',
+  'konso-cultural-landscape':
+    'The Konso Cultural Landscape is shaped by generations of stone terracing, fortified hilltop settlements, communal spaces, and a highly adapted farming tradition.',
+  'yeha-temple':
+    'Yeha’s finely fitted stone temple and archaeological remains offer a rare window into the sophisticated pre-Axumite civilization of northern Ethiopia.',
+  'debre-damo-monastery':
+    'Debre Damo is an ancient cliff-top monastery known for Axumite architecture, a long monastic tradition, and its dramatic rope-assisted approach.',
+  'abuna-yemata-guh':
+    'Abuna Yemata Guh is a small rock-hewn church high in the Gheralta cliffs, reached by a demanding ascent and treasured for its old wall paintings.',
+  'fasil-ghebbi':
+    'Fasil Ghebbi is Gondar’s UNESCO-listed royal enclosure, a distinctive complex of castles and palaces built by Ethiopian emperors from the seventeenth century onward.',
+  'holy-trinity-cathedral':
+    'Addis Ababa’s Holy Trinity Cathedral combines Ethiopian Orthodox art, stained glass, imperial history, and memorials connected with the country’s modern story.',
+  'national-museum-of-ethiopia':
+    'The National Museum introduces Ethiopia’s deep human and artistic history, including early hominin fossils, archaeological collections, royal objects, and modern art.',
+  'st-george-church':
+    'Bete Giyorgis is Lalibela’s iconic cross-shaped church, carved below ground level and approached through a rock-cut trench and passageway.',
+  'medhane-alem-church':
+    'Bete Medhane Alem is the largest of Lalibela’s rock-hewn churches, distinguished by its monumental colonnaded form and active religious life.',
+  'lake-tana':
+    'Ethiopia’s largest lake is the source region of the Blue Nile and is dotted with islands and peninsulas sheltering centuries-old churches and monasteries.',
+  'blue-nile-falls':
+    'Near Bahir Dar, the Blue Nile Falls drops across a broad basalt edge, with countryside footpaths and viewpoints revealing the river’s seasonal power.',
+  'lake-langano':
+    'Lake Langano is a popular Rift Valley retreat with rust-colored water, lakeside lodges, birdlife, and easy access to nearby volcanic landscapes.',
+  'wenchi-crater-lake':
+    'Wenchi is a water-filled volcanic caldera where highland trails descend past farmland, forest, hot springs, waterfalls, and a small island monastery.',
+  'lake-abaya':
+    'Lake Abaya stretches along the southern Rift Valley beneath the Guge Mountains, its reddish water and broad shoreline forming a dramatic approach to Arba Minch.',
+  'lake-chamo':
+    'Lake Chamo is known for boat excursions among hippos, waterbirds, and large Nile crocodiles, framed by the escarpments and plains around Arba Minch.',
+  'lake-ziway':
+    'Lake Ziway is a shallow Rift Valley lake rich in birdlife, fishing culture, papyrus-fringed shores, and island traditions linked to Ethiopian Orthodox history.',
+  'lake-hawassa':
+    'Lake Hawassa pairs a relaxed waterfront with fish markets, lakeside walking, abundant waterbirds, and occasional hippo sightings near the city.',
+  'lake-shalla':
+    'Deep Lake Shalla fills a steep volcanic caldera, creating a rugged landscape of cliffs, hot springs, islands, and important bird habitat.',
+  'lake-abijatta':
+    'Shallow Lake Abijatta lies within a protected Rift Valley landscape and supports seasonal concentrations of flamingos, pelicans, and other waterbirds.',
+  'simien-mountains-national-park':
+    'The Simien Mountains rise in immense escarpments and deeply cut valleys, offering high-altitude trekking and chances to see geladas, Walia ibex, and lammergeiers.',
+  'bale-mountains-national-park':
+    'Bale protects contrasting habitats from Harenna Forest to the Sanetti Plateau, home to Ethiopian wolves, mountain nyala, endemic birds, and sweeping alpine scenery.',
+  'awash-national-park':
+    'Awash National Park combines acacia savanna, volcanic terrain, river falls, hot springs, and wildlife such as oryx, kudu, gazelles, and numerous birds.',
+  'nech-sar-national-park':
+    'Nech Sar spreads between Lakes Abaya and Chamo, with pale grasslands, forest, escarpment views, zebras, gazelles, and diverse Rift Valley birdlife.',
+  'mago-national-park':
+    'Mago National Park protects remote savanna and river landscapes near Jinka and forms part of the wider cultural and ecological setting of the lower Omo region.',
+  'yangudi-rassa-national-park':
+    'Yangudi Rassa conserves arid Afar plains and volcanic foothills, an austere landscape associated with Grevy’s zebra, wild ass habitat, and desert-adapted wildlife.',
+  'chebera-churchura-national-park':
+    'Chebera Churchura is a lush southwestern park of rivers, waterfalls, woodland, and grassland, noted for elephants, buffalo, and rich birdlife.',
+  'kafta-sheraro-national-park':
+    'Kafta Sheraro protects broad lowland savannas along the Tekeze River and one of Ethiopia’s most important remaining ranges for African elephants.',
+  'ras-dashen':
+    'Ras Dashen, Ethiopia’s highest summit, rewards a multi-day Simien trek with remote highland scenery, steep valleys, and expansive views from the massif.',
+  'mount-chilalo':
+    'Mount Chilalo is a prominent Arsi highland peak surrounded by cultivated slopes, Afro-alpine vegetation, cool mountain air, and far-reaching views.',
+  'danakil-depression':
+    'The Danakil is a severe but extraordinary Afar landscape of salt flats, faulted desert, geothermal fields, volcanic horizons, and long-established salt-trading routes.',
+  'erta-ale':
+    'Erta Ale is a broad shield volcano in the Afar Depression, reached by expedition travel and known for its stark lava fields and persistently active summit crater.',
+  dallol:
+    'Dallol’s geothermal field creates vivid mineral terraces, acidic springs, salt formations, and one of the Danakil Depression’s most surreal geological scenes.',
+  'sof-omar-caves':
+    'The Web River has carved Sof Omar into an immense limestone cave system of echoing chambers, sculpted pillars, natural bridges, and spiritual significance.',
+  'babille-elephant-sanctuary':
+    'The Babille area east of Harar protects rugged valleys and dry woodland used by a small, elusive population of elephants and other lowland wildlife.',
+  'omo-valley':
+    'The Omo Valley brings together striking river landscapes, archaeological importance, markets, and culturally distinct communities best visited with patience, consent, and local guidance.',
+  jinka:
+    'Jinka is a practical gateway to the lower Omo, with a regional museum, a lively market, nearby Ari communities, and road access toward Mago National Park.',
+  turmi:
+    'Turmi is a small southern settlement and useful base for locally guided visits, Hamer country, regional markets, and excursions toward the lower Omo River.',
+  'arba-minch':
+    'Set above Lakes Abaya and Chamo, Arba Minch offers forest springs, Rift Valley panoramas, boat trips, and easy connections to Dorze and Konso.',
+  dorze:
+    'Dorze highland villages are known for tall woven bamboo houses, expert weaving, enset-based farming, and expansive views above the Rift Valley.',
+  konso:
+    'Konso is the gateway to a UNESCO cultural landscape of stone terraces, walled settlements, generation poles, craft traditions, and resilient dryland agriculture.',
+  chencha:
+    'Chencha is a cool Guge Mountain town associated with Dorze weaving, highland markets, enset cultivation, and panoramic routes above Arba Minch.',
+  debark:
+    'Debark is the principal gateway town for Simien Mountains visits, where trekking logistics, park arrangements, guides, and highland routes come together.',
+  'bahir-dar':
+    'Bahir Dar is a green lakeside city and base for Lake Tana monastery cruises, Blue Nile Falls excursions, waterfront walks, and northern historic routes.',
+  mekele:
+    'Mekele is Tigray’s main urban center and a traditional staging point for journeys to Gheralta’s rock churches, northern heritage sites, and Afar routes.',
+  'debre-markos':
+    'Debre Markos is an Amhara highland city on the overland route toward Bahir Dar, with surrounding agricultural landscapes and access to the Blue Nile Gorge corridor.',
+  gheralta:
+    'Gheralta’s sandstone mountains conceal remarkable rock-hewn churches, with trails and steep approaches opening onto some of northern Ethiopia’s finest panoramas.',
+  kombolcha:
+    'Kombolcha is a transport hub in north-central Ethiopia, surrounded by mountain scenery and positioned between Addis Ababa, Dessie, Wollo, and eastern routes.',
+  'awra-amba':
+    'Awra Amba is a community near Lake Tana known for its cooperative social model, weaving enterprises, shared responsibilities, and emphasis on equality.',
+  'debre-libanos-monastery':
+    'Debre Libanos is one of Ethiopia’s most important monasteries, set below a dramatic escarpment near the Jemma Gorge and associated with Saint Tekle Haymanot.',
+  'portuguese-bridge':
+    'The stone bridge near Debre Libanos spans a seasonal gorge beside waterfalls and basalt cliffs, making it a scenic stop on a popular Addis Ababa day trip.',
+  'jemma-river-gorge':
+    'The Jemma River Gorge cuts deeply through the North Shewa plateau, offering sweeping escarpment views and habitat for geladas and soaring raptors.',
+  semera:
+    'Semera is the modern administrative center of the Afar Region and a key logistics gateway for supported journeys into the Danakil Depression.',
+  'hamed-ela':
+    'Hamed Ela is a remote Afar settlement used as an expedition base near the salt flats, Dallol geothermal fields, and traditional salt-caravan routes.',
+  'dire-dawa':
+    'Dire Dawa grew around the railway and retains broad avenues, lively markets, mixed architectural influences, and an important role as the gateway to Harar.',
+  aweday:
+    'Aweday hosts one of Ethiopia’s best-known khat markets, a fast-moving center of regional trade on the road between Dire Dawa and Harar.',
+  'mount-entoto':
+    'Mount Entoto rises above Addis Ababa with eucalyptus forest, historic churches, imperial associations, cultural sites, and wide views across the capital.',
+  'ethnological-museum':
+    'Housed in Haile Selassie’s former palace, the Ethnological Museum presents Ethiopia’s peoples, traditions, religious art, music, and imperial-era rooms.',
+  'st-george-cathedral':
+    'Addis Ababa’s octagonal St. George Cathedral commemorates the Battle of Adwa and contains religious paintings, historical objects, and a small museum.',
+  'mount-wonchi':
+    'Mount Wonchi surrounds a spectacular crater lake where highland paths, forest, springs, farms, and island heritage create a rewarding day journey.',
+  'cherkos-monastery':
+    'Cherkos Monastery sits within the Wonchi caldera landscape and adds a quiet spiritual and historical dimension to lake walks and boat crossings.',
+  'melka-kunture':
+    'Melka Kunture preserves a major cluster of prehistoric sites along the Awash River, with stone tools and geological layers tracing early human activity.',
+  'adadi-maryam':
+    'Adadi Maryam is a rock-hewn Ethiopian Orthodox church south of Addis Ababa, traditionally linked to the Lalibela period and still used by local worshippers.',
+  karo:
+    'Karo communities live near the lower Omo River and are known for farming, cattle culture, carefully expressed body art, and strong ties to the river landscape.',
+  nyangatom:
+    'Nyangatom communities inhabit the dry borderlands west of the lower Omo, where pastoral life, seasonal cultivation, and regional exchange shape daily routines.',
+  omorate:
+    'Omorate is a remote riverside town near the Kenyan border and a crossing point for locally guided visits along the lower Omo and into Dassanech country.',
+  dassanech:
+    'Dassanech communities live around the lower Omo and Lake Turkana borderlands, adapting pastoralism, fishing, farming, and mobility to a demanding environment.',
+  hawassa:
+    'Hawassa is a lively southern city beside its namesake lake, known for a waterfront promenade, fish market, birdlife, gardens, cafés, and relaxed overnight stays.',
+}
+
+const destinationEventNotes: Record<string, string[]> = {
+  'addis-ababa': [
+    'Meskel celebrations take place around September 27, with the main bonfire ceremony at Meskel Square.',
+    'Timkat is celebrated around January 19, while Enkutatash marks Ethiopian New Year around September 11.',
+  ],
+  lalibela: [
+    'Ethiopian Christmas, or Genna, draws large pilgrim gatherings around January 7.',
+    'Timkat follows later in January, and major Orthodox saints’ days bring active worship throughout the year.',
+  ],
+  gondar: [
+    'Timkat around January 19 is Gondar’s signature celebration, centered on the historic Fasilides’ Bath.',
+  ],
+  aksum: [
+    'The annual Hidar Tsion pilgrimage is held in late November at St. Mary of Zion.',
+    'Ashenda is celebrated across Tigray in August, with dates and local programs varying each year.',
+  ],
+  harar: [
+    'Islamic holidays and Mawlid are important occasions, but their Gregorian dates move each year.',
+    'Market days and the nightly hyena-feeding tradition are more dependable cultural experiences than fixed festivals.',
+  ],
+  tiya: ['Local holidays follow Ethiopia’s national calendar; Tiya itself does not host a major fixed tourist festival.'],
+  'konso-cultural-landscape': ['Generation and community ceremonies follow local calendars and should only be attended through invitation and respectful local coordination.'],
+  'yeha-temple': ['Ashenda and Ethiopian Orthodox feast days animate the wider Tigray region, with dates varying by place and year.'],
+  'debre-damo-monastery': ['Major Ethiopian Orthodox feast days bring additional pilgrimage activity; access rules remain in force during events.'],
+  'abuna-yemata-guh': ['Local saints’ days can bring worshippers to the church; timing should be confirmed with guides and clergy.'],
+  'fasil-ghebbi': ['Gondar’s Timkat celebration around January 19 is the region’s largest annual event.'],
+  'holy-trinity-cathedral': ['Timkat, Meskel, Easter, and other Orthodox holidays bring special services and larger congregations.'],
+  'national-museum-of-ethiopia': ['Addis Ababa’s Meskel, Timkat, and Enkutatash seasons can be combined with a museum visit.'],
+  'st-george-church': ['Genna around January 7 and Timkat around January 19 are especially significant in Lalibela.'],
+  'medhane-alem-church': ['Genna around January 7 is the most important pilgrimage period in Lalibela.'],
+  'lake-tana': ['Timkat and monastery saints’ days bring colorful religious activity around Bahir Dar and the lake’s island churches.'],
+  'blue-nile-falls': ['Water volume is generally strongest after the main rains, especially from August into October.'],
+  'lake-langano': ['Holiday weekends bring more domestic visitors; November through February is also a strong period for birding.'],
+  'wenchi-crater-lake': ['Irreecha celebrations occur across Oromia around the end of the rainy season; local dates and venues should be confirmed.'],
+  'lake-abaya': ['There is no major fixed lake festival; pair the visit with market days or cultural programs around Arba Minch.'],
+  'lake-chamo': ['Boat trips and birding are the main seasonal experiences; wildlife viewing depends on water and weather conditions.'],
+  'lake-ziway': ['Migratory bird season from roughly November to February is the lake’s main seasonal highlight.'],
+  'lake-hawassa': ['Weekend fish-market activity and migratory bird season are the most reliable recurring experiences.'],
+  'lake-shalla': ['Dry-season birding is the main seasonal attraction; there is no major fixed festival at the lake.'],
+  'lake-abijatta': ['Flamingo and pelican numbers vary with water levels and migration rather than a fixed annual event.'],
+  'simien-mountains-national-park': ['Dry-season trekking is the principal seasonal experience; wildlife sightings are possible year-round.'],
+  'bale-mountains-national-park': ['The dry season favors trekking and Ethiopian wolf viewing, while birding interest continues throughout the year.'],
+  'awash-national-park': ['Dry-season game viewing and birding are the main seasonal experiences; wildlife is not tied to a formal event.'],
+  'nech-sar-national-park': ['Dry-season wildlife viewing and Lake Chamo boat outings are the main seasonal draws.'],
+  'mago-national-park': ['There is no park festival; community market days and ceremonies require locally confirmed, respectful arrangements.'],
+  'yangudi-rassa-national-park': ['Wildlife and access depend on current conservation and security conditions rather than a scheduled event.'],
+  'chebera-churchura-national-park': ['The drier months improve road access and wildlife viewing; no major fixed festival is held in the park.'],
+  'kafta-sheraro-national-park': ['Elephant tracking and birding are seasonal nature experiences, subject to park access and local guidance.'],
+  'ras-dashen': ['The dry trekking season is the key annual window; summit plans depend on trail and weather conditions.'],
+  'mount-chilalo': ['Irreecha season is important across Oromia, while mountain visits are otherwise shaped by weather and local market days.'],
+  'danakil-depression': ['Salt caravans are a living trade pattern rather than a staged event and vary with heat, demand, and route conditions.'],
+  'erta-ale': ['Volcanic activity is natural and unpredictable; there is no scheduled eruption event or guaranteed lava visibility.'],
+  dallol: ['Salt extraction and caravan activity vary seasonally and should not be treated as a guaranteed performance.'],
+  'sof-omar-caves': ['The site has Muslim spiritual significance; religious occasions follow a local and lunar calendar.'],
+  'babille-elephant-sanctuary': ['The nearby Babille camel and livestock market is a recurring local experience; elephant sightings are never guaranteed.'],
+  'omo-valley': ['Market days rotate among towns, while ceremonies occur on community calendars and are never guaranteed for visitors.'],
+  jinka: ['Jinka’s market days and locally announced cultural programs are the most accessible recurring events.'],
+  turmi: ['Hamer market days recur locally; bull-jumping ceremonies occur only when families organize them and are not scheduled tourist shows.'],
+  'arba-minch': ['Kultho and town market days, lakeside activity, and regional cultural programs vary through the year.'],
+  dorze: ['Dorze market activity and community celebrations follow local calendars; visits should be coordinated with local hosts.'],
+  konso: ['Community ceremonies and generation traditions are locally organized and require consent rather than fixed tourist scheduling.'],
+  chencha: ['Weekly market days offer the most dependable cultural activity; local festival dates should be checked before travel.'],
+  debark: ['The trekking season is the town’s busiest period, especially from October through March.'],
+  'bahir-dar': ['Timkat is celebrated in January, while lake monastery feast days and post-rain Blue Nile Falls add seasonal interest.'],
+  mekele: ['Ashenda in August and Orthodox holidays are major regional occasions, subject to current local arrangements.'],
+  'debre-markos': ['Meskel, Timkat, and local church feast days are the main annual celebrations.'],
+  gheralta: ['Ashenda and local saints’ days add cultural interest, but cliff-church access must remain respectful during worship.'],
+  kombolcha: ['National and religious holidays shape the annual calendar; there is no single major destination festival.'],
+  'awra-amba': ['Community visits focus on daily cooperative life rather than staged festivals; arrange timing directly with local hosts.'],
+  'debre-libanos-monastery': ['The feast of Saint Tekle Haymanot draws pilgrims on dates in the Ethiopian Orthodox calendar.'],
+  'portuguese-bridge': ['Waterfalls are most active after rains; no formal annual event is held at the bridge.'],
+  'jemma-river-gorge': ['Post-rain green scenery and dry-season gelada viewing are seasonal highlights rather than organized events.'],
+  semera: ['Afar cultural and administrative events vary; expedition departures are shaped mainly by cool-season weather.'],
+  'hamed-ela': ['Salt-caravan activity follows working conditions and trade demand and cannot be guaranteed on a particular day.'],
+  'dire-dawa': ['Islamic holidays follow the lunar calendar, while market life and railway heritage can be experienced year-round.'],
+  aweday: ['The khat market is the main recurring activity, with trading rhythms stronger at particular times of day rather than seasons.'],
+  'mount-entoto': ['Meskel, Timkat, and church feast days in Addis Ababa can be paired with an Entoto visit.'],
+  'ethnological-museum': ['Addis Ababa’s Meskel, Timkat, and Enkutatash periods add citywide cultural context to a museum visit.'],
+  'st-george-cathedral': ['Timkat, Meskel, Adwa Victory Day, and major Orthodox holidays can bring special services and commemorations.'],
+  'mount-wonchi': ['Irreecha season and local Orthodox feast days may add cultural activity, with exact programs confirmed locally.'],
+  'cherkos-monastery': ['The monastery’s saint day follows the Ethiopian Orthodox calendar and may bring local pilgrims.'],
+  'melka-kunture': ['There is no major fixed festival at the archaeological site; combine it with nearby community and heritage visits.'],
+  'adadi-maryam': ['Major Orthodox holidays and the church’s saint day bring worshippers; visitors should avoid disrupting services.'],
+  karo: ['Community ceremonies and market activity are locally determined and should never be promised in advance.'],
+  nyangatom: ['Ceremonies and gatherings follow community needs and seasons, not a published tourist calendar.'],
+  omorate: ['Market days and riverside activity are the most dependable recurring experiences; border conditions may affect access.'],
+  dassanech: ['Community ceremonies are private and locally scheduled; respectful visits should focus on everyday life and conversation.'],
+  hawassa: ['The lakeside fish market is active through the week, and migratory bird season adds interest from roughly November to February.'],
+}
+
+const danakilSlugs = new Set(['danakil-depression', 'erta-ale', 'dallol', 'semera', 'hamed-ela'])
+const simienSlugs = new Set(['simien-mountains-national-park', 'ras-dashen', 'debark'])
+const omoSlugs = new Set(['omo-valley', 'jinka', 'turmi', 'arba-minch', 'dorze', 'konso', 'chencha', 'mago-national-park', 'karo', 'nyangatom', 'omorate', 'dassanech'])
+const easternSlugs = new Set(['harar', 'dire-dawa', 'aweday', 'babille-elephant-sanctuary', 'awash-national-park'])
+
+function getBestTimeToVisit(slug: string, category: DestinationCategory) {
+  if (danakilSlugs.has(slug)) {
+    return 'November to February offers the least extreme heat and is the preferred expedition window. Temperatures remain demanding, so current access, safety advice, and local support are essential.'
+  }
+
+  if (simienSlugs.has(slug)) {
+    return 'October to March usually brings clearer skies and drier trekking trails. September can be brilliantly green, while June to August is wetter and cloudier.'
+  }
+
+  if (slug === 'bale-mountains-national-park' || slug === 'mount-chilalo' || slug === 'sof-omar-caves') {
+    return 'November to March is generally best for dry trails, wildlife viewing, and highland travel. Conditions can be wetter from April to October, especially during the main rains.'
+  }
+
+  if (omoSlugs.has(slug)) {
+    return 'November to March is usually the easiest period for overland travel, with drier roads and warm days. Access can become slower during the April–May and October rains.'
+  }
+
+  if (easternSlugs.has(slug)) {
+    return 'October to March is generally cooler and more comfortable for walking and wildlife excursions. Harar and Dire Dawa remain visitable year-round, but late spring can be very hot.'
+  }
+
+  if (category === 'lakes-scenic') {
+    return 'October to March generally offers pleasant weather and strong birding. Waterfalls and green scenery are often best just after the main rains, from August into October.'
+  }
+
+  if (category === 'mountains-wildlife') {
+    return 'October to March is normally the most comfortable dry-season window for access, walking, and wildlife viewing. Exact conditions vary by altitude and park.'
+  }
+
+  if (category === 'tribal-cultural') {
+    return 'November to March usually provides easier road travel and comfortable cultural touring. Market days and community availability should be confirmed locally.'
+  }
+
+  return 'October to March usually brings clearer, drier weather for heritage touring. September is green and festive, while January is popular for major Ethiopian Orthodox celebrations.'
+}
+
 const destinationSeeds: DestinationSeed[] = [
   {
     name: 'Addis Ababa',
@@ -225,10 +508,10 @@ const destinationSeeds: DestinationSeed[] = [
     ],
   },
   {
-    name: 'Aksum',
+    name: 'Axum',
     slug: 'aksum',
     primaryKeyword: 'Axum Tours Ethiopia',
-    secondaryKeywords: ['Aksum Historical Tours', 'Northern Ethiopia Heritage Tours'],
+    secondaryKeywords: ['Axum Historical Tours', 'Northern Ethiopia Heritage Tours'],
     category: 'historical-religious',
     categoryLabel: 'Historical and Religious Destinations',
     region: 'Tigray',
@@ -1181,7 +1464,7 @@ const destinationContentOverrides: Record<string, Partial<DestinationSeed>> = {
     shortDescription:
       'Gondar anchors northern Ethiopia historic routes with royal castles, church art, and onward access to the Simien Mountains.',
     overview:
-      'Approved historic-route itineraries use Gondar for Fasil Ghebbi, Fasilides Castle, palace compounds, Debre Birhan Selassie Church, Kuskuam Palace, and connections between Bahir Dar, Lake Tana, Simien Mountains, Lalibela, and Aksum.',
+      'Approved historic-route itineraries use Gondar for Fasil Ghebbi, Fasilides Castle, palace compounds, Debre Birhan Selassie Church, Kuskuam Palace, and connections between Bahir Dar, Lake Tana, Simien Mountains, Lalibela, and Axum.',
     highlights: [
       'Royal Enclosure and Fasil Ghebbi visits in historic-route tours',
       'Debre Birhan Selassie Church and Gondar heritage interpretation',
@@ -1191,7 +1474,7 @@ const destinationContentOverrides: Record<string, Partial<DestinationSeed>> = {
     itinerary: [
       'Arrive from Bahir Dar, Simien Mountains, or another northern route point',
       'Tour Gondar castles, churches, and palace sites with local interpretation',
-      'Continue toward Simien Mountains, Lalibela, or Aksum depending on itinerary',
+      'Continue toward Simien Mountains, Lalibela, or Axum depending on itinerary',
       'Use Gondar as an overnight base for northern Ethiopia touring',
     ],
     seoTitle: 'Gondar Castles and Historical Tours',
@@ -1202,9 +1485,9 @@ const destinationContentOverrides: Record<string, Partial<DestinationSeed>> = {
   },
   aksum: {
     shortDescription:
-      'Aksum is a northern Ethiopia heritage stop focused on stelae fields, archaeological sites, and ancient kingdom history.',
+      'Axum is a northern Ethiopia heritage stop focused on stelae fields, archaeological sites, and ancient kingdom history.',
     overview:
-      'Approved historic-route tours include Aksum for the Northern Stelae Field, archaeological museum, royal tombs, Queen of Sheba palace ruins, Ezana inscriptions, and St. Mary of Zion Church, with onward links to Tigray, Mekele, Lalibela, and Addis Ababa.',
+      'Approved historic-route tours include Axum for the Northern Stelae Field, archaeological museum, royal tombs, Queen of Sheba palace ruins, Ezana inscriptions, and St. Mary of Zion Church, with onward links to Tigray, Mekele, Lalibela, and Addis Ababa.',
     highlights: [
       'Ancient stelae fields and archaeological interpretation',
       'Royal tombs, inscriptions, palace ruins, and church heritage',
@@ -1212,15 +1495,15 @@ const destinationContentOverrides: Record<string, Partial<DestinationSeed>> = {
       'Strong fit for historical, religious, and UNESCO-heritage themed journeys',
     ],
     itinerary: [
-      'Fly or travel into Aksum as part of a northern route',
+      'Fly or travel into Axum as part of a northern route',
       'Visit stelae fields, museum sites, tombs, inscriptions, and church landmarks',
       'Continue toward Tigray, Mekele, Lalibela, or Addis Ababa',
-      'Pair Aksum with Gondar, Bahir Dar, and Lalibela for a complete historic route',
+      'Pair Axum with Gondar, Bahir Dar, and Lalibela for a complete historic route',
     ],
-    seoTitle: 'Aksum Archaeological and Heritage Tours',
+    seoTitle: 'Axum Archaeological and Heritage Tours',
     seoDescription:
-      'Plan Aksum heritage touring with stelae fields, archaeological sites, royal history and northern Ethiopia route connections.',
-    primaryKeyword: 'Aksum Tours Ethiopia',
+      'Plan Axum heritage touring with stelae fields, archaeological sites, royal history and northern Ethiopia route connections.',
+    primaryKeyword: 'Axum Tours Ethiopia',
     contentStatus: 'partial',
   },
   harar: {
@@ -1300,7 +1583,7 @@ const destinationContentOverrides: Record<string, Partial<DestinationSeed>> = {
     highlights: [
       'Guided hikes through cliffs, valleys, and escarpments',
       'Gelada Baboon and highland wildlife viewing opportunities',
-      'Pairs with Gondar, Aksum, and northern Ethiopia heritage routes',
+      'Pairs with Gondar, Axum, and northern Ethiopia heritage routes',
       'Suitable for nature, photography, trekking, and historic-route extensions',
     ],
     itinerary: [
@@ -1476,8 +1759,12 @@ function buildDestination(seed: DestinationSeed): Destination {
         : 'thin')
   const indexable = mergedSeed.indexable ?? contentStatus === 'complete'
   const shortDescription =
-    mergedSeed.shortDescription || categoryCopy.shortDescription(mergedSeed.name, mergedSeed.region)
-  const overview = mergedSeed.overview || categoryCopy.overview(mergedSeed.name, mergedSeed.region)
+    destinationPlaceDescriptions[mergedSeed.slug] ||
+    mergedSeed.shortDescription ||
+    categoryCopy.shortDescription(mergedSeed.name, mergedSeed.region)
+  const overview = `${shortDescription} ${
+    mergedSeed.overview || categoryCopy.overview(mergedSeed.name, mergedSeed.region)
+  }`
   const image = mergedSeed.image || TEMPORARY_DESTINATION_IMAGE
   const primaryKeyword = mergedSeed.primaryKeyword || `${mergedSeed.name} Tours`
   const title = mergedSeed.seoTitle || `${mergedSeed.name} Travel Information`
@@ -1501,6 +1788,10 @@ function buildDestination(seed: DestinationSeed): Destination {
     relatedDestinationSlugs: mergedSeed.relatedDestinationSlugs || [],
     travelTips: mergedSeed.travelTips || [],
     culturalNotes: mergedSeed.culturalNotes || [],
+    bestTimeToVisit: getBestTimeToVisit(mergedSeed.slug, mergedSeed.category),
+    events: destinationEventNotes[mergedSeed.slug] || [
+      'Seasonal conditions and local calendars shape the best experiences; confirm current dates and access while planning.',
+    ],
     faq: mergedSeed.faq || [],
     gallery: mergedSeed.image ? [image] : [],
     place: mergedSeed.region,

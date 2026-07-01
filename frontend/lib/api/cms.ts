@@ -201,12 +201,16 @@ export function mapApiTour(apiTour: ApiTour): Tour {
 
 export function mapApiDestination(apiDestination: ApiDestination): Destination {
   const fallback = findFallbackDestination(apiDestination) ?? fallbackDestinations[0]
-  const description = apiDestination.description || fallback.description
+  const description = (apiDestination.description || fallback.description).replace(
+    /\bAksum\b/g,
+    'Axum',
+  )
+  const name = apiDestination.name.replace(/\bAksum\b/g, 'Axum')
 
   return {
     ...fallback,
     slug: fallback?.slug ?? String(apiDestination.id),
-    name: apiDestination.name,
+    name,
     image: imageUrl(apiDestination.imageUrl, fallback.image),
     shortDescription: description,
     overview: description,

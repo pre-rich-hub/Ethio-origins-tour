@@ -27,6 +27,8 @@ export type Destination = {
   itinerary: string[]
   travelTips?: string[]
   culturalNotes?: string[]
+  bestTimeToVisit: string
+  events: string[]
   relatedDestinationSlugs?: string[]
   faq?: Array<{
     question: string

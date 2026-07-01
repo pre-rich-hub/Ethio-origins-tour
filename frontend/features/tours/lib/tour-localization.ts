@@ -205,7 +205,7 @@ const categoryTranslations: Partial<
     'ethiopia-historic-route-tours': {
       name: 'Historische Route Äthiopien',
       description:
-        'Nordäthiopische Kulturerbereisen, die Bahir Dar, Lake Tana, Gondar, Lalibela, Aksum und weitere historische Höhepunkte verbinden.',
+        'Nordäthiopische Kulturerbereisen, die Bahir Dar, Lake Tana, Gondar, Lalibela, Axum und weitere historische Höhepunkte verbinden.',
     },
     'private-customized-tours': {
       name: 'Private und maßgeschneiderte Reisen in Äthiopien',
@@ -312,7 +312,7 @@ const categoryTranslations: Partial<
     'ethiopia-historic-route-tours': {
       name: 'Tours por la ruta histórica de Etiopía',
       description:
-        'Tours patrimoniales del norte que conectan Bahir Dar, Lake Tana, Gondar, Lalibela, Aksum y otros hitos históricos.',
+        'Tours patrimoniales del norte que conectan Bahir Dar, Lake Tana, Gondar, Lalibela, Axum y otros hitos históricos.',
     },
     'private-customized-tours': {
       name: 'Tours privados y personalizados en Etiopía',
@@ -419,7 +419,7 @@ const categoryTranslations: Partial<
     'ethiopia-historic-route-tours': {
       name: 'Circuits de la route historique d’Éthiopie',
       description:
-        'Circuits patrimoniaux du nord reliant Bahir Dar, Lake Tana, Gondar, Lalibela, Aksum et d’autres temps forts historiques.',
+        'Circuits patrimoniaux du nord reliant Bahir Dar, Lake Tana, Gondar, Lalibela, Axum et d’autres temps forts historiques.',
     },
     'private-customized-tours': {
       name: 'Circuits privés et sur mesure en Éthiopie',
@@ -538,7 +538,7 @@ const tourTranslations: Partial<Record<LanguageCode, Record<string, TourText>>> 
     '14-day-ethiopia-historic-route-danakil-depression': {
       title: '14 Tage Historische Route Äthiopien und Danakil-Senke',
       description:
-        'Eine Nordäthiopien-Reise durch Aksum, Tigray, Bahir Dar, Gondar, Simien Mountains, Lalibela und Danakil-Bezüge.',
+        'Eine Nordäthiopien-Reise durch Axum, Tigray, Bahir Dar, Gondar, Simien Mountains, Lalibela und Danakil-Bezüge.',
       destination: 'Historische Route Nordäthiopien',
       bestFor:
         'Nordäthiopische Geschichte, UNESCO-Erbe, Kirchen, Klöster, Simien-Berge, kulturelle Traditionen und private historische Reisen',
@@ -546,7 +546,7 @@ const tourTranslations: Partial<Record<LanguageCode, Record<string, TourText>>> 
     '5-day-ethiopia-historic-route-tour': {
       title: '5 Tage Historische Route Äthiopien',
       description:
-        'Eine kompakte private Route durch Bahir Dar, Gondar, Lalibela und Aksum mit Kirchen, Klöstern und alten Königreichen.',
+        'Eine kompakte private Route durch Bahir Dar, Gondar, Lalibela und Axum mit Kirchen, Klöstern und alten Königreichen.',
       destination: 'Historische Route Äthiopien',
       bestFor:
         'Historische Route, UNESCO-Erbe, Kirchen, Klöster, Schlösser, alte Königreiche, Kulturentdeckung und private Äthiopienferien',
@@ -660,7 +660,7 @@ const tourTranslations: Partial<Record<LanguageCode, Record<string, TourText>>> 
     '14-day-ethiopia-historic-route-danakil-depression': {
       title: '14 días Ruta histórica de Etiopía y Danakil',
       description:
-        'Viaje por el norte con Aksum, Tigray, Bahir Dar, Gondar, Simien Mountains, Lalibela y conexión con Danakil.',
+        'Viaje por el norte con Axum, Tigray, Bahir Dar, Gondar, Simien Mountains, Lalibela y conexión con Danakil.',
       destination: 'Ruta histórica del norte de Etiopía',
       bestFor:
         'Historia del norte, patrimonio UNESCO, iglesias, monasterios, Simien Mountains, tradiciones culturales y viaje privado histórico',
@@ -668,7 +668,7 @@ const tourTranslations: Partial<Record<LanguageCode, Record<string, TourText>>> 
     '5-day-ethiopia-historic-route-tour': {
       title: '5 días Ruta histórica de Etiopía',
       description:
-        'Ruta privada compacta por Bahir Dar, Gondar, Lalibela y Aksum con iglesias, monasterios y reinos antiguos.',
+        'Ruta privada compacta por Bahir Dar, Gondar, Lalibela y Axum con iglesias, monasterios y reinos antiguos.',
       destination: 'Ruta histórica de Etiopía',
       bestFor:
         'Ruta histórica, UNESCO, iglesias, monasterios, castillos, reinos antiguos, descubrimiento cultural y vacaciones privadas',
@@ -782,7 +782,7 @@ const tourTranslations: Partial<Record<LanguageCode, Record<string, TourText>>> 
     '14-day-ethiopia-historic-route-danakil-depression': {
       title: '14 jours route historique d’Éthiopie et Danakil',
       description:
-        'Voyage dans le nord avec Aksum, Tigray, Bahir Dar, Gondar, Simien Mountains, Lalibela et lien avec le Danakil.',
+        'Voyage dans le nord avec Axum, Tigray, Bahir Dar, Gondar, Simien Mountains, Lalibela et lien avec le Danakil.',
       destination: 'Route historique du nord de l’Éthiopie',
       bestFor:
         'Histoire du nord, patrimoine UNESCO, églises, monastères, Simien Mountains, traditions culturelles et voyage historique privé',
@@ -790,7 +790,7 @@ const tourTranslations: Partial<Record<LanguageCode, Record<string, TourText>>> 
     '5-day-ethiopia-historic-route-tour': {
       title: '5 jours route historique d’Éthiopie',
       description:
-        'Route privée compacte par Bahir Dar, Gondar, Lalibela et Aksum avec églises, monastères et royaumes anciens.',
+        'Route privée compacte par Bahir Dar, Gondar, Lalibela et Axum avec églises, monastères et royaumes anciens.',
       destination: 'Route historique d’Éthiopie',
       bestFor:
         'Route historique, UNESCO, églises, monastères, châteaux, royaumes anciens, découverte culturelle et vacances privées',
