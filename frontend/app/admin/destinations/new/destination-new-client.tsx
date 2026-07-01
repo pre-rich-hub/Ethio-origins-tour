@@ -17,7 +17,7 @@ export function AdminDestinationNew() {
 
     const form = e.currentTarget
     const formData = new FormData(form)
-    if (image) formData.append('image', image)
+    if (image) formData.set('destinationImage', image)
 
     try {
       const res = await fetch('/api/v1/admin/destinations', {
@@ -56,36 +56,36 @@ export function AdminDestinationNew() {
           <h2 className="font-serif text-lg text-foreground mb-5">Destination Details</h2>
           <div className="space-y-5">
             <div>
-              <label htmlFor="name" className="block text-sm font-medium text-foreground mb-1.5">
+              <label htmlFor="destinationName" className="block text-sm font-medium text-foreground mb-1.5">
                 Name
               </label>
               <input
-                id="name"
-                name="name"
+                id="destinationName"
+                name="destinationName"
                 required
                 className="w-full px-3.5 py-2 bg-white border border-border rounded-lg text-sm text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-gold/30 focus:border-gold"
                 placeholder="e.g. Omo Valley"
               />
             </div>
             <div>
-              <label htmlFor="description" className="block text-sm font-medium text-foreground mb-1.5">
+              <label htmlFor="destinationDescription" className="block text-sm font-medium text-foreground mb-1.5">
                 Description
               </label>
               <textarea
-                id="description"
-                name="description"
+                id="destinationDescription"
+                name="destinationDescription"
                 rows={4}
                 className="w-full px-3.5 py-2 bg-white border border-border rounded-lg text-sm text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-gold/30 focus:border-gold resize-y"
                 placeholder="Describe this destination..."
               />
             </div>
             <div>
-              <label htmlFor="image" className="block text-sm font-medium text-foreground mb-1.5">
+              <label htmlFor="destinationImage" className="block text-sm font-medium text-foreground mb-1.5">
                 Image
               </label>
               <input
-                id="image"
-                name="image"
+                id="destinationImage"
+                name="destinationImage"
                 type="file"
                 accept="image/*"
                 onChange={(e) => setImage(e.target.files?.[0] ?? null)}

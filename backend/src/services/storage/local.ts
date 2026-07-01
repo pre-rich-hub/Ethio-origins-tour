@@ -38,6 +38,6 @@ export class LocalStorageProvider implements StorageProvider {
     if (env.PUBLIC_FILE_BASE_URL) {
       return `${env.PUBLIC_FILE_BASE_URL.replace(/\/+$/, "")}/${storedPath}`;
     }
-    return `/uploads/${storedPath}`;
+    return `/${storedPath}`;
   }
 }

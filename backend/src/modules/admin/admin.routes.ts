@@ -8,7 +8,7 @@ import { asyncHandler } from "../../utils/async-handler.js";
 import { ok } from "../../utils/api-response.js";
 import { HttpError } from "../../middleware/error.middleware.js";
 import { requireAdminAuth } from "../../middleware/auth.middleware.js";
-import { uploadFor, storedPathForFile } from "../../middleware/upload.middleware.js";
+import { uploadFor, storedPathForFile, urlForFile } from "../../middleware/upload.middleware.js";
 import { parseOptionalJsonArrayString, toBoolean, toNumber } from "../../utils/parsers.js";
 import {
   mapBlog,
@@ -179,7 +179,7 @@ adminRouter.post(
   tourUpload.array("tourImages", 20),
   asyncHandler(async (req, res) => {
     const files = (req.files as Express.Multer.File[] | undefined) ?? [];
-    const imagePaths = files.map(storedPathForFile).filter((path): path is string => Boolean(path));
+    const imagePaths = files.map((f) => urlForFile(f) || storedPathForFile(f)).filter((path): path is string => Boolean(path));
     if (imagePaths.length === 0) throw new HttpError(422, "At least one tour image is required");
 
     const categoryIds = parseCategoryIds(req.body.tourCategories);
@@ -237,7 +237,7 @@ adminRouter.put(
     const id = idParam.parse(req.params.id);
     const categoryIds = parseCategoryIds(req.body.tourCategories);
     const files = (req.files as Express.Multer.File[] | undefined) ?? [];
-    const imagePaths = files.map(storedPathForFile).filter((path): path is string => Boolean(path));
+    const imagePaths = files.map((f) => urlForFile(f) || storedPathForFile(f)).filter((path): path is string => Boolean(path));
     const tourTitle = String(req.body.tourTitle ?? "");
     const slug = slugify(tourTitle);
 
@@ -320,7 +320,7 @@ adminRouter.post(
   "/destinations",
   destinationUpload.single("destinationImage"),
   asyncHandler(async (req, res) => {
-    const imageUrl = req.file ? storedPathForFile(req.file) : undefined;
+    const imageUrl = req.file ? urlForFile(req.file) || storedPathForFile(req.file) : undefined;
     if (!imageUrl) throw new HttpError(422, "Destination image is required");
     const destinationName = String(req.body.destinationName ?? "");
     const slug = slugify(destinationName);
@@ -342,7 +342,7 @@ adminRouter.put(
   destinationUpload.single("destinationImage"),
   asyncHandler(async (req, res) => {
     const id = idParam.parse(req.params.id);
-    const imageUrl = req.file ? storedPathForFile(req.file) : undefined;
+    const imageUrl = req.file ? urlForFile(req.file) || storedPathForFile(req.file) : undefined;
     const destinationName = String(req.body.destinationName ?? "");
     const slug = slugify(destinationName);
     const destination = await prisma.destination.update({
@@ -410,7 +410,7 @@ adminRouter.post(
   "/gallery",
   galleryUpload.single("galleryImage"),
   asyncHandler(async (req, res) => {
-    const imageUrl = req.file ? storedPathForFile(req.file) : undefined;
+    const imageUrl = req.file ? urlForFile(req.file) || storedPathForFile(req.file) : undefined;
     if (!imageUrl) throw new HttpError(422, "Gallery image is required");
     const tourId = req.body.tourId ? Number(req.body.tourId) : null;
     const image = await prisma.gallery.create({ data: { imageUrl, tourId } });
@@ -432,7 +432,7 @@ adminRouter.post(
   "/blog",
   blogUpload.single("blogImage"),
   asyncHandler(async (req, res) => {
-    const imageUrl = req.file ? storedPathForFile(req.file) : undefined;
+    const imageUrl = req.file ? urlForFile(req.file) || storedPathForFile(req.file) : undefined;
     const blogTitle = String(req.body.blogTitle ?? "");
     const slug = slugify(blogTitle);
     const post = await prisma.blog.create({
@@ -454,7 +454,7 @@ adminRouter.put(
   blogUpload.single("blogImage"),
   asyncHandler(async (req, res) => {
     const id = idParam.parse(req.params.id);
-    const imageUrl = req.file ? storedPathForFile(req.file) : undefined;
+    const imageUrl = req.file ? urlForFile(req.file) || storedPathForFile(req.file) : undefined;
     const blogTitle = String(req.body.blogTitle ?? "");
     const slug = slugify(blogTitle);
     const post = await prisma.blog.update({

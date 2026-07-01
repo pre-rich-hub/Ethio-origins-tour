@@ -23,6 +23,10 @@ export function storedPathForFile(file: Express.Multer.File) {
   return (file as Express.Multer.File & { storedPath?: string }).storedPath;
 }
 
+export function urlForFile(file: Express.Multer.File) {
+  return (file as Express.Multer.File & { url?: string }).url;
+}
+
 export function uploadFor(kind: UploadKind) {
   const upload = createMulterUpload();
 
@@ -30,6 +34,7 @@ export function uploadFor(kind: UploadKind) {
     const provider = await getStorageProvider();
     const result = await provider.save(file, kind);
     (file as any).storedPath = result.storedPath;
+    (file as any).url = result.url;
   }
 
   return {

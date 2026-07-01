@@ -113,6 +113,10 @@ const nextConfig = {
         source: "/api/:path*",
         destination: `${apiBaseUrl}/api/:path*`,
       },
+      {
+        source: "/assets/:path*",
+        destination: `${apiBaseUrl}/assets/:path*`,
+      },
     ];
   },
   async headers() {

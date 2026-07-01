@@ -8,7 +8,7 @@ import { validate } from "../../middleware/validate.middleware.js";
 import { authCookieOptions, requireAdminAuth, signAdminToken } from "../../middleware/auth.middleware.js";
 import { loginSchema, changePasswordSchema, updateProfileSchema } from "./auth.validation.js";
 import { HttpError } from "../../middleware/error.middleware.js";
-import { uploadFor, storedPathForFile } from "../../middleware/upload.middleware.js";
+import { uploadFor, storedPathForFile, urlForFile } from "../../middleware/upload.middleware.js";
 import { loginLimiter } from "../../middleware/rate-limit.middleware.js";
 
 export const authRouter = Router();
@@ -66,7 +66,7 @@ authRouter.put(
   profileUpload.single("profilePic"),
   validate(updateProfileSchema),
   asyncHandler(async (req, res) => {
-    const profilePicUrl = req.file ? storedPathForFile(req.file) : undefined;
+    const profilePicUrl = req.file ? urlForFile(req.file) || storedPathForFile(req.file) : undefined;
     const admin = await prisma.admin.update({
       where: { id: req.admin!.id },
       data: {

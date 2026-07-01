@@ -35,3 +35,7 @@ backend/plan.md
 backend/ai-plan.md
 backend/data/*.docx
 .venv/
+
+# Uploaded test images
+backend/assets/images/destination/
+backend/assets/images/custom/gallery/

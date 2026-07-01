@@ -266,7 +266,6 @@ export function AdminTourEdit() {
                 type="number"
                 min="0"
                 step="0.01"
-                required
                 defaultValue={tour.adultPrice ?? ''}
                 className="w-full px-3.5 py-2 bg-white border border-border rounded-lg text-sm text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-gold/30 focus:border-gold"
               />
