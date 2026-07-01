@@ -1,209 +1,176 @@
 'use client'
 
-import { useCallback, useEffect, useState } from 'react'
-import Link from 'next/link'
-import { Plus, Search, Edit, Trash2, Loader2 } from 'lucide-react'
+import { FormEvent, useCallback, useEffect, useState } from 'react'
+import { Edit3, FileText, Loader2, Plus, Tags, Trash2, X } from 'lucide-react'
+import {
+  AdminFeedback,
+  AdminLoading,
+  AdminPageHeader,
+  adminInputClass,
+  adminLabelClass,
+  adminPrimaryButtonClass,
+  adminSecondaryButtonClass,
+} from '@/components/admin/admin-primitives'
+import { adminRequest, formatAdminDate } from '@/lib/admin/api'
 
-type BlogListItem = {
+type BlogCategory = { id: number; name: string; slug: string; postCount: number }
+type BlogPost = {
   id: number
   title: string
-  slug: string
   description: string | null
   imageUrl: string | null
-  category: { id: number; name: string; slug: string } | null
+  category: { id: number; name: string } | null
   createdAt: string | null
 }
 
 export function AdminBlog() {
-  const [items, setItems] = useState<BlogListItem[]>([])
+  const [posts, setPosts] = useState<BlogPost[]>([])
+  const [categories, setCategories] = useState<BlogCategory[]>([])
   const [loading, setLoading] = useState(true)
-  const [search, setSearch] = useState('')
-  const [deleting, setDeleting] = useState<number | null>(null)
+  const [saving, setSaving] = useState(false)
+  const [editing, setEditing] = useState<BlogPost | null>(null)
+  const [formOpen, setFormOpen] = useState(false)
+  const [feedback, setFeedback] = useState('')
 
-  const fetchItems = useCallback(async () => {
+  const load = useCallback(async () => {
+    setLoading(true)
     try {
-      const res = await fetch('/api/v1/admin/blog', { credentials: 'include' })
-      const data = await res.json()
-      if (data.success) setItems(data.data)
-    } catch {
-      /* ignore */
+      const [postList, categoryList] = await Promise.all([
+        adminRequest<BlogPost[]>('/api/v1/admin/blog'),
+        adminRequest<BlogCategory[]>('/api/v1/admin/blog-categories'),
+      ])
+      setPosts(postList)
+      setCategories(categoryList)
+      setFeedback('')
+    } catch (error) {
+      setFeedback(error instanceof Error ? error.message : 'Blog content could not be loaded.')
     } finally {
       setLoading(false)
     }
   }, [])
 
   useEffect(() => {
-    const id = window.setTimeout(() => void fetchItems(), 0)
+    const id = window.setTimeout(() => void load(), 0)
     return () => window.clearTimeout(id)
-  }, [fetchItems])
+  }, [load])
 
-  async function handleDelete(id: number) {
-    if (!confirm('Are you sure you want to delete this post?')) return
-    setDeleting(id)
+  function showForm(post: BlogPost | null) {
+    setEditing(post)
+    setFormOpen(true)
+    setFeedback('')
+  }
+
+  async function submitPost(event: FormEvent<HTMLFormElement>) {
+    event.preventDefault()
+    setSaving(true)
+    setFeedback('')
     try {
-      const res = await fetch(`/api/v1/admin/blog/${id}`, {
-        method: 'DELETE',
-        credentials: 'include',
+      await adminRequest<BlogPost>(editing ? `/api/v1/admin/blog/${editing.id}` : '/api/v1/admin/blog', {
+        method: editing ? 'PUT' : 'POST',
+        body: new FormData(event.currentTarget),
       })
-      const data = await res.json()
-      if (data.success) setItems((prev) => prev.filter((t) => t.id !== id))
-    } catch {
-      /* ignore */
+      setFormOpen(false)
+      setEditing(null)
+      await load()
+    } catch (error) {
+      setFeedback(error instanceof Error ? error.message : 'Blog post could not be saved.')
     } finally {
-      setDeleting(null)
+      setSaving(false)
     }
   }
 
-  const filtered = items.filter((t) =>
-    t.title.toLowerCase().includes(search.toLowerCase())
-  )
+  async function addCategory(event: FormEvent<HTMLFormElement>) {
+    event.preventDefault()
+    const form = event.currentTarget
+    const name = String(new FormData(form).get('name') ?? '').trim()
+    if (!name) return
+    try {
+      await adminRequest<BlogCategory>('/api/v1/admin/blog-categories', {
+        method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ name }),
+      })
+      form.reset()
+      await load()
+    } catch (error) {
+      setFeedback(error instanceof Error ? error.message : 'Category could not be created.')
+    }
+  }
+
+  async function renameCategory(category: BlogCategory) {
+    const name = window.prompt('Category name', category.name)?.trim()
+    if (!name || name === category.name) return
+    try {
+      await adminRequest<BlogCategory>(`/api/v1/admin/blog-categories/${category.id}`, {
+        method: 'PUT', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ name }),
+      })
+      await load()
+    } catch (error) {
+      setFeedback(error instanceof Error ? error.message : 'Category could not be renamed.')
+    }
+  }
+
+  async function deleteCategory(category: BlogCategory) {
+    if (!window.confirm(`Delete category “${category.name}”?`)) return
+    try {
+      await adminRequest<null>(`/api/v1/admin/blog-categories/${category.id}`, { method: 'DELETE' })
+      await load()
+    } catch (error) {
+      setFeedback(error instanceof Error ? error.message : 'Category could not be deleted.')
+    }
+  }
+
+  async function deletePost(post: BlogPost) {
+    if (!window.confirm(`Delete “${post.title}”?`)) return
+    try {
+      await adminRequest<null>(`/api/v1/admin/blog/${post.id}`, { method: 'DELETE' })
+      setPosts((current) => current.filter((entry) => entry.id !== post.id))
+    } catch (error) {
+      setFeedback(error instanceof Error ? error.message : 'Blog post could not be deleted.')
+    }
+  }
 
   return (
     <div className="p-8">
-      <div className="flex items-center justify-between mb-8">
-        <div>
-          <h1 className="font-serif text-3xl text-foreground">Blog</h1>
-          <p className="text-muted-foreground text-sm mt-1">
-            Manage your blog posts
-          </p>
-        </div>
-        <Link
-          href="/admin/blog/new"
-          className="inline-flex items-center gap-2 px-5 py-2.5 bg-gold text-white rounded-lg text-sm font-medium hover:bg-gold/90 transition-colors"
-        >
-          <Plus size={16} />
-          Add Post
-        </Link>
-      </div>
+      <AdminPageHeader title="Blog" description="Publish stories and organize them into editorial categories." action={<button type="button" onClick={() => showForm(null)} className={adminPrimaryButtonClass} data-testid="add-blog-post"><Plus className="size-4" /> Add post</button>} />
+      <AdminFeedback message={feedback} />
 
-      <div className="relative mb-6">
-        <Search size={16} className="absolute left-3.5 top-1/2 -translate-y-1/2 text-muted-foreground" />
-        <input
-          type="text"
-          placeholder="Search posts..."
-          value={search}
-          onChange={(e) => setSearch(e.target.value)}
-          className="w-full max-w-sm pl-9 pr-4 py-2 bg-white border border-border rounded-lg text-sm text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-gold/30 focus:border-gold"
-        />
-      </div>
+      <section className="mb-8 rounded-xl border border-border bg-white p-5 shadow-sm">
+        <div className="flex flex-wrap items-center gap-3">
+          <div className="mr-auto flex items-center gap-2"><Tags className="size-4 text-gold" /><h2 className="font-serif text-lg">Categories</h2></div>
+          <form onSubmit={addCategory} className="flex gap-2" data-testid="blog-category-form"><input name="name" className={`${adminInputClass} w-48`} placeholder="New category" required /><button className={adminSecondaryButtonClass} type="submit"><Plus className="size-4" /> Add</button></form>
+        </div>
+        <div className="mt-4 flex flex-wrap gap-2">
+          {categories.length === 0 ? <p className="text-sm text-muted-foreground">No categories yet.</p> : categories.map((category) => (
+            <span key={category.id} className="inline-flex items-center gap-2 rounded-full border border-border bg-muted/40 px-3 py-1.5 text-xs text-foreground" data-testid={`blog-category-${category.id}`}>
+              {category.name} <span className="text-muted-foreground">{category.postCount}</span>
+              <button type="button" onClick={() => void renameCategory(category)} aria-label={`Rename ${category.name}`} className="text-muted-foreground hover:text-gold"><Edit3 className="size-3" /></button>
+              <button type="button" onClick={() => void deleteCategory(category)} aria-label={`Delete ${category.name}`} className="text-muted-foreground hover:text-red-600"><X className="size-3" /></button>
+            </span>
+          ))}
+        </div>
+      </section>
 
-      {loading ? (
-        <div className="flex items-center justify-center py-20">
-          <Loader2 className="animate-spin text-gold" size={24} />
-        </div>
-      ) : filtered.length === 0 ? (
-        <div className="bg-white rounded-xl border border-border p-12 shadow-xs text-center">
-          <FileTextIcon size={40} className="mx-auto text-muted-foreground/40 mb-3" />
-          <p className="text-muted-foreground">No posts found</p>
-          <p className="text-xs text-muted-foreground/60 mt-1">
-            {search ? 'Try a different search term' : 'Click "Add Post" to write your first blog post'}
-          </p>
-        </div>
+      {formOpen && (
+        <form onSubmit={submitPost} className="mb-8 rounded-xl border border-border bg-white p-6 shadow-sm" data-testid="blog-form">
+          <div className="mb-5 flex items-center justify-between"><h2 className="font-serif text-xl">{editing ? 'Edit post' : 'New blog post'}</h2><button type="button" onClick={() => setFormOpen(false)} className="rounded-lg p-2 text-muted-foreground hover:bg-muted" aria-label="Close form"><X className="size-4" /></button></div>
+          <div className="grid gap-5 md:grid-cols-2">
+            <label><span className={adminLabelClass}>Title</span><input name="blogTitle" defaultValue={editing?.title ?? ''} className={adminInputClass} required /></label>
+            <label><span className={adminLabelClass}>Category</span><select name="categoryId" defaultValue={editing?.category?.id ?? ''} className={adminInputClass}><option value="">Uncategorized</option>{categories.map((category) => <option key={category.id} value={category.id}>{category.name}</option>)}</select></label>
+            <label className="md:col-span-2"><span className={adminLabelClass}>Featured image {editing ? '(optional replacement)' : '(optional)'}</span><input name="blogImage" type="file" accept="image/*" className={adminInputClass} /></label>
+            <label className="md:col-span-2"><span className={adminLabelClass}>Article content</span><textarea name="blogDescription" defaultValue={editing?.description ?? ''} className={`${adminInputClass} min-h-48 resize-y`} required /></label>
+          </div>
+          <div className="mt-5 flex justify-end gap-3"><button type="button" onClick={() => setFormOpen(false)} className={adminSecondaryButtonClass}>Cancel</button><button type="submit" disabled={saving} className={adminPrimaryButtonClass} data-testid="save-blog-post">{saving && <Loader2 className="size-4 animate-spin" />} {editing ? 'Save changes' : 'Publish post'}</button></div>
+        </form>
+      )}
+
+      {loading ? <AdminLoading /> : posts.length === 0 ? (
+        <div className="rounded-xl border border-dashed border-border bg-white p-12 text-center text-muted-foreground"><FileText className="mx-auto mb-3 size-9 opacity-30" />No blog posts yet.</div>
       ) : (
-        <div className="bg-white rounded-xl border border-border shadow-xs overflow-hidden">
-          <table className="w-full text-sm">
-            <thead>
-              <tr className="border-b border-border bg-muted/30">
-                <th className="text-left font-medium text-muted-foreground px-5 py-3">Post</th>
-                <th className="text-left font-medium text-muted-foreground px-5 py-3">Category</th>
-                <th className="text-left font-medium text-muted-foreground px-5 py-3">Date</th>
-                <th className="text-right font-medium text-muted-foreground px-5 py-3">Actions</th>
-              </tr>
-            </thead>
-            <tbody>
-              {filtered.map((item) => (
-                <tr
-                  key={item.id}
-                  className="border-b border-border/50 last:border-0 hover:bg-muted/20 transition-colors"
-                >
-                  <td className="px-5 py-3.5">
-                    <div className="flex items-center gap-3">
-                      {item.imageUrl ? (
-                        <img
-                          src={item.imageUrl}
-                          alt=""
-                          className="w-10 h-10 rounded-lg object-cover shrink-0"
-                        />
-                      ) : (
-                        <div className="w-10 h-10 rounded-lg bg-muted flex items-center justify-center shrink-0">
-                          <FileTextIcon size={16} className="text-muted-foreground/40" />
-                        </div>
-                      )}
-                      <div>
-                        <span className="text-foreground font-medium truncate max-w-xs block">
-                          {item.title}
-                        </span>
-                        <span className="text-xs text-muted-foreground">/{item.slug}</span>
-                      </div>
-                    </div>
-                  </td>
-                  <td className="px-5 py-3.5">
-                    {item.category ? (
-                      <span className="inline-flex items-center gap-1 text-xs font-medium bg-gold/10 text-gold px-2.5 py-1 rounded-full">
-                        {item.category.name}
-                      </span>
-                    ) : (
-                      <span className="text-muted-foreground">—</span>
-                    )}
-                  </td>
-                  <td className="px-5 py-3.5 text-muted-foreground text-xs">
-                    {item.createdAt
-                      ? new Date(item.createdAt).toLocaleDateString('en-US', {
-                          year: 'numeric', month: 'short', day: 'numeric',
-                        })
-                      : '—'}
-                  </td>
-                  <td className="px-5 py-3.5 text-right">
-                    <div className="flex items-center justify-end gap-1">
-                      <Link
-                        href={`/admin/blog/${item.id}`}
-                        className="inline-flex items-center justify-center w-8 h-8 rounded-lg text-muted-foreground hover:text-foreground hover:bg-muted transition-colors"
-                        title="Edit"
-                      >
-                        <Edit size={15} />
-                      </Link>
-                      <button
-                        onClick={() => handleDelete(item.id)}
-                        disabled={deleting === item.id}
-                        className="inline-flex items-center justify-center w-8 h-8 rounded-lg text-muted-foreground hover:text-destructive hover:bg-destructive/10 transition-colors disabled:opacity-50"
-                        title="Delete"
-                      >
-                        {deleting === item.id ? (
-                          <Loader2 size={15} className="animate-spin" />
-                        ) : (
-                          <Trash2 size={15} />
-                        )}
-                      </button>
-                    </div>
-                  </td>
-                </tr>
-              ))}
-            </tbody>
+        <div className="overflow-hidden rounded-xl border border-border bg-white shadow-sm">
+          <table className="w-full text-sm"><thead className="border-b border-border bg-muted/30"><tr><th className="px-5 py-3 text-left font-medium text-muted-foreground">Post</th><th className="px-5 py-3 text-left font-medium text-muted-foreground">Category</th><th className="px-5 py-3 text-left font-medium text-muted-foreground">Created</th><th className="px-5 py-3 text-right font-medium text-muted-foreground">Actions</th></tr></thead>
+            <tbody>{posts.map((post) => <tr key={post.id} className="border-b border-border/50 last:border-0" data-testid={`blog-post-${post.id}`}><td className="px-5 py-4"><p className="font-medium text-foreground">{post.title}</p><p className="mt-1 max-w-xl truncate text-xs text-muted-foreground">{post.description}</p></td><td className="px-5 py-4 text-muted-foreground">{post.category?.name || 'Uncategorized'}</td><td className="px-5 py-4 text-muted-foreground">{formatAdminDate(post.createdAt)}</td><td className="px-5 py-4"><div className="flex justify-end gap-1"><button type="button" onClick={() => showForm(post)} className="rounded-lg p-2 text-muted-foreground hover:bg-muted" aria-label={`Edit ${post.title}`}><Edit3 className="size-4" /></button><button type="button" onClick={() => void deletePost(post)} className="rounded-lg p-2 text-muted-foreground hover:bg-red-50 hover:text-red-600" aria-label={`Delete ${post.title}`}><Trash2 className="size-4" /></button></div></td></tr>)}</tbody>
           </table>
         </div>
       )}
     </div>
-  )
-}
-
-function FileTextIcon(props: { size: number; className?: string }) {
-  return (
-    <svg
-      xmlns="http://www.w3.org/2000/svg"
-      width={props.size}
-      height={props.size}
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="2"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-      className={props.className}
-    >
-      <path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z" />
-      <polyline points="14 2 14 8 20 8" />
-      <line x1="16" y1="13" x2="8" y2="13" />
-      <line x1="16" y1="17" x2="8" y2="17" />
-    </svg>
   )
 }

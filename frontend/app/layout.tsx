@@ -68,10 +68,11 @@ export const metadata: Metadata = {
   category: 'travel',
   icons: {
     icon: [
-      { url: '/ethio-origins-favicon.png', sizes: '512x512', type: 'image/png' },
+      { url: '/favicon.ico?v=20260701', sizes: 'any', type: 'image/x-icon' },
+      { url: '/ethio-origin-favicon-transparent-2026.png?v=20260701', sizes: '512x512', type: 'image/png' },
     ],
-    shortcut: ['/ethio-origins-favicon.png'],
-    apple: [{ url: '/apple-icon.png', sizes: '512x512', type: 'image/png' }],
+    shortcut: ['/favicon.ico?v=20260701'],
+    apple: [{ url: '/ethio-origin-apple-icon-transparent-2026.png?v=20260701', sizes: '512x512', type: 'image/png' }],
   },
   manifest: '/manifest.webmanifest',
 }

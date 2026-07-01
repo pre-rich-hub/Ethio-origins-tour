@@ -1,10 +1,19 @@
 'use client'
 
-import { useCallback, useEffect, useState } from 'react'
-import Link from 'next/link'
-import { Plus, Search, Edit, Trash2, Loader2 } from 'lucide-react'
+import { FormEvent, useCallback, useEffect, useRef, useState } from 'react'
+import { Edit3, Loader2, MapPin, Plus, Trash2, X } from 'lucide-react'
+import {
+  AdminFeedback,
+  AdminLoading,
+  AdminPageHeader,
+  adminInputClass,
+  adminLabelClass,
+  adminPrimaryButtonClass,
+  adminSecondaryButtonClass,
+} from '@/components/admin/admin-primitives'
+import { adminRequest } from '@/lib/admin/api'
 
-type DestinationListItem = {
+type Destination = {
   id: number
   name: string
   description: string | null
@@ -13,182 +22,163 @@ type DestinationListItem = {
 }
 
 export function AdminDestinations() {
-  const [items, setItems] = useState<DestinationListItem[]>([])
+  const [items, setItems] = useState<Destination[]>([])
   const [loading, setLoading] = useState(true)
-  const [search, setSearch] = useState('')
-  const [deleting, setDeleting] = useState<number | null>(null)
+  const [saving, setSaving] = useState(false)
+  const [deletingId, setDeletingId] = useState<number | null>(null)
+  const [editing, setEditing] = useState<Destination | null>(null)
+  const [formOpen, setFormOpen] = useState(false)
+  const [feedback, setFeedback] = useState('')
+  const formRef = useRef<HTMLFormElement>(null)
 
-  const fetchItems = useCallback(async () => {
+  const load = useCallback(async () => {
+    setLoading(true)
     try {
-      const res = await fetch('/api/v1/admin/destinations', { credentials: 'include' })
-      const data = await res.json()
-      if (data.success) setItems(data.data)
-    } catch {
-      /* ignore */
+      setItems(await adminRequest<Destination[]>('/api/v1/admin/destinations'))
+      setFeedback('')
+    } catch (error) {
+      setFeedback(error instanceof Error ? error.message : 'Destinations could not be loaded.')
     } finally {
       setLoading(false)
     }
   }, [])
 
   useEffect(() => {
-    const id = window.setTimeout(() => void fetchItems(), 0)
+    const id = window.setTimeout(() => void load(), 0)
     return () => window.clearTimeout(id)
-  }, [fetchItems])
+  }, [load])
 
-  async function handleDelete(id: number) {
-    if (!confirm('Are you sure you want to delete this destination?')) return
-    setDeleting(id)
+  function openCreate() {
+    setEditing(null)
+    setFormOpen(true)
+    setFeedback('')
+    window.setTimeout(() => formRef.current?.scrollIntoView({ behavior: 'smooth' }), 0)
+  }
+
+  function openEdit(item: Destination) {
+    setEditing(item)
+    setFormOpen(true)
+    setFeedback('')
+    window.setTimeout(() => formRef.current?.scrollIntoView({ behavior: 'smooth' }), 0)
+  }
+
+  async function submit(event: FormEvent<HTMLFormElement>) {
+    event.preventDefault()
+    setSaving(true)
+    setFeedback('')
+    const formData = new FormData(event.currentTarget)
+
     try {
-      const res = await fetch(`/api/v1/admin/destinations/${id}`, {
-        method: 'DELETE',
-        credentials: 'include',
-      })
-      const data = await res.json()
-      if (data.success) setItems((prev) => prev.filter((t) => t.id !== id))
-    } catch {
-      /* ignore */
+      await adminRequest<Destination>(
+        editing ? `/api/v1/admin/destinations/${editing.id}` : '/api/v1/admin/destinations',
+        { method: editing ? 'PUT' : 'POST', body: formData },
+      )
+      setFormOpen(false)
+      setEditing(null)
+      await load()
+    } catch (error) {
+      setFeedback(error instanceof Error ? error.message : 'Destination could not be saved.')
     } finally {
-      setDeleting(null)
+      setSaving(false)
     }
   }
 
-  const filtered = items.filter((t) =>
-    t.name.toLowerCase().includes(search.toLowerCase())
-  )
+  async function remove(item: Destination) {
+    if (!window.confirm(`Delete “${item.name}”?`)) return
+    setDeletingId(item.id)
+    setFeedback('')
+    try {
+      await adminRequest<null>(`/api/v1/admin/destinations/${item.id}`, { method: 'DELETE' })
+      setItems((current) => current.filter((entry) => entry.id !== item.id))
+    } catch (error) {
+      setFeedback(error instanceof Error ? error.message : 'Destination could not be deleted.')
+    } finally {
+      setDeletingId(null)
+    }
+  }
 
   return (
     <div className="p-8">
-      <div className="flex items-center justify-between mb-8">
-        <div>
-          <h1 className="font-serif text-3xl text-foreground">Destinations</h1>
-          <p className="text-muted-foreground text-sm mt-1">
-            Manage your tour destinations
-          </p>
-        </div>
-        <Link
-          href="/admin/destinations/new"
-          className="inline-flex items-center gap-2 px-5 py-2.5 bg-gold text-white rounded-lg text-sm font-medium hover:bg-gold/90 transition-colors"
-        >
-          <Plus size={16} />
-          Add Destination
-        </Link>
-      </div>
+      <AdminPageHeader
+        title="Destinations"
+        description="Create and maintain the places featured across the website."
+        action={(
+          <button type="button" onClick={openCreate} className={adminPrimaryButtonClass} data-testid="add-destination">
+            <Plus className="size-4" /> Add destination
+          </button>
+        )}
+      />
 
-      <div className="relative mb-6">
-        <Search size={16} className="absolute left-3.5 top-1/2 -translate-y-1/2 text-muted-foreground" />
-        <input
-          type="text"
-          placeholder="Search destinations..."
-          value={search}
-          onChange={(e) => setSearch(e.target.value)}
-          className="w-full max-w-sm pl-9 pr-4 py-2 bg-white border border-border rounded-lg text-sm text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-gold/30 focus:border-gold"
-        />
-      </div>
+      <AdminFeedback message={feedback} />
 
-      {loading ? (
-        <div className="flex items-center justify-center py-20">
-          <Loader2 className="animate-spin text-gold" size={24} />
-        </div>
-      ) : filtered.length === 0 ? (
-        <div className="bg-white rounded-xl border border-border p-12 shadow-xs text-center">
-          <MapPinIcon size={40} className="mx-auto text-muted-foreground/40 mb-3" />
-          <p className="text-muted-foreground">No destinations found</p>
-          <p className="text-xs text-muted-foreground/60 mt-1">
-            {search ? 'Try a different search term' : 'Click "Add Destination" to create your first destination'}
-          </p>
+      {formOpen && (
+        <form ref={formRef} onSubmit={submit} className="mb-8 rounded-xl border border-border bg-white p-6 shadow-sm" data-testid="destination-form">
+          <div className="mb-5 flex items-center justify-between">
+            <div>
+              <h2 className="font-serif text-xl text-foreground">{editing ? 'Edit destination' : 'New destination'}</h2>
+              <p className="mt-1 text-xs text-muted-foreground">Name, description, and a strong landscape image.</p>
+            </div>
+            <button type="button" onClick={() => setFormOpen(false)} className="rounded-lg p-2 text-muted-foreground hover:bg-muted" aria-label="Close form">
+              <X className="size-4" />
+            </button>
+          </div>
+          <div className="grid gap-5 md:grid-cols-2">
+            <label>
+              <span className={adminLabelClass}>Destination name</span>
+              <input name="destinationName" defaultValue={editing?.name ?? ''} className={adminInputClass} required />
+            </label>
+            <label>
+              <span className={adminLabelClass}>Image {editing ? '(leave empty to keep current)' : ''}</span>
+              <input name="destinationImage" type="file" accept="image/*" className={adminInputClass} required={!editing} />
+            </label>
+            <label className="md:col-span-2">
+              <span className={adminLabelClass}>Description</span>
+              <textarea name="destinationDescription" defaultValue={editing?.description ?? ''} className={`${adminInputClass} min-h-32 resize-y`} required />
+            </label>
+          </div>
+          <div className="mt-5 flex justify-end gap-3">
+            <button type="button" className={adminSecondaryButtonClass} onClick={() => setFormOpen(false)}>Cancel</button>
+            <button type="submit" className={adminPrimaryButtonClass} disabled={saving} data-testid="save-destination">
+              {saving && <Loader2 className="size-4 animate-spin" />}
+              {editing ? 'Save changes' : 'Create destination'}
+            </button>
+          </div>
+        </form>
+      )}
+
+      {loading ? <AdminLoading /> : items.length === 0 ? (
+        <div className="rounded-xl border border-dashed border-border bg-white p-12 text-center text-muted-foreground">
+          <MapPin className="mx-auto mb-3 size-9 opacity-30" /> No destinations yet.
         </div>
       ) : (
-        <div className="bg-white rounded-xl border border-border shadow-xs overflow-hidden">
-          <table className="w-full text-sm">
-            <thead>
-              <tr className="border-b border-border bg-muted/30">
-                <th className="text-left font-medium text-muted-foreground px-5 py-3">Destination</th>
-                <th className="text-left font-medium text-muted-foreground px-5 py-3">Description</th>
-                <th className="text-left font-medium text-muted-foreground px-5 py-3">Tours</th>
-                <th className="text-right font-medium text-muted-foreground px-5 py-3">Actions</th>
-              </tr>
-            </thead>
-            <tbody>
-              {filtered.map((item) => (
-                <tr
-                  key={item.id}
-                  className="border-b border-border/50 last:border-0 hover:bg-muted/20 transition-colors"
-                >
-                  <td className="px-5 py-3.5">
-                    <div className="flex items-center gap-3">
-                      {item.imageUrl ? (
-                        <img
-                          src={item.imageUrl}
-                          alt=""
-                          className="w-10 h-10 rounded-lg object-cover shrink-0"
-                        />
-                      ) : (
-                        <div className="w-10 h-10 rounded-lg bg-muted flex items-center justify-center shrink-0">
-                          <MapPinIcon size={16} className="text-muted-foreground/40" />
-                        </div>
-                      )}
-                      <span className="text-foreground font-medium truncate max-w-xs">
-                        {item.name}
-                      </span>
-                    </div>
-                  </td>
-                  <td className="px-5 py-3.5 text-muted-foreground max-w-xs truncate">
-                    {item.description ?? '—'}
-                  </td>
-                  <td className="px-5 py-3.5">
-                    <span className="text-xs font-medium bg-gold/10 text-gold px-2.5 py-1 rounded-full">
-                      {item.tourCount ?? 0} tours
-                    </span>
-                  </td>
-                  <td className="px-5 py-3.5 text-right">
-                    <div className="flex items-center justify-end gap-1">
-                      <Link
-                        href={`/admin/destinations/${item.id}`}
-                        className="inline-flex items-center justify-center w-8 h-8 rounded-lg text-muted-foreground hover:text-foreground hover:bg-muted transition-colors"
-                        title="Edit"
-                      >
-                        <Edit size={15} />
-                      </Link>
-                      <button
-                        onClick={() => handleDelete(item.id)}
-                        disabled={deleting === item.id}
-                        className="inline-flex items-center justify-center w-8 h-8 rounded-lg text-muted-foreground hover:text-destructive hover:bg-destructive/10 transition-colors disabled:opacity-50"
-                        title="Delete"
-                      >
-                        {deleting === item.id ? (
-                          <Loader2 size={15} className="animate-spin" />
-                        ) : (
-                          <Trash2 size={15} />
-                        )}
-                      </button>
-                    </div>
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
+        <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-3">
+          {items.map((item) => (
+            <article key={item.id} className="overflow-hidden rounded-xl border border-border bg-white shadow-sm" data-testid={`destination-${item.id}`}>
+              <div
+                className="h-40 bg-muted bg-cover bg-center"
+                style={item.imageUrl ? { backgroundImage: `url("${item.imageUrl}")` } : undefined}
+                role={item.imageUrl ? 'img' : undefined}
+                aria-label={item.imageUrl ? item.name : undefined}
+              />
+              <div className="p-5">
+                <div className="flex items-start justify-between gap-4">
+                  <div>
+                    <h2 className="font-serif text-xl text-foreground">{item.name}</h2>
+                    <p className="mt-1 text-xs font-medium uppercase tracking-wider text-gold">{item.tourCount ?? 0} tours</p>
+                  </div>
+                  <div className="flex gap-1">
+                    <button type="button" onClick={() => openEdit(item)} className="rounded-lg p-2 text-muted-foreground hover:bg-muted hover:text-foreground" aria-label={`Edit ${item.name}`}><Edit3 className="size-4" /></button>
+                    <button type="button" onClick={() => void remove(item)} disabled={deletingId === item.id} className="rounded-lg p-2 text-muted-foreground hover:bg-red-50 hover:text-red-600" aria-label={`Delete ${item.name}`}>
+                      {deletingId === item.id ? <Loader2 className="size-4 animate-spin" /> : <Trash2 className="size-4" />}
+                    </button>
+                  </div>
+                </div>
+                <p className="mt-3 line-clamp-3 text-sm leading-relaxed text-muted-foreground">{item.description || 'No description.'}</p>
+              </div>
+            </article>
+          ))}
         </div>
       )}
     </div>
-  )
-}
-
-function MapPinIcon(props: { size: number; className?: string }) {
-  return (
-    <svg
-      xmlns="http://www.w3.org/2000/svg"
-      width={props.size}
-      height={props.size}
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="2"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-      className={props.className}
-    >
-      <path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z" />
-      <circle cx="12" cy="10" r="3" />
-    </svg>
   )
 }

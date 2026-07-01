@@ -48,10 +48,10 @@ export function LoginForm() {
         <div className="bg-cream/95 backdrop-blur-sm rounded-2xl shadow-2xl p-8 md:p-10">
           <div className="flex justify-center mb-8">
             <Image
-              src="/brand/logo-header-420.webp"
+              src="/brand/ethio-origin-logo-transparent-2026.webp"
               alt="Ethio Origins"
               width={420}
-              height={412}
+              height={223}
               className="h-12 w-auto"
             />
           </div>

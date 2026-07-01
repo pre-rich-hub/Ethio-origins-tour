@@ -85,7 +85,7 @@ export function ChatWidget({ defaultOpen = false }: { defaultOpen?: boolean }) {
                     Ethio Origins Assistant
                   </p>
                   <p className="font-sans text-[0.68rem] uppercase tracking-[0.18em] text-cream/65">
-                    Local travel help
+                    International traveler support
                   </p>
                 </div>
               </div>

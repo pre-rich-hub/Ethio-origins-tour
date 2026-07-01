@@ -131,7 +131,17 @@ function publicRouteSet({ tours, destinations, tourCategories, posts, isPublishe
     '/tours',
     '/login',
     '/admin',
+    '/admin/blog',
+    '/admin/bookings',
+    '/admin/categories',
+    '/admin/contacts',
+    '/admin/destinations',
     '/admin/documents',
+    '/admin/gallery',
+    '/admin/subscribers',
+    '/admin/testimonials',
+    '/admin/tours',
+    '/admin/tours/new',
     ...tours.map((tour) => `/tours/${tour.slug}`),
     ...tourCategories.map((category) => `/tours/${category.slug}`),
     ...destinations.map((destination) => `/destinations/${destination.slug}`),
@@ -285,7 +295,7 @@ for (const link of collectLiteralInternalLinks()) {
 }
 
 const metadataRecords = [
-  { route: '/', title: 'Ethiopia Tour Company & Local Travel Experts', description: 'Explore Ethiopia with experienced local guides. Discover cultural, historical, adventure, trekking and customized tour packages with Ethio Origins Tour.', primaryKeyword: 'Ethiopia Tour Company', indexable: true },
+  { route: '/', title: 'Ethiopia Tour Company for International Travelers', description: 'Explore Ethiopia with trusted destination experts. Discover cultural, historical, adventure, trekking and customized tour packages with Ethio Origins Tour.', primaryKeyword: 'Ethiopia Tour Company', indexable: true },
   { route: '/tours', title: 'Ethiopia Tour Packages & Guided Tours', description: 'Browse Ethiopia tour packages for cultural journeys, historical routes, trekking, wildlife, coffee experiences, private tours and group adventures.', primaryKeyword: 'Ethiopia Tour Packages', indexable: true },
   { route: '/destinations', title: 'Ethiopia Travel Destinations & Places to Visit', description: "Discover Ethiopia's leading travel destinations, including Lalibela, Omo Valley, Danakil Depression, Bale Mountains, Wenchi Crater Lake, Awash National Park, festivals and adventure experiences.", primaryKeyword: 'Ethiopia Travel Destinations', indexable: true },
   { route: '/about', title: 'About Our Local Ethiopia Tour Company', description: 'Learn about Ethio Origins Tour, our local guides, travel expertise, values and commitment to responsible, memorable journeys across Ethiopia.', primaryKeyword: 'About Ethio Origins Tour', indexable: true },

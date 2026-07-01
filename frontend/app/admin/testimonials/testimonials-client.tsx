@@ -1,214 +1,181 @@
 'use client'
 
-import { useCallback, useEffect, useState } from 'react'
-import Link from 'next/link'
-import { Plus, Search, Edit, Trash2, Loader2 } from 'lucide-react'
+import { FormEvent, useCallback, useEffect, useState } from 'react'
+import { Edit3, Loader2, Plus, Quote, Star, Trash2, X } from 'lucide-react'
+import {
+  AdminFeedback,
+  AdminLoading,
+  AdminPageHeader,
+  adminInputClass,
+  adminLabelClass,
+  adminPrimaryButtonClass,
+  adminSecondaryButtonClass,
+} from '@/components/admin/admin-primitives'
+import { adminRequest } from '@/lib/admin/api'
 
-type TestimonialListItem = {
+type Testimonial = {
   id: number
-  name: string
-  role: string | null
-  content: string
-  rating: number | null
-  imageUrl: string | null
-  isFeatured: boolean
-  createdAt: string | null
+  message: string
+  reviewerName: string
+  profession: string | null
 }
 
 export function AdminTestimonials() {
-  const [items, setItems] = useState<TestimonialListItem[]>([])
+  const [items, setItems] = useState<Testimonial[]>([])
   const [loading, setLoading] = useState(true)
-  const [search, setSearch] = useState('')
-  const [deleting, setDeleting] = useState<number | null>(null)
+  const [saving, setSaving] = useState(false)
+  const [editing, setEditing] = useState<Testimonial | null>(null)
+  const [formOpen, setFormOpen] = useState(false)
+  const [feedback, setFeedback] = useState('')
+  const [success, setSuccess] = useState('')
+  const [deletingId, setDeletingId] = useState<number | null>(null)
 
-  const fetchItems = useCallback(async () => {
+  const load = useCallback(async () => {
+    setLoading(true)
     try {
-      const res = await fetch('/api/v1/admin/testimonials', { credentials: 'include' })
-      const data = await res.json()
-      if (data.success) setItems(data.data)
-    } catch {
-      /* ignore */
+      setItems(await adminRequest<Testimonial[]>('/api/v1/admin/testimonials'))
+      setFeedback('')
+    } catch (error) {
+      setFeedback(error instanceof Error ? error.message : 'Testimonials could not be loaded.')
     } finally {
       setLoading(false)
     }
   }, [])
 
   useEffect(() => {
-    const id = window.setTimeout(() => void fetchItems(), 0)
-    return () => window.clearTimeout(id)
-  }, [fetchItems])
+    let active = true
 
-  async function handleDelete(id: number) {
-    if (!confirm('Are you sure you want to delete this testimonial?')) return
-    setDeleting(id)
-    try {
-      const res = await fetch(`/api/v1/admin/testimonials/${id}`, {
-        method: 'DELETE',
-        credentials: 'include',
+    adminRequest<Testimonial[]>('/api/v1/admin/testimonials')
+      .then((testimonials) => {
+        if (!active) return
+        setItems(testimonials)
+        setFeedback('')
       })
-      const data = await res.json()
-      if (data.success) setItems((prev) => prev.filter((t) => t.id !== id))
-    } catch {
-      /* ignore */
+      .catch((error: unknown) => {
+        if (!active) return
+        setFeedback(error instanceof Error ? error.message : 'Testimonials could not be loaded.')
+      })
+      .finally(() => {
+        if (active) setLoading(false)
+      })
+
+    return () => { active = false }
+  }, [])
+
+  function showForm(item: Testimonial | null) {
+    setEditing(item)
+    setFormOpen(true)
+    setFeedback('')
+    setSuccess('')
+  }
+
+  async function submit(event: FormEvent<HTMLFormElement>) {
+    event.preventDefault()
+    setSaving(true)
+    setFeedback('')
+    setSuccess('')
+    const wasEditing = Boolean(editing)
+    const formData = new FormData(event.currentTarget)
+    const body = {
+      reviewerName: String(formData.get('reviewerName') ?? '').trim(),
+      profession: String(formData.get('profession') ?? '').trim(),
+      message: String(formData.get('message') ?? '').trim(),
+    }
+    try {
+      await adminRequest<Testimonial>(
+        editing ? `/api/v1/admin/testimonials/${editing.id}` : '/api/v1/admin/testimonials',
+        {
+          method: editing ? 'PUT' : 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(body),
+        },
+      )
+      setFormOpen(false)
+      setEditing(null)
+      await load()
+      setSuccess(wasEditing ? 'Testimonial updated on the website.' : 'Testimonial published on the website.')
+    } catch (error) {
+      setFeedback(error instanceof Error ? error.message : 'Testimonial could not be saved.')
     } finally {
-      setDeleting(null)
+      setSaving(false)
     }
   }
 
-  const filtered = items.filter((t) =>
-    t.name.toLowerCase().includes(search.toLowerCase()) ||
-    (t.content?.toLowerCase().includes(search.toLowerCase()))
-  )
+  async function remove(item: Testimonial) {
+    if (!window.confirm(`Delete the testimonial from ${item.reviewerName}?`)) return
+    setDeletingId(item.id)
+    setFeedback('')
+    setSuccess('')
+    try {
+      await adminRequest<null>(`/api/v1/admin/testimonials/${item.id}`, { method: 'DELETE' })
+      setItems((current) => current.filter((entry) => entry.id !== item.id))
+      if (editing?.id === item.id) {
+        setEditing(null)
+        setFormOpen(false)
+      }
+      setSuccess('Testimonial removed from the website.')
+    } catch (error) {
+      setFeedback(error instanceof Error ? error.message : 'Testimonial could not be deleted.')
+    } finally {
+      setDeletingId(null)
+    }
+  }
 
   return (
     <div className="p-8">
-      <div className="flex items-center justify-between mb-8">
-        <div>
-          <h1 className="font-serif text-3xl text-foreground">Testimonials</h1>
-          <p className="text-muted-foreground text-sm mt-1">
-            Manage customer testimonials
-          </p>
-        </div>
-        <Link
-          href="/admin/testimonials/new"
-          className="inline-flex items-center gap-2 px-5 py-2.5 bg-gold text-white rounded-lg text-sm font-medium hover:bg-gold/90 transition-colors"
-        >
-          <Plus size={16} />
-          Add Testimonial
-        </Link>
-      </div>
+      <AdminPageHeader
+        title="Testimonials"
+        description="Manage verified guest stories shown across the website."
+        action={<button type="button" onClick={() => showForm(null)} className={adminPrimaryButtonClass} data-testid="add-testimonial"><Plus className="size-4" /> Add testimonial</button>}
+      />
+      <AdminFeedback message={feedback} />
+      <AdminFeedback message={success} tone="success" />
 
-      <div className="relative mb-6">
-        <Search size={16} className="absolute left-3.5 top-1/2 -translate-y-1/2 text-muted-foreground" />
-        <input
-          type="text"
-          placeholder="Search testimonials..."
-          value={search}
-          onChange={(e) => setSearch(e.target.value)}
-          className="w-full max-w-sm pl-9 pr-4 py-2 bg-white border border-border rounded-lg text-sm text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-gold/30 focus:border-gold"
-        />
-      </div>
+      {formOpen && (
+        <form key={editing?.id ?? 'new'} onSubmit={submit} className="mb-8 rounded-xl border border-border bg-white p-6 shadow-sm" data-testid="testimonial-form">
+          <div className="mb-5 flex items-center justify-between">
+            <h2 className="font-serif text-xl text-foreground">{editing ? 'Edit testimonial' : 'New testimonial'}</h2>
+            <button type="button" onClick={() => setFormOpen(false)} className="rounded-lg p-2 text-muted-foreground hover:bg-muted" aria-label="Close form"><X className="size-4" /></button>
+          </div>
+          <div className="grid gap-5 md:grid-cols-2">
+            <label><span className={adminLabelClass}>Guest name</span><input name="reviewerName" defaultValue={editing?.reviewerName ?? ''} className={adminInputClass} required /></label>
+            <label><span className={adminLabelClass}>Profession or trip</span><input name="profession" defaultValue={editing?.profession ?? ''} className={adminInputClass} /></label>
+            <label className="md:col-span-2"><span className={adminLabelClass}>Guest message</span><textarea name="message" defaultValue={editing?.message ?? ''} className={`${adminInputClass} min-h-32 resize-y`} required /></label>
+          </div>
+          <div className="mt-5 flex justify-end gap-3">
+            <button type="button" onClick={() => setFormOpen(false)} className={adminSecondaryButtonClass}>Cancel</button>
+            <button type="submit" disabled={saving} className={adminPrimaryButtonClass} data-testid="save-testimonial">{saving && <Loader2 className="size-4 animate-spin" />} {editing ? 'Save changes' : 'Create testimonial'}</button>
+          </div>
+        </form>
+      )}
 
-      {loading ? (
-        <div className="flex items-center justify-center py-20">
-          <Loader2 className="animate-spin text-gold" size={24} />
-        </div>
-      ) : filtered.length === 0 ? (
-        <div className="bg-white rounded-xl border border-border p-12 shadow-xs text-center">
-          <StarIcon size={40} className="mx-auto text-muted-foreground/40 mb-3" />
-          <p className="text-muted-foreground">No testimonials found</p>
-          <p className="text-xs text-muted-foreground/60 mt-1">
-            {search ? 'Try a different search term' : 'Click "Add Testimonial" to add your first one'}
-          </p>
-        </div>
+      {loading ? <AdminLoading /> : items.length === 0 ? (
+        <div className="rounded-xl border border-dashed border-border bg-white p-12 text-center text-muted-foreground"><Star className="mx-auto mb-3 size-9 opacity-30" />No testimonials yet.</div>
       ) : (
-        <div className="bg-white rounded-xl border border-border shadow-xs overflow-hidden">
-          <table className="w-full text-sm">
-            <thead>
-              <tr className="border-b border-border bg-muted/30">
-                <th className="text-left font-medium text-muted-foreground px-5 py-3">Name</th>
-                <th className="text-left font-medium text-muted-foreground px-5 py-3">Content</th>
-                <th className="text-left font-medium text-muted-foreground px-5 py-3">Rating</th>
-                <th className="text-left font-medium text-muted-foreground px-5 py-3">Featured</th>
-                <th className="text-right font-medium text-muted-foreground px-5 py-3">Actions</th>
-              </tr>
-            </thead>
-            <tbody>
-              {filtered.map((item) => (
-                <tr
-                  key={item.id}
-                  className="border-b border-border/50 last:border-0 hover:bg-muted/20 transition-colors"
-                >
-                  <td className="px-5 py-3.5">
-                    <div className="flex items-center gap-3">
-                      {item.imageUrl ? (
-                        <img
-                          src={item.imageUrl}
-                          alt=""
-                          className="w-9 h-9 rounded-full object-cover shrink-0"
-                        />
-                      ) : (
-                        <div className="w-9 h-9 rounded-full bg-muted flex items-center justify-center shrink-0">
-                          <StarIcon size={14} className="text-muted-foreground/40" />
-                        </div>
-                      )}
-                      <div>
-                        <span className="text-foreground font-medium block">{item.name}</span>
-                        {item.role && (
-                          <span className="text-xs text-muted-foreground">{item.role}</span>
-                        )}
-                      </div>
-                    </div>
-                  </td>
-                  <td className="px-5 py-3.5 text-muted-foreground max-w-xs truncate">
-                    {item.content}
-                  </td>
-                  <td className="px-5 py-3.5">
-                    {item.rating != null ? (
-                      <span className="inline-flex items-center gap-1 text-xs font-medium bg-amber-50 text-amber-700 px-2 py-1 rounded-full">
-                        {'★'.repeat(item.rating)}{'☆'.repeat(5 - item.rating)}
-                      </span>
-                    ) : (
-                      <span className="text-muted-foreground">—</span>
-                    )}
-                  </td>
-                  <td className="px-5 py-3.5">
-                    {item.isFeatured ? (
-                      <span className="inline-flex items-center gap-1 text-xs font-medium bg-emerald-50 text-emerald-700 px-2.5 py-1 rounded-full">
-                        Featured
-                      </span>
-                    ) : (
-                      <span className="text-xs text-muted-foreground">No</span>
-                    )}
-                  </td>
-                  <td className="px-5 py-3.5 text-right">
-                    <div className="flex items-center justify-end gap-1">
-                      <Link
-                        href={`/admin/testimonials/${item.id}`}
-                        className="inline-flex items-center justify-center w-8 h-8 rounded-lg text-muted-foreground hover:text-foreground hover:bg-muted transition-colors"
-                        title="Edit"
-                      >
-                        <Edit size={15} />
-                      </Link>
-                      <button
-                        onClick={() => handleDelete(item.id)}
-                        disabled={deleting === item.id}
-                        className="inline-flex items-center justify-center w-8 h-8 rounded-lg text-muted-foreground hover:text-destructive hover:bg-destructive/10 transition-colors disabled:opacity-50"
-                        title="Delete"
-                      >
-                        {deleting === item.id ? (
-                          <Loader2 size={15} className="animate-spin" />
-                        ) : (
-                          <Trash2 size={15} />
-                        )}
-                      </button>
-                    </div>
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
+        <div>
+          <p className="mb-4 text-sm text-muted-foreground" data-testid="testimonial-count">
+            Showing all {items.length} {items.length === 1 ? 'testimonial' : 'testimonials'}
+          </p>
+          <div className="grid gap-4 lg:grid-cols-2 xl:grid-cols-3">
+            {items.map((item) => (
+              <article key={item.id} className="relative rounded-xl border border-border bg-white p-6 shadow-sm" data-testid={`testimonial-${item.id}`}>
+                <Quote className="absolute right-5 top-5 size-8 text-gold/15" />
+                <span className="mb-4 inline-flex rounded-full bg-forest/10 px-2.5 py-1 text-[0.68rem] font-semibold uppercase tracking-wider text-forest">
+                  Visible on website
+                </span>
+                <p className="pr-8 text-sm leading-7 text-foreground/80">“{item.message}”</p>
+                <div className="mt-5 flex items-end justify-between gap-4 border-t border-border/60 pt-4">
+                  <div><h2 className="font-medium text-foreground">{item.reviewerName}</h2><p className="mt-1 text-xs text-muted-foreground">{item.profession || 'Guest traveler'}</p></div>
+                  <div className="flex flex-wrap justify-end gap-2">
+                    <button type="button" onClick={() => showForm(item)} className="inline-flex items-center gap-1.5 rounded-lg border border-border px-3 py-2 text-xs font-semibold text-foreground transition hover:border-gold hover:bg-gold/10" aria-label={`Edit ${item.reviewerName}`} data-testid={`edit-testimonial-${item.id}`}><Edit3 className="size-3.5" /> Edit</button>
+                    <button type="button" onClick={() => void remove(item)} disabled={deletingId === item.id} className="inline-flex items-center gap-1.5 rounded-lg border border-red-200 px-3 py-2 text-xs font-semibold text-red-600 transition hover:bg-red-50 disabled:cursor-wait disabled:opacity-60" aria-label={`Delete ${item.reviewerName}`} data-testid={`delete-testimonial-${item.id}`}>{deletingId === item.id ? <Loader2 className="size-3.5 animate-spin" /> : <Trash2 className="size-3.5" />} Delete</button>
+                  </div>
+                </div>
+              </article>
+            ))}
+          </div>
         </div>
       )}
     </div>
-  )
-}
-
-function StarIcon(props: { size: number; className?: string }) {
-  return (
-    <svg
-      xmlns="http://www.w3.org/2000/svg"
-      width={props.size}
-      height={props.size}
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="2"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-      className={props.className}
-    >
-      <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" />
-    </svg>
   )
 }

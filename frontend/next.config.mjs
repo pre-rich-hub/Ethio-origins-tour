@@ -92,7 +92,7 @@ function getValidatedApiBaseUrl() {
   return normalizeUrl(apiBaseUrl.toString());
 }
 
-// getValidatedSiteUrl()
+getValidatedSiteUrl()
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {

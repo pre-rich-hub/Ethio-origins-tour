@@ -10,6 +10,24 @@
   --font-sans: var(--font-jakarta), ui-sans-serif, system-ui, sans-serif;
   --font-mono: ui-monospace, monospace;
 
+  /* Slightly fuller typography across public and admin surfaces. */
+  --text-xs: 0.775rem;
+  --text-sm: 0.9rem;
+  --text-base: 1.025rem;
+  --text-lg: 1.15rem;
+  --text-xl: 1.275rem;
+  --text-2xl: 1.525rem;
+  --text-3xl: 1.91rem;
+  --text-4xl: 2.29rem;
+  --text-5xl: 3.04rem;
+  --text-6xl: 3.8rem;
+  --text-7xl: 4.56rem;
+  --text-8xl: 6.08rem;
+  --text-9xl: 8.1rem;
+
+  --font-weight-light: 400;
+  --font-weight-normal: 500;
+
   --color-sidebar-ring: var(--sidebar-ring);
   --color-sidebar-border: var(--sidebar-border);
   --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
@@ -110,6 +128,7 @@
   }
   body {
     @apply bg-background text-foreground;
+    font-weight: 500;
     font-feature-settings: 'liga' 1, 'kern' 1;
   }
   h1, h2, h3, h4, h5, h6 {

@@ -1,141 +1,106 @@
 'use client'
 
-import { useCallback, useEffect, useState } from 'react'
-import Link from 'next/link'
-import { Plus, Trash2, Loader2, Image as ImageIcon } from 'lucide-react'
+import { FormEvent, useCallback, useEffect, useState } from 'react'
+import { Image as ImageIcon, Loader2, Plus, Trash2, Upload, X } from 'lucide-react'
+import {
+  AdminFeedback,
+  AdminLoading,
+  AdminPageHeader,
+  adminInputClass,
+  adminLabelClass,
+  adminPrimaryButtonClass,
+  adminSecondaryButtonClass,
+} from '@/components/admin/admin-primitives'
+import { adminRequest } from '@/lib/admin/api'
 
-type GalleryItem = {
-  id: number
-  imageUrl: string | null
-  alt?: string
-  title?: string
-  place?: string
-  tourId: number | null
-  createdAt?: string
-}
+type GalleryItem = { id: number; imageUrl: string; tourId: number | null; tour?: { id: number; name: string } | null }
+type Tour = { id: number; name: string }
 
 export function AdminGallery() {
   const [items, setItems] = useState<GalleryItem[]>([])
+  const [tours, setTours] = useState<Tour[]>([])
   const [loading, setLoading] = useState(true)
-  const [deleting, setDeleting] = useState<number | null>(null)
+  const [saving, setSaving] = useState(false)
+  const [formOpen, setFormOpen] = useState(false)
+  const [feedback, setFeedback] = useState('')
 
-  const fetchItems = useCallback(async () => {
+  const load = useCallback(async () => {
+    setLoading(true)
     try {
-      const res = await fetch('/api/v1/admin/gallery', { credentials: 'include' })
-      const data = await res.json()
-      if (data.success) setItems(data.data)
-    } catch {
-      /* ignore */
+      const [gallery, tourList] = await Promise.all([
+        adminRequest<GalleryItem[]>('/api/v1/admin/gallery'),
+        adminRequest<Tour[]>('/api/v1/admin/tours'),
+      ])
+      setItems(gallery)
+      setTours(tourList)
+      setFeedback('')
+    } catch (error) {
+      setFeedback(error instanceof Error ? error.message : 'Gallery could not be loaded.')
     } finally {
       setLoading(false)
     }
   }, [])
 
   useEffect(() => {
-    const id = window.setTimeout(() => void fetchItems(), 0)
+    const id = window.setTimeout(() => void load(), 0)
     return () => window.clearTimeout(id)
-  }, [fetchItems])
+  }, [load])
 
-  async function handleDelete(id: number) {
-    if (!confirm('Are you sure you want to delete this image?')) return
-    setDeleting(id)
+  async function submit(event: FormEvent<HTMLFormElement>) {
+    event.preventDefault()
+    const form = event.currentTarget
+    const formData = new FormData(form)
+    setSaving(true)
+    setFeedback('')
     try {
-      const res = await fetch(`/api/v1/admin/gallery/${id}`, {
-        method: 'DELETE',
-        credentials: 'include',
-      })
-      const data = await res.json()
-      if (data.success) setItems((prev) => prev.filter((t) => t.id !== id))
-    } catch {
-      /* ignore */
+      await adminRequest<GalleryItem>('/api/v1/admin/gallery', { method: 'POST', body: formData })
+      form.reset()
+      setFormOpen(false)
+      await load()
+    } catch (error) {
+      setFeedback(error instanceof Error ? error.message : 'Image could not be uploaded.')
     } finally {
-      setDeleting(null)
+      setSaving(false)
+    }
+  }
+
+  async function remove(item: GalleryItem) {
+    if (!window.confirm('Delete this gallery image?')) return
+    try {
+      await adminRequest<null>(`/api/v1/admin/gallery/${item.id}`, { method: 'DELETE' })
+      setItems((current) => current.filter((entry) => entry.id !== item.id))
+    } catch (error) {
+      setFeedback(error instanceof Error ? error.message : 'Image could not be deleted.')
     }
   }
 
   return (
     <div className="p-8">
-      <div className="flex items-center justify-between mb-8">
-        <div>
-          <h1 className="font-serif text-3xl text-foreground">Gallery</h1>
-          <p className="text-muted-foreground text-sm mt-1">
-            Manage your gallery images
-          </p>
-        </div>
-        <Link
-          href="/admin/gallery/new"
-          className="inline-flex items-center gap-2 px-5 py-2.5 bg-gold text-white rounded-lg text-sm font-medium hover:bg-gold/90 transition-colors"
-        >
-          <Plus size={16} />
-          Add Images
-        </Link>
-      </div>
+      <AdminPageHeader title="Gallery" description="Curate images and optionally connect them to a tour." action={<button type="button" onClick={() => setFormOpen(true)} className={adminPrimaryButtonClass} data-testid="add-gallery-image"><Plus className="size-4" /> Add image</button>} />
+      <AdminFeedback message={feedback} />
 
-      {loading ? (
-        <div className="flex items-center justify-center py-20">
-          <Loader2 className="animate-spin text-gold" size={24} />
-        </div>
-      ) : items.length === 0 ? (
-        <div className="bg-white rounded-xl border border-border p-12 shadow-xs text-center">
-          <ImageIcon size={40} className="mx-auto text-muted-foreground/40 mb-3" />
-          <p className="text-muted-foreground">No images in the gallery</p>
-          <p className="text-xs text-muted-foreground/60 mt-1">
-            Click "Add Images" to upload your first image
-          </p>
-        </div>
+      {formOpen && (
+        <form onSubmit={submit} className="mb-8 rounded-xl border border-border bg-white p-6 shadow-sm" data-testid="gallery-form">
+          <div className="mb-5 flex items-center justify-between"><h2 className="font-serif text-xl">Upload gallery image</h2><button type="button" onClick={() => setFormOpen(false)} className="rounded-lg p-2 text-muted-foreground hover:bg-muted" aria-label="Close form"><X className="size-4" /></button></div>
+          <div className="grid items-end gap-5 md:grid-cols-2">
+            <label><span className={adminLabelClass}>Image</span><input name="galleryImage" type="file" accept="image/*" className={adminInputClass} required /></label>
+            <label><span className={adminLabelClass}>Related tour (optional)</span><select name="tourId" className={adminInputClass}><option value="">General gallery</option>{tours.map((tour) => <option key={tour.id} value={tour.id}>{tour.name}</option>)}</select></label>
+          </div>
+          <div className="mt-5 flex justify-end gap-3"><button type="button" onClick={() => setFormOpen(false)} className={adminSecondaryButtonClass}>Cancel</button><button type="submit" disabled={saving} className={adminPrimaryButtonClass} data-testid="save-gallery-image">{saving ? <Loader2 className="size-4 animate-spin" /> : <Upload className="size-4" />} Upload image</button></div>
+        </form>
+      )}
+
+      {loading ? <AdminLoading /> : items.length === 0 ? (
+        <div className="rounded-xl border border-dashed border-border bg-white p-12 text-center text-muted-foreground"><ImageIcon className="mx-auto mb-3 size-9 opacity-30" />No gallery images yet.</div>
       ) : (
-        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4">
+        <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
           {items.map((item) => (
-            <div
-              key={item.id}
-              className="group relative bg-white rounded-xl border border-border overflow-hidden shadow-xs hover:shadow-md transition-shadow"
-            >
-              <div className="aspect-[4/3] bg-muted">
-                {item.imageUrl ? (
-                  <img
-                    src={item.imageUrl}
-                    alt={item.alt ?? ''}
-                    className="w-full h-full object-cover"
-                  />
-                ) : (
-                  <div className="w-full h-full flex items-center justify-center">
-                    <ImageIcon size={24} className="text-muted-foreground/40" />
-                  </div>
-                )}
+            <article key={item.id} className="group overflow-hidden rounded-xl border border-border bg-white shadow-sm" data-testid={`gallery-${item.id}`}>
+              <div className="relative h-48 bg-muted bg-cover bg-center" style={{ backgroundImage: `url("${item.imageUrl}")` }}>
+                <button type="button" onClick={() => void remove(item)} className="absolute right-3 top-3 inline-flex size-9 items-center justify-center rounded-full bg-black/55 text-white opacity-0 backdrop-blur transition hover:bg-red-600 group-hover:opacity-100" aria-label="Delete image"><Trash2 className="size-4" /></button>
               </div>
-              <div className="p-3">
-                {item.title && (
-                  <p className="text-sm font-medium text-foreground truncate">{item.title}</p>
-                )}
-                {item.place && (
-                  <p className="text-xs text-muted-foreground truncate">{item.place}</p>
-                )}
-              </div>
-              <div className="absolute top-2 right-2 opacity-0 group-hover:opacity-100 transition-opacity flex gap-1">
-                <Link
-                  href={`/admin/gallery/${item.id}`}
-                  className="w-8 h-8 bg-white/90 backdrop-blur-sm rounded-lg flex items-center justify-center text-muted-foreground hover:text-foreground shadow-xs transition-colors"
-                  title="Edit"
-                >
-                  <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                    <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7" />
-                    <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z" />
-                  </svg>
-                </Link>
-                <button
-                  onClick={() => handleDelete(item.id)}
-                  disabled={deleting === item.id}
-                  className="w-8 h-8 bg-white/90 backdrop-blur-sm rounded-lg flex items-center justify-center text-muted-foreground hover:text-destructive shadow-xs transition-colors disabled:opacity-50"
-                  title="Delete"
-                >
-                  {deleting === item.id ? (
-                    <Loader2 size={13} className="animate-spin" />
-                  ) : (
-                    <Trash2 size={14} />
-                  )}
-                </button>
-              </div>
-            </div>
+              <div className="p-4"><p className="truncate text-sm font-medium text-foreground">{item.tour?.name || 'General gallery'}</p><p className="mt-1 text-xs text-muted-foreground">Image #{item.id}</p></div>
+            </article>
           ))}
         </div>
       )}

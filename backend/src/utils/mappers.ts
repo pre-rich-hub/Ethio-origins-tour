@@ -46,6 +46,7 @@ export function mapGalleryImage(image: any) {
 
 export function mapTour(tour: any, detail = false) {
   const gallery = Array.isArray(tour.gallery) ? tour.gallery.map(mapGalleryImage) : [];
+  const itinerary = parseJsonArray(tour.itinerary);
   const categories = Array.isArray(tour.categories)
     ? tour.categories.map((item: any) => mapCategory(item.category))
     : [];
@@ -65,9 +66,10 @@ export function mapTour(tour: any, detail = false) {
     destination: tour.destination ? mapDestination(tour.destination) : null,
     categories,
     gallery,
+    durationDays: itinerary.length,
     included: detail ? parseJsonArray(tour.included) : undefined,
     excluded: detail ? parseJsonArray(tour.excluded) : undefined,
-    itinerary: detail ? parseJsonArray(tour.itinerary) : undefined,
+    itinerary: detail ? itinerary : undefined,
     journeyMap: detail ? tour.journeyMap : undefined,
     createdAt: tour.createdAt ?? null,
     updatedAt: tour.updatedAt ?? null,

@@ -1,7 +1,7 @@
 'use client'
 
 import { useCallback, useEffect, useState, useRef } from 'react'
-import { Upload, File as FileIcon, Loader2, CheckCircle, XCircle, Clock } from 'lucide-react'
+import { Upload, File as FileIcon, Loader2, CheckCircle, XCircle, Clock, Trash2 } from 'lucide-react'
 
 type DocumentFile = {
   id: number
@@ -100,6 +100,23 @@ export function AdminDocuments() {
     } catch {
       setFeedback('Ingestion failed. Please try again.')
       setIngesting(false)
+    }
+  }
+
+  async function handleDelete(doc: DocumentFile) {
+    if (!window.confirm(`Delete “${doc.originalName}” and its indexed content?`)) return
+    setFeedback('')
+    try {
+      const res = await fetch(`/api/v1/admin/documents/${doc.id}`, {
+        method: 'DELETE',
+        credentials: 'include',
+      })
+      const data = await res.json()
+      if (!res.ok || !data.success) throw new Error(data.message || 'Delete failed')
+      setDocuments((current) => current.filter((item) => item.id !== doc.id))
+      setFeedback('Document deleted.')
+    } catch {
+      setFeedback('Document could not be deleted.')
     }
   }
 
@@ -219,6 +236,7 @@ export function AdminDocuments() {
                 <th className="text-left font-medium text-muted-foreground px-5 py-3">Size</th>
                 <th className="text-left font-medium text-muted-foreground px-5 py-3">Status</th>
                 <th className="text-left font-medium text-muted-foreground px-5 py-3">Uploaded</th>
+                <th className="text-right font-medium text-muted-foreground px-5 py-3">Actions</th>
               </tr>
             </thead>
             <tbody>
@@ -241,6 +259,16 @@ export function AdminDocuments() {
                     )}
                   </td>
                   <td className="px-5 py-3.5 text-muted-foreground text-xs">{formatDate(doc.createdAt)}</td>
+                  <td className="px-5 py-3.5 text-right">
+                    <button
+                      type="button"
+                      onClick={() => void handleDelete(doc)}
+                      className="rounded-lg p-2 text-muted-foreground transition-colors hover:bg-red-50 hover:text-red-600"
+                      aria-label={`Delete ${doc.originalName}`}
+                    >
+                      <Trash2 className="size-4" />
+                    </button>
+                  </td>
                 </tr>
               ))}
             </tbody>

@@ -44,12 +44,13 @@ type ApiTour = {
   destination: ApiDestination | null
   categories: { id: number; name: string }[]
   gallery: ApiGalleryImage[]
+  durationDays?: number
   included?: string[]
   excluded?: string[]
   itinerary?: unknown[]
   journeyMap?: string | null
   relatedTours?: ApiTour[]
-  canonical?: { suggestedPath?: string; id?: number }
+  canonical?: { suggestedPath?: string; id?: number; slug?: string | null }
 }
 
 type ApiBlogPost = {
@@ -69,6 +70,20 @@ type ApiBlogCategory = {
   postCount: number
 }
 
+type ApiTestimonial = {
+  id: number
+  message: string
+  reviewerName: string
+  profession: string | null
+}
+
+export type CmsTestimonial = {
+  id: number
+  quote: string
+  name: string
+  experience: string
+}
+
 function slugify(value: string) {
   return value
     .toLowerCase()
@@ -84,8 +99,9 @@ function imageUrl(value: string | null | undefined, fallback: string) {
 }
 
 function findFallbackTour(apiTour: ApiTour) {
+  const canonicalSlug = apiTour.canonical?.slug || apiTour.canonical?.suggestedPath?.split('/').filter(Boolean).at(-1)
   return (
-    fallbackTours.find((tour) => tour.id === apiTour.id) ||
+    fallbackTours.find((tour) => tour.slug === canonicalSlug) ||
     fallbackTours.find((tour) => tour.title.toLowerCase() === apiTour.name.toLowerCase())
   )
 }
@@ -127,33 +143,60 @@ function normalizeItineraryItem(item: unknown, index: number) {
 }
 
 export function mapApiTour(apiTour: ApiTour): Tour {
-  const fallback = findFallbackTour(apiTour) ?? fallbackTours[0]
-  const slug = fallback?.slug ?? String(apiTour.id)
+  const matchedFallback = findFallbackTour(apiTour)
+  const template = matchedFallback ?? fallbackTours[0]
+  const slug =
+    apiTour.canonical?.slug ||
+    apiTour.canonical?.suggestedPath?.split('/').filter(Boolean).at(-1) ||
+    slugify(apiTour.name) ||
+    String(apiTour.id)
   const gallery = apiTour.gallery
     .map((image) => imageUrl(image.imageUrl, ''))
     .filter(Boolean)
+  const itinerary = apiTour.itinerary?.length
+    ? apiTour.itinerary.map(normalizeItineraryItem)
+    : matchedFallback?.itinerary ?? template.itinerary
+  const durationDays = apiTour.durationDays || itinerary.length
+  const destination = apiTour.destination?.name ?? matchedFallback?.destination ?? 'Ethiopia'
+  const categorySlugs = apiTour.categories.map((category) => slugify(category.name)).filter(Boolean)
+  const description = apiTour.description || apiTour.overview || matchedFallback?.description || `Explore ${destination} with Ethio Origins Tour.`
+  const moments = itinerary.map((day) => day.title).filter(Boolean)
+  const highlights = apiTour.categories.map((category) => category.name).filter(Boolean).join(' · ') || destination
 
   return {
-    ...fallback,
+    ...template,
     id: apiTour.id,
     slug,
     title: apiTour.name,
-    image: imageUrl(apiTour.mainImage, fallback.image),
-    gallery: gallery.length ? gallery : fallback.gallery,
-    description: apiTour.description || fallback.description,
-    intro: apiTour.overview || fallback.intro,
-    adultPrice: apiTour.adultPrice ?? fallback.adultPrice,
-    childPrice: apiTour.childPrice ?? fallback.childPrice,
-    rating: apiTour.rating ?? fallback.rating,
-    reviewCount: apiTour.noOfRates ?? fallback.reviewCount,
-    destination: apiTour.destination?.name ?? fallback.destination,
-    included: apiTour.included?.length ? apiTour.included : fallback.included,
-    excluded: apiTour.excluded?.length ? apiTour.excluded : fallback.excluded,
-    itinerary: apiTour.itinerary?.length
-      ? apiTour.itinerary.map(normalizeItineraryItem)
-      : fallback.itinerary,
-    journeyMap: apiTour.journeyMap ?? fallback.journeyMap,
-  } as Tour
+    image: imageUrl(apiTour.mainImage, template.image),
+    imageAlt: `${apiTour.name} in ${destination}`,
+    gallery: gallery.length ? gallery : template.gallery,
+    duration: durationDays > 0 ? `${durationDays} Day${durationDays === 1 ? '' : 's'}` : 'Custom itinerary',
+    region: destination,
+    highlights,
+    description,
+    intro: apiTour.overview || description,
+    adultPrice: apiTour.adultPrice ?? 0,
+    childPrice: apiTour.childPrice ?? 0,
+    rating: apiTour.rating ?? 0,
+    reviewCount: apiTour.noOfRates ?? 0,
+    destination,
+    bestFor: highlights,
+    moments: moments.length ? moments : [destination, ...apiTour.categories.map((category) => category.name)],
+    included: apiTour.included ?? matchedFallback?.included ?? [],
+    excluded: apiTour.excluded ?? matchedFallback?.excluded ?? [],
+    itinerary,
+    journeyMap: apiTour.journeyMap ?? matchedFallback?.journeyMap,
+    destinationSlugs: apiTour.destination ? [slugify(apiTour.destination.name)] : [],
+    categorySlugs,
+    seo: {
+      ...template.seo,
+      title: apiTour.name,
+      description,
+      canonicalPath: `/tours/${slug}`,
+      noIndex: false,
+    },
+  } as unknown as Tour
 }
 
 export function mapApiDestination(apiDestination: ApiDestination): Destination {
@@ -173,14 +216,15 @@ export function mapApiDestination(apiDestination: ApiDestination): Destination {
 }
 
 export async function getTours() {
-  const data = await apiFetch<Paginated<ApiTour>>('/api/tours?limit=100', {
+  const data = await apiFetch<Paginated<ApiTour>>('/api/v1/tours?limit=100', {
     fallback: { items: [], meta: { total: 0, page: 1, limit: 100, totalPages: 0 } },
+    next: { revalidate: 0 },
   })
   return data.items.length ? data.items.map(mapApiTour) : fallbackTours
 }
 
 export async function getFeaturedTours() {
-  const data = await apiFetch<ApiTour[]>('/api/tours/featured', { fallback: [] })
+  const data = await apiFetch<ApiTour[]>('/api/v1/tours/featured', { fallback: [], next: { revalidate: 0 } })
   return data.length ? data.map(mapApiTour) : fallbackTours.slice(0, 6)
 }
 
@@ -189,11 +233,15 @@ export async function getTourByRoute(route: string) {
   const id = Number(route)
 
   if (!Number.isNaN(id)) {
-    const data = await apiFetch<ApiTour | null>(`/api/tours/${id}`, { fallback: null })
+    const data = await apiFetch<ApiTour | null>(`/api/v1/tours/${id}`, { fallback: null, next: { revalidate: 0 } })
     return data ? mapApiTour(data) : fallback
   }
 
-  return fallback
+  const data = await apiFetch<ApiTour | null>(`/api/v1/tours/slug/${route}`, {
+    fallback: null,
+    next: { revalidate: 0 },
+  })
+  return data ? mapApiTour(data) : fallback
 }
 
 export async function getDestinations() {
@@ -234,6 +282,20 @@ export async function getGalleryImages() {
     alt: `Ethio Origins tour gallery image ${index + 1}`,
     title: `Travel Moment ${index + 1}`,
     place: 'Ethiopia',
+  }))
+}
+
+export async function getTestimonials(): Promise<CmsTestimonial[]> {
+  const data = await apiFetch<ApiTestimonial[]>('/api/v1/testimonials', {
+    fallback: [],
+    next: { revalidate: 0 },
+  })
+
+  return data.map((testimonial) => ({
+    id: testimonial.id,
+    quote: testimonial.message,
+    name: testimonial.reviewerName,
+    experience: testimonial.profession || 'Guest traveler',
   }))
 }
 

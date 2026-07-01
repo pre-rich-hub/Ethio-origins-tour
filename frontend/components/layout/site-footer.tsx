@@ -16,34 +16,32 @@ import { siteConfig } from '@/lib/seo/site-config'
 const partnerLinks: Array<{
   label: string
   href: string
-  meta: string
-  color: string
-  textColor: string
-  mark: string
+  brand: 'viator' | 'safari-bookings' | 'get-your-guide' | 'tourist' | 'tripadvisor'
 }> = [
+  {
+    label: 'Viator',
+    href: 'https://www.viator.com/',
+    brand: 'viator',
+  },
+  {
+    label: 'SafariBookings',
+    href: 'https://www.safaribookings.com/',
+    brand: 'safari-bookings',
+  },
+  {
+    label: 'GetYourGuide',
+    href: 'https://www.getyourguide.com/',
+    brand: 'get-your-guide',
+  },
+  {
+    label: 'Tourist',
+    href: siteConfig.social.tourist,
+    brand: 'tourist',
+  },
   {
     label: 'Tripadvisor',
     href: siteConfig.social.tripadvisor,
-    meta: 'Traveler reviews',
-    color: '#34E0A1',
-    textColor: '#001A17',
-    mark: 'owl',
-  },
-  {
-    label: 'Tourist.com',
-    href: siteConfig.social.tourist,
-    meta: 'Travel profile',
-    color: '#1677FF',
-    textColor: '#FFFFFF',
-    mark: 'T',
-  },
-  {
-    label: 'Google Maps',
-    href: 'https://maps.app.goo.gl/HSzn7PiL5KWzdWD99',
-    meta: 'Find our location',
-    color: '#4285F4',
-    textColor: '#FFFFFF',
-    mark: 'G',
+    brand: 'tripadvisor',
   },
 ]
 
@@ -64,6 +62,24 @@ const socialLinks: Array<{
     href: siteConfig.social.facebook,
     color: '#8AB4F8',
     icon: 'facebook',
+  },
+  {
+    label: 'LinkedIn',
+    href: siteConfig.social.linkedin,
+    color: '#8CC8FF',
+    icon: 'linkedin',
+  },
+  {
+    label: 'YouTube',
+    href: siteConfig.social.youtube,
+    color: '#FF6B6B',
+    icon: 'youtube',
+  },
+  {
+    label: 'TikTok',
+    href: siteConfig.social.tiktok,
+    color: '#69F0E5',
+    icon: 'tiktok',
   },
 ]
 
@@ -105,6 +121,56 @@ function SocialLogo({ icon }: { icon: string }) {
     )
   }
 
+  if (icon === 'linkedin') {
+    return (
+      <svg viewBox="0 0 24 24" className="size-4" aria-hidden="true">
+        <path fill="currentColor" d="M5.3 7.6H2.2V21h3.1V7.6ZM3.75 2A1.82 1.82 0 1 0 3.75 5.64 1.82 1.82 0 0 0 3.75 2ZM21.8 13.3c0-4.05-2.16-5.94-5.05-5.94a4.36 4.36 0 0 0-3.95 2.17V7.6H9.7V21h3.1v-6.63c0-1.75.33-3.44 2.5-3.44 2.14 0 2.17 2 2.17 3.55V21h3.1l1.23-7.7Z" />
+      </svg>
+    )
+  }
+
+  if (icon === 'youtube') {
+    return (
+      <svg viewBox="0 0 24 24" className="size-4.5" aria-hidden="true">
+        <path fill="currentColor" d="M22.3 7.1a2.7 2.7 0 0 0-1.9-1.91C18.73 4.74 12 4.74 12 4.74s-6.73 0-8.4.45A2.7 2.7 0 0 0 1.7 7.1 28.4 28.4 0 0 0 1.25 12c0 1.64.15 3.27.45 4.9a2.7 2.7 0 0 0 1.9 1.91c1.67.45 8.4.45 8.4.45s6.73 0 8.4-.45a2.7 2.7 0 0 0 1.9-1.91c.3-1.63.45-3.26.45-4.9s-.15-3.27-.45-4.9ZM9.85 15.1V8.9L15.45 12l-5.6 3.1Z" />
+      </svg>
+    )
+  }
+
+  if (icon === 'tiktok') {
+    return (
+      <svg viewBox="0 0 24 24" className="size-4.5" aria-hidden="true">
+        <path fill="currentColor" d="M16.9 2c.2 1.72 1.16 3.2 2.58 4.12A7.2 7.2 0 0 0 22 7.15v3.18a10.35 10.35 0 0 1-5.08-1.37v6.52A6.52 6.52 0 1 1 11.3 9v3.28a3.33 3.33 0 1 0 2.43 3.2V2h3.17Z" />
+      </svg>
+    )
+  }
+
+  if (icon === 'tourist') {
+    return (
+      <span className="flex items-center gap-1.5">
+        <span className="flex size-5 items-center justify-center rounded-md bg-[#08BFA9] text-white">
+          <svg viewBox="0 0 24 24" className="size-3" aria-hidden="true">
+            <path fill="currentColor" d="M6.2 5.2c5.4-1.1 10.5 2.5 11.6 7.8.4 2-.1 4-1.2 5.7-5.4 1.1-10.5-2.5-11.6-7.8-.4-2 .1-4 1.2-5.7Zm3.2 3.1c.2 3.4 2.5 6.2 5.8 7.1-.2-3.4-2.5-6.2-5.8-7.1Z" />
+          </svg>
+        </span>
+        <span className="font-sans text-xs font-black lowercase tracking-[-0.04em]">tourist</span>
+      </span>
+    )
+  }
+
+  if (icon === 'tripadvisor') {
+    return (
+      <span className="flex items-center gap-1.5">
+        <span className="relative inline-flex h-5 w-7 items-center justify-center">
+          <span className="absolute left-0 size-4 rounded-full border-2 border-current" />
+          <span className="absolute right-0 size-4 rounded-full border-2 border-current" />
+          <span className="absolute bottom-0 left-1/2 size-1.5 -translate-x-1/2 rotate-45 border-b-2 border-r-2 border-current" />
+        </span>
+        <span className="font-sans text-xs font-black tracking-[-0.05em]">Tripadvisor</span>
+      </span>
+    )
+  }
+
   if (icon === 'telegram') {
     return (
       <svg viewBox="0 0 24 24" className="size-4.5" aria-hidden="true">
@@ -123,6 +189,89 @@ function SocialLogo({ icon }: { icon: string }) {
         d="M12.03 2a9.92 9.92 0 0 0-8.47 15.1L2.35 21.5l4.52-1.18A9.93 9.93 0 1 0 12.03 2Zm0 18.2a8.2 8.2 0 0 1-4.18-1.15l-.3-.18-2.68.7.72-2.62-.2-.32a8.18 8.18 0 1 1 6.64 3.57Zm4.5-6.13c-.25-.13-1.47-.72-1.7-.8-.23-.08-.4-.13-.57.13-.17.25-.65.8-.8.96-.15.17-.3.19-.55.06-.25-.13-1.06-.39-2.02-1.25-.75-.67-1.25-1.49-1.4-1.74-.15-.25-.02-.39.11-.52.12-.12.25-.3.38-.45.13-.15.17-.25.25-.42.08-.17.04-.32-.02-.45-.06-.13-.57-1.37-.78-1.88-.2-.49-.41-.42-.57-.43h-.49c-.17 0-.45.06-.68.32-.23.25-.89.87-.89 2.12s.91 2.46 1.04 2.63c.13.17 1.8 2.75 4.36 3.85.61.26 1.08.42 1.45.54.61.19 1.16.16 1.6.1.49-.07 1.47-.6 1.68-1.18.21-.58.21-1.08.15-1.18-.06-.1-.23-.16-.48-.29Z"
       />
     </svg>
+  )
+}
+
+function PartnerLogo({ brand }: { brand: (typeof partnerLinks)[number]['brand'] }) {
+  if (brand === 'viator') {
+    return (
+      <span className="relative font-sans text-[1.65rem] font-black leading-none tracking-[-0.08em] text-[#087E9B]">
+        viator<span className="absolute -top-1 left-[2.18rem] size-2 rounded-full bg-[#F58220]" />
+      </span>
+    )
+  }
+
+  if (brand === 'safari-bookings') {
+    return (
+      <span className="flex items-center gap-2 text-[#8D0808]">
+        <svg viewBox="0 0 32 32" className="size-7" aria-hidden="true">
+          <path d="M7 23c3-5 2-9 7-12 1 4 5 3 7 7 2 4-1 8-5 9-4 1-7-1-9-4Zm8-15c1-2 1-4 0-6m5 9c3-3 3-6 2-8" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" />
+        </svg>
+        <span className="text-center font-serif text-[0.78rem] font-semibold uppercase leading-[0.9] tracking-wide">
+          Safari<br />Bookings
+        </span>
+      </span>
+    )
+  }
+
+  if (brand === 'get-your-guide') {
+    return (
+      <span className="font-sans text-[0.9rem] font-black uppercase leading-[0.78] tracking-[-0.06em] text-[#FF5533]">
+        Get<br />Your<br />Guide
+      </span>
+    )
+  }
+
+  if (brand === 'tourist') {
+    return (
+      <span className="flex items-center gap-2 text-[#202428]">
+        <span className="flex size-8 items-center justify-center rounded-lg bg-[#08BFA9] text-white">
+          <svg viewBox="0 0 24 24" className="size-4" aria-hidden="true">
+            <path fill="currentColor" d="M6.2 5.2c5.4-1.1 10.5 2.5 11.6 7.8.4 2-.1 4-1.2 5.7-5.4 1.1-10.5-2.5-11.6-7.8-.4-2 .1-4 1.2-5.7Zm3.2 3.1c.2 3.4 2.5 6.2 5.8 7.1-.2-3.4-2.5-6.2-5.8-7.1Z" />
+          </svg>
+        </span>
+        <span className="font-sans text-lg font-black lowercase tracking-[-0.06em]">tourist</span>
+      </span>
+    )
+  }
+
+  return (
+    <span className="flex items-center gap-2 text-[#111]">
+      <span className="relative inline-flex h-7 w-10 items-center justify-center">
+        <span className="absolute left-0 size-6 rounded-full border-[3px] border-current" />
+        <span className="absolute right-0 size-6 rounded-full border-[3px] border-current" />
+        <span className="absolute bottom-0 left-1/2 size-2 -translate-x-1/2 rotate-45 border-b-[3px] border-r-[3px] border-current" />
+      </span>
+      <span className="font-sans text-base font-black tracking-[-0.06em]">Tripadvisor</span>
+    </span>
+  )
+}
+
+function PaymentLogo({ brand }: { brand: 'paypal' | 'mastercard' | 'visa' | 'amex' }) {
+  if (brand === 'paypal') return <span className="font-sans text-sm font-black italic tracking-tight text-white">PayPal</span>
+  if (brand === 'visa') {
+    return (
+      <span className="relative font-sans text-base font-black italic tracking-[-0.06em] text-white">
+        <span className="absolute -left-1 top-0 h-1 w-3 -skew-x-12 bg-[#F7A600]" />VISA
+      </span>
+    )
+  }
+  if (brand === 'amex') {
+    return (
+      <span className="border-y border-white px-0.5 text-center font-sans text-[0.58rem] font-black uppercase leading-[0.85] tracking-[-0.04em] text-white">
+        American<br />Express
+      </span>
+    )
+  }
+
+  return (
+    <span className="flex items-center gap-1.5">
+      <span className="relative h-6 w-9">
+        <span className="absolute left-0 top-0 size-6 rounded-full bg-[#EB001B]" />
+        <span className="absolute right-0 top-0 size-6 rounded-full bg-[#F79E1B]" />
+        <span className="absolute left-1/2 top-0 size-6 -translate-x-1/2 rounded-full bg-[#FF5F00] opacity-90" />
+      </span>
+    </span>
   )
 }
 
@@ -226,11 +375,11 @@ export function SiteFooter() {
         <div className="grid gap-8 pb-9 lg:grid-cols-12">
           <div className="lg:col-span-4">
             <Image
-              src="/brand/logo-header-420.webp"
+              src="/brand/ethio-origin-logo-dark-transparent-2026.webp"
               alt="Ethio Origins Ethiopia Tours"
               width={420}
-              height={412}
-              className="h-24 w-auto"
+              height={223}
+              className="h-24 w-auto object-contain"
             />
             <p className="mt-4 max-w-xs font-sans text-sm font-light leading-relaxed text-cream/70">
               {t.footer.description}
@@ -243,7 +392,7 @@ export function SiteFooter() {
                   target="_blank"
                   rel="noreferrer"
                   aria-label={link.label}
-                  className="flex size-10 items-center justify-center rounded-full border border-cream/20 bg-cream/5 transition-transform hover:-translate-y-0.5"
+                  className="flex size-9 items-center justify-center rounded-full border border-cream/20 bg-cream/5 transition-transform hover:-translate-y-0.5 hover:border-cream/40"
                   style={{ color: link.color }}
                 >
                   <SocialLogo icon={link.icon} />
@@ -364,68 +513,60 @@ export function SiteFooter() {
 
         {partnerLinks.length ? (
         <div className="border-t border-cream/10 py-6">
-          <div className="relative overflow-hidden border border-cream/12 bg-[linear-gradient(135deg,rgba(250,246,236,0.08),rgba(250,246,236,0.025))] p-4 shadow-2xl shadow-black/10 backdrop-blur-sm md:p-5">
+          <div className="relative overflow-hidden rounded-xl border border-cream/12 bg-[linear-gradient(135deg,rgba(250,246,236,0.08),rgba(250,246,236,0.025))] p-5 shadow-2xl shadow-black/10 backdrop-blur-sm md:p-6">
             <div className="pointer-events-none absolute inset-x-8 top-0 h-px bg-gradient-to-r from-transparent via-gold/60 to-transparent" />
-            <div className="grid gap-5 lg:grid-cols-[0.75fr_1.5fr] lg:items-center">
+            <div className="grid gap-6 lg:grid-cols-[0.72fr_1.65fr] lg:items-center">
               <div>
                 <p className="font-sans text-[0.66rem] uppercase tracking-[0.28em] text-gold">
                   {t.footer.platforms}
                 </p>
-                <h3 className="mt-2 max-w-md font-serif text-2xl font-medium leading-tight text-cream md:text-3xl">
+                <h3 className="mt-2 max-w-md font-serif text-xl font-medium leading-tight text-cream md:text-2xl">
                   {t.footer.platformTitle}
                 </h3>
-                <p className="mt-3 max-w-xl font-sans text-sm font-light leading-relaxed text-cream/62">
+                <p className="mt-2 max-w-xl font-sans text-xs font-light leading-relaxed text-cream/62">
                   {t.footer.platformDescription}
                 </p>
               </div>
 
-              <div className="grid gap-3 sm:grid-cols-2 xl:grid-cols-4">
-                {partnerLinks.map((link) => (
-                  <a
-                    key={link.label}
-                    href={link.href}
-                    target="_blank"
-                    rel="noreferrer"
-                    className="group overflow-hidden border bg-cream shadow-lg shadow-black/15 transition-transform duration-300 hover:-translate-y-1 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4"
-                    style={{
-                      borderColor: link.color,
-                      outlineColor: link.color,
-                    }}
-                  >
-                    <div
-                      className="px-4 py-5 text-center"
-                      style={{
-                        backgroundColor: link.color,
-                        color: link.textColor,
-                      }}
+              <div>
+                <div className="grid grid-cols-2 gap-2.5 sm:grid-cols-3 xl:grid-cols-5">
+                  {partnerLinks.map((link) => (
+                    <a
+                      key={link.label}
+                      href={link.href}
+                      target="_blank"
+                      rel="noreferrer"
+                      aria-label={`View Ethio Origins on ${link.label}`}
+                      className="flex h-16 items-center justify-center rounded-lg border border-white/80 bg-white px-3 shadow-sm transition duration-300 hover:-translate-y-0.5 hover:border-gold hover:shadow-md focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-3 focus-visible:outline-gold"
                     >
-                      <p className="font-sans text-lg font-extrabold uppercase leading-none tracking-[0.03em]">
-                        {link.meta}
-                      </p>
-                      <div className="mt-4 flex items-center justify-center gap-2">
-                        {link.mark === 'owl' ? (
-                          <span className="relative inline-flex h-6 w-9 items-center justify-center">
-                            <span className="absolute left-0 size-5 rounded-full border-[3px] border-current" />
-                            <span className="absolute right-0 size-5 rounded-full border-[3px] border-current" />
-                            <span className="absolute bottom-0 left-1/2 h-2 w-2 -translate-x-1/2 rotate-45 border-b-[3px] border-r-[3px] border-current" />
-                          </span>
-                        ) : (
-                          <span className="inline-flex size-7 items-center justify-center rounded-full bg-current/15 font-sans text-sm font-black">
-                            {link.mark}
-                          </span>
-                        )}
-                        <span className="font-sans text-xl font-black tracking-tight">
-                          {link.label}
-                        </span>
-                      </div>
-                    </div>
-                    <div className="bg-cream px-4 py-4 text-center">
-                      <p className="font-sans text-base font-extrabold leading-snug tracking-tight text-forest underline decoration-forest/50 underline-offset-2">
-                        Ethio Origins Tours &amp; Travel
-                      </p>
-                    </div>
-                  </a>
-                ))}
+                      <PartnerLogo brand={link.brand} />
+                    </a>
+                  ))}
+                </div>
+
+                <div className="mt-5 flex flex-col gap-3 border-t border-cream/10 pt-4 sm:flex-row sm:items-center">
+                  <p className="shrink-0 font-sans text-[0.68rem] font-semibold uppercase tracking-[0.22em] text-cream/65">
+                    We accept
+                  </p>
+                  <div className="flex flex-wrap gap-2">
+                    {(['paypal', 'visa', 'mastercard', 'amex'] as const).map((brand) => (
+                      <span
+                        key={brand}
+                        className={`flex h-11 w-[4.5rem] items-center justify-center rounded-md border border-white/15 px-2 shadow-sm ${
+                          brand === 'paypal'
+                            ? 'bg-[#253B80]'
+                            : brand === 'visa'
+                              ? 'bg-[#0878BE]'
+                              : brand === 'mastercard'
+                                ? 'bg-[#364556]'
+                                : 'bg-[#0877C9]'
+                        }`}
+                      >
+                        <PaymentLogo brand={brand} />
+                      </span>
+                    ))}
+                  </div>
+                </div>
               </div>
             </div>
           </div>

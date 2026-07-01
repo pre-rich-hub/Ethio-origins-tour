@@ -35,10 +35,18 @@ export const translations = {
       all: 'All',
       language: 'Language',
       changeLanguage: 'Change language',
+      menuLabel: 'Journey menu',
+      menuContext: 'Explore Ethiopia',
+      discover: 'Discover',
+      menuTitleLine1: 'Go somewhere',
+      menuTitleLine2: 'remarkable.',
+      supportLabel: 'International traveler support',
+      supportTitle: 'A private journey, shaped around you.',
+      follow: 'Follow the journey',
     },
     hero: {
       eyebrow: 'The Land of Origins',
-      title: 'Explore Ethiopia with Local Travel Experts',
+      title: 'Explore Ethiopia with Trusted Travel Experts',
       description:
         'Expertly crafted journeys through ancient history, vibrant cultures, and extraordinary landscapes.',
       primaryCta: 'Explore Tours',
@@ -49,13 +57,13 @@ export const translations = {
       'Travelers Hosted',
       'Curated Experiences',
       'Guest Satisfaction',
-      'Local Expertise',
+      'Destination Expertise',
     ],
     experiences: {
       eyebrow: 'Signature Journeys',
       title: 'Exceptional Journeys, Expertly Crafted',
       description:
-        'Discover Ethiopia through carefully curated experiences that blend culture, history, nature, and authentic local connections.',
+        'Discover Ethiopia through carefully curated experiences that blend culture, history, nature, and authentic cultural connections.',
       discover: 'Discover Journey',
       exploreMore: 'Explore More',
     },
@@ -77,18 +85,18 @@ export const translations = {
         ['Ancient', 'History'],
         ['Living', 'Cultures'],
         ['Epic', 'Landscapes'],
-        ['Local', 'Experiences'],
+        ['Immersive', 'Experiences'],
       ],
     },
     custom: {
       eyebrow: 'Why Travel With Ethio Origins',
       title: 'Why Travelers Choose Ethio Origins',
       description:
-        'Local expertise, private planning, and authentic access come together to create journeys that feel personal, polished, and deeply connected to place.',
+        'Destination expertise, private planning, and authentic access come together to create journeys that feel personal, polished, and deeply connected to place.',
       features: [
         [
           '3+',
-          'Years Local Expertise',
+          'Years of Destination Expertise',
           'Deep regional knowledge shaped by years of planning and guiding journeys across Ethiopia.',
         ],
         [
@@ -99,7 +107,7 @@ export const translations = {
         [
           'Expert',
           'Guides Across Ethiopia',
-          'Travel with knowledgeable local guides who bring history, culture, and landscapes to life.',
+          'Travel with knowledgeable expert guides who bring history, culture, and landscapes to life.',
         ],
         [
           'Authentic',
@@ -139,15 +147,15 @@ export const translations = {
       title: 'Travel With Purpose',
       paragraphs: [
         'Ethio Origins Tours was founded with a simple mission: to share the richness of Ethiopia with the world through authentic, responsible, and unforgettable travel experiences.',
-        'Our team combines local knowledge, professional expertise, and a genuine passion for Ethiopian culture, history, and nature. We go beyond sightseeing to create journeys that foster connection, understanding, and discovery.',
-        'Our journeys support local businesses, promote cultural preservation, encourage responsible travel practices, and contribute to sustainable tourism development across Ethiopia.',
+        'Our team combines in-depth destination knowledge, professional expertise, and a genuine passion for Ethiopian culture, history, and nature. We go beyond sightseeing to create journeys that foster connection, understanding, and discovery.',
+        'Our journeys support community businesses, promote cultural preservation, encourage responsible travel practices, and contribute to sustainable tourism development across Ethiopia.',
       ],
       quote:
         "We don't just guide journeys. We create meaningful connections between travelers and the soul of Ethiopia.",
     },
     footer: {
       description:
-        'Expertly crafted Ethiopian journeys inspired by culture, heritage, nature, and discovery. Creating meaningful travel experiences through authentic local expertise and responsible tourism.',
+        'Expertly crafted Ethiopian journeys inspired by culture, heritage, nature, and discovery. Creating meaningful travel experiences through authentic destination expertise and responsible tourism.',
       journeys: 'Journeys',
       allTours: 'All Tours',
       signatureJourneys: 'Signature Journeys',
@@ -420,10 +428,18 @@ export const translations = {
       all: 'Alle',
       language: 'Sprache',
       changeLanguage: 'Sprache ändern',
+      menuLabel: 'Reisemenü',
+      menuContext: 'Äthiopien entdecken',
+      discover: 'Entdecken',
+      menuTitleLine1: 'Entdecken Sie',
+      menuTitleLine2: 'Außergewöhnliches.',
+      supportLabel: 'Betreuung internationaler Reisender',
+      supportTitle: 'Eine Privatreise, ganz nach Ihren Wünschen.',
+      follow: 'Begleiten Sie die Reise',
     },
     hero: {
       eyebrow: 'Das Land der Ursprünge',
-      title: 'Entdecken Sie Äthiopien mit lokalen Reiseexperten',
+      title: 'Entdecken Sie Äthiopien mit vertrauenswürdigen Reiseexperten',
       description:
         'Sorgfältig gestaltete Reisen durch alte Geschichte, lebendige Kulturen und außergewöhnliche Landschaften.',
       primaryCta: 'Touren entdecken',
@@ -434,13 +450,13 @@ export const translations = {
       'Betreute Reisende',
       'Kuratierte Erlebnisse',
       'Gästezufriedenheit',
-      'Lokale Expertise',
+      'Reiseziel-Expertise',
     ],
     experiences: {
       eyebrow: 'Signature-Reisen',
       title: 'Außergewöhnliche Reisen, fachkundig gestaltet',
       description:
-        'Entdecken Sie Äthiopien durch sorgfältig kuratierte Erlebnisse, die Kultur, Geschichte, Natur und authentische lokale Begegnungen verbinden.',
+        'Entdecken Sie Äthiopien durch sorgfältig kuratierte Erlebnisse, die Kultur, Geschichte, Natur und authentische kulturelle Begegnungen verbinden.',
       discover: 'Reise entdecken',
       exploreMore: 'Mehr entdecken',
     },
@@ -462,18 +478,18 @@ export const translations = {
         ['Alte', 'Geschichte'],
         ['Lebendige', 'Kulturen'],
         ['Epische', 'Landschaften'],
-        ['Lokale', 'Erlebnisse'],
+        ['Intensive', 'Erlebnisse'],
       ],
     },
     custom: {
       eyebrow: 'Warum mit Ethio Origins reisen',
       title: 'Warum Reisende Ethio Origins wählen',
       description:
-        'Lokale Expertise, private Planung und authentischer Zugang schaffen Reisen, die persönlich, hochwertig und tief mit dem Ort verbunden sind.',
+        'Fundierte Reiseziel-Expertise, private Planung und authentischer Zugang schaffen Reisen, die persönlich, hochwertig und tief mit dem Ort verbunden sind.',
       features: [
         [
           '15+',
-          'Jahre lokale Expertise',
+          'Jahre Reiseziel-Expertise',
           'Tiefes regionales Wissen aus Jahren der Planung und Reiseleitung in ganz Äthiopien.',
         ],
         [
@@ -484,7 +500,7 @@ export const translations = {
         [
           'Experten',
           'Guides in ganz Äthiopien',
-          'Reisen Sie mit kundigen lokalen Guides, die Geschichte, Kultur und Landschaften lebendig machen.',
+          'Reisen Sie mit kundigen, professionellen Guides, die Geschichte, Kultur und Landschaften lebendig machen.',
         ],
         [
           'Authentisch',
@@ -524,15 +540,15 @@ export const translations = {
       title: 'Reisen mit Sinn',
       paragraphs: [
         'Ethio Origins Tours wurde mit einer einfachen Mission gegründet: den Reichtum Äthiopiens durch authentische, verantwortungsvolle und unvergessliche Reiseerlebnisse mit der Welt zu teilen.',
-        'Unser Team verbindet lokales Wissen, professionelle Expertise und echte Leidenschaft für äthiopische Kultur, Geschichte und Natur. Wir gehen über Besichtigungen hinaus und schaffen Reisen, die Verbindung, Verständnis und Entdeckung fördern.',
-        'Unsere Reisen unterstützen lokale Unternehmen, fördern kulturelle Bewahrung, ermutigen verantwortungsbewusstes Reisen und tragen zur nachhaltigen Tourismusentwicklung in Äthiopien bei.',
+        'Unser Team verbindet fundiertes Reisezielwissen, professionelle Expertise und echte Leidenschaft für äthiopische Kultur, Geschichte und Natur. Wir gehen über Besichtigungen hinaus und schaffen Reisen, die Verbindung, Verständnis und Entdeckung fördern.',
+        'Unsere Reisen unterstützen Unternehmen in den besuchten Gemeinschaften, fördern kulturelle Bewahrung, ermutigen verantwortungsbewusstes Reisen und tragen zur nachhaltigen Tourismusentwicklung in Äthiopien bei.',
       ],
       quote:
         'Wir führen nicht nur Reisen. Wir schaffen bedeutungsvolle Verbindungen zwischen Reisenden und der Seele Äthiopiens.',
     },
     footer: {
       description:
-        'Fachkundig gestaltete Äthiopienreisen, inspiriert von Kultur, Erbe, Natur und Entdeckung. Wir schaffen bedeutungsvolle Reiseerlebnisse durch authentische lokale Expertise und verantwortungsvollen Tourismus.',
+        'Fachkundig gestaltete Äthiopienreisen, inspiriert von Kultur, Erbe, Natur und Entdeckung. Wir schaffen bedeutungsvolle Reiseerlebnisse durch fundierte Reiseziel-Expertise und verantwortungsvollen Tourismus.',
       journeys: 'Reisen',
       allTours: 'Alle Touren',
       signatureJourneys: 'Signature-Reisen',
@@ -805,10 +821,18 @@ export const translations = {
       all: 'Todos',
       language: 'Idioma',
       changeLanguage: 'Cambiar idioma',
+      menuLabel: 'Menú de viaje',
+      menuContext: 'Explora Etiopía',
+      discover: 'Descubre',
+      menuTitleLine1: 'Ve a un lugar',
+      menuTitleLine2: 'extraordinario.',
+      supportLabel: 'Asistencia a viajeros internacionales',
+      supportTitle: 'Un viaje privado, diseñado para ti.',
+      follow: 'Sigue el viaje',
     },
     hero: {
       eyebrow: 'La tierra de los orígenes',
-      title: 'Explora Etiopía con expertos locales',
+      title: 'Explora Etiopía con expertos de confianza',
       description:
         'Viajes diseñados con cuidado a través de historia antigua, culturas vibrantes y paisajes extraordinarios.',
       primaryCta: 'Explorar tours',
@@ -819,13 +843,13 @@ export const translations = {
       'Viajeros recibidos',
       'Experiencias curadas',
       'Satisfacción de huéspedes',
-      'Experiencia local',
+      'Experiencia en el destino',
     ],
     experiences: {
       eyebrow: 'Viajes destacados',
       title: 'Viajes excepcionales, diseñados por expertos',
       description:
-        'Descubre Etiopía mediante experiencias cuidadosamente curadas que combinan cultura, historia, naturaleza y conexiones locales auténticas.',
+        'Descubre Etiopía mediante experiencias cuidadosamente curadas que combinan cultura, historia, naturaleza y conexiones culturales auténticas.',
       discover: 'Descubrir viaje',
       exploreMore: 'Ver más',
     },
@@ -847,18 +871,18 @@ export const translations = {
         ['Historia', 'Antigua'],
         ['Culturas', 'Vivas'],
         ['Paisajes', 'Épicos'],
-        ['Experiencias', 'Locales'],
+        ['Experiencias', 'Inmersivas'],
       ],
     },
     custom: {
       eyebrow: 'Por qué viajar con Ethio Origins',
       title: 'Por qué los viajeros eligen Ethio Origins',
       description:
-        'La experiencia local, la planificación privada y el acceso auténtico se unen para crear viajes personales, cuidados y profundamente conectados con el lugar.',
+        'La experiencia en el destino, la planificación privada y el acceso auténtico se unen para crear viajes personales, cuidados y profundamente conectados con el lugar.',
       features: [
         [
           '15+',
-          'Años de experiencia local',
+          'Años de experiencia en el destino',
           'Conocimiento regional profundo adquirido tras años de planificar y guiar viajes por Etiopía.',
         ],
         [
@@ -869,7 +893,7 @@ export const translations = {
         [
           'Expertos',
           'Guías por toda Etiopía',
-          'Viaja con guías locales expertos que dan vida a la historia, la cultura y los paisajes.',
+          'Viaja con guías expertos que dan vida a la historia, la cultura y los paisajes.',
         ],
         [
           'Auténtico',
@@ -909,15 +933,15 @@ export const translations = {
       title: 'Viajar con propósito',
       paragraphs: [
         'Ethio Origins Tours nació con una misión simple: compartir la riqueza de Etiopía con el mundo mediante experiencias auténticas, responsables e inolvidables.',
-        'Nuestro equipo combina conocimiento local, experiencia profesional y una pasión genuina por la cultura, la historia y la naturaleza etíopes. Vamos más allá de las visitas para crear viajes que fomentan conexión, comprensión y descubrimiento.',
-        'Nuestros viajes apoyan negocios locales, promueven la preservación cultural, fomentan prácticas responsables y contribuyen al desarrollo sostenible del turismo en Etiopía.',
+        'Nuestro equipo combina un profundo conocimiento del destino, experiencia profesional y una pasión genuina por la cultura, la historia y la naturaleza etíopes. Vamos más allá de las visitas para crear viajes que fomentan conexión, comprensión y descubrimiento.',
+        'Nuestros viajes apoyan negocios de las comunidades, promueven la preservación cultural, fomentan prácticas responsables y contribuyen al desarrollo sostenible del turismo en Etiopía.',
       ],
       quote:
         'No solo guiamos viajes. Creamos conexiones significativas entre los viajeros y el alma de Etiopía.',
     },
     footer: {
       description:
-        'Viajes por Etiopía diseñados con experiencia e inspirados en cultura, patrimonio, naturaleza y descubrimiento. Creamos experiencias significativas mediante conocimiento local auténtico y turismo responsable.',
+        'Viajes por Etiopía diseñados con experiencia e inspirados en cultura, patrimonio, naturaleza y descubrimiento. Creamos experiencias significativas mediante un profundo conocimiento del destino y turismo responsable.',
       journeys: 'Viajes',
       allTours: 'Todos los tours',
       signatureJourneys: 'Viajes destacados',
@@ -1190,10 +1214,18 @@ export const translations = {
       all: 'Tous',
       language: 'Langue',
       changeLanguage: 'Changer de langue',
+      menuLabel: 'Menu voyage',
+      menuContext: "Explorez l'Éthiopie",
+      discover: 'Découvrir',
+      menuTitleLine1: 'Partez vers',
+      menuTitleLine2: "l'exceptionnel.",
+      supportLabel: 'Assistance aux voyageurs internationaux',
+      supportTitle: 'Un voyage privé, pensé pour vous.',
+      follow: 'Suivez le voyage',
     },
     hero: {
       eyebrow: 'La terre des origines',
-      title: "Explorez l'Éthiopie avec des experts locaux",
+      title: "Explorez l'Éthiopie avec des experts de confiance",
       description:
         'Des voyages conçus avec soin à travers une histoire ancienne, des cultures vivantes et des paysages extraordinaires.',
       primaryCta: 'Explorer les circuits',
@@ -1204,13 +1236,13 @@ export const translations = {
       'Voyageurs accueillis',
       'Expériences sélectionnées',
       'Satisfaction des invités',
-      'Expertise locale',
+      'Expertise de la destination',
     ],
     experiences: {
       eyebrow: 'Voyages signature',
       title: 'Des voyages exceptionnels, conçus avec expertise',
       description:
-        "Découvrez l'Éthiopie à travers des expériences soigneusement sélectionnées qui mêlent culture, histoire, nature et rencontres locales authentiques.",
+        "Découvrez l'Éthiopie à travers des expériences soigneusement sélectionnées qui mêlent culture, histoire, nature et rencontres culturelles authentiques.",
       discover: 'Découvrir le voyage',
       exploreMore: 'Voir plus',
     },
@@ -1232,18 +1264,18 @@ export const translations = {
         ['Histoire', 'Ancienne'],
         ['Cultures', 'Vivantes'],
         ['Paysages', 'Épiques'],
-        ['Expériences', 'Locales'],
+        ['Expériences', 'Immersives'],
       ],
     },
     custom: {
       eyebrow: 'Pourquoi voyager avec Ethio Origins',
       title: 'Pourquoi les voyageurs choisissent Ethio Origins',
       description:
-        'Expertise locale, planification privée et accès authentique se combinent pour créer des voyages personnels, raffinés et profondément liés au lieu.',
+        'Expertise approfondie de la destination, planification privée et accès authentique se combinent pour créer des voyages personnels, raffinés et profondément liés au lieu.',
       features: [
         [
           '15+',
-          "Années d'expertise locale",
+          "Années d'expertise de la destination",
           "Une connaissance régionale approfondie acquise au fil des années de planification et d'accompagnement de voyages en Éthiopie.",
         ],
         [
@@ -1254,7 +1286,7 @@ export const translations = {
         [
           'Experts',
           "Guides dans toute l'Éthiopie",
-          "Voyagez avec des guides locaux compétents qui donnent vie à l'histoire, à la culture et aux paysages.",
+          "Voyagez avec des guides experts qui donnent vie à l'histoire, à la culture et aux paysages.",
         ],
         [
           'Authentique',
@@ -1294,15 +1326,15 @@ export const translations = {
       title: 'Voyager avec sens',
       paragraphs: [
         "Ethio Origins Tours a été fondé avec une mission simple : partager la richesse de l'Éthiopie avec le monde grâce à des expériences authentiques, responsables et inoubliables.",
-        "Notre équipe associe connaissance locale, expertise professionnelle et passion sincère pour la culture, l'histoire et la nature éthiopiennes. Nous allons au-delà des visites pour créer des voyages qui favorisent connexion, compréhension et découverte.",
-        "Nos voyages soutiennent les entreprises locales, favorisent la préservation culturelle, encouragent les pratiques responsables et contribuent au développement durable du tourisme en Éthiopie.",
+        "Notre équipe associe connaissance approfondie de la destination, expertise professionnelle et passion sincère pour la culture, l'histoire et la nature éthiopiennes. Nous allons au-delà des visites pour créer des voyages qui favorisent connexion, compréhension et découverte.",
+        "Nos voyages soutiennent les entreprises des communautés visitées, favorisent la préservation culturelle, encouragent les pratiques responsables et contribuent au développement durable du tourisme en Éthiopie.",
       ],
       quote:
         "Nous ne guidons pas seulement des voyages. Nous créons des liens significatifs entre les voyageurs et l'âme de l'Éthiopie.",
     },
     footer: {
       description:
-        "Des voyages en Éthiopie conçus avec expertise, inspirés par la culture, le patrimoine, la nature et la découverte. Nous créons des expériences significatives grâce à une expertise locale authentique et un tourisme responsable.",
+        "Des voyages en Éthiopie conçus avec expertise, inspirés par la culture, le patrimoine, la nature et la découverte. Nous créons des expériences significatives grâce à une connaissance approfondie de la destination et un tourisme responsable.",
       journeys: 'Voyages',
       allTours: 'Tous les circuits',
       signatureJourneys: 'Voyages signature',

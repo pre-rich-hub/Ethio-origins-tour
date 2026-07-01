@@ -106,6 +106,7 @@ export function AdminGalleryEdit() {
                 Current Image
               </label>
               {item.imageUrl ? (
+                // eslint-disable-next-line @next/next/no-img-element
                 <img
                   src={item.imageUrl}
                   alt={item.alt ?? ''}

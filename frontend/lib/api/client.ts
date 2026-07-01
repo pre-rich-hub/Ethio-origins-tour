@@ -99,7 +99,7 @@ export async function apiFetch<T>(
         Accept: 'application/json',
         ...init?.headers,
       },
-      next: { revalidate: 60 },
+      next: init?.next ?? { revalidate: 60 },
     })
 
     const payload = await readJson<T>(response)

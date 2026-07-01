@@ -24,6 +24,7 @@ type TourData = {
   childPrice: number | null
   discount: string | null
   rating: number | null
+  noOfRates: number | null
   isFeatured: boolean
   mainImage: string | null
   destination: { id: number; name: string } | null
@@ -153,9 +154,10 @@ export function AdminTourEdit() {
     formData.set('tourIncluded', JSON.stringify(included.filter(Boolean)))
     formData.set('tourExcluded', JSON.stringify(excluded.filter(Boolean)))
     formData.set('tourItinerary', JSON.stringify(itinerary))
-    formData.set('tourReviews', '0')
+    formData.set('tourReviews', String(tour?.noOfRates ?? 0))
     formData.set('deleteImages', JSON.stringify(deleteImageIds))
 
+    formData.delete('tourImages')
     newImages.forEach((file) => formData.append('tourImages', file))
 
     try {
@@ -315,7 +317,9 @@ export function AdminTourEdit() {
 
         {/* Overview */}
         <section className="bg-white rounded-xl border border-border p-6 shadow-xs">
-          <h2 className="font-serif text-lg text-foreground mb-5">Overview</h2>
+          <label htmlFor="tourOverview" className="mb-5 block font-serif text-lg text-foreground">
+            Overview
+          </label>
           <textarea
             id="tourOverview"
             name="tourOverview"
@@ -490,6 +494,8 @@ export function AdminTourEdit() {
                     onClick={() => toggleDeleteImage(img.id)}
                     title={marked ? 'Click to keep' : 'Click to mark for deletion'}
                   >
+                    {/* Admin images can come from uploaded files or an external CDN. */}
+                    {/* eslint-disable-next-line @next/next/no-img-element */}
                     <img
                       src={img.imageUrl}
                       alt=""
@@ -570,6 +576,7 @@ export function AdminTourEdit() {
           <button
             type="submit"
             disabled={submitting}
+            data-testid="save-tour"
             className="inline-flex items-center gap-2 px-6 py-2.5 bg-gold text-white rounded-lg text-sm font-medium hover:bg-gold/90 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
           >
             {submitting && <Loader2 size={16} className="animate-spin" />}

@@ -172,6 +172,7 @@ export function AdminBlogEdit() {
                 Current Featured Image
               </label>
               {post.imageUrl ? (
+                // eslint-disable-next-line @next/next/no-img-element
                 <img
                   src={post.imageUrl}
                   alt=""

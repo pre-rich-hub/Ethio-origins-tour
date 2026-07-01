@@ -18,7 +18,7 @@ export function BrandStory() {
                 'https://res.cloudinary.com/divimnzxa/image/upload/v1782422779/IMG-20251228-WA0007_sef2nn.jpg',
                 cloudinaryTransforms.portrait,
               )}
-              alt="A local guide and travelers walking an Ethiopian highland ridge at golden hour"
+              alt="An expert guide and travelers walking an Ethiopian highland ridge at golden hour"
               fill
               sizes="(max-width: 1024px) 100vw, 42vw"
               className="object-cover"

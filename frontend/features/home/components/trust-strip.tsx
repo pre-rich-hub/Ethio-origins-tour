@@ -7,7 +7,7 @@ const stats = [
   { value: '20+', label: 'Travelers Hosted' },
   { value: '5+', label: 'Curated Experiences' },
   { value: '98%', label: 'Guest Satisfaction' },
-  { value: '100%', label: 'Local Expertise' },
+  { value: '100%', label: 'Destination Expertise' },
 ]
 
 export function TrustStrip() {

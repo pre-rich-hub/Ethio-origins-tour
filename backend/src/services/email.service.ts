@@ -95,6 +95,11 @@ export async function sendMail(input: SendEmailInput) {
 const isVercel = Boolean(process.env.VERCEL);
 
 export async function sendEmail(input: SendEmailInput) {
+  if (!env.EMAIL_ENABLED) {
+    await sendMail(input);
+    return;
+  }
+
   if (isVercel) {
     await sendMail(input);
     return;

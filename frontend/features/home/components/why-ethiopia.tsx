@@ -9,7 +9,7 @@ const facts = [
   { value: 'Ancient', label: 'History' },
   { value: 'Living', label: 'Cultures' },
   { value: 'Epic', label: 'Landscapes' },
-  { value: 'Local', label: 'Experiences' },
+  { value: 'Immersive', label: 'Experiences' },
 ]
 
 export function WhyEthiopia() {

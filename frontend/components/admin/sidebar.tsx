@@ -13,6 +13,7 @@ import {
   MessageSquare,
   Image as ImageIcon,
   Star,
+  Tags,
   Users,
   File,
   LogOut,
@@ -22,6 +23,7 @@ import {
 const navItems = [
   { href: '/admin', label: 'Dashboard', icon: LayoutDashboard },
   { href: '/admin/tours', label: 'Tours', icon: Compass },
+  { href: '/admin/categories', label: 'Tour Categories', icon: Tags },
   { href: '/admin/destinations', label: 'Destinations', icon: MapPin },
   { href: '/admin/blog', label: 'Blog', icon: FileText },
   { href: '/admin/bookings', label: 'Bookings', icon: CalendarCheck },
@@ -52,11 +54,11 @@ export function AdminSidebar() {
     <aside className="fixed left-0 top-0 h-screen w-64 bg-forest flex flex-col z-50">
       <div className="flex items-center gap-3 px-6 h-16 border-b border-cream/10">
         <Image
-          src="/brand/logo-header-420.webp"
+          src="/brand/ethio-origin-logo-dark-transparent-2026.webp"
           alt="Ethio Origins"
           width={420}
-          height={412}
-          className="h-8 w-auto"
+          height={223}
+          className="h-10 w-auto object-contain"
         />
       </div>
 

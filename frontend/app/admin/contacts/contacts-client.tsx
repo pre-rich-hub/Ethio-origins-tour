@@ -1,193 +1,103 @@
 'use client'
 
-import { useCallback, useEffect, useState } from 'react'
-import Link from 'next/link'
-import { Search, Eye, Trash2, Loader2 } from 'lucide-react'
+import { FormEvent, useCallback, useEffect, useState } from 'react'
+import { Loader2, Mail, MessageSquare, Reply, Trash2, X } from 'lucide-react'
+import {
+  AdminFeedback,
+  AdminLoading,
+  AdminPageHeader,
+  adminInputClass,
+  adminLabelClass,
+  adminPrimaryButtonClass,
+  adminSecondaryButtonClass,
+} from '@/components/admin/admin-primitives'
+import { adminRequest, formatAdminDate } from '@/lib/admin/api'
 
-type ContactListItem = {
-  id: number
-  name: string
-  email: string
-  phone: string | null
-  preferredMonth: string | null
-  message: string
-  status: string
-  createdAt: string | null
-}
-
-const statusStyles: Record<string, string> = {
-  new: 'bg-blue-50 text-blue-700',
-  read: 'bg-gray-50 text-gray-700',
-  replied: 'bg-emerald-50 text-emerald-700',
-}
+type Contact = { id: number; name: string; email: string; message: string; createdAt: string | null }
 
 export function AdminContacts() {
-  const [items, setItems] = useState<ContactListItem[]>([])
+  const [items, setItems] = useState<Contact[]>([])
   const [loading, setLoading] = useState(true)
-  const [search, setSearch] = useState('')
-  const [deleting, setDeleting] = useState<number | null>(null)
+  const [replyingTo, setReplyingTo] = useState<Contact | null>(null)
+  const [sending, setSending] = useState(false)
+  const [feedback, setFeedback] = useState('')
+  const [success, setSuccess] = useState('')
 
-  const fetchItems = useCallback(async () => {
+  const load = useCallback(async () => {
+    setLoading(true)
     try {
-      const res = await fetch('/api/v1/admin/contacts', { credentials: 'include' })
-      const data = await res.json()
-      if (data.success) setItems(data.data)
-    } catch {
-      /* ignore */
+      setItems(await adminRequest<Contact[]>('/api/v1/admin/contacts'))
+      setFeedback('')
+    } catch (error) {
+      setFeedback(error instanceof Error ? error.message : 'Messages could not be loaded.')
     } finally {
       setLoading(false)
     }
   }, [])
 
   useEffect(() => {
-    const id = window.setTimeout(() => void fetchItems(), 0)
+    const id = window.setTimeout(() => void load(), 0)
     return () => window.clearTimeout(id)
-  }, [fetchItems])
+  }, [load])
 
-  async function handleDelete(id: number) {
-    if (!confirm('Are you sure you want to delete this contact message?')) return
-    setDeleting(id)
+  async function sendReply(event: FormEvent<HTMLFormElement>) {
+    event.preventDefault()
+    if (!replyingTo) return
+    setSending(true)
+    setFeedback('')
+    setSuccess('')
+    const data = new FormData(event.currentTarget)
     try {
-      const res = await fetch(`/api/v1/admin/contacts/${id}`, {
-        method: 'DELETE',
-        credentials: 'include',
+      await adminRequest<null>(`/api/v1/admin/contacts/${replyingTo.id}/reply`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ subject: String(data.get('subject')), message: String(data.get('message')) }),
       })
-      const data = await res.json()
-      if (data.success) setItems((prev) => prev.filter((t) => t.id !== id))
-    } catch {
-      /* ignore */
+      setSuccess(`Reply sent to ${replyingTo.email}.`)
+      setReplyingTo(null)
+    } catch (error) {
+      setFeedback(error instanceof Error ? error.message : 'Reply could not be sent.')
     } finally {
-      setDeleting(null)
+      setSending(false)
     }
   }
 
-  const filtered = items.filter((t) =>
-    t.name.toLowerCase().includes(search.toLowerCase()) ||
-    t.email.toLowerCase().includes(search.toLowerCase()) ||
-    t.message.toLowerCase().includes(search.toLowerCase())
-  )
+  async function remove(contact: Contact) {
+    if (!window.confirm(`Delete the message from ${contact.name}?`)) return
+    try {
+      await adminRequest<null>(`/api/v1/admin/contacts/${contact.id}`, { method: 'DELETE' })
+      setItems((current) => current.filter((entry) => entry.id !== contact.id))
+    } catch (error) {
+      setFeedback(error instanceof Error ? error.message : 'Message could not be deleted.')
+    }
+  }
 
   return (
     <div className="p-8">
-      <div className="flex items-center justify-between mb-8">
-        <div>
-          <h1 className="font-serif text-3xl text-foreground">Contacts</h1>
-          <p className="text-muted-foreground text-sm mt-1">
-            Messages from the contact form
-          </p>
-        </div>
-      </div>
+      <AdminPageHeader title="Contacts" description="Read traveler inquiries and reply from the admin workspace." />
+      <AdminFeedback message={feedback} />
+      <AdminFeedback message={success} tone="success" />
 
-      <div className="relative mb-6">
-        <Search size={16} className="absolute left-3.5 top-1/2 -translate-y-1/2 text-muted-foreground" />
-        <input
-          type="text"
-          placeholder="Search messages..."
-          value={search}
-          onChange={(e) => setSearch(e.target.value)}
-          className="w-full max-w-sm pl-9 pr-4 py-2 bg-white border border-border rounded-lg text-sm text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-gold/30 focus:border-gold"
-        />
-      </div>
+      {replyingTo && (
+        <form onSubmit={sendReply} className="mb-8 rounded-xl border border-gold/30 bg-white p-6 shadow-sm" data-testid="contact-reply-form">
+          <div className="mb-5 flex items-center justify-between"><div><h2 className="font-serif text-xl">Reply to {replyingTo.name}</h2><p className="mt-1 text-xs text-muted-foreground">{replyingTo.email}</p></div><button type="button" onClick={() => setReplyingTo(null)} className="rounded-lg p-2 text-muted-foreground hover:bg-muted" aria-label="Close reply"><X className="size-4" /></button></div>
+          <div className="grid gap-5"><label><span className={adminLabelClass}>Subject</span><input name="subject" defaultValue="Your Ethio Origins Tour inquiry" className={adminInputClass} required /></label><label><span className={adminLabelClass}>Message</span><textarea name="message" className={`${adminInputClass} min-h-36 resize-y`} required /></label></div>
+          <div className="mt-5 flex justify-end gap-3"><button type="button" onClick={() => setReplyingTo(null)} className={adminSecondaryButtonClass}>Cancel</button><button type="submit" disabled={sending} className={adminPrimaryButtonClass} data-testid="send-contact-reply">{sending ? <Loader2 className="size-4 animate-spin" /> : <Mail className="size-4" />} Send reply</button></div>
+        </form>
+      )}
 
-      {loading ? (
-        <div className="flex items-center justify-center py-20">
-          <Loader2 className="animate-spin text-gold" size={24} />
-        </div>
-      ) : filtered.length === 0 ? (
-        <div className="bg-white rounded-xl border border-border p-12 shadow-xs text-center">
-          <MessageIcon size={40} className="mx-auto text-muted-foreground/40 mb-3" />
-          <p className="text-muted-foreground">No messages found</p>
-          <p className="text-xs text-muted-foreground/60 mt-1">
-            {search ? 'Try a different search term' : 'Contact messages will appear here'}
-          </p>
-        </div>
+      {loading ? <AdminLoading /> : items.length === 0 ? (
+        <div className="rounded-xl border border-dashed border-border bg-white p-12 text-center text-muted-foreground"><MessageSquare className="mx-auto mb-3 size-9 opacity-30" />No contact messages yet.</div>
       ) : (
-        <div className="bg-white rounded-xl border border-border shadow-xs overflow-hidden">
-          <table className="w-full text-sm">
-            <thead>
-              <tr className="border-b border-border bg-muted/30">
-                <th className="text-left font-medium text-muted-foreground px-5 py-3">From</th>
-                <th className="text-left font-medium text-muted-foreground px-5 py-3">Message</th>
-                <th className="text-left font-medium text-muted-foreground px-5 py-3">Date</th>
-                <th className="text-left font-medium text-muted-foreground px-5 py-3">Status</th>
-                <th className="text-right font-medium text-muted-foreground px-5 py-3">Actions</th>
-              </tr>
-            </thead>
-            <tbody>
-              {filtered.map((item) => (
-                <tr
-                  key={item.id}
-                  className="border-b border-border/50 last:border-0 hover:bg-muted/20 transition-colors"
-                >
-                  <td className="px-5 py-3.5">
-                    <div>
-                      <span className="text-foreground font-medium">{item.name}</span>
-                      <span className="text-xs text-muted-foreground block">{item.email}</span>
-                    </div>
-                  </td>
-                  <td className="px-5 py-3.5 text-muted-foreground max-w-xs truncate">
-                    {item.message}
-                  </td>
-                  <td className="px-5 py-3.5 text-muted-foreground text-xs">
-                    {item.createdAt
-                      ? new Date(item.createdAt).toLocaleDateString('en-US', {
-                          year: 'numeric', month: 'short', day: 'numeric',
-                        })
-                      : '—'}
-                  </td>
-                  <td className="px-5 py-3.5">
-                    <span className={`inline-flex items-center gap-1 text-xs font-medium px-2.5 py-1 rounded-full ${statusStyles[item.status] ?? 'bg-gray-50 text-gray-700'}`}>
-                      {item.status}
-                    </span>
-                  </td>
-                  <td className="px-5 py-3.5 text-right">
-                    <div className="flex items-center justify-end gap-1">
-                      <Link
-                        href={`/admin/contacts/${item.id}`}
-                        className="inline-flex items-center justify-center w-8 h-8 rounded-lg text-muted-foreground hover:text-foreground hover:bg-muted transition-colors"
-                        title="View details"
-                      >
-                        <Eye size={15} />
-                      </Link>
-                      <button
-                        onClick={() => handleDelete(item.id)}
-                        disabled={deleting === item.id}
-                        className="inline-flex items-center justify-center w-8 h-8 rounded-lg text-muted-foreground hover:text-destructive hover:bg-destructive/10 transition-colors disabled:opacity-50"
-                        title="Delete"
-                      >
-                        {deleting === item.id ? (
-                          <Loader2 size={15} className="animate-spin" />
-                        ) : (
-                          <Trash2 size={15} />
-                        )}
-                      </button>
-                    </div>
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
+        <div className="space-y-4">
+          {items.map((contact) => (
+            <article key={contact.id} className="rounded-xl border border-border bg-white p-6 shadow-sm" data-testid={`contact-${contact.id}`}>
+              <div className="flex flex-wrap items-start justify-between gap-4"><div><h2 className="font-serif text-xl text-foreground">{contact.name}</h2><a href={`mailto:${contact.email}`} className="mt-1 block text-sm text-gold hover:underline">{contact.email}</a></div><div className="text-right"><p className="text-xs text-muted-foreground">{formatAdminDate(contact.createdAt)}</p><div className="mt-2 flex gap-1"><button type="button" onClick={() => { setReplyingTo(contact); setSuccess('') }} className="inline-flex items-center gap-2 rounded-lg px-3 py-2 text-xs font-medium text-forest hover:bg-forest/5" data-testid={`reply-contact-${contact.id}`}><Reply className="size-4" /> Reply</button><button type="button" onClick={() => void remove(contact)} className="rounded-lg p-2 text-muted-foreground hover:bg-red-50 hover:text-red-600" aria-label={`Delete message from ${contact.name}`}><Trash2 className="size-4" /></button></div></div></div>
+              <p className="mt-5 whitespace-pre-wrap border-t border-border/60 pt-5 text-sm leading-7 text-foreground/75">{contact.message}</p>
+            </article>
+          ))}
         </div>
       )}
     </div>
-  )
-}
-
-function MessageIcon(props: { size: number; className?: string }) {
-  return (
-    <svg
-      xmlns="http://www.w3.org/2000/svg"
-      width={props.size}
-      height={props.size}
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="2"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-      className={props.className}
-    >
-      <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" />
-    </svg>
   )
 }

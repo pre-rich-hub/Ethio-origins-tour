@@ -1,8 +1,10 @@
 'use client'
 
-import { useCallback, useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useRouter } from 'next/navigation'
+import Link from 'next/link'
 import { Loader2, Plus, X, ArrowUp, ArrowDown } from 'lucide-react'
+import { adminRequest } from '@/lib/admin/api'
 
 type Destination = { id: number; name: string }
 type Category = { id: number; name: string }
@@ -19,6 +21,8 @@ export function AdminTourNew() {
   const router = useRouter()
   const [submitting, setSubmitting] = useState(false)
   const [error, setError] = useState('')
+  const [optionsLoading, setOptionsLoading] = useState(true)
+  const [optionsError, setOptionsError] = useState('')
   const [destinations, setDestinations] = useState<Destination[]>([])
   const [categories, setCategories] = useState<Category[]>([])
   const [selectedCategories, setSelectedCategories] = useState<number[]>([])
@@ -30,17 +34,27 @@ export function AdminTourNew() {
   ])
 
   useEffect(() => {
-    const id = window.setTimeout(() => {
-      void Promise.all([
-        fetch('/api/v1/admin/destinations', { credentials: 'include' })
-          .then((r) => r.json())
-          .then((d) => { if (d.success) setDestinations(d.data) }),
-        fetch('/api/v1/admin/categories', { credentials: 'include' })
-          .then((r) => r.json())
-          .then((d) => { if (d.success) setCategories(d.data) }),
-      ])
-    }, 0)
-    return () => window.clearTimeout(id)
+    let active = true
+
+    Promise.all([
+      adminRequest<Destination[]>('/api/v1/admin/destinations'),
+      adminRequest<Category[]>('/api/v1/admin/categories'),
+    ])
+      .then(([destinationItems, categoryItems]) => {
+        if (!active) return
+        setDestinations(destinationItems)
+        setCategories(categoryItems)
+        setOptionsError('')
+      })
+      .catch((loadError: unknown) => {
+        if (!active) return
+        setOptionsError(loadError instanceof Error ? loadError.message : 'Tour options could not be loaded.')
+      })
+      .finally(() => {
+        if (active) setOptionsLoading(false)
+      })
+
+    return () => { active = false }
   }, [])
 
   function toggleCategory(id: number) {
@@ -109,6 +123,7 @@ export function AdminTourNew() {
     formData.set('tourItinerary', JSON.stringify(itinerary))
     formData.set('tourReviews', '0')
 
+    formData.delete('tourImages')
     images.forEach((file) => formData.append('tourImages', file))
 
     try {
@@ -143,6 +158,12 @@ export function AdminTourNew() {
         </div>
       )}
 
+      {optionsError ? (
+        <div role="alert" className="mb-6 rounded-lg border border-red-200 bg-red-50 p-4 text-sm text-red-700">
+          {optionsError}
+        </div>
+      ) : null}
+
       <form onSubmit={handleSubmit} className="space-y-8">
         {/* Basic Info */}
         <section className="bg-white rounded-xl border border-border p-6 shadow-xs">
@@ -168,13 +189,29 @@ export function AdminTourNew() {
                 id="tourDestination"
                 name="tourDestination"
                 required
+                disabled={optionsLoading || destinations.length === 0}
                 className="w-full px-3.5 py-2 bg-white border border-border rounded-lg text-sm text-foreground focus:outline-none focus:ring-2 focus:ring-gold/30 focus:border-gold"
               >
-                <option value="">Select a destination</option>
+                <option value="">
+                  {optionsLoading
+                    ? 'Loading destinations...'
+                    : destinations.length === 0
+                      ? 'No destinations available'
+                      : 'Select a destination'}
+                </option>
                 {destinations.map((d) => (
                   <option key={d.id} value={d.id}>{d.name}</option>
                 ))}
               </select>
+              {!optionsLoading && destinations.length === 0 ? (
+                <p className="mt-2 text-xs text-amber-700">
+                  A tour needs a destination.{' '}
+                  <Link href="/admin/destinations" className="font-semibold underline underline-offset-2">
+                    Add a destination first
+                  </Link>
+                  .
+                </p>
+              ) : null}
             </div>
             <div>
               <label htmlFor="tourDiscount" className="block text-sm font-medium text-foreground mb-1.5">
@@ -250,7 +287,9 @@ export function AdminTourNew() {
 
         {/* Overview */}
         <section className="bg-white rounded-xl border border-border p-6 shadow-xs">
-          <h2 className="font-serif text-lg text-foreground mb-5">Overview</h2>
+          <label htmlFor="tourOverview" className="mb-5 block font-serif text-lg text-foreground">
+            Overview
+          </label>
           <textarea
             id="tourOverview"
             name="tourOverview"
@@ -422,6 +461,7 @@ export function AdminTourNew() {
             name="tourImages"
             multiple
             accept="image/*"
+            required
             onChange={(e) => setImages(Array.from(e.target.files ?? []))}
             className="block w-full text-sm text-muted-foreground file:mr-3 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-sm file:font-medium file:bg-gold/10 file:text-gold hover:file:bg-gold/20 cursor-pointer"
           />
@@ -470,7 +510,8 @@ export function AdminTourNew() {
         <div className="flex items-center gap-3 pt-2">
           <button
             type="submit"
-            disabled={submitting}
+            disabled={submitting || optionsLoading || destinations.length === 0}
+            data-testid="save-tour"
             className="inline-flex items-center gap-2 px-6 py-2.5 bg-gold text-white rounded-lg text-sm font-medium hover:bg-gold/90 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
           >
             {submitting && <Loader2 size={16} className="animate-spin" />}

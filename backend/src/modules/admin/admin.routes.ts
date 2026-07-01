@@ -303,11 +303,15 @@ adminRouter.delete(
   "/tours/:id",
   asyncHandler(async (req, res) => {
     const id = idParam.parse(req.params.id);
+    const gallery = await prisma.gallery.findMany({ where: { tourId: id } });
     await prisma.$transaction([
+      prisma.booking.updateMany({ where: { tourId: id }, data: { tourId: null } }),
+      prisma.tourBlockedDate.deleteMany({ where: { tourId: id } }),
       prisma.tourCategoryJunction.deleteMany({ where: { tourId: id } }),
       prisma.gallery.deleteMany({ where: { tourId: id } }),
       prisma.tour.delete({ where: { id } })
     ]);
+    await Promise.all(gallery.map((image) => removeStoredFile(image.imageUrl)));
     return ok(res, "Tour deleted successfully", null);
   })
 );
@@ -545,9 +549,9 @@ adminRouter.post(
   asyncHandler(async (req, res) => {
     const body = z
       .object({
-        message: z.string().min(1),
-        reviewerName: z.string().min(1),
-        profession: z.string().optional()
+        message: z.string().trim().min(1).max(5000),
+        reviewerName: z.string().trim().min(1).max(160),
+        profession: z.string().trim().max(160).optional()
       })
       .parse(req.body);
     const testimonial = await prisma.testimonial.create({ data: body });
@@ -561,9 +565,9 @@ adminRouter.put(
     const id = idParam.parse(req.params.id);
     const body = z
       .object({
-        message: z.string().min(1),
-        reviewerName: z.string().min(1),
-        profession: z.string().optional()
+        message: z.string().trim().min(1).max(5000),
+        reviewerName: z.string().trim().min(1).max(160),
+        profession: z.string().trim().max(160).optional()
       })
       .parse(req.body);
     const testimonial = await prisma.testimonial.update({ where: { id }, data: body });
@@ -813,6 +817,15 @@ adminRouter.get(
   })
 );
 
+adminRouter.delete(
+  "/subscribers/:id",
+  asyncHandler(async (req, res) => {
+    const id = idParam.parse(req.params.id);
+    await prisma.subscriber.delete({ where: { id } });
+    return ok(res, "Subscriber deleted successfully", null);
+  })
+);
+
 // Document Management
 
 const docUpload = multer({
@@ -832,6 +845,25 @@ adminRouter.get(
       orderBy: { createdAt: "desc" },
     });
     return ok(res, "Documents fetched successfully", documents);
+  }),
+);
+
+adminRouter.delete(
+  "/documents/:id",
+  asyncHandler(async (req, res) => {
+    const id = idParam.parse(req.params.id);
+    const document = await prisma.documentFile.findUnique({ where: { id } });
+    if (!document) throw new HttpError(404, "Document not found");
+
+    await prisma.$transaction([
+      prisma.documentChunk.deleteMany({ where: { source: document.filename } }),
+      prisma.documentFile.delete({ where: { id } }),
+    ]);
+
+    const filePath = path.resolve(env.DOCUMENTS_DIR, document.filename);
+    if (fs.existsSync(filePath)) fs.unlinkSync(filePath);
+
+    return ok(res, "Document deleted successfully", null);
   }),
 );
 

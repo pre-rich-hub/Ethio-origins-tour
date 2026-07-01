@@ -4,6 +4,7 @@ import { createMetadata } from '@/lib/seo/create-metadata'
 import {
   getFeaturedDestinations,
   getGalleryImages,
+  getTestimonials,
 } from '@/lib/api/cms'
 import {
   BrandStory,
@@ -19,9 +20,9 @@ import {
 import { tours } from '@/features/tours'
 
 export const metadata = createMetadata({
-  title: 'Ethiopia Tour Company & Local Travel Experts',
+  title: 'Ethiopia Tour Company for International Travelers',
   description:
-    'Explore Ethiopia with experienced local guides. Discover cultural, historical, adventure, trekking and customized tour packages with Ethio Origins Tour.',
+    'Explore Ethiopia with trusted destination experts. Discover cultural, historical, adventure, trekking and customized tour packages with Ethio Origins Tour.',
   canonicalPath: '/',
   primaryKeyword: 'Ethiopia Tour Company',
   secondaryKeywords: [
@@ -37,9 +38,10 @@ export const metadata = createMetadata({
 })
 
 export default async function Page() {
-  const [featuredDestinations, galleryImages] = await Promise.all([
+  const [featuredDestinations, galleryImages, testimonials] = await Promise.all([
     getFeaturedDestinations(),
     getGalleryImages(),
+    getTestimonials(),
   ])
   const featuredTours = tours.slice(0, 6).map((tour) => ({
     title: tour.title,
@@ -60,7 +62,7 @@ export default async function Page() {
       <WhyEthiopia />
       <CustomJourneys />
       <HomeGallery items={galleryImages.slice(0, 6)} />
-      <HomeTestimonials />
+      <HomeTestimonials items={testimonials} />
       <BrandStory />
       <SiteFooter />
     </main>

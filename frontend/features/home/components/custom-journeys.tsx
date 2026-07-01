@@ -15,7 +15,7 @@ const features = [
   {
     icon: ShieldCheck,
     stat: '3+',
-    title: 'Years Local Expertise',
+    title: 'Years of Destination Expertise',
     text: 'Deep regional knowledge shaped by years of planning and guiding journeys across Ethiopia.',
   },
   {
@@ -28,7 +28,7 @@ const features = [
     icon: UserRound,
     stat: 'Expert',
     title: 'Guides Across Ethiopia',
-    text: 'Travel with knowledgeable local guides who bring history, culture, and landscapes to life.',
+    text: 'Travel with knowledgeable expert guides who bring history, culture, and landscapes to life.',
   },
   {
     icon: Handshake,

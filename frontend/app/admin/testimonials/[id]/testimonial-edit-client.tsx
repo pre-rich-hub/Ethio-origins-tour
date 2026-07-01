@@ -165,6 +165,7 @@ export function AdminTestimonialEdit() {
                 Current Photo
               </label>
               {testimonial.imageUrl ? (
+                // eslint-disable-next-line @next/next/no-img-element
                 <img
                   src={testimonial.imageUrl}
                   alt=""
