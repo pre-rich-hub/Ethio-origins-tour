@@ -575,7 +575,18 @@ export function SiteFooter() {
 
         <div className="flex flex-col items-center justify-between gap-4 border-t border-cream/10 py-5 sm:flex-row">
           <p className="font-sans text-xs text-cream/50">
-            © {new Date().getFullYear()} Ethio Origins Tours. {t.footer.rights}
+            © {new Date().getFullYear()} Ethio Origins Tours. {t.footer.rights}{' '}
+            <span className="whitespace-nowrap">
+              Built by{' '}
+              <a
+                href="https://www.melba.et/"
+                target="_blank"
+                rel="noreferrer"
+                className="text-cream/75 transition-colors hover:text-gold"
+              >
+                Melba Technology
+              </a>
+            </span>
           </p>
           <div className="flex gap-6">
             <a href="/terms" className="font-sans text-sm text-cream/60 transition-colors hover:text-cream">

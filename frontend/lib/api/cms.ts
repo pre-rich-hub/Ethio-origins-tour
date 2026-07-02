@@ -257,7 +257,15 @@ export async function getFeaturedDestinations() {
   const data = await apiFetch<ApiDestination[]>('/api/destinations/featured', {
     fallback: [],
   })
-  return data.length ? data.map(mapApiDestination) : fallbackDestinations.slice(0, 6)
+  const apiDestinations = data.map(mapApiDestination)
+
+  return [...apiDestinations, ...fallbackDestinations]
+    .filter(
+      (destination, index, allDestinations) =>
+        allDestinations.findIndex((item) => item.slug === destination.slug) ===
+        index,
+    )
+    .slice(0, 12)
 }
 
 export async function getDestinationByRoute(route: string) {
@@ -281,12 +289,17 @@ export async function getGalleryImages() {
     return galleryImages
   }
 
-  return data.map((image, index) => ({
+  const apiImages = data.map((image, index) => ({
     src: imageUrl(image.imageUrl, galleryImages[index % galleryImages.length].src),
     alt: `Ethio Origins tour gallery image ${index + 1}`,
     title: `Travel Moment ${index + 1}`,
     place: 'Ethiopia',
   }))
+
+  return [...apiImages, ...galleryImages].filter(
+    (image, index, allImages) =>
+      allImages.findIndex((item) => item.src === image.src) === index,
+  )
 }
 
 export async function getTestimonials(): Promise<CmsTestimonial[]> {

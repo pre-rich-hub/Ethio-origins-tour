@@ -7,7 +7,7 @@ import {
   ArrowUpRight,
   Check,
   ChevronDown,
-  EllipsisVertical,
+  Menu,
   Globe2,
   Mail,
   Minus,
@@ -276,7 +276,7 @@ export function Navbar({ solid = false }: { solid?: boolean } = {}) {
             aria-controls="mobile-navigation"
             className="group inline-flex size-11 items-center justify-center rounded-full border border-cream/20 bg-coffee/35 text-cream shadow-lg shadow-black/10 backdrop-blur-md transition-colors hover:border-gold/70 hover:bg-coffee/60 hover:text-gold lg:hidden"
           >
-            <EllipsisVertical className="size-5 transition-transform duration-300 group-hover:scale-110" />
+            <Menu className="size-6 transition-transform duration-300 group-hover:scale-110" strokeWidth={2.4} />
           </button>
         </div>
       </nav>
