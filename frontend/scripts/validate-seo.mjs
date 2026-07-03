@@ -393,6 +393,21 @@ for (const schema of schemasToValidate) {
   assert(!('aggregateRating' in schema), 'Tour schema must not contain fake ratings.')
   assert(!('review' in schema), 'Tour schema must not contain fake reviews.')
 }
+
+const pricedTour = tours.find((tour) => tour.adultPrice > 0)
+assert(pricedTour, 'At least one tour must have a verified starting price.')
+const pricedTourSchema = schemas.createTourSchema({
+  name: pricedTour.title,
+  description: pricedTour.description,
+  image: pricedTour.image,
+  path: `/tours/${pricedTour.slug}`,
+  price: pricedTour.adultPrice,
+})
+assert(
+  pricedTourSchema.offers?.price === pricedTour.adultPrice &&
+    pricedTourSchema.offers?.priceCurrency === 'USD',
+  'Verified tour price must be emitted as a USD offer.',
+)
 assert(
   !read('app/blog/[slug]/page.tsx').includes('createArticleSchema'),
   'Incomplete blog posts must not emit Article schema.',

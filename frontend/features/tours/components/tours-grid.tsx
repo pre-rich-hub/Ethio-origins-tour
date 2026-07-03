@@ -8,6 +8,7 @@ import { trackSeoEvent } from '@/lib/analytics/events'
 import { cloudinaryImage, cloudinaryTransforms } from '@/lib/images/cloudinary'
 import { tours } from '../data/tours'
 import { getLocalizedTours } from '../lib/tour-localization'
+import { getTourPriceLabel } from '../lib/tour-pricing'
 import type { Tour } from '../types/tour'
 
 export function ToursGrid({ items = tours }: { items?: Tour[] }) {
@@ -54,6 +55,13 @@ export function ToursGrid({ items = tours }: { items?: Tour[] }) {
                 </h3>
                 <p className="mt-3 max-w-[22rem] font-sans text-sm font-light leading-relaxed text-cream/80">
                   {tour.description}
+                </p>
+                <p className="mt-4 font-sans text-xs font-bold uppercase tracking-[0.16em] text-gold">
+                  {getTourPriceLabel(tour, {
+                    from: t.toursPage.from,
+                    perPerson: t.toursPage.perPerson,
+                    requestQuote: t.toursPage.requestQuote,
+                  })}
                 </p>
                 <span className="mt-6 inline-flex h-12 w-full items-center justify-center gap-2 border border-cream/90 px-5 font-sans text-[0.64rem] font-bold uppercase tracking-[0.14em] text-cream transition-colors group-hover:bg-cream group-hover:text-coffee sm:mt-8 sm:h-14 sm:w-48 sm:text-[0.66rem] sm:tracking-[0.22em]">
                   {t.toursPage.openTourPage}

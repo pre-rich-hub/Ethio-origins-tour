@@ -73,6 +73,22 @@ assert(
 )
 assert(tours.length === 15, 'all 15 approved tours must remain present.')
 
+const newTourAdmin = read('app/admin/tours/new/tour-new-client.tsx')
+const editTourAdmin = read('app/admin/tours/[id]/tour-edit-client.tsx')
+for (const [label, source] of [
+  ['new tour form', newTourAdmin],
+  ['edit tour form', editTourAdmin],
+]) {
+  assert(
+    !source.includes("formData.delete('tourImages')"),
+    `${label} must preserve the native multipart image payload.`,
+  )
+  assert(
+    source.includes('adminRequest('),
+    `${label} must surface structured admin API errors.`,
+  )
+}
+
 const previousEnv = { ...process.env }
 try {
   const envModule = loadTs('lib/env.ts')

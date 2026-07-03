@@ -7,6 +7,10 @@ import { trackSeoEvent } from '@/lib/analytics/events'
 import { useLanguage } from '@/lib/i18n/language'
 import { cloudinaryImage, cloudinaryTransforms } from '@/lib/images/cloudinary'
 import { getLocalizedTour } from '../lib/tour-localization'
+import {
+  formatUsdPrice,
+  getTourStartingPrice,
+} from '../lib/tour-pricing'
 import type { Tour } from '../types/tour'
 
 type TourDetailHeroProps = {
@@ -17,6 +21,7 @@ type TourDetailHeroProps = {
 export function TourDetailHero({ gallery, tour }: TourDetailHeroProps) {
   const { language, t } = useLanguage()
   const localizedTour = getLocalizedTour(tour, language)
+  const startingPrice = getTourStartingPrice(tour)
 
   return (
     <section className="relative isolate overflow-hidden bg-coffee pt-28 text-cream md:pt-36">
@@ -93,6 +98,23 @@ export function TourDetailHero({ gallery, tour }: TourDetailHeroProps) {
             <p className="mt-4 font-sans text-sm font-light leading-relaxed text-cream/72">
               {localizedTour.bestFor}
             </p>
+            <div className="mt-6 border-y border-cream/16 py-5">
+              <p className="font-sans text-[0.62rem] font-bold uppercase tracking-widest text-cream/58">
+                {startingPrice
+                  ? t.toursPage.startingPrice
+                  : t.toursPage.pricing}
+              </p>
+              <p className="mt-2 font-serif text-3xl font-medium text-gold">
+                {startingPrice
+                  ? `${t.toursPage.from} ${formatUsdPrice(startingPrice)}`
+                  : t.toursPage.requestQuote}
+              </p>
+              <p className="mt-2 font-sans text-xs font-light leading-relaxed text-cream/64">
+                {startingPrice
+                  ? `${t.toursPage.perPerson}. ${t.toursPage.priceVariesNote}`
+                  : t.toursPage.quoteNote}
+              </p>
+            </div>
             <div className="mt-6 grid grid-cols-2 gap-3">
               {gallery.slice(0, 4).map((image, index) => (
                 <figure

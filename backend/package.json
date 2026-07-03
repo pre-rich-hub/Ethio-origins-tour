@@ -19,6 +19,7 @@
     "test:integration": "vitest run tests/integration/",
     "test:e2e": "playwright test",
     "backfill:slugs": "tsx scripts/backfill-slugs.ts",
+    "catalog:import": "tsx scripts/import-tour-catalog.ts",
     "ingest:docs": "tsx scripts/ingest-docs.ts"
   },
   "dependencies": {

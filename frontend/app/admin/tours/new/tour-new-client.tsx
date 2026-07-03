@@ -123,23 +123,18 @@ export function AdminTourNew() {
     formData.set('tourItinerary', JSON.stringify(itinerary))
     formData.set('tourReviews', '0')
 
-    formData.delete('tourImages')
-    images.forEach((file) => formData.append('tourImages', file))
-
     try {
-      const res = await fetch('/api/v1/admin/tours', {
+      await adminRequest('/api/v1/admin/tours', {
         method: 'POST',
         body: formData,
-        credentials: 'include',
       })
-      const data = await res.json()
-      if (data.success) {
-        router.push('/admin/tours')
-      } else {
-        setError(data.message || 'Failed to create tour')
-      }
-    } catch {
-      setError('Network error. Please try again.')
+      router.push('/admin/tours')
+    } catch (submitError) {
+      setError(
+        submitError instanceof Error
+          ? submitError.message
+          : 'Failed to create tour. Please try again.',
+      )
     } finally {
       setSubmitting(false)
     }
@@ -459,11 +454,14 @@ export function AdminTourNew() {
             type="file"
             name="tourImages"
             multiple
-            accept="image/*"
+            accept=".jpg,.jpeg,.png,.webp,.avif"
             required
             onChange={(e) => setImages(Array.from(e.target.files ?? []))}
             className="block w-full text-sm text-muted-foreground file:mr-3 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-sm file:font-medium file:bg-gold/10 file:text-gold hover:file:bg-gold/20 cursor-pointer"
           />
+          <p className="mt-2 text-xs text-muted-foreground">
+            JPG, PNG, WebP, or AVIF. Each image must be 5 MB or smaller.
+          </p>
           {images.length > 0 && (
             <div className="flex flex-wrap gap-2 mt-3">
               {images.map((file, i) => (

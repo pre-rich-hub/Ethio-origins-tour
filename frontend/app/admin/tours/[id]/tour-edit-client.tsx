@@ -3,6 +3,7 @@
 import { useEffect, useState } from 'react'
 import { useRouter, useParams } from 'next/navigation'
 import { Loader2, Plus, X, ArrowUp, ArrowDown, Trash2 } from 'lucide-react'
+import { adminRequest } from '@/lib/admin/api'
 
 type Destination = { id: number; name: string }
 type Category = { id: number; name: string }
@@ -40,6 +41,7 @@ export function AdminTourEdit() {
   const router = useRouter()
   const params = useParams()
   const tourId = Number(params.id)
+  const invalidTourId = !Number.isInteger(tourId) || tourId <= 0
   const [loading, setLoading] = useState(true)
   const [submitting, setSubmitting] = useState(false)
   const [error, setError] = useState('')
@@ -54,40 +56,52 @@ export function AdminTourEdit() {
   const [itinerary, setItinerary] = useState<ItineraryDay[]>([])
 
   useEffect(() => {
-    const id = window.setTimeout(() => {
-      void Promise.all([
-        fetch(`/api/v1/admin/tours/${tourId}`, { credentials: 'include' })
-          .then((r) => r.json())
-          .then((d) => {
-            if (d.success) {
-              const t = d.data as TourData
-              setTour(t)
-              setIncluded(t.included ?? [])
-              setExcluded(t.excluded ?? [])
-              setItinerary(
-                t.itinerary?.length
-                  ? t.itinerary.map((item) => ({
-                      day: item.day,
-                      title: item.title ?? '',
-                      activities: item.activities ?? '',
-                      overnight: item.overnight ?? '',
-                      meals: item.meals ?? '',
-                    }))
-                  : [{ day: 1, title: '', activities: '', overnight: '', meals: '' }]
-              )
-              setSelectedCategories(t.categories.map((c) => c.id))
-            }
-          }),
-        fetch('/api/v1/admin/destinations', { credentials: 'include' })
-          .then((r) => r.json())
-          .then((d) => { if (d.success) setDestinations(d.data) }),
-        fetch('/api/v1/admin/categories', { credentials: 'include' })
-          .then((r) => r.json())
-          .then((d) => { if (d.success) setCategories(d.data) }),
-      ]).finally(() => setLoading(false))
-    }, 0)
-    return () => window.clearTimeout(id)
-  }, [tourId])
+    let active = true
+
+    if (invalidTourId) {
+      return () => { active = false }
+    }
+
+    Promise.all([
+      adminRequest<TourData>(`/api/v1/admin/tours/${tourId}`, { cache: 'no-store' }),
+      adminRequest<Destination[]>('/api/v1/admin/destinations', { cache: 'no-store' }),
+      adminRequest<Category[]>('/api/v1/admin/categories', { cache: 'no-store' }),
+    ])
+      .then(([tourData, destinationItems, categoryItems]) => {
+        if (!active) return
+        setTour(tourData)
+        setDestinations(destinationItems)
+        setCategories(categoryItems)
+        setIncluded(tourData.included ?? [])
+        setExcluded(tourData.excluded ?? [])
+        setItinerary(
+          tourData.itinerary?.length
+            ? tourData.itinerary.map((item) => ({
+                day: item.day,
+                title: item.title ?? '',
+                activities: item.activities ?? '',
+                overnight: item.overnight ?? '',
+                meals: item.meals ?? '',
+              }))
+            : [{ day: 1, title: '', activities: '', overnight: '', meals: '' }],
+        )
+        setSelectedCategories(tourData.categories.map((category) => category.id))
+        setError('')
+      })
+      .catch((loadError: unknown) => {
+        if (!active) return
+        setError(
+          loadError instanceof Error
+            ? loadError.message
+            : 'Tour details could not be loaded.',
+        )
+      })
+      .finally(() => {
+        if (active) setLoading(false)
+      })
+
+    return () => { active = false }
+  }, [invalidTourId, tourId])
 
   function toggleCategory(id: number) {
     setSelectedCategories((prev) =>
@@ -157,26 +171,32 @@ export function AdminTourEdit() {
     formData.set('tourReviews', String(tour?.noOfRates ?? 0))
     formData.set('deleteImages', JSON.stringify(deleteImageIds))
 
-    formData.delete('tourImages')
-    newImages.forEach((file) => formData.append('tourImages', file))
-
     try {
-      const res = await fetch(`/api/v1/admin/tours/${tourId}`, {
+      await adminRequest(`/api/v1/admin/tours/${tourId}`, {
         method: 'PUT',
         body: formData,
-        credentials: 'include',
       })
-      const data = await res.json()
-      if (data.success) {
-        router.push('/admin/tours')
-      } else {
-        setError(data.message || 'Failed to update tour')
-      }
-    } catch {
-      setError('Network error. Please try again.')
+      router.replace('/admin/tours')
+      router.refresh()
+    } catch (submitError) {
+      setError(
+        submitError instanceof Error
+          ? submitError.message
+          : 'Failed to update tour. Please try again.',
+      )
     } finally {
       setSubmitting(false)
     }
+  }
+
+  if (invalidTourId) {
+    return (
+      <div className="p-8">
+        <div role="alert" className="max-w-xl rounded-lg border border-red-200 bg-red-50 p-5 text-sm text-red-700">
+          Invalid tour ID.
+        </div>
+      </div>
+    )
   }
 
   if (loading) {
@@ -190,7 +210,16 @@ export function AdminTourEdit() {
   if (!tour) {
     return (
       <div className="p-8">
-        <p className="text-muted-foreground">Tour not found.</p>
+        <div role="alert" className="max-w-xl rounded-lg border border-red-200 bg-red-50 p-5 text-sm text-red-700">
+          {error || 'Tour not found.'}
+        </div>
+        <button
+          type="button"
+          onClick={() => window.location.reload()}
+          className="mt-4 rounded-lg border border-border px-4 py-2 text-sm font-medium text-foreground hover:bg-muted"
+        >
+          Try Again
+        </button>
       </div>
     )
   }
@@ -522,10 +551,13 @@ export function AdminTourEdit() {
             type="file"
             name="tourImages"
             multiple
-            accept="image/*"
+            accept=".jpg,.jpeg,.png,.webp,.avif"
             onChange={(e) => setNewImages(Array.from(e.target.files ?? []))}
             className="block w-full text-sm text-muted-foreground file:mr-3 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-sm file:font-medium file:bg-gold/10 file:text-gold hover:file:bg-gold/20 cursor-pointer"
           />
+          <p className="mt-2 text-xs text-muted-foreground">
+            JPG, PNG, WebP, or AVIF. Each image must be 5 MB or smaller.
+          </p>
           {newImages.length > 0 && (
             <div className="flex flex-wrap gap-2 mt-3">
               {newImages.map((file, i) => (

@@ -1,6 +1,7 @@
 import type { ErrorRequestHandler } from "express";
 import { Prisma } from "@prisma/client";
 import { ZodError } from "zod";
+import multer from "multer";
 import { fail } from "../utils/api-response.js";
 import { isProduction } from "../config/env.js";
 
@@ -18,6 +19,13 @@ export const notFoundHandler = () => {
 };
 
 export const errorHandler: ErrorRequestHandler = (err, _req, res, _next) => {
+  if (err instanceof multer.MulterError) {
+    const message = err.code === "LIMIT_FILE_SIZE"
+      ? "An uploaded file is larger than the allowed image size"
+      : "The uploaded images could not be processed";
+    return fail(res, message, [], 422);
+  }
+
   if (err instanceof ZodError) {
     return fail(
       res,
@@ -32,7 +40,8 @@ export const errorHandler: ErrorRequestHandler = (err, _req, res, _next) => {
 
   if (err instanceof Prisma.PrismaClientKnownRequestError) {
     if (err.code === "P2025") return fail(res, "Record not found", [], 404);
-    if (err.code === "P2002") return fail(res, "Duplicate record", [], 409);
+    if (err.code === "P2002") return fail(res, "A record with the same name already exists", [], 409);
+    if (err.code === "P2003") return fail(res, "The selected destination or category no longer exists", [], 422);
   }
 
   if (err instanceof HttpError) {
@@ -42,4 +51,3 @@ export const errorHandler: ErrorRequestHandler = (err, _req, res, _next) => {
   const message = isProduction ? "Internal server error" : err?.message ?? "Internal server error";
   return fail(res, message, [], 500);
 };
-

@@ -104,24 +104,40 @@ export function createTourSchema({
   image,
   name,
   path,
+  price,
 }: {
   description: string
   image: string
   name: string
   path: string
+  price?: number | null
 }) {
+  const url = absoluteUrl(path)
+  const hasPrice =
+    typeof price === 'number' && Number.isFinite(price) && price > 0
+
   return {
     '@context': 'https://schema.org',
     '@type': 'TouristTrip',
     name,
     description,
     image: absoluteUrl(image),
-    url: absoluteUrl(path),
+    url,
     provider: {
       '@type': 'TravelAgency',
       name: siteConfig.name,
       url: siteConfig.url,
     },
+    ...(hasPrice
+      ? {
+          offers: {
+            '@type': 'Offer',
+            price,
+            priceCurrency: 'USD',
+            url,
+          },
+        }
+      : {}),
   }
 }
 

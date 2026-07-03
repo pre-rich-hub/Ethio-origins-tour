@@ -4,7 +4,7 @@ import type { Destination } from '@/features/destinations/types/destination'
 import { galleryImages } from '@/features/gallery/data/gallery-images'
 import { tours as fallbackTours } from '@/features/tours/data/tours'
 import type { Tour } from '@/features/tours/types/tour'
-import { apiFetch, getPublicApiBaseUrl } from './client'
+import { apiFetch, getPublicApiBaseUrl, isApiError } from './client'
 
 type Paginated<T> = {
   items: T[]
@@ -94,8 +94,72 @@ function slugify(value: string) {
 
 function imageUrl(value: string | null | undefined, fallback: string) {
   if (!value) return fallback
-  if (value.startsWith('http') || value.startsWith('/')) return value
+  if (value.startsWith('http')) {
+    try {
+      const url = new URL(value)
+      if (url.pathname.startsWith('/assets/')) {
+        return `${url.pathname}${url.search}`
+      }
+    } catch {
+      return fallback
+    }
+
+    return value
+  }
+  if (value.startsWith('/')) return value
   return `${getPublicApiBaseUrl()}/${value.replace(/^\/+/, '')}`
+}
+
+function mapApiBlogPost(post: ApiBlogPost) {
+  const title = post.title?.trim()
+  const slug = post.slug?.trim()
+  const description = post.description?.trim()
+
+  if (!title || !slug || !description) return null
+
+  const paragraphs = description
+    .split(/\n\s*\n/)
+    .map((paragraph) => paragraph.trim())
+    .filter(Boolean)
+  const excerpt = description.length > 180
+    ? `${description.slice(0, 177).trimEnd()}...`
+    : description
+  const date = post.createdAt
+    ? new Intl.DateTimeFormat('en', {
+        year: 'numeric',
+        month: 'long',
+        day: 'numeric',
+        timeZone: 'UTC',
+      }).format(new Date(post.createdAt))
+    : 'Travel Guide'
+
+  return {
+    slug,
+    title,
+    category: post.category?.name || 'Travel Insight',
+    date,
+    image: imageUrl(post.imageUrl, '/images/gallery-market.png'),
+    excerpt,
+    description,
+    status: 'published' as const,
+    contentStatus: 'complete' as const,
+    body: paragraphs.map((text) => ({
+      type: 'paragraph' as const,
+      text,
+    })),
+    publishedAt: post.createdAt ?? undefined,
+  }
+}
+
+function positivePrice(
+  ...values: Array<number | null | undefined>
+): number {
+  for (const value of values) {
+    const price = Number(value)
+    if (Number.isFinite(price) && price > 0) return price
+  }
+
+  return 0
 }
 
 function findFallbackTour(apiTour: ApiTour) {
@@ -176,8 +240,8 @@ export function mapApiTour(apiTour: ApiTour): Tour {
     highlights,
     description,
     intro: apiTour.overview || description,
-    adultPrice: apiTour.adultPrice ?? 0,
-    childPrice: apiTour.childPrice ?? 0,
+    adultPrice: positivePrice(apiTour.adultPrice, matchedFallback?.adultPrice),
+    childPrice: positivePrice(apiTour.childPrice, matchedFallback?.childPrice),
     rating: apiTour.rating ?? 0,
     reviewCount: apiTour.noOfRates ?? 0,
     destination,
@@ -219,33 +283,65 @@ export function mapApiDestination(apiDestination: ApiDestination): Destination {
   }
 }
 
+function safeMapApiTour(apiTour: ApiTour): Tour | null {
+  try {
+    return mapApiTour(apiTour)
+  } catch {
+    return null
+  }
+}
+
 export async function getTours() {
-  const data = await apiFetch<Paginated<ApiTour>>('/api/v1/tours?limit=100', {
-    fallback: { items: [], meta: { total: 0, page: 1, limit: 100, totalPages: 0 } },
-    next: { revalidate: 0 },
-  })
-  return data.items.length ? data.items.map(mapApiTour) : fallbackTours
+  const data = await apiFetch<Paginated<ApiTour> | ApiTour[] | null>(
+    '/api/v1/tours?limit=100',
+    {
+      fallback: null,
+      timeoutMs: 15000,
+      next: { revalidate: 0 },
+    },
+  )
+  const items = Array.isArray(data)
+    ? data
+    : Array.isArray(data?.items)
+      ? data.items
+      : []
+  const apiTours = items
+    .map(safeMapApiTour)
+    .filter((tour): tour is Tour => tour !== null)
+
+  return data === null ? fallbackTours : apiTours
 }
 
 export async function getFeaturedTours() {
-  const data = await apiFetch<ApiTour[]>('/api/v1/tours/featured', { fallback: [], next: { revalidate: 0 } })
-  return data.length ? data.map(mapApiTour) : fallbackTours.slice(0, 6)
+  const data = await apiFetch<ApiTour[] | null>('/api/v1/tours/featured', {
+    fallback: null,
+    timeoutMs: 15000,
+    next: { revalidate: 0 },
+  })
+  const apiTours = (Array.isArray(data) ? data : [])
+    .map(safeMapApiTour)
+    .filter((tour): tour is Tour => tour !== null)
+
+  return data === null ? fallbackTours.slice(0, 6) : apiTours.slice(0, 6)
 }
 
 export async function getTourByRoute(route: string) {
   const fallback = fallbackTours.find((tour) => tour.slug === route)
   const id = Number(route)
+  const path = !Number.isNaN(id)
+    ? `/api/v1/tours/${id}`
+    : `/api/v1/tours/slug/${route}`
 
-  if (!Number.isNaN(id)) {
-    const data = await apiFetch<ApiTour | null>(`/api/v1/tours/${id}`, { fallback: null, next: { revalidate: 0 } })
-    return data ? mapApiTour(data) : fallback
+  try {
+    const data = await apiFetch<ApiTour | null>(path, {
+      timeoutMs: 15000,
+      next: { revalidate: 0 },
+    })
+    return data ? safeMapApiTour(data) ?? fallback : undefined
+  } catch (error) {
+    if (isApiError(error) && error.code === 'not_found') return undefined
+    return fallback
   }
-
-  const data = await apiFetch<ApiTour | null>(`/api/v1/tours/slug/${route}`, {
-    fallback: null,
-    next: { revalidate: 0 },
-  })
-  return data ? mapApiTour(data) : fallback
 }
 
 export async function getDestinations() {
@@ -317,40 +413,64 @@ export async function getTestimonials(): Promise<CmsTestimonial[]> {
 }
 
 export async function getBlogPosts() {
-  const data = await apiFetch<Paginated<ApiBlogPost>>('/api/blog?limit=12', {
-    fallback: { items: [], meta: { total: 0, page: 1, limit: 12, totalPages: 0 } },
-  })
+  const data = await apiFetch<Paginated<ApiBlogPost> | ApiBlogPost[] | null>(
+    '/api/v1/blog?limit=100',
+    {
+      fallback: null,
+      timeoutMs: 15000,
+      next: { revalidate: 0 },
+    },
+  )
+  const items = Array.isArray(data)
+    ? data
+    : Array.isArray(data?.items)
+      ? data.items
+      : []
+  const apiPosts = items
+    .map(mapApiBlogPost)
+    .filter((post): post is NonNullable<ReturnType<typeof mapApiBlogPost>> =>
+      post !== null,
+    )
 
-  if (!data.items.length) {
-    return posts
-  }
+  if (data === null) return posts
 
-  return posts
+  return [...apiPosts, ...posts].filter(
+    (post, index, allPosts) =>
+      allPosts.findIndex((item) => item.slug === post.slug) === index,
+  )
 }
 
 export async function getBlogPostBySlug(slug: string) {
-  const data = await apiFetch<ApiBlogPost | null>(`/api/blog/slug/${slug}`, { fallback: null })
+  const fallback = posts.find(
+    (post) => post.slug === slug && isPublishedCompletePost(post),
+  )
 
-  if (data) return null
+  try {
+    const data = await apiFetch<ApiBlogPost | null>(`/api/v1/blog/slug/${slug}`, {
+      timeoutMs: 15000,
+      next: { revalidate: 0 },
+    })
+    return data ? mapApiBlogPost(data) : null
+  } catch (error) {
+    if (isApiError(error) && error.code === 'not_found') return null
+    if (!fallback) return null
 
-  const fallback = posts.find((p) => p.slug === slug)
-  if (!fallback || !isPublishedCompletePost(fallback)) return null
-
-  return {
-    slug: fallback.slug,
-    title: fallback.title,
-    category: fallback.category,
-    date: fallback.date,
-    image: fallback.image,
-    excerpt: fallback.excerpt,
-    description: fallback.body?.map((block) => {
-      if (block.type === 'list') return block.items.join('\n')
-      return block.text
-    }).join('\n\n') || fallback.excerpt,
-    body: fallback.body,
-    author: fallback.author,
-    publishedAt: fallback.publishedAt,
-    updatedAt: fallback.updatedAt,
+    return {
+      slug: fallback.slug,
+      title: fallback.title,
+      category: fallback.category,
+      date: fallback.date,
+      image: fallback.image,
+      excerpt: fallback.excerpt,
+      description: fallback.body?.map((block) => {
+        if (block.type === 'list') return block.items.join('\n')
+        return block.text
+      }).join('\n\n') || fallback.excerpt,
+      body: fallback.body,
+      author: fallback.author,
+      publishedAt: fallback.publishedAt,
+      updatedAt: fallback.updatedAt,
+    }
   }
 }
 

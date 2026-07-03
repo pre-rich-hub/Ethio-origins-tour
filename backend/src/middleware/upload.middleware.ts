@@ -3,6 +3,7 @@ import multer from "multer";
 import { env } from "../config/env.js";
 import { getStorageProvider } from "../services/storage/index.js";
 import type { UploadKind } from "../services/storage/types.js";
+import { HttpError } from "./error.middleware.js";
 
 export { UploadKind };
 
@@ -14,7 +15,12 @@ function createMulterUpload() {
     limits: { fileSize: env.MAX_UPLOAD_MB * 1024 * 1024 },
     fileFilter: (_req, file, cb) => {
       const ext = path.extname(file.originalname).replace(".", "").toLowerCase();
-      cb(null, allowedExtensions.includes(ext) && file.mimetype.startsWith("image/"));
+      if (allowedExtensions.includes(ext) && file.mimetype.startsWith("image/")) {
+        cb(null, true);
+        return;
+      }
+
+      cb(new HttpError(422, "Images must use JPG, PNG, WebP, or AVIF format"));
     }
   });
 }
@@ -46,7 +52,7 @@ export function uploadFor(kind: UploadKind) {
           const files = (req.files as Express.Multer.File[]) ?? [];
           Promise.all(files.map(saveToStorage))
             .then(() => next())
-            .catch(next);
+            .catch(() => next(new HttpError(503, "Images could not be stored. Check the persistent media storage configuration")));
         });
       };
     },
@@ -60,8 +66,8 @@ export function uploadFor(kind: UploadKind) {
           try {
             await saveToStorage(req.file);
             next();
-          } catch (e) {
-            next(e);
+          } catch {
+            next(new HttpError(503, "The image could not be stored. Check the persistent media storage configuration"));
           }
         });
       };

@@ -56,6 +56,25 @@ function parseItinerary(value: unknown): string {
   }
 }
 
+const tourTitleSchema = z.string().trim().min(1, "Tour name is required").max(255);
+const tourDestinationSchema = z.coerce.number().int().positive("A destination is required");
+
+async function uniqueTourSlug(title: string, excludeId?: number): Promise<string> {
+  const base = slugify(title) || "tour";
+  let candidate = base;
+  let suffix = 2;
+
+  while (true) {
+    const existing = await prisma.tour.findUnique({
+      where: { slug: candidate },
+      select: { id: true }
+    });
+    if (!existing || existing.id === excludeId) return candidate;
+    candidate = `${base}-${suffix}`;
+    suffix += 1;
+  }
+}
+
 const tourUpload = uploadFor("tour");
 const destinationUpload = uploadFor("destination");
 const blogUpload = uploadFor("blog");
@@ -182,13 +201,14 @@ adminRouter.post(
     const imagePaths = files.map((f) => urlForFile(f) || storedPathForFile(f)).filter((path): path is string => Boolean(path));
     if (imagePaths.length === 0) throw new HttpError(422, "At least one tour image is required");
 
-    const categoryIds = parseCategoryIds(req.body.tourCategories);
-    const tourTitle = String(req.body.tourTitle ?? "");
-    const slug = slugify(tourTitle);
+    const categoryIds = parseCategoryIds(req.body.tourCategories).filter((id) => id > 0);
+    const tourTitle = tourTitleSchema.parse(req.body.tourTitle);
+    const destinationId = tourDestinationSchema.parse(req.body.tourDestination);
+    const slug = await uniqueTourSlug(tourTitle);
     const created = await prisma.$transaction(async (tx) => {
       const tour = await tx.tour.create({
         data: {
-          destinationId: Number(req.body.tourDestination),
+          destinationId,
           slug,
           tourName: tourTitle,
           adultPrice: toNumber(req.body.adultPrice) ?? 0,
@@ -235,17 +255,19 @@ adminRouter.put(
   tourUpload.array("tourImages", 20),
   asyncHandler(async (req, res) => {
     const id = idParam.parse(req.params.id);
-    const categoryIds = parseCategoryIds(req.body.tourCategories);
+    const categoryIds = parseCategoryIds(req.body.tourCategories).filter((categoryId) => categoryId > 0);
     const files = (req.files as Express.Multer.File[] | undefined) ?? [];
     const imagePaths = files.map((f) => urlForFile(f) || storedPathForFile(f)).filter((path): path is string => Boolean(path));
-    const tourTitle = String(req.body.tourTitle ?? "");
-    const slug = slugify(tourTitle);
+    const tourTitle = tourTitleSchema.parse(req.body.tourTitle);
+    const destinationId = tourDestinationSchema.parse(req.body.tourDestination);
+    const slug = await uniqueTourSlug(tourTitle, id);
 
+    let imagesToRemove: string[] = [];
     const updated = await prisma.$transaction(async (tx) => {
       await tx.tour.update({
         where: { id },
         data: {
-          destinationId: Number(req.body.tourDestination),
+          destinationId,
           slug,
           tourName: tourTitle,
           adultPrice: toNumber(req.body.adultPrice) ?? 0,
@@ -268,7 +290,7 @@ adminRouter.put(
           where: { id: { in: deleteImageIds }, tourId: id }
         });
         await tx.gallery.deleteMany({ where: { id: { in: deleteImageIds }, tourId: id } });
-        await Promise.all(deleting.map((image) => removeStoredFile(image.imageUrl)));
+        imagesToRemove = deleting.map((image) => image.imageUrl);
       }
 
       if (imagePaths.length) {
@@ -293,7 +315,9 @@ adminRouter.put(
           categories: { include: { category: true } }
         }
       });
-    });
+    }, { maxWait: 10000, timeout: 30000 });
+
+    await Promise.all(imagesToRemove.map((imageUrl) => removeStoredFile(imageUrl)));
 
     return ok(res, "Tour updated successfully", mapTour(updated, true));
   })
@@ -441,7 +465,8 @@ adminRouter.post(
         blogTitle,
         description: String(req.body.blogDescription ?? ""),
         imageUrl,
-        categoryId: req.body.categoryId ? Number(req.body.categoryId) : null
+        categoryId: req.body.categoryId ? Number(req.body.categoryId) : null,
+        createdAt: new Date()
       },
       include: { category: true }
     });

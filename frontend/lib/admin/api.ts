@@ -22,7 +22,12 @@ export async function adminRequest<T>(
 
   if (!response.ok || !payload?.success) {
     const detail = payload?.errors?.map((error) => error.message).join(', ')
-    throw new Error(detail || payload?.message || 'The request could not be completed.')
+    const statusMessage = response.status === 413
+      ? 'The selected images are too large. Use files no larger than 5 MB each.'
+      : response.status === 401
+        ? 'Your admin session has expired. Sign in and try again.'
+        : 'The request could not be completed.'
+    throw new Error(detail || payload?.message || statusMessage)
   }
 
   return payload.data

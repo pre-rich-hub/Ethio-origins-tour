@@ -6,6 +6,7 @@ import { ArrowRight } from 'lucide-react'
 import { useLanguage } from '@/lib/i18n/language'
 import { cloudinaryImage, cloudinaryTransforms } from '@/lib/images/cloudinary'
 import { getLocalizedTours } from '../lib/tour-localization'
+import { getTourPriceLabel } from '../lib/tour-pricing'
 import type { Tour } from '../types/tour'
 
 export function RelatedTours({ relatedTours }: { relatedTours: Tour[] }) {
@@ -61,6 +62,13 @@ export function RelatedTours({ relatedTours }: { relatedTours: Tour[] }) {
               <div className="p-5">
                 <p className="font-sans text-sm font-light leading-relaxed text-muted-foreground">
                   {item.description}
+                </p>
+                <p className="mt-4 font-sans text-xs font-bold uppercase tracking-[0.14em] text-gold">
+                  {getTourPriceLabel(item, {
+                    from: t.toursPage.from,
+                    perPerson: t.toursPage.perPerson,
+                    requestQuote: t.toursPage.requestQuote,
+                  })}
                 </p>
                 <div className="mt-5 flex items-center justify-between border-t border-border pt-4">
                   <span className="font-sans text-[0.65rem] uppercase tracking-widest text-muted-foreground">

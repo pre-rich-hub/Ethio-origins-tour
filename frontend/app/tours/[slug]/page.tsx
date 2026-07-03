@@ -14,7 +14,7 @@ import {
   tourCategories,
   tours,
 } from '@/features/tours'
-import { getTourByRoute } from '@/lib/api/cms'
+import { getTourByRoute, getTours } from '@/lib/api/cms'
 import {
   createMetadata,
   createNotFoundMetadata,
@@ -44,7 +44,10 @@ function getDurationDays(duration: string) {
   return Number.isNaN(value) ? 1 : value
 }
 
-function getRelatedTours(tour: (typeof tours)[number]) {
+function getRelatedTours(
+  tour: (typeof tours)[number],
+  availableTours: (typeof tours)[number][],
+) {
   const currentDestinations = new Set(tour.destinationSlugs)
   const currentCategories = new Set(tour.categorySlugs)
   const currentRegions = new Set(
@@ -55,7 +58,7 @@ function getRelatedTours(tour: (typeof tours)[number]) {
   )
   const currentDays = getDurationDays(tour.duration)
 
-  return tours
+  return availableTours
     .filter((item) => item.slug !== tour.slug)
     .map((item) => {
       const sharedDestinations = item.destinationSlugs.filter((slug) =>
@@ -104,14 +107,19 @@ export async function generateMetadata({
     permanentRedirect(`/tours/${tourRedirects[slug]}`)
   }
 
-  const tour = await getTourByRoute(slug)
   const category = getTourCategory(slug)
 
-  if (!tour && !category) {
+  if (category) {
+    return createMetadata(category.seo)
+  }
+
+  const tour = await getTourByRoute(slug)
+
+  if (!tour) {
     return createNotFoundMetadata('Tour Not Found')
   }
 
-  return createMetadata((tour || category)!.seo)
+  return createMetadata(tour.seo)
 }
 
 export default async function TourPage({ params }: TourPageProps) {
@@ -121,15 +129,10 @@ export default async function TourPage({ params }: TourPageProps) {
     permanentRedirect(`/tours/${tourRedirects[slug]}`)
   }
 
-  const tour = await getTourByRoute(slug)
   const category = getTourCategory(slug)
 
-  if (!tour && !category) {
-    notFound()
-  }
-
   if (category) {
-    const categoryTours = tours.filter((item) =>
+    const categoryTours = (await getTours()).filter((item) =>
       item.categorySlugs.includes(category.slug),
     )
 
@@ -156,12 +159,17 @@ export default async function TourPage({ params }: TourPageProps) {
     )
   }
 
+  const [tour, availableTours] = await Promise.all([
+    getTourByRoute(slug),
+    getTours(),
+  ])
+
   if (!tour) {
     notFound()
   }
 
   const gallery = tour.gallery?.length ? tour.gallery : [tour.image]
-  const relatedTours = getRelatedTours(tour)
+  const relatedTours = getRelatedTours(tour, availableTours)
 
   return (
     <main className="bg-stone text-foreground">
@@ -185,6 +193,7 @@ export default async function TourPage({ params }: TourPageProps) {
           image: tour.image,
           name: tour.title,
           path: `/tours/${tour.slug}`,
+          price: tour.adultPrice,
         })}
       />
       <TourDetailHero gallery={gallery} tour={tour} />

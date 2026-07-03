@@ -860,7 +860,10 @@ export const tours = [
       'Take a full-day trip from Addis Ababa to Debre Libanos Monastery, Portuguese Bridge, Jemma River Gorge, waterfalls and Gelada Baboon viewpoints.',
     intro:
       'Escape the bustle of Addis Ababa and discover one of Ethiopia\'s most important religious and natural destinations on a full-day excursion to Debre Libanos Monastery and the historic Portuguese Bridge. Founded in the 13th century by Saint Tekle Haymanot, Debre Libanos remains a revered Ethiopian Orthodox pilgrimage and learning center, while the nearby Jemma River Gorge offers canyon views, waterfall viewpoints, Gelada Baboons, birds of prey and endemic Ethiopian birdlife.',
-    adultPrice: 0,
+    // Public benchmark reviewed 2026-07-03:
+    // https://enattours.com/tour/1-day-debre-libanos-excursions-and-portuguese-bridge/
+    // This is a starting price per person; the final quote depends on trip details.
+    adultPrice: 180,
     childPrice: 0,
     rating: 0,
     reviewCount: 0,
@@ -1743,7 +1746,10 @@ export const tours = [
       'Explore Mount Entoto, the National Museum, Ethnological Museum, Holy Trinity Cathedral, St. George Cathedral and Merkato on a private Addis Ababa city tour.',
     intro:
       'Discover the vibrant capital of Ethiopia on a comprehensive full-day tour of Addis Ababa, where ancient traditions blend with modern African life. Founded by Emperor Menelik II in 1886, the city is Ethiopia\'s political, cultural and diplomatic center, and this private tour introduces its museums, historic churches, bustling markets, panoramic viewpoints and traditional food culture.',
-    adultPrice: 0,
+    // Public benchmark reviewed 2026-07-03:
+    // https://enattours.com/tours/ethiopia-tours/
+    // This is a starting price per person; the final quote depends on trip details.
+    adultPrice: 110,
     childPrice: 0,
     rating: 0,
     reviewCount: 0,

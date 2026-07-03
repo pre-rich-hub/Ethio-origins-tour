@@ -167,9 +167,9 @@ export function AdminTours() {
                     {tour.destination?.name ?? '—'}
                   </td>
                   <td className="px-5 py-3.5 text-foreground">
-                    {tour.adultPrice != null
+                    {tour.adultPrice != null && Number(tour.adultPrice) > 0
                       ? `$${Number(tour.adultPrice).toLocaleString()}`
-                      : '—'}
+                      : 'Quote required'}
                     {tour.discount ? (
                       <span className="ml-2 text-xs text-gold font-medium">
                         -{tour.discount}%
