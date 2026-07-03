@@ -4,7 +4,7 @@ import { createMetadata } from '@/lib/seo/create-metadata'
 import {
   getFeaturedDestinations,
   getGalleryImages,
-  getTestimonials,
+  // getTestimonials,
 } from '@/lib/api/cms'
 import {
   BrandStory,
@@ -13,8 +13,9 @@ import {
   FeaturedDestinations,
   Hero,
   HomeGallery,
-  HomeTestimonials,
+  // HomeTestimonials,
   TrustStrip,
+  TrustindexReviews,
   WhyEthiopia,
 } from '@/features/home'
 import { tours } from '@/features/tours'
@@ -38,10 +39,10 @@ export const metadata = createMetadata({
 })
 
 export default async function Page() {
-  const [featuredDestinations, galleryImages, testimonials] = await Promise.all([
+  const [featuredDestinations, galleryImages] = await Promise.all([
     getFeaturedDestinations(),
     getGalleryImages(),
-    getTestimonials(),
+    // getTestimonials(),
   ])
   const featuredTours = tours.slice(0, 6).map((tour) => ({
     title: tour.title,
@@ -62,7 +63,9 @@ export default async function Page() {
       <WhyEthiopia />
       <CustomJourneys />
       <HomeGallery items={galleryImages.slice(0, 6)} />
-      <HomeTestimonials items={testimonials} />
+      {/* Manual testimonials are temporarily hidden in favor of live Trustindex reviews. */}
+      {/* <HomeTestimonials items={testimonials} /> */}
+      <TrustindexReviews />
       <BrandStory />
       <SiteFooter />
     </main>
