@@ -47,7 +47,13 @@ const envSchema = z.object({
   DOCUMENTS_DIR: z.string().default("./data"),
 
   // Storage
-  STORAGE_DRIVER: z.enum(["local", "s3", "cloudinary"]).default("local"),
+  // When omitted, hosted storage is inferred from the available credentials.
+  // This keeps local development simple without accidentally selecting local
+  // disk on a serverless deployment that already has Cloudinary/S3 configured.
+  STORAGE_DRIVER: z.preprocess(
+    (value) => typeof value === "string" && value.trim() === "" ? undefined : value,
+    z.enum(["local", "s3", "cloudinary"]).optional()
+  ),
   STORAGE_S3_BUCKET: z.string().optional().default(""),
   STORAGE_S3_REGION: z.string().optional().default(""),
   STORAGE_S3_ACCESS_KEY: z.string().optional().default(""),
@@ -55,9 +61,30 @@ const envSchema = z.object({
   STORAGE_CLOUDINARY_CLOUD_NAME: z.string().optional().default(""),
   STORAGE_CLOUDINARY_API_KEY: z.string().optional().default(""),
   STORAGE_CLOUDINARY_API_SECRET: z.string().optional().default(""),
+  CLOUDINARY_URL: z.string().optional().default(""),
 });
 
-const parsed = envSchema.parse(process.env);
+const rawEnv = envSchema.parse(process.env);
+
+const hasCloudinaryConfig = Boolean(
+  rawEnv.CLOUDINARY_URL ||
+  (rawEnv.STORAGE_CLOUDINARY_CLOUD_NAME &&
+    rawEnv.STORAGE_CLOUDINARY_API_KEY &&
+    rawEnv.STORAGE_CLOUDINARY_API_SECRET)
+);
+const hasS3Config = Boolean(
+  rawEnv.STORAGE_S3_BUCKET &&
+  rawEnv.STORAGE_S3_REGION &&
+  rawEnv.STORAGE_S3_ACCESS_KEY &&
+  rawEnv.STORAGE_S3_SECRET_KEY
+);
+
+const parsed = {
+  ...rawEnv,
+  STORAGE_DRIVER:
+    rawEnv.STORAGE_DRIVER ??
+    (hasCloudinaryConfig ? "cloudinary" : hasS3Config ? "s3" : "local")
+};
 
 if (parsed.NODE_ENV === "production") {
   const required: string[] = [];

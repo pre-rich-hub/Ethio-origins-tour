@@ -200,13 +200,14 @@ adminRouter.post(
     const files = (req.files as Express.Multer.File[] | undefined) ?? [];
     const imagePaths = files.map((f) => urlForFile(f) || storedPathForFile(f)).filter((path): path is string => Boolean(path));
     if (imagePaths.length === 0) throw new HttpError(422, "At least one tour image is required");
+    const storedPaths = files.map(storedPathForFile).filter((path): path is string => Boolean(path));
 
-    const categoryIds = parseCategoryIds(req.body.tourCategories).filter((id) => id > 0);
-    const tourTitle = tourTitleSchema.parse(req.body.tourTitle);
-    const destinationId = tourDestinationSchema.parse(req.body.tourDestination);
-    const slug = await uniqueTourSlug(tourTitle);
-    const created = await prisma.$transaction(async (tx) => {
-      const tour = await tx.tour.create({
+    try {
+      const categoryIds = parseCategoryIds(req.body.tourCategories).filter((id) => id > 0);
+      const tourTitle = tourTitleSchema.parse(req.body.tourTitle);
+      const destinationId = tourDestinationSchema.parse(req.body.tourDestination);
+      const slug = await uniqueTourSlug(tourTitle);
+      const created = await prisma.tour.create({
         data: {
           destinationId,
           slug,
@@ -221,32 +222,33 @@ adminRouter.post(
           included: parseOptionalJsonArrayString(req.body.tourIncluded),
           excluded: parseOptionalJsonArrayString(req.body.tourExcluded),
           itinerary: parseItinerary(req.body.tourItinerary),
-          journeyMap: req.body.tourMap ? String(req.body.tourMap) : null
-        }
-      });
-
-      await tx.gallery.createMany({
-        data: imagePaths.map((imageUrl) => ({ imageUrl, tourId: tour.id }))
-      });
-
-      if (categoryIds.length) {
-        await tx.tourCategoryJunction.createMany({
-          data: categoryIds.map((categoryId) => ({ tourId: tour.id, categoryId })),
-          skipDuplicates: true
-        });
-      }
-
-      return tx.tour.findUnique({
-        where: { id: tour.id },
+          journeyMap: req.body.tourMap ? String(req.body.tourMap) : null,
+          gallery: {
+            createMany: { data: imagePaths.map((imageUrl) => ({ imageUrl })) }
+          },
+          ...(categoryIds.length
+            ? {
+                categories: {
+                  createMany: {
+                    data: categoryIds.map((categoryId) => ({ categoryId })),
+                    skipDuplicates: true
+                  }
+                }
+              }
+            : {})
+        },
         include: {
           destination: true,
           gallery: { orderBy: { id: "asc" } },
           categories: { include: { category: true } }
         }
       });
-    });
 
-    return ok(res, "Tour created successfully", mapTour(created, true), 201);
+      return ok(res, "Tour created successfully", mapTour(created, true), 201);
+    } catch (error) {
+      await Promise.all(storedPaths.map((storedPath) => removeStoredFile(storedPath)));
+      throw error;
+    }
   })
 );
 

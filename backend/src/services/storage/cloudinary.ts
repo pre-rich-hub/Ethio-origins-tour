@@ -4,11 +4,23 @@ import type { StorageProvider, SaveResult, UploadKind } from "./types.js";
 
 export class CloudinaryStorageProvider implements StorageProvider {
   constructor() {
-    cloudinary.config({
-      cloud_name: env.STORAGE_CLOUDINARY_CLOUD_NAME,
-      api_key: env.STORAGE_CLOUDINARY_API_KEY,
-      api_secret: env.STORAGE_CLOUDINARY_API_SECRET
-    });
+    if (env.CLOUDINARY_URL) {
+      const cloudinaryUrl = new URL(env.CLOUDINARY_URL);
+      if (cloudinaryUrl.protocol !== "cloudinary:") {
+        throw new Error("CLOUDINARY_URL must start with cloudinary://");
+      }
+      cloudinary.config({
+        cloud_name: cloudinaryUrl.hostname,
+        api_key: decodeURIComponent(cloudinaryUrl.username),
+        api_secret: decodeURIComponent(cloudinaryUrl.password)
+      });
+    } else {
+      cloudinary.config({
+        cloud_name: env.STORAGE_CLOUDINARY_CLOUD_NAME,
+        api_key: env.STORAGE_CLOUDINARY_API_KEY,
+        api_secret: env.STORAGE_CLOUDINARY_API_SECRET
+      });
+    }
   }
 
   async save(file: { buffer: Buffer; originalname: string }, kind: UploadKind): Promise<SaveResult> {

@@ -9,6 +9,15 @@ export { UploadKind };
 
 const allowedExtensions = ["jpg", "jpeg", "png", "webp", "avif"];
 
+function storageFailureMessage(plural: boolean): string {
+  if (process.env.VERCEL && env.STORAGE_DRIVER === "local") {
+    return "Image uploads on Vercel require Cloudinary or S3 persistent storage configuration";
+  }
+  return plural
+    ? "Images could not be stored. Check the persistent media storage configuration"
+    : "The image could not be stored. Check the persistent media storage configuration";
+}
+
 function createMulterUpload() {
   return multer({
     storage: multer.memoryStorage(),
@@ -52,7 +61,7 @@ export function uploadFor(kind: UploadKind) {
           const files = (req.files as Express.Multer.File[]) ?? [];
           Promise.all(files.map(saveToStorage))
             .then(() => next())
-            .catch(() => next(new HttpError(503, "Images could not be stored. Check the persistent media storage configuration")));
+            .catch(() => next(new HttpError(503, storageFailureMessage(true))));
         });
       };
     },
@@ -67,7 +76,7 @@ export function uploadFor(kind: UploadKind) {
             await saveToStorage(req.file);
             next();
           } catch {
-            next(new HttpError(503, "The image could not be stored. Check the persistent media storage configuration"));
+            next(new HttpError(503, storageFailureMessage(false)));
           }
         });
       };
