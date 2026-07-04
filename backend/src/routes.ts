@@ -12,6 +12,7 @@ import { contactsRouter } from "./modules/contacts/contacts.routes.js";
 import { seoRouter } from "./modules/seo/seo.routes.js";
 import { subscribeRouter } from "./modules/subscribe/subscribe.routes.js";
 import { assistantRouter } from "./modules/assistant/assistant.routes.js";
+import { mediaRouter } from "./modules/media/media.routes.js";
 
 export function registerRoutes(app: Express) {
   // API v1 routes
@@ -28,6 +29,7 @@ export function registerRoutes(app: Express) {
   app.use("/api/v1/seo", seoRouter);
   app.use("/api/v1/subscribe", subscribeRouter);
   app.use("/api/v1/assistant", assistantRouter);
+  app.use("/api/v1/media", mediaRouter);
 
   // Backward compatibility: redirect old /api/ routes to /api/v1/
   app.use("/api/auth", (_req, res) => {

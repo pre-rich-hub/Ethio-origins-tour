@@ -52,7 +52,7 @@ const envSchema = z.object({
   // disk on a serverless deployment that already has Cloudinary/S3 configured.
   STORAGE_DRIVER: z.preprocess(
     (value) => typeof value === "string" && value.trim() === "" ? undefined : value,
-    z.enum(["local", "s3", "cloudinary"]).optional()
+    z.enum(["local", "database", "s3", "cloudinary"]).optional()
   ),
   STORAGE_S3_BUCKET: z.string().optional().default(""),
   STORAGE_S3_REGION: z.string().optional().default(""),
@@ -82,8 +82,10 @@ const hasS3Config = Boolean(
 const parsed = {
   ...rawEnv,
   STORAGE_DRIVER:
-    rawEnv.STORAGE_DRIVER ??
-    (hasCloudinaryConfig ? "cloudinary" : hasS3Config ? "s3" : "local")
+    process.env.VERCEL && (!rawEnv.STORAGE_DRIVER || rawEnv.STORAGE_DRIVER === "local")
+      ? "database"
+      : rawEnv.STORAGE_DRIVER ??
+        (hasCloudinaryConfig ? "cloudinary" : hasS3Config ? "s3" : "local")
 };
 
 if (parsed.NODE_ENV === "production") {

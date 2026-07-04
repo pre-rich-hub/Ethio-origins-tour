@@ -6,7 +6,7 @@ export interface SaveResult {
 }
 
 export interface StorageProvider {
-  save(file: { buffer: Buffer; originalname: string }, kind: UploadKind): Promise<SaveResult>;
+  save(file: { buffer: Buffer; originalname: string; mimetype?: string }, kind: UploadKind): Promise<SaveResult>;
   delete(storedPath: string): Promise<void>;
   getUrl(storedPath: string): string;
 }

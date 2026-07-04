@@ -193,3 +193,14 @@ model DocumentChunk {
   @@index([source])
   @@map("document_chunks")
 }
+
+model MediaAsset {
+  id           String   @id @default(uuid())
+  content      Bytes
+  mimeType     String   @map("mime_type")
+  originalName String?  @map("original_name")
+  size         Int
+  createdAt    DateTime @default(now()) @map("created_at")
+
+  @@map("media_assets")
+}

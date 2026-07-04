@@ -10,6 +10,11 @@ async function resolveProvider(): Promise<StorageProvider> {
   if (_provider) return _provider;
 
   switch (env.STORAGE_DRIVER) {
+    case "database": {
+      const { DatabaseStorageProvider } = await import("./database.js");
+      _provider = new DatabaseStorageProvider();
+      break;
+    }
     case "s3": {
       const { S3StorageProvider } = await import("./s3.js");
       _provider = new S3StorageProvider();
