@@ -29,6 +29,7 @@ type TourData = {
   isFeatured: boolean
   mainImage: string | null
   destination: { id: number; name: string } | null
+  destinations: { id: number; name: string }[]
   categories: Category[]
   gallery: GalleryImage[]
   included: string[]
@@ -48,6 +49,7 @@ export function AdminTourEdit() {
   const [tour, setTour] = useState<TourData | null>(null)
   const [destinations, setDestinations] = useState<Destination[]>([])
   const [categories, setCategories] = useState<Category[]>([])
+  const [selectedDestinations, setSelectedDestinations] = useState<number[]>([])
   const [selectedCategories, setSelectedCategories] = useState<number[]>([])
   const [newImages, setNewImages] = useState<File[]>([])
   const [deleteImageIds, setDeleteImageIds] = useState<number[]>([])
@@ -72,6 +74,13 @@ export function AdminTourEdit() {
         setTour(tourData)
         setDestinations(destinationItems)
         setCategories(categoryItems)
+        setSelectedDestinations(
+          tourData.destinations?.length
+            ? tourData.destinations.map((destination) => destination.id)
+            : tourData.destination
+              ? [tourData.destination.id]
+              : [],
+        )
         setIncluded(tourData.included ?? [])
         setExcluded(tourData.excluded ?? [])
         setItinerary(
@@ -106,6 +115,12 @@ export function AdminTourEdit() {
   function toggleCategory(id: number) {
     setSelectedCategories((prev) =>
       prev.includes(id) ? prev.filter((c) => c !== id) : [...prev, id]
+    )
+  }
+
+  function toggleDestination(id: number) {
+    setSelectedDestinations((prev) =>
+      prev.includes(id) ? prev.filter((destinationId) => destinationId !== id) : [...prev, id]
     )
   }
 
@@ -158,12 +173,18 @@ export function AdminTourEdit() {
 
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault()
+    if (selectedDestinations.length === 0) {
+      setError('Choose at least one destination.')
+      return
+    }
     setSubmitting(true)
     setError('')
 
     const form = e.currentTarget
     const formData = new FormData(form)
 
+    formData.set('tourDestination', String(selectedDestinations[0]))
+    formData.set('tourDestinations', JSON.stringify(selectedDestinations))
     formData.set('tourCategories', JSON.stringify(selectedCategories))
     formData.set('tourIncluded', JSON.stringify(included.filter(Boolean)))
     formData.set('tourExcluded', JSON.stringify(excluded.filter(Boolean)))
@@ -254,23 +275,32 @@ export function AdminTourEdit() {
                 className="w-full px-3.5 py-2 bg-white border border-border rounded-lg text-sm text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-gold/30 focus:border-gold"
               />
             </div>
-            <div>
-              <label htmlFor="tourDestination" className="block text-sm font-medium text-foreground mb-1.5">
-                Destination
-              </label>
-              <select
-                id="tourDestination"
-                name="tourDestination"
-                required
-                defaultValue={tour.destination?.id ?? ''}
-                className="w-full px-3.5 py-2 bg-white border border-border rounded-lg text-sm text-foreground focus:outline-none focus:ring-2 focus:ring-gold/30 focus:border-gold"
-              >
-                <option value="">Select a destination</option>
-                {destinations.map((d) => (
-                  <option key={d.id} value={d.id}>{d.name}</option>
+            <fieldset className="md:col-span-2">
+              <legend className="block text-sm font-medium text-foreground mb-1.5">
+                Destinations
+              </legend>
+              <p className="mb-3 text-xs text-muted-foreground">Choose one or more destinations for this tour.</p>
+              <div className="flex flex-wrap gap-3">
+                {destinations.map((destination) => (
+                  <label
+                    key={destination.id}
+                    className={`flex items-center gap-2 rounded-lg border px-3.5 py-2 text-sm cursor-pointer transition-colors ${
+                      selectedDestinations.includes(destination.id)
+                        ? 'border-gold bg-gold/5 text-gold'
+                        : 'border-border bg-white text-muted-foreground hover:border-gold/50'
+                    }`}
+                  >
+                    <input
+                      type="checkbox"
+                      checked={selectedDestinations.includes(destination.id)}
+                      onChange={() => toggleDestination(destination.id)}
+                      className="h-4 w-4 rounded border-border text-gold focus:ring-gold/30"
+                    />
+                    {destination.name}
+                  </label>
                 ))}
-              </select>
-            </div>
+              </div>
+            </fieldset>
             <div>
               <label htmlFor="tourDiscount" className="block text-sm font-medium text-foreground mb-1.5">
                 Discount (%)

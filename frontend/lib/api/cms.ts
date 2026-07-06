@@ -42,6 +42,7 @@ type ApiTour = {
   noOfRates: number | null
   mainImage: string | null
   destination: ApiDestination | null
+  destinations?: ApiDestination[]
   categories: { id: number; name: string }[]
   gallery: ApiGalleryImage[]
   durationDays?: number
@@ -221,7 +222,14 @@ export function mapApiTour(apiTour: ApiTour): Tour {
     ? apiTour.itinerary.map(normalizeItineraryItem)
     : matchedFallback?.itinerary ?? template.itinerary
   const durationDays = apiTour.durationDays || itinerary.length
-  const destination = apiTour.destination?.name ?? matchedFallback?.destination ?? 'Ethiopia'
+  const apiDestinations = apiTour.destinations?.length
+    ? apiTour.destinations
+    : apiTour.destination
+      ? [apiTour.destination]
+      : []
+  const destination = apiDestinations.length
+    ? apiDestinations.map((item) => item.name).join(' & ')
+    : matchedFallback?.destination ?? 'Ethiopia'
   const categorySlugs = apiTour.categories.map((category) => slugify(category.name)).filter(Boolean)
   const description = apiTour.description || apiTour.overview || matchedFallback?.description || `Explore ${destination} with Ethio Origins Tour.`
   const moments = itinerary.map((day) => day.title).filter(Boolean)
@@ -251,7 +259,7 @@ export function mapApiTour(apiTour: ApiTour): Tour {
     excluded: apiTour.excluded ?? matchedFallback?.excluded ?? [],
     itinerary,
     journeyMap: apiTour.journeyMap ?? matchedFallback?.journeyMap,
-    destinationSlugs: apiTour.destination ? [slugify(apiTour.destination.name)] : [],
+    destinationSlugs: apiDestinations.map((item) => slugify(item.name)).filter(Boolean),
     categorySlugs,
     seo: {
       ...template.seo,

@@ -14,6 +14,7 @@ type TourListItem = {
   isFeatured: boolean
   mainImage: string | null
   destination: { id: number; name: string } | null
+  destinations: { id: number; name: string }[]
   createdAt: string | null
 }
 
@@ -126,7 +127,7 @@ export function AdminTours() {
             <thead>
               <tr className="border-b border-border bg-muted/30">
                 <th className="text-left font-medium text-muted-foreground px-5 py-3">Tour</th>
-                <th className="text-left font-medium text-muted-foreground px-5 py-3">Destination</th>
+                <th className="text-left font-medium text-muted-foreground px-5 py-3">Destinations</th>
                 <th className="text-left font-medium text-muted-foreground px-5 py-3">Adult Price</th>
                 <th className="text-left font-medium text-muted-foreground px-5 py-3">Rating</th>
                 <th className="text-left font-medium text-muted-foreground px-5 py-3">Featured</th>
@@ -164,7 +165,9 @@ export function AdminTours() {
                     </div>
                   </td>
                   <td className="px-5 py-3.5 text-muted-foreground">
-                    {tour.destination?.name ?? '—'}
+                    {tour.destinations?.length
+                      ? tour.destinations.map((destination) => destination.name).join(', ')
+                      : tour.destination?.name ?? '—'}
                   </td>
                   <td className="px-5 py-3.5 text-foreground">
                     {tour.adultPrice != null && Number(tour.adultPrice) > 0

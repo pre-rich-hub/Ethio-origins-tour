@@ -59,6 +59,14 @@ function parseItinerary(value: unknown): string {
 const tourTitleSchema = z.string().trim().min(1, "Tour name is required").max(255);
 const tourDestinationSchema = z.coerce.number().int().positive("A destination is required");
 
+function parseTourDestinationIds(body: Record<string, unknown>): number[] {
+  const destinationIds = [...new Set(
+    parseCategoryIds(body.tourDestinations).filter((destinationId) => destinationId > 0)
+  )];
+  if (destinationIds.length > 0) return destinationIds;
+  return [tourDestinationSchema.parse(body.tourDestination)];
+}
+
 async function uniqueTourSlug(title: string, excludeId?: number): Promise<string> {
   const base = slugify(title) || "tour";
   let candidate = base;
@@ -86,6 +94,7 @@ adminRouter.get(
     const tours = await prisma.tour.findMany({
       include: {
         destination: true,
+        destinations: { include: { destination: true } },
         gallery: { orderBy: { id: "asc" } },
         categories: { include: { category: true } }
       },
@@ -103,6 +112,7 @@ adminRouter.get(
       where: { id },
       include: {
         destination: true,
+        destinations: { include: { destination: true } },
         gallery: { orderBy: { id: "asc" } },
         categories: { include: { category: true } }
       }
@@ -116,7 +126,7 @@ adminRouter.get(
   "/destinations",
   asyncHandler(async (_req, res) => {
     const destinations = await prisma.destination.findMany({
-      include: { _count: { select: { tours: true } } },
+      include: { _count: { select: { tours: true, tourLinks: true } } },
       orderBy: { id: "desc" }
     });
     return ok(res, "Destinations fetched successfully", destinations.map(mapDestination));
@@ -129,7 +139,7 @@ adminRouter.get(
     const id = idParam.parse(req.params.id);
     const destination = await prisma.destination.findUnique({
       where: { id },
-      include: { _count: { select: { tours: true } } }
+      include: { _count: { select: { tours: true, tourLinks: true } } }
     });
     if (!destination) throw new HttpError(404, "Destination not found");
     return ok(res, "Destination fetched successfully", mapDestination(destination));
@@ -205,7 +215,8 @@ adminRouter.post(
     try {
       const categoryIds = parseCategoryIds(req.body.tourCategories).filter((id) => id > 0);
       const tourTitle = tourTitleSchema.parse(req.body.tourTitle);
-      const destinationId = tourDestinationSchema.parse(req.body.tourDestination);
+      const destinationIds = parseTourDestinationIds(req.body);
+      const destinationId = destinationIds[0];
       const slug = await uniqueTourSlug(tourTitle);
       const created = await prisma.tour.create({
         data: {
@@ -223,6 +234,14 @@ adminRouter.post(
           excluded: parseOptionalJsonArrayString(req.body.tourExcluded),
           itinerary: parseItinerary(req.body.tourItinerary),
           journeyMap: req.body.tourMap ? String(req.body.tourMap) : null,
+          destinations: {
+            createMany: {
+              data: destinationIds.map((selectedDestinationId) => ({
+                destinationId: selectedDestinationId
+              })),
+              skipDuplicates: true
+            }
+          },
           gallery: {
             createMany: { data: imagePaths.map((imageUrl) => ({ imageUrl })) }
           },
@@ -239,6 +258,7 @@ adminRouter.post(
         },
         include: {
           destination: true,
+          destinations: { include: { destination: true } },
           gallery: { orderBy: { id: "asc" } },
           categories: { include: { category: true } }
         }
@@ -261,7 +281,8 @@ adminRouter.put(
     const files = (req.files as Express.Multer.File[] | undefined) ?? [];
     const imagePaths = files.map((f) => urlForFile(f) || storedPathForFile(f)).filter((path): path is string => Boolean(path));
     const tourTitle = tourTitleSchema.parse(req.body.tourTitle);
-    const destinationId = tourDestinationSchema.parse(req.body.tourDestination);
+    const destinationIds = parseTourDestinationIds(req.body);
+    const destinationId = destinationIds[0];
     const slug = await uniqueTourSlug(tourTitle, id);
 
     let imagesToRemove: string[] = [];
@@ -282,7 +303,16 @@ adminRouter.put(
           included: parseOptionalJsonArrayString(req.body.tourIncluded),
           excluded: parseOptionalJsonArrayString(req.body.tourExcluded),
           itinerary: parseItinerary(req.body.tourItinerary),
-          journeyMap: req.body.tourMap ? String(req.body.tourMap) : null
+          journeyMap: req.body.tourMap ? String(req.body.tourMap) : null,
+          destinations: {
+            deleteMany: {},
+            createMany: {
+              data: destinationIds.map((selectedDestinationId) => ({
+                destinationId: selectedDestinationId
+              })),
+              skipDuplicates: true
+            }
+          }
         }
       });
 
@@ -313,6 +343,7 @@ adminRouter.put(
         where: { id },
         include: {
           destination: true,
+          destinations: { include: { destination: true } },
           gallery: { orderBy: { id: "asc" } },
           categories: { include: { category: true } }
         }
@@ -357,7 +388,7 @@ adminRouter.post(
         description: String(req.body.destinationDescription ?? ""),
         imageUrl
       },
-      include: { _count: { select: { tours: true } } }
+      include: { _count: { select: { tours: true, tourLinks: true } } }
     });
     return ok(res, "Destination created successfully", mapDestination(destination), 201);
   })
@@ -379,7 +410,7 @@ adminRouter.put(
         description: String(req.body.destinationDescription ?? ""),
         ...(imageUrl ? { imageUrl } : {})
       },
-      include: { _count: { select: { tours: true } } }
+      include: { _count: { select: { tours: true, tourLinks: true } } }
     });
     return ok(res, "Destination updated successfully", mapDestination(destination));
   })

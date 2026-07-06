@@ -25,6 +25,7 @@ export function AdminTourNew() {
   const [optionsError, setOptionsError] = useState('')
   const [destinations, setDestinations] = useState<Destination[]>([])
   const [categories, setCategories] = useState<Category[]>([])
+  const [selectedDestinations, setSelectedDestinations] = useState<number[]>([])
   const [selectedCategories, setSelectedCategories] = useState<number[]>([])
   const [images, setImages] = useState<File[]>([])
   const [included, setIncluded] = useState<string[]>([''])
@@ -60,6 +61,12 @@ export function AdminTourNew() {
   function toggleCategory(id: number) {
     setSelectedCategories((prev) =>
       prev.includes(id) ? prev.filter((c) => c !== id) : [...prev, id]
+    )
+  }
+
+  function toggleDestination(id: number) {
+    setSelectedDestinations((prev) =>
+      prev.includes(id) ? prev.filter((destinationId) => destinationId !== id) : [...prev, id]
     )
   }
 
@@ -111,12 +118,18 @@ export function AdminTourNew() {
 
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault()
+    if (selectedDestinations.length === 0) {
+      setError('Choose at least one destination.')
+      return
+    }
     setSubmitting(true)
     setError('')
 
     const form = e.currentTarget
     const formData = new FormData(form)
 
+    formData.set('tourDestination', String(selectedDestinations[0]))
+    formData.set('tourDestinations', JSON.stringify(selectedDestinations))
     formData.set('tourCategories', JSON.stringify(selectedCategories))
     formData.set('tourIncluded', JSON.stringify(included.filter(Boolean)))
     formData.set('tourExcluded', JSON.stringify(excluded.filter(Boolean)))
@@ -176,28 +189,35 @@ export function AdminTourNew() {
                 placeholder="e.g. Omo Valley Explorer"
               />
             </div>
-            <div>
-              <label htmlFor="tourDestination" className="block text-sm font-medium text-foreground mb-1.5">
-                Destination
-              </label>
-              <select
-                id="tourDestination"
-                name="tourDestination"
-                required
-                disabled={optionsLoading || destinations.length === 0}
-                className="w-full px-3.5 py-2 bg-white border border-border rounded-lg text-sm text-foreground focus:outline-none focus:ring-2 focus:ring-gold/30 focus:border-gold"
-              >
-                <option value="">
-                  {optionsLoading
-                    ? 'Loading destinations...'
-                    : destinations.length === 0
-                      ? 'No destinations available'
-                      : 'Select a destination'}
-                </option>
-                {destinations.map((d) => (
-                  <option key={d.id} value={d.id}>{d.name}</option>
-                ))}
-              </select>
+            <fieldset className="md:col-span-2">
+              <legend className="block text-sm font-medium text-foreground mb-1.5">
+                Destinations
+              </legend>
+              <p className="mb-3 text-xs text-muted-foreground">Choose one or more destinations for this tour.</p>
+              {optionsLoading ? (
+                <p className="text-sm text-muted-foreground">Loading destinations...</p>
+              ) : (
+                <div className="flex flex-wrap gap-3">
+                  {destinations.map((destination) => (
+                    <label
+                      key={destination.id}
+                      className={`flex items-center gap-2 rounded-lg border px-3.5 py-2 text-sm cursor-pointer transition-colors ${
+                        selectedDestinations.includes(destination.id)
+                          ? 'border-gold bg-gold/5 text-gold'
+                          : 'border-border bg-white text-muted-foreground hover:border-gold/50'
+                      }`}
+                    >
+                      <input
+                        type="checkbox"
+                        checked={selectedDestinations.includes(destination.id)}
+                        onChange={() => toggleDestination(destination.id)}
+                        className="h-4 w-4 rounded border-border text-gold focus:ring-gold/30"
+                      />
+                      {destination.name}
+                    </label>
+                  ))}
+                </div>
+              )}
               {!optionsLoading && destinations.length === 0 ? (
                 <p className="mt-2 text-xs text-amber-700">
                   A tour needs a destination.{' '}
@@ -207,7 +227,7 @@ export function AdminTourNew() {
                   .
                 </p>
               ) : null}
-            </div>
+            </fieldset>
             <div>
               <label htmlFor="tourDiscount" className="block text-sm font-medium text-foreground mb-1.5">
                 Discount (%)

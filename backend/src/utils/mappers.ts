@@ -26,7 +26,7 @@ export function mapDestination(destination: any) {
     name: destination.destinationName,
     description: destination.description,
     imageUrl: destination.imageUrl,
-    tourCount: destination._count?.tours ?? undefined,
+    tourCount: destination._count?.tourLinks ?? destination._count?.tours ?? undefined,
     canonical: {
       type: "slug",
       id: destination.id,
@@ -50,6 +50,17 @@ export function mapTour(tour: any, detail = false) {
   const categories = Array.isArray(tour.categories)
     ? tour.categories.map((item: any) => mapCategory(item.category))
     : [];
+  const destinationRecords = [
+    ...(tour.destination ? [tour.destination] : []),
+    ...(Array.isArray(tour.destinations)
+      ? tour.destinations.map((item: any) => item.destination).filter(Boolean)
+      : [])
+  ];
+  const destinations = destinationRecords
+    .filter((destination, index, all) =>
+      all.findIndex((item) => item.id === destination.id) === index
+    )
+    .map(mapDestination);
 
   return {
     id: tour.id,
@@ -63,7 +74,8 @@ export function mapTour(tour: any, detail = false) {
     noOfRates: tour.noOfRates,
     isFeatured: Boolean(tour.isFeatured),
     mainImage: gallery[0]?.imageUrl ?? null,
-    destination: tour.destination ? mapDestination(tour.destination) : null,
+    destination: destinations[0] ?? null,
+    destinations,
     categories,
     gallery,
     durationDays: itinerary.length,

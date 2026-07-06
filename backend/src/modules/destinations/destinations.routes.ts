@@ -8,11 +8,36 @@ import { mapDestination, mapTour } from "../../utils/mappers.js";
 
 export const destinationsRouter = Router();
 
+const includeDestinationTour = {
+  destination: true,
+  destinations: { include: { destination: true } },
+  gallery: { orderBy: { id: "asc" as const }, take: 4 },
+  categories: { include: { category: true } }
+};
+
+const includeDestinationDetail = {
+  _count: { select: { tours: true, tourLinks: true } },
+  tours: { include: includeDestinationTour },
+  tourLinks: { include: { tour: { include: includeDestinationTour } } }
+};
+
+function destinationTours(destination: any) {
+  const tours = [
+    ...(Array.isArray(destination.tours) ? destination.tours : []),
+    ...(Array.isArray(destination.tourLinks)
+      ? destination.tourLinks.map((item: any) => item.tour).filter(Boolean)
+      : [])
+  ];
+  return tours.filter((tour, index, all) =>
+    all.findIndex((item) => item.id === tour.id) === index
+  );
+}
+
 destinationsRouter.get(
   "/",
   asyncHandler(async (_req, res) => {
     const destinations = await prisma.destination.findMany({
-      include: { _count: { select: { tours: true } } },
+      include: { _count: { select: { tours: true, tourLinks: true } } },
       orderBy: { id: "desc" }
     });
     return ok(res, "Destinations fetched successfully", destinations.map(mapDestination));
@@ -23,10 +48,12 @@ destinationsRouter.get(
   "/featured",
   asyncHandler(async (_req, res) => {
     const destinations = await prisma.destination.findMany({
-      include: { _count: { select: { tours: true } } }
+      include: { _count: { select: { tours: true, tourLinks: true } } }
     });
     const sorted = destinations
-      .sort((a, b) => b._count.tours - a._count.tours)
+      .sort((a, b) =>
+        (b._count.tourLinks ?? b._count.tours) - (a._count.tourLinks ?? a._count.tours)
+      )
       .slice(0, 8)
       .map(mapDestination);
     return ok(res, "Featured destinations fetched successfully", sorted);
@@ -39,21 +66,13 @@ destinationsRouter.get(
     const slug = z.string().parse(req.params.slug);
     const destination = await prisma.destination.findUnique({
       where: { slug },
-      include: {
-        _count: { select: { tours: true } },
-        tours: {
-          include: {
-            destination: true,
-            gallery: { orderBy: { id: "asc" }, take: 4 },
-            categories: { include: { category: true } }
-          }
-        }
-      }
+      include: includeDestinationDetail
     });
     if (!destination) throw new HttpError(404, "Destination not found");
+    const tours = destinationTours(destination);
     return ok(res, "Destination fetched successfully", {
       ...mapDestination(destination),
-      tours: destination.tours.map((tour) => mapTour(tour))
+      tours: tours.map((tour) => mapTour(tour))
     });
   })
 );
@@ -64,21 +83,13 @@ destinationsRouter.get(
     const id = z.coerce.number().int().positive().parse(req.params.id);
     const destination = await prisma.destination.findUnique({
       where: { id },
-      include: {
-        _count: { select: { tours: true } },
-        tours: {
-          include: {
-            destination: true,
-            gallery: { orderBy: { id: "asc" }, take: 4 },
-            categories: { include: { category: true } }
-          }
-        }
-      }
+      include: includeDestinationDetail
     });
     if (!destination) throw new HttpError(404, "Destination not found");
+    const tours = destinationTours(destination);
     return ok(res, "Destination fetched successfully", {
       ...mapDestination(destination),
-      tours: destination.tours.map((tour) => mapTour(tour))
+      tours: tours.map((tour) => mapTour(tour))
     });
   })
 );

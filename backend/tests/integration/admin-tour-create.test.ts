@@ -72,6 +72,7 @@ describe("POST /api/v1/admin/tours", () => {
       .set("Cookie", `${env.AUTH_COOKIE_NAME}=${token}`)
       .field("tourTitle", "Admin Form Tour")
       .field("tourDestination", "42")
+      .field("tourDestinations", "[42,43]")
       .field("adultPrice", "1250")
       .field("childPrice", "650")
       .field("tourRating", "4.8")
@@ -103,6 +104,12 @@ describe("POST /api/v1/admin/tours", () => {
       data: expect.objectContaining({
         destinationId: 42,
         tourName: "Admin Form Tour",
+        destinations: {
+          createMany: {
+            data: [{ destinationId: 42 }, { destinationId: 43 }],
+            skipDuplicates: true
+          }
+        },
         gallery: {
           createMany: {
             data: [{ imageUrl: "https://media.example.com/tour/test-tour.png" }]

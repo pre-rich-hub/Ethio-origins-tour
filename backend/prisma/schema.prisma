@@ -41,6 +41,7 @@ model Tour {
   gallery       Gallery[]
   bookings      Booking[]
   categories    TourCategoryJunction[]
+  destinations  TourDestinationJunction[]
   blockedDates  TourBlockedDate[]
 
   @@map("tours")
@@ -53,8 +54,20 @@ model Destination {
   description     String?  @db.Text
   imageUrl        String?  @map("image_url")
   tours           Tour[]
+  tourLinks       TourDestinationJunction[]
 
   @@map("destinations")
+}
+
+model TourDestinationJunction {
+  tourId        Int         @map("Tour_ID")
+  destinationId Int         @map("Destination_ID")
+  tour          Tour        @relation(fields: [tourId], references: [id], onDelete: Cascade)
+  destination   Destination @relation(fields: [destinationId], references: [id], onDelete: Cascade)
+
+  @@id([tourId, destinationId])
+  @@index([destinationId])
+  @@map("tour_destination_junction")
 }
 
 model TourCategory {

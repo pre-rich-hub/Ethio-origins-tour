@@ -30,12 +30,14 @@ const blockedDatesQuery = z.object({
 
 const includeTourList = {
   destination: true,
+  destinations: { include: { destination: true } },
   gallery: { orderBy: { id: "asc" as const }, take: 4 },
   categories: { include: { category: true } }
 };
 
 const includeTourDetail = {
   destination: true,
+  destinations: { include: { destination: true } },
   gallery: { orderBy: { id: "asc" as const } },
   categories: { include: { category: true } }
 };
@@ -55,14 +57,24 @@ toursRouter.get(
     }
 
     if (query.destinationId) {
-      where.destinationId = query.destinationId;
+      where.AND = [{
+        OR: [
+          { destinationId: query.destinationId },
+          { destinations: { some: { destinationId: query.destinationId } } }
+        ]
+      }];
     } else if (query.destinationSlug) {
       const destination = await prisma.destination.findUnique({
         where: { slug: query.destinationSlug },
         select: { id: true }
       });
       if (destination) {
-        where.destinationId = destination.id;
+        where.AND = [{
+          OR: [
+            { destinationId: destination.id },
+            { destinations: { some: { destinationId: destination.id } } }
+          ]
+        }];
       } else {
         return ok(res, "Tours fetched successfully", { items: [], meta: meta(0, page, limit) });
       }
@@ -137,9 +149,21 @@ toursRouter.get(
     });
     if (!tour) throw new HttpError(404, "Tour not found");
 
-    const related = tour.destinationId
+    const destinationIds = [...new Set([
+      ...(tour.destinationId ? [tour.destinationId] : []),
+      ...(Array.isArray(tour.destinations)
+        ? tour.destinations.map((item) => item.destinationId)
+        : [])
+    ])];
+    const related = destinationIds.length
       ? await prisma.tour.findMany({
-          where: { destinationId: tour.destinationId, id: { not: tour.id } },
+          where: {
+            id: { not: tour.id },
+            OR: [
+              { destinationId: { in: destinationIds } },
+              { destinations: { some: { destinationId: { in: destinationIds } } } }
+            ]
+          },
           include: includeTourList,
           orderBy: [{ isFeatured: "desc" }, { rating: "desc" }, { id: "desc" }],
           take: 6
@@ -163,9 +187,21 @@ toursRouter.get(
     });
     if (!tour) throw new HttpError(404, "Tour not found");
 
-    const related = tour.destinationId
+    const destinationIds = [...new Set([
+      ...(tour.destinationId ? [tour.destinationId] : []),
+      ...(Array.isArray(tour.destinations)
+        ? tour.destinations.map((item) => item.destinationId)
+        : [])
+    ])];
+    const related = destinationIds.length
       ? await prisma.tour.findMany({
-          where: { destinationId: tour.destinationId, id: { not: id } },
+          where: {
+            id: { not: id },
+            OR: [
+              { destinationId: { in: destinationIds } },
+              { destinations: { some: { destinationId: { in: destinationIds } } } }
+            ]
+          },
           include: includeTourList,
           orderBy: [{ isFeatured: "desc" }, { rating: "desc" }, { id: "desc" }],
           take: 6
