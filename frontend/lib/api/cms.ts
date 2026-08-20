@@ -347,7 +347,7 @@ export async function getTourByRoute(route: string) {
     })
     return data ? safeMapApiTour(data) ?? fallback : undefined
   } catch (error) {
-    if (isApiError(error) && error.code === 'not_found') return undefined
+    if (isApiError(error) && error.code === 'not_found') return fallback
     return fallback
   }
 }
