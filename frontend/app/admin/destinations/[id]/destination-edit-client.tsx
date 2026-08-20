@@ -3,6 +3,7 @@
 import { useEffect, useState } from 'react'
 import { useRouter, useParams } from 'next/navigation'
 import { Loader2 } from 'lucide-react'
+import { adminRequest } from '@/lib/admin/api'
 
 type DestinationData = {
   id: number
@@ -23,10 +24,11 @@ export function AdminDestinationEdit() {
 
   useEffect(() => {
     const timeout = window.setTimeout(() => {
-      fetch(`/api/v1/admin/destinations/${id}`, { credentials: 'include' })
-        .then((r) => r.json())
-        .then((d) => { if (d.success) setDestination(d.data) })
-        .catch(() => undefined)
+      adminRequest<DestinationData>(`/api/v1/admin/destinations/${id}`)
+        .then(setDestination)
+        .catch((error) => {
+          setError(error instanceof Error ? error.message : 'Destination could not be loaded.')
+        })
         .finally(() => setLoading(false))
     }, 0)
     return () => window.clearTimeout(timeout)
@@ -42,19 +44,13 @@ export function AdminDestinationEdit() {
     if (newImage) formData.set('destinationImage', newImage)
 
     try {
-      const res = await fetch(`/api/v1/admin/destinations/${id}`, {
+      await adminRequest(`/api/v1/admin/destinations/${id}`, {
         method: 'PUT',
         body: formData,
-        credentials: 'include',
       })
-      const data = await res.json()
-      if (data.success) {
-        router.push('/admin/destinations')
-      } else {
-        setError(data.message || 'Failed to update destination')
-      }
-    } catch {
-      setError('Network error. Please try again.')
+      router.push('/admin/destinations')
+    } catch (error) {
+      setError(error instanceof Error ? error.message : 'Failed to update destination')
     } finally {
       setSubmitting(false)
     }

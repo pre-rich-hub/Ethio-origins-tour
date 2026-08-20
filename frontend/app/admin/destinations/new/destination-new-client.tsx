@@ -3,6 +3,7 @@
 import { useState } from 'react'
 import { useRouter } from 'next/navigation'
 import { Loader2 } from 'lucide-react'
+import { adminRequest } from '@/lib/admin/api'
 
 export function AdminDestinationNew() {
   const router = useRouter()
@@ -20,19 +21,13 @@ export function AdminDestinationNew() {
     if (image) formData.set('destinationImage', image)
 
     try {
-      const res = await fetch('/api/v1/admin/destinations', {
+      await adminRequest('/api/v1/admin/destinations', {
         method: 'POST',
         body: formData,
-        credentials: 'include',
       })
-      const data = await res.json()
-      if (data.success) {
-        router.push('/admin/destinations')
-      } else {
-        setError(data.message || 'Failed to create destination')
-      }
-    } catch {
-      setError('Network error. Please try again.')
+      router.push('/admin/destinations')
+    } catch (error) {
+      setError(error instanceof Error ? error.message : 'Failed to create destination')
     } finally {
       setSubmitting(false)
     }

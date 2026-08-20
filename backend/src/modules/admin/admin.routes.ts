@@ -26,6 +26,7 @@ import { slugify } from "../../utils/slug.js";
 import { env } from "../../config/env.js";
 import { ingestAll } from "../../services/ingestion.js";
 import { logger } from "../../config/pino.js";
+import { withTourDestinationLinksFallback } from "../../utils/schema-compat.js";
 
 export const adminRouter = Router();
 
@@ -88,18 +89,41 @@ const destinationUpload = uploadFor("destination");
 const blogUpload = uploadFor("blog");
 const galleryUpload = uploadFor("gallery");
 
+function adminTourInclude(includeDestinationLinks: boolean) {
+  return {
+    destination: true,
+    ...(includeDestinationLinks
+      ? { destinations: { include: { destination: true } } }
+      : {}),
+    gallery: { orderBy: { id: "asc" as const } },
+    categories: { include: { category: true } }
+  };
+}
+
+function destinationCountInclude(includeDestinationLinks: boolean) {
+  return {
+    _count: {
+      select: {
+        tours: true,
+        ...(includeDestinationLinks ? { tourLinks: true } : {})
+      }
+    }
+  };
+}
+
 adminRouter.get(
   "/tours",
   asyncHandler(async (_req, res) => {
-    const tours = await prisma.tour.findMany({
-      include: {
-        destination: true,
-        destinations: { include: { destination: true } },
-        gallery: { orderBy: { id: "asc" } },
-        categories: { include: { category: true } }
-      },
-      orderBy: { id: "desc" }
-    });
+    const tours = await withTourDestinationLinksFallback(
+      () => prisma.tour.findMany({
+        include: adminTourInclude(true),
+        orderBy: { id: "desc" }
+      }),
+      () => prisma.tour.findMany({
+        include: adminTourInclude(false),
+        orderBy: { id: "desc" }
+      })
+    );
     return ok(res, "Tours fetched successfully", tours.map((t) => mapTour(t)));
   })
 );
@@ -108,15 +132,16 @@ adminRouter.get(
   "/tours/:id",
   asyncHandler(async (req, res) => {
     const id = idParam.parse(req.params.id);
-    const tour = await prisma.tour.findUnique({
-      where: { id },
-      include: {
-        destination: true,
-        destinations: { include: { destination: true } },
-        gallery: { orderBy: { id: "asc" } },
-        categories: { include: { category: true } }
-      }
-    });
+    const tour = await withTourDestinationLinksFallback(
+      () => prisma.tour.findUnique({
+        where: { id },
+        include: adminTourInclude(true)
+      }),
+      () => prisma.tour.findUnique({
+        where: { id },
+        include: adminTourInclude(false)
+      })
+    );
     if (!tour) throw new HttpError(404, "Tour not found");
     return ok(res, "Tour fetched successfully", mapTour(tour, true));
   })
@@ -125,10 +150,16 @@ adminRouter.get(
 adminRouter.get(
   "/destinations",
   asyncHandler(async (_req, res) => {
-    const destinations = await prisma.destination.findMany({
-      include: { _count: { select: { tours: true, tourLinks: true } } },
-      orderBy: { id: "desc" }
-    });
+    const destinations = await withTourDestinationLinksFallback(
+      () => prisma.destination.findMany({
+        include: destinationCountInclude(true),
+        orderBy: { id: "desc" }
+      }),
+      () => prisma.destination.findMany({
+        include: destinationCountInclude(false),
+        orderBy: { id: "desc" }
+      })
+    );
     return ok(res, "Destinations fetched successfully", destinations.map(mapDestination));
   })
 );
@@ -137,10 +168,16 @@ adminRouter.get(
   "/destinations/:id",
   asyncHandler(async (req, res) => {
     const id = idParam.parse(req.params.id);
-    const destination = await prisma.destination.findUnique({
-      where: { id },
-      include: { _count: { select: { tours: true, tourLinks: true } } }
-    });
+    const destination = await withTourDestinationLinksFallback(
+      () => prisma.destination.findUnique({
+        where: { id },
+        include: destinationCountInclude(true)
+      }),
+      () => prisma.destination.findUnique({
+        where: { id },
+        include: destinationCountInclude(false)
+      })
+    );
     if (!destination) throw new HttpError(404, "Destination not found");
     return ok(res, "Destination fetched successfully", mapDestination(destination));
   })
@@ -218,7 +255,7 @@ adminRouter.post(
       const destinationIds = parseTourDestinationIds(req.body);
       const destinationId = destinationIds[0];
       const slug = await uniqueTourSlug(tourTitle);
-      const created = await prisma.tour.create({
+      const createTour = (includeDestinationLinks: boolean) => prisma.tour.create({
         data: {
           destinationId,
           slug,
@@ -234,14 +271,18 @@ adminRouter.post(
           excluded: parseOptionalJsonArrayString(req.body.tourExcluded),
           itinerary: parseItinerary(req.body.tourItinerary),
           journeyMap: req.body.tourMap ? String(req.body.tourMap) : null,
-          destinations: {
-            createMany: {
-              data: destinationIds.map((selectedDestinationId) => ({
-                destinationId: selectedDestinationId
-              })),
-              skipDuplicates: true
-            }
-          },
+          ...(includeDestinationLinks
+            ? {
+                destinations: {
+                  createMany: {
+                    data: destinationIds.map((selectedDestinationId) => ({
+                      destinationId: selectedDestinationId
+                    })),
+                    skipDuplicates: true
+                  }
+                }
+              }
+            : {}),
           gallery: {
             createMany: { data: imagePaths.map((imageUrl) => ({ imageUrl })) }
           },
@@ -256,13 +297,12 @@ adminRouter.post(
               }
             : {})
         },
-        include: {
-          destination: true,
-          destinations: { include: { destination: true } },
-          gallery: { orderBy: { id: "asc" } },
-          categories: { include: { category: true } }
-        }
+        include: adminTourInclude(includeDestinationLinks)
       });
+      const created = await withTourDestinationLinksFallback(
+        () => createTour(true),
+        () => createTour(false)
+      );
 
       return ok(res, "Tour created successfully", mapTour(created, true), 201);
     } catch (error) {
@@ -286,7 +326,7 @@ adminRouter.put(
     const slug = await uniqueTourSlug(tourTitle, id);
 
     let imagesToRemove: string[] = [];
-    const updated = await prisma.$transaction(async (tx) => {
+    const updateTour = (includeDestinationLinks: boolean) => prisma.$transaction(async (tx) => {
       await tx.tour.update({
         where: { id },
         data: {
@@ -304,15 +344,19 @@ adminRouter.put(
           excluded: parseOptionalJsonArrayString(req.body.tourExcluded),
           itinerary: parseItinerary(req.body.tourItinerary),
           journeyMap: req.body.tourMap ? String(req.body.tourMap) : null,
-          destinations: {
-            deleteMany: {},
-            createMany: {
-              data: destinationIds.map((selectedDestinationId) => ({
-                destinationId: selectedDestinationId
-              })),
-              skipDuplicates: true
-            }
-          }
+          ...(includeDestinationLinks
+            ? {
+                destinations: {
+                  deleteMany: {},
+                  createMany: {
+                    data: destinationIds.map((selectedDestinationId) => ({
+                      destinationId: selectedDestinationId
+                    })),
+                    skipDuplicates: true
+                  }
+                }
+              }
+            : {})
         }
       });
 
@@ -341,14 +385,13 @@ adminRouter.put(
 
       return tx.tour.findUnique({
         where: { id },
-        include: {
-          destination: true,
-          destinations: { include: { destination: true } },
-          gallery: { orderBy: { id: "asc" } },
-          categories: { include: { category: true } }
-        }
+        include: adminTourInclude(includeDestinationLinks)
       });
     }, { maxWait: 10000, timeout: 30000 });
+    const updated = await withTourDestinationLinksFallback(
+      () => updateTour(true),
+      () => updateTour(false)
+    );
 
     await Promise.all(imagesToRemove.map((imageUrl) => removeStoredFile(imageUrl)));
 
@@ -388,7 +431,7 @@ adminRouter.post(
         description: String(req.body.destinationDescription ?? ""),
         imageUrl
       },
-      include: { _count: { select: { tours: true, tourLinks: true } } }
+      include: destinationCountInclude(false)
     });
     return ok(res, "Destination created successfully", mapDestination(destination), 201);
   })
@@ -410,7 +453,7 @@ adminRouter.put(
         description: String(req.body.destinationDescription ?? ""),
         ...(imageUrl ? { imageUrl } : {})
       },
-      include: { _count: { select: { tours: true, tourLinks: true } } }
+      include: destinationCountInclude(false)
     });
     return ok(res, "Destination updated successfully", mapDestination(destination));
   })

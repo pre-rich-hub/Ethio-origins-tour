@@ -9,14 +9,20 @@ export async function adminRequest<T>(
   path: string,
   init: RequestInit = {},
 ): Promise<T> {
-  const response = await fetch(path, {
-    ...init,
-    credentials: 'include',
-    headers: {
-      Accept: 'application/json',
-      ...init.headers,
-    },
-  })
+  let response: Response
+
+  try {
+    response = await fetch(path, {
+      ...init,
+      credentials: 'include',
+      headers: {
+        Accept: 'application/json',
+        ...init.headers,
+      },
+    })
+  } catch {
+    throw new Error('The backend API is not reachable. Make sure the backend server is running and the API URL is configured correctly.')
+  }
 
   const payload = (await response.json().catch(() => null)) as AdminApiEnvelope<T> | null
 
@@ -26,7 +32,9 @@ export async function adminRequest<T>(
       ? 'The selected images are too large. Use files no larger than 5 MB each.'
       : response.status === 401
         ? 'Your admin session has expired. Sign in and try again.'
-        : 'The request could not be completed.'
+        : response.status >= 500
+          ? 'The backend server could not complete the request. Check the backend logs and media storage configuration.'
+          : 'The request could not be completed.'
     throw new Error(detail || payload?.message || statusMessage)
   }
 
