@@ -419,13 +419,25 @@ for (const [siteUrl, apiUrl, message] of [
   ['http://localhost:3000', 'https://api.example.com', 'Localhost production site URL must fail.'],
   ['https://example.vercel.app', 'https://api.example.com', 'Preview production site URL must fail.'],
   ['not-a-url', 'https://api.example.com', 'Invalid production site URL must fail.'],
-  [PROD_ORIGIN, 'http://localhost:5000', 'Localhost production API URL must fail.'],
 ]) {
   const previous = { ...process.env }
   process.env.VERCEL_ENV = 'production'
   process.env.NEXT_PUBLIC_SITE_URL = siteUrl
   process.env.NEXT_PUBLIC_API_BASE_URL = apiUrl
   assertThrows(() => loadFreshEnv(), message)
+  process.env = previous
+}
+
+{
+  const previous = { ...process.env }
+  process.env.VERCEL_ENV = 'production'
+  process.env.NEXT_PUBLIC_SITE_URL = PROD_ORIGIN
+  process.env.NEXT_PUBLIC_API_BASE_URL = 'http://localhost:5000'
+  const fallback = loadFreshEnv()
+  assert(
+    fallback.apiBaseUrl === 'https://api.ethiooriginstour.com',
+    'Invalid production API URL must fall back to the derived origin.',
+  )
   process.env = previous
 }
 

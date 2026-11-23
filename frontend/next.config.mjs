@@ -1,3 +1,10 @@
+import {
+  isPreviewLikeUrl,
+  normalizeAbsoluteUrl,
+  normalizeUrl,
+  resolveApiBaseUrl,
+} from "./lib/url-normalize.mjs";
+
 const withBundleAnalyzer =
   process.env.ANALYZE === "true"
     ? (await import("@next/bundle-analyzer")).default({ enabled: true })
@@ -8,86 +15,41 @@ const isProductionDeployment =
   process.env.NEXT_PUBLIC_DEPLOYMENT_ENV === "production" ||
   process.env.DEPLOYMENT_ENV === "production";
 
-function normalizeUrl(value) {
-  return value.replace(/\/+$/, "");
-}
-
-function parseUrl(value, label) {
-  try {
-    const url = new URL(value);
-
-    if (!["http:", "https:"].includes(url.protocol)) {
-      throw new Error(`${label} must use http or https.`);
-    }
-
-    return url;
-  } catch (error) {
-    throw new Error(
-      `${label} must be a valid absolute URL.${error instanceof Error ? ` ${error.message}` : ""}`,
-    );
-  }
-}
-
-function isLocalhost(url) {
-  return ["localhost", "127.0.0.1", "0.0.0.0", "::1"].includes(url.hostname);
-}
-
-function isPreviewLikeUrl(url) {
-  const hostname = url.hostname.toLowerCase();
-
-  return (
-    hostname.endsWith(".vercel.app") ||
-    hostname.includes("staging") ||
-    hostname.includes("preview")
-  );
-}
-
 function getValidatedSiteUrl() {
   const rawSiteUrl =
     process.env.NEXT_PUBLIC_SITE_URL || "https://ethiooriginstour.com";
-  const siteUrl = parseUrl(normalizeUrl(rawSiteUrl), "NEXT_PUBLIC_SITE_URL");
 
-  if (isProductionDeployment) {
-    if (!process.env.NEXT_PUBLIC_SITE_URL) {
-      throw new Error(
-        "NEXT_PUBLIC_SITE_URL is required for production deployments.",
-      );
-    }
+  if (isProductionDeployment && !process.env.NEXT_PUBLIC_SITE_URL) {
+    throw new Error(
+      "NEXT_PUBLIC_SITE_URL is required for production deployments.",
+    );
+  }
 
-    if (isLocalhost(siteUrl)) {
-      throw new Error(
-        "NEXT_PUBLIC_SITE_URL cannot be localhost in production.",
-      );
-    }
+  const siteUrl = normalizeAbsoluteUrl(rawSiteUrl, "NEXT_PUBLIC_SITE_URL", {
+    production: isProductionDeployment,
+  });
 
-    if (isPreviewLikeUrl(siteUrl)) {
-      throw new Error(
-        "NEXT_PUBLIC_SITE_URL cannot be a preview or staging URL in production.",
-      );
-    }
+  if (isProductionDeployment && isPreviewLikeUrl(siteUrl)) {
+    throw new Error(
+      `NEXT_PUBLIC_SITE_URL cannot be a preview or staging URL in production (received ${JSON.stringify(rawSiteUrl)}).`,
+    );
   }
 
   return normalizeUrl(siteUrl.toString());
 }
 
 function getValidatedApiBaseUrl() {
-  const rawApiBaseUrl =
-    process.env.API_BASE_URL ||
-    process.env.NEXT_PUBLIC_API_BASE_URL ||
-    "http://localhost:5000";
-  const apiBaseUrl = parseUrl(normalizeUrl(rawApiBaseUrl), "API base URL");
+  const explicitApiBaseUrl =
+    process.env.API_BASE_URL || process.env.NEXT_PUBLIC_API_BASE_URL;
 
-  if (isProductionDeployment) {
-    if (!process.env.API_BASE_URL && !process.env.NEXT_PUBLIC_API_BASE_URL) {
-      throw new Error(
-        "API_BASE_URL or NEXT_PUBLIC_API_BASE_URL is required in production.",
-      );
-    }
-
-    if (isLocalhost(apiBaseUrl)) {
-      throw new Error("API base URL cannot be localhost in production.");
-    }
-  }
+  const apiBaseUrl = resolveApiBaseUrl(
+    explicitApiBaseUrl,
+    new URL(getValidatedSiteUrl()),
+    {
+      production: isProductionDeployment,
+      warn: (message) => console.warn(`[next.config] ${message}`),
+    },
+  );
 
   return normalizeUrl(apiBaseUrl.toString());
 }

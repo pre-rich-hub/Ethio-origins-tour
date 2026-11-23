@@ -1,6 +1,10 @@
 import fs from 'node:fs'
+import path from 'node:path'
 import vm from 'node:vm'
 import ts from 'typescript'
+
+const ROOT = new URL('..', import.meta.url).pathname
+const moduleCache = new Map()
 
 function assert(condition, message) {
   if (!condition) {
@@ -8,12 +12,31 @@ function assert(condition, message) {
   }
 }
 
-function read(path) {
-  return fs.readFileSync(new URL(`../${path}`, import.meta.url), 'utf8')
+function read(relativePath) {
+  return fs.readFileSync(new URL(`../${relativePath}`, import.meta.url), 'utf8')
 }
 
-function loadTs(path) {
-  const source = read(path)
+function resolveModule(request, fromFile) {
+  if (request.startsWith('@/')) {
+    return path.join(ROOT, `${request.slice(2)}.ts`)
+  }
+
+  if (request.startsWith('.')) {
+    const candidate = path.resolve(path.dirname(fromFile), request)
+    for (const extension of ['.ts', '.tsx', '.js', '.mjs']) {
+      if (fs.existsSync(`${candidate}${extension}`)) return `${candidate}${extension}`
+    }
+    if (fs.existsSync(candidate)) return candidate
+  }
+
+  return null
+}
+
+function loadTs(relativePath) {
+  const absolutePath = path.join(ROOT, relativePath)
+  if (moduleCache.has(absolutePath)) return moduleCache.get(absolutePath)
+
+  const source = read(relativePath)
   const code = ts.transpileModule(source, {
     compilerOptions: {
       module: ts.ModuleKind.CommonJS,
@@ -30,12 +53,17 @@ function loadTs(path) {
     URL,
     require: (id) => {
       if (id.startsWith('@/') || id.startsWith('../types')) return {}
+      const resolved = resolveModule(id, absolutePath)
+      if (resolved) {
+        return loadTs(path.relative(ROOT, resolved))
+      }
       throw new Error(`Unexpected import in validation script: ${id}`)
     },
   }
 
   sandbox.exports = cjsModule.exports
-  vm.runInNewContext(code, sandbox, { filename: path })
+  vm.runInNewContext(code, sandbox, { filename: relativePath })
+  moduleCache.set(absolutePath, cjsModule.exports)
   return cjsModule.exports
 }
 
@@ -102,7 +130,18 @@ try {
 
   process.env.NEXT_PUBLIC_SITE_URL = 'https://ethiooriginstour.com'
   process.env.NEXT_PUBLIC_API_BASE_URL = 'http://localhost:5000'
-  assertThrows(() => envModule.getPublicEnv(), 'localhost API URL must fail in production.')
+  const fallbackEnv = envModule.getPublicEnv()
+  assert(
+    fallbackEnv.apiBaseUrl === 'https://api.ethiooriginstour.com',
+    'invalid API URL must fall back to the derived production origin.',
+  )
+
+  process.env.NEXT_PUBLIC_API_BASE_URL = 'https://api.example.com'
+  const explicitEnv = envModule.getPublicEnv()
+  assert(
+    explicitEnv.apiBaseUrl === 'https://api.example.com',
+    'valid API URL must win over the derived origin.',
+  )
 
   process.env.VERCEL_ENV = 'preview'
   process.env.NEXT_PUBLIC_API_BASE_URL = 'http://localhost:5000'
